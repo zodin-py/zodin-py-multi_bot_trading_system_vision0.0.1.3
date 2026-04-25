@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Bot Trading System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-buy { background-color: #10b981; }
+        .status-sell { background-color: #ef4444; }
+        .status-hold { background-color: #f59e0b; }
+        
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <!-- Header -->
+    <header class="bg-slate-900/80 border-b border-slate-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-robot text-2xl text-blue-400"></i>
+                        <h1 class="text-xl font-bold">Multi-Bot Trading System</h1>
+                    </div>
+                    <div id="status-indicator" class="flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-gray-500 pulse-dot"></span>
+                        <span class="text-sm text-gray-400">Stopped</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Coin Input -->
+                    <div class="flex items-center space-x-2">
+                        <input 
+                            id="symbol-input" 
+                            type="text" 
+                            placeholder="z.B. BTC" 
+                            class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500 w-24"
+                            value="{{ current_symbol.replace('USDT', '') }}"
+                        />
+                        <button 
+                            id="symbol-load-btn" 
+                            class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                        >
+                            <i class="fas fa-search mr-1"></i>Laden
+                        </button>
+                    </div>
+                    
+                    <!-- Timeframe Selection -->
+                    <select id="timeframe-select" class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        {% for tf, name in timeframes.items() %}
+                        <option value="{{ tf }}" {% if tf == current_timeframe %}selected{% endif %}>{{ tf }} - {{ name }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <!-- Trading Toggle -->
+                    <button id="trading-toggle" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <i class="fas fa-play mr-2"></i>Start
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Price & Signal Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <!-- Current Price -->
+            <div class="card rounded-xl p-4">
+                <div class="text-sm text-gray-400 mb-1">Aktueller Preis</div>
+                <div id="current-price" class="text-2xl font-bold text-blue-400">--</div>
+                <div id="price-change" class="text-sm text-gray-500">--</div>
+            </div>
+            
+            <!-- Aggregated Signal -->
+            <div class="card rounded-xl p-4">
+                <div class="text-sm text-gray-400 mb-1">Aggregiertes Signal</div>
+                <div id="agg-signal" class="text-2xl font-bold text-gray-400">--</div>
+                <div id="agg-confidence" class="text-sm text-gray-500">Konfidenz: --</div>
+            </div>
+            
+            <!-- Open Trades -->
+            <div class="card rounded-xl p-4">
+                <div class="text-sm text-gray-400 mb-1">Offene Trades</div>
+                <div id="open-trades-count" class="text-2xl font-bold text-yellow-400">0</div>
+                <div id="open-trades-pnl" class="text-sm text-gray-500">P&L: --</div>
+            </div>
+            
+            <!-- Capital -->
+            <div class="card rounded-xl p-4">
+                <div class="text-sm text-gray-400 mb-1">Kapital</div>
+                <div id="capital" class="text-2xl font-bold text-green-400">--</div>
+                <div id="capital-change" class="text-sm text-gray-500">--</div>
+            </div>
+        </div>
+
+        <!-- Bot Signals Table -->
+        <div class="card rounded-xl p-4 mb-6">
+            <h2 class="text-lg font-semibold mb-4">
+                <i class="fas fa-robot mr-2 text-blue-400"></i>Bot Signale
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left text-sm text-gray-400 border-b border-slate-700">
+                            <th class="pb-3">Bot</th>
+                            <th class="pb-3">Buy %</th>
+                            <th class="pb-3">Sell %</th>
+                            <th class="pb-3">Hold %</th>
+                            <th class="pb-3">Signal</th>
+                            <th class="pb-3">Letztes Update</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bot-signals-body" class="text-sm">
+                        <tr>
+                            <td colspan="6" class="py-4 text-center text-gray-500">Lade Daten...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Indicators Table -->
+            <div class="card rounded-xl p-4">
+                <h2 class="text-lg font-semibold mb-4">
+                    <i class="fas fa-chart-line mr-2 text-green-400"></i>Indikatoren
+                </h2>
+                <div class="space-y-4" id="indicators-container">
+                    <!-- RSI -->
+                    <div class="bg-slate-800/50 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium">RSI (14)</span>
+                            <span id="rsi-value" class="text-xl font-bold">--</span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-400">Buy</span>
+                                    <span id="rsi-buy" class="text-green-400">--%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div id="rsi-buy-bar" class="progress-bar bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-400">Sell</span>
+                                    <span id="rsi-sell" class="text-red-400">--%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div id="rsi-sell-bar" class="progress-bar bg-red-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- MACD -->
+                    <div class="bg-slate-800/50 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium">MACD</span>
+                            <span id="macd-value" class="text-sm">--</span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-400">Buy</span>
+                                    <span id="macd-buy" class="text-green-400">--%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div id="macd-buy-bar" class="progress-bar bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-400">Sell</span>
+                                    <span id="macd-sell" class="text-red-400">--%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div id="macd-sell-bar" class="progress-bar bg-red-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- MFI -->
+                    <div class="bg-slate-800/50 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium">MFI (14)</span>
+                            <span id="mfi-value" class="text-xl font-bold">--</span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-400">Buy</span>
+                                    <span id="mfi-buy" class="text-green-400">--%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div id="mfi-buy-bar" class="progress-bar bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-400">Sell</span>
+                                    <span id="mfi-sell" class="text-red-400">--%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div id="mfi-sell-bar" class="progress-bar bg-red-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Open Trades Table -->
+            <div class="card rounded-xl p-4">
+                <h2 class="text-lg font-semibold mb-4">
+                    <i class="fas fa-ticket-alt mr-2 text-yellow-400"></i>Offene Trades
+                </h2>
+                <div class="overflow-x-auto max-h-80 scrollbar-thin">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-left text-sm text-gray-400 border-b border-slate-700">
+                                <th class="pb-2">ID</th>
+                                <th class="pb-2">Symbol</th>
+                                <th class="pb-2">Side</th>
+                                <th class="pb-2">Entry</th>
+                                <th class="pb-2">SL</th>
+                                <th class="pb-2">TP</th>
+                                <th class="pb-2">Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody id="open-trades-body" class="text-sm">
+                            <tr>
+                                <td colspan="7" class="py-4 text-center text-gray-500">Keine offenen Trades</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="card rounded-xl p-4 mt-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold">
+                    <i class="fas fa-history mr-2 text-purple-400"></i>Trade Historie
+                </h2>
+                <div class="flex items-center space-x-4">
+                    <input type="date" id="start-date" class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm" value="">
+                    <span class="text-gray-400">bis</span>
+                    <input type="date" id="end-date" class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm" value="">
+                    <button id="load-history" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium">
+                        Historie laden
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
+                <div class="bg-slate-800/50 rounded-lg p-3 text-center">
+                    <div class="text-sm text-gray-400">Trades</div>
+                    <div id="stat-total" class="text-xl font-bold">0</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-3 text-center">
+                    <div class="text-sm text-gray-400">Gewinner</div>
+                    <div id="stat-winners" class="text-xl font-bold text-green-400">0</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-3 text-center">
+                    <div class="text-sm text-gray-400">Verlierer</div>
+                    <div id="stat-losers" class="text-xl font-bold text-red-400">0</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-3 text-center">
+                    <div class="text-sm text-gray-400">Win Rate</div>
+                    <div id="stat-winrate" class="text-xl font-bold">0%</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-3 text-center">
+                    <div class="text-sm text-gray-400">Netto P&L</div>
+                    <div id="stat-pnl" class="text-xl font-bold">0</div>
+                </div>
+            </div>
+            
+            <!-- History Table -->
+            <div class="overflow-x-auto max-h-60 scrollbar-thin">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left text-sm text-gray-400 border-b border-slate-700">
+                            <th class="pb-2">ID</th>
+                            <th class="pb-2">Symbol</th>
+                            <th class="pb-2">Side</th>
+                            <th class="pb-2">Entry</th>
+                            <th class="pb-2">Schluss</th>
+                            <th class="pb-2">P&L</th>
+                            <th class="pb-2">%</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body" class="text-sm">
+                        <tr>
+                            <td colspan="7" class="py-4 text-center text-gray-500">Keine Historie verfügbar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // State
+        let tradingActive = false;
+        let refreshInterval = 5000;
+
+        // DOM Elements
+        const symbolInput = document.getElementById('symbol-input');
+        const symbolLoadBtn = document.getElementById('symbol-load-btn');
+        const timeframeSelect = document.getElementById('timeframe-select');
+        const tradingToggle = document.getElementById('trading-toggle');
+        const statusIndicator = document.getElementById('status-indicator');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            setInterval(loadData, refreshInterval);
+        });
+
+        // Event Listeners
+        symbolLoadBtn.addEventListener('click', loadSymbol);
+        symbolInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loadSymbol();
+        });
+        timeframeSelect.addEventListener('change', updateTimeframe);
+        tradingToggle.addEventListener('click', toggleTrading);
+        document.getElementById('load-history').addEventListener('click', loadHistory);
+
+        // Functions
+        async function loadSymbol() {
+            const symbol = symbolInput.value.trim().toUpperCase();
+            if (!symbol) {
+                alert('Bitte einen Coin eingeben (z.B. BTC)');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/load-coin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        timeframe: timeframeSelect.value
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log(`Coin geladen: ${data.symbol} mit ${data.candles_loaded} candles`);
+                    loadData(); // Aktualisiere Daten
+                } else {
+                    alert(data.error || 'Fehler beim Laden des Coins');
+                }
+            } catch (e) {
+                console.error('Error loading coin:', e);
+                alert('Fehler beim Laden des Coins');
+            }
+        }
+
+        async function updateTimeframe() {
+            // Reload data with new timeframe
+            const response = await fetch('/api/settings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    symbol: symbolInput.value.toUpperCase() + 'USDT',
+                    timeframe: timeframeSelect.value
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                loadData();
+            }
+        }
+
+        async function loadData() {
+            await Promise.all([
+                loadStatus(),
+                loadSignals(),
+                loadIndicators(),
+                loadOpenTrades(),
+                loadCapital()
+            ]);
+        }
+
+        async function loadStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                const dot = statusIndicator.querySelector('span:first-child');
+                const text = statusIndicator.querySelector('span:last-child');
+                
+                if (data.status === 'running') {
+                    dot.className = 'w-2 h-2 rounded-full bg-green-500 pulse-dot';
+                    text.textContent = 'Running';
+                } else {
+                    dot.className = 'w-2 h-2 rounded-full bg-gray-500 pulse-dot';
+                    text.textContent = 'Stopped';
+                }
+            } catch (e) {
+                console.error('Error loading status:', e);
+            }
+        }
+
+        async function loadSignals() {
+            try {
+                const response = await fetch('/api/signals');
+                const data = await response.json();
+                
+                // Update price with 4 decimal places
+                document.getElementById('current-price').textContent = data.current_price ? data.current_price.toFixed(4) : '--';
+                
+                // Update aggregated signal
+                const agg = data.aggregated;
+                const signalEl = document.getElementById('agg-signal');
+                const confEl = document.getElementById('agg-confidence');
+                
+                if (agg) {
+                    signalEl.textContent = agg.final_signal.toUpperCase();
+                    signalEl.className = `text-2xl font-bold ${
+                        agg.final_signal === 'buy' ? 'text-green-400' : 
+                        agg.final_signal === 'sell' ? 'text-red-400' : 'text-gray-400'
+                    }`;
+                    confEl.textContent = `Konfidenz: ${agg.confidence.toFixed(1)}%`;
+                }
+                
+                // Update bot signals table
+                updateBotSignalsTable(data.bot_probabilities);
+            } catch (e) {
+                console.error('Error loading signals:', e);
+            }
+        }
+
+        function updateBotSignalsTable(probabilities) {
+            const tbody = document.getElementById('bot-signals-body');
+            
+            if (!probabilities || Object.keys(probabilities).length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="py-4 text-center text-gray-500">Keine Daten</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            for (const [botName, data] of Object.entries(probabilities)) {
+                const signal = data.last_signal?.signal_type || 'hold';
+                const signalClass = signal === 'buy' ? 'text-green-400' : signal === 'sell' ? 'text-red-400' : 'text-gray-400';
+                const signalText = signal === 'buy' ? 'BUY' : signal === 'sell' ? 'SELL' : 'HOLD';
+                const timestamp = data.last_signal?.timestamp ? new Date(data.last_signal.timestamp).toLocaleTimeString() : '--';
+                
+                html += `
+                    <tr class="border-b border-slate-700/50 hover:bg-slate-800/30">
+                        <td class="py-3 font-medium">${botName}</td>
+                        <td class="py-3">
+                            <div class="flex items-center">
+                                <div class="w-16 bg-slate-700 rounded-full h-2 mr-2">
+                                    <div class="progress-bar bg-green-500 h-2 rounded-full" style="width: ${data.buy}%"></div>
+                                </div>
+                                <span class="text-green-400">${data.buy}%</span>
+                            </div>
+                        </td>
+                        <td class="py-3">
+                            <div class="flex items-center">
+                                <div class="w-16 bg-slate-700 rounded-full h-2 mr-2">
+                                    <div class="progress-bar bg-red-500 h-2 rounded-full" style="width: ${data.sell}%"></div>
+                                </div>
+                                <span class="text-red-400">${data.sell}%</span>
+                            </div>
+                        </td>
+                        <td class="py-3">
+                            <div class="flex items-center">
+                                <div class="w-16 bg-slate-700 rounded-full h-2 mr-2">
+                                    <div class="progress-bar bg-yellow-500 h-2 rounded-full" style="width: ${data.hold}%"></div>
+                                </div>
+                                <span class="text-yellow-400">${data.hold}%</span>
+                            </div>
+                        </td>
+                        <td class="py-3 ${signalClass} font-medium">${signalText}</td>
+                        <td class="py-3 text-gray-400">${timestamp}</td>
+                    </tr>
+                `;
+            }
+            
+            tbody.innerHTML = html;
+        }
+
+        async function loadIndicators() {
+            try {
+                const response = await fetch('/api/indicators');
+                const data = await response.json();
+                
+                // RSI
+                if (data.rsi) {
+                    document.getElementById('rsi-value').textContent = data.rsi.value.toFixed(2);
+                    document.getElementById('rsi-buy').textContent = `${data.rsi.confidence.toFixed(0)}%`;
+                    document.getElementById('rsi-sell').textContent = `${(100 - data.rsi.confidence).toFixed(0)}%`;
+                    document.getElementById('rsi-buy-bar').style.width = `${data.rsi.confidence}%`;
+                    document.getElementById('rsi-sell-bar').style.width = `${100 - data.rsi.confidence}%`;
+                }
+                
+                // MACD
+                if (data.macd) {
+                    document.getElementById('macd-value').textContent = `MACD: ${data.macd.macd_line.toFixed(4)}`;
+                    document.getElementById('macd-buy').textContent = `${data.macd.confidence.toFixed(0)}%`;
+                    document.getElementById('macd-sell').textContent = `${(100 - data.macd.confidence).toFixed(0)}%`;
+                    document.getElementById('macd-buy-bar').style.width = `${data.macd.confidence}%`;
+                    document.getElementById('macd-sell-bar').style.width = `${100 - data.macd.confidence}%`;
+                }
+                
+                // MFI
+                if (data.mfi) {
+                    document.getElementById('mfi-value').textContent = data.mfi.value.toFixed(2);
+                    document.getElementById('mfi-buy').textContent = `${data.mfi.confidence.toFixed(0)}%`;
+                    document.getElementById('mfi-sell').textContent = `${(100 - data.mfi.confidence).toFixed(0)}%`;
+                    document.getElementById('mfi-buy-bar').style.width = `${data.mfi.confidence}%`;
+                    document.getElementById('mfi-sell-bar').style.width = `${100 - data.mfi.confidence}%`;
+                }
+            } catch (e) {
+                console.error('Error loading indicators:', e);
+            }
+        }
+
+        async function loadOpenTrades() {
+            try {
+                const response = await fetch('/api/trades');
+                const data = await response.json();
+                
+                document.getElementById('open-trades-count').textContent = data.count;
+                
+                const tbody = document.getElementById('open-trades-body');
+                
+                if (data.trades.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="py-4 text-center text-gray-500">Keine offenen Trades</td></tr>';
+                    return;
+                }
+                
+                let html = '';
+                for (const trade of data.trades) {
+                    const sideClass = trade.side === 'long' ? 'text-green-400' : 'text-red-400';
+                    html += `
+                        <tr class="border-b border-slate-700/50">
+                            <td class="py-2">${trade.id}</td>
+                            <td class="py-2">${trade.symbol}</td>
+                            <td class="py-2 ${sideClass}">${trade.side.toUpperCase()}</td>
+                            <td class="py-2">${trade.entry_price.toFixed(2)}</td>
+                            <td class="py-2 text-red-400">${trade.stop_loss.toFixed(2)}</td>
+                            <td class="py-2 text-green-400">${trade.take_profit.toFixed(2)}</td>
+                            <td class="py-2">
+                                <button onclick="closeTrade('${trade.id}')" class="text-red-400 hover:text-red-300">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }
+                
+                tbody.innerHTML = html;
+            } catch (e) {
+                console.error('Error loading trades:', e);
+            }
+        }
+
+        async function loadCapital() {
+            try {
+                const response = await fetch('/api/capital');
+                const data = await response.json();
+                
+                document.getElementById('capital').textContent = data.capital.toFixed(2) + ' USDT';
+            } catch (e) {
+                console.error('Error loading capital:', e);
+            }
+        }
+
+        async function loadHistory() {
+            try {
+                const startDate = document.getElementById('start-date').value;
+                const endDate = document.getElementById('end-date').value;
+                
+                let url = '/api/history';
+                const params = new URLSearchParams();
+                if (startDate) params.append('start_date', startDate);
+                if (endDate) params.append('end_date', endDate);
+                if (params.toString()) url += '?' + params.toString();
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('stat-total').textContent = data.stats.total_trades;
+                document.getElementById('stat-winners').textContent = data.stats.winning_trades;
+                document.getElementById('stat-losers').textContent = data.stats.losing_trades;
+                document.getElementById('stat-winrate').textContent = data.stats.win_rate.toFixed(1) + '%';
+                document.getElementById('stat-pnl').textContent = data.stats.total_pnl.toFixed(2);
+                document.getElementById('stat-pnl').className = `text-xl font-bold ${data.stats.total_pnl >= 0 ? 'text-green-400' : 'text-red-400'}`;
+                
+                // Update table
+                const tbody = document.getElementById('history-body');
+                
+                if (data.trades.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="py-4 text-center text-gray-500">Keine Historie</td></tr>';
+                    return;
+                }
+                
+                let html = '';
+                for (const trade of data.trades.slice(0, 20)) {
+                    const pnlClass = trade.pnl >= 0 ? 'text-green-400' : 'text-red-400';
+                    html += `
+                        <tr class="border-b border-slate-700/50">
+                            <td class="py-2">${trade.id}</td>
+                            <td class="py-2">${trade.symbol}</td>
+                            <td class="py-2 ${trade.side === 'long' ? 'text-green-400' : 'text-red-400'}">${trade.side.toUpperCase()}</td>
+                            <td class="py-2">${trade.entry_price.toFixed(2)}</td>
+                            <td class="py-2">${trade.close_time ? new Date(trade.close_time).toLocaleDateString() : '--'}</td>
+                            <td class="py-2 ${pnlClass}">${trade.pnl.toFixed(2)}</td>
+                            <td class="py-2 ${pnlClass}">${trade.pnl_percent.toFixed(2)}%</td>
+                        </tr>
+                    `;
+                }
+                
+                tbody.innerHTML = html;
+            } catch (e) {
+                console.error('Error loading history:', e);
+            }
+        }
+
+        async function toggleTrading() {
+            try {
+                const action = tradingActive ? 'stop' : 'start';
+                const response = await fetch('/api/trading', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action })
+                });
+                
+                const data = await response.json();
+                tradingActive = data.status === 'started';
+                
+                if (tradingActive) {
+                    tradingToggle.innerHTML = '<i class="fas fa-stop mr-2"></i>Stop';
+                    tradingToggle.className = 'bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors';
+                } else {
+                    tradingToggle.innerHTML = '<i class="fas fa-play mr-2"></i>Start';
+                    tradingToggle.className = 'bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors';
+                }
+                
+                loadStatus();
+            } catch (e) {
+                console.error('Error toggling trading:', e);
+            }
+        }
+
+        async function closeTrade(tradeId) {
+            if (!confirm('Möchten Sie diesen Trade wirklich schließen?')) return;
+            
+            try {
+                await fetch(`/api/trades/${tradeId}`, { method: 'DELETE' });
+                loadOpenTrades();
+                loadCapital();
+            } catch (e) {
+                console.error('Error closing trade:', e);
+            }
+        }
+
+        // Load history on page load
+        loadHistory();
+    </script>
+</body>
+</html>
