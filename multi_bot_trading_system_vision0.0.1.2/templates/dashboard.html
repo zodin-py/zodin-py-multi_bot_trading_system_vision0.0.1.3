@@ -82,12 +82,22 @@
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <!-- Coin Selection -->
-                    <select id="symbol-select" class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                        {% for coin in coins %}
-                        <option value="{{ coin }}" {% if coin == current_symbol %}selected{% endif %}>{{ coin }}</option>
-                        {% endfor %}
-                    </select>
+                    <!-- Coin Input -->
+                    <div class="flex items-center space-x-2">
+                        <input 
+                            id="symbol-input" 
+                            type="text" 
+                            placeholder="z.B. BTC" 
+                            class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500 w-24"
+                            value="{{ current_symbol.replace('USDT', '') }}"
+                        />
+                        <button 
+                            id="symbol-load-btn" 
+                            class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                        >
+                            <i class="fas fa-search mr-1"></i>Laden
+                        </button>
+                    </div>
                     
                     <!-- Timeframe Selection -->
                     <select id="timeframe-select" class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
@@ -357,7 +367,8 @@
         let refreshInterval = 5000;
 
         // DOM Elements
-        const symbolSelect = document.getElementById('symbol-select');
+        const symbolInput = document.getElementById('symbol-input');
+        const symbolLoadBtn = document.getElementById('symbol-load-btn');
         const timeframeSelect = document.getElementById('timeframe-select');
         const tradingToggle = document.getElementById('trading-toggle');
         const statusIndicator = document.getElementById('status-indicator');
@@ -369,12 +380,67 @@
         });
 
         // Event Listeners
-        symbolSelect.addEventListener('change', updateSettings);
-        timeframeSelect.addEventListener('change', updateSettings);
+        symbolLoadBtn.addEventListener('click', loadSymbol);
+        symbolInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loadSymbol();
+        });
+        timeframeSelect.addEventListener('change', updateTimeframe);
         tradingToggle.addEventListener('click', toggleTrading);
         document.getElementById('load-history').addEventListener('click', loadHistory);
 
         // Functions
+        async function loadSymbol() {
+            const symbol = symbolInput.value.trim().toUpperCase();
+            if (!symbol) {
+                alert('Bitte einen Coin eingeben (z.B. BTC)');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/load-coin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        timeframe: timeframeSelect.value
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log(`Coin geladen: ${data.symbol} mit ${data.candles_loaded} candles`);
+                    loadData(); // Aktualisiere Daten
+                } else {
+                    alert(data.error || 'Fehler beim Laden des Coins');
+                }
+            } catch (e) {
+                console.error('Error loading coin:', e);
+                alert('Fehler beim Laden des Coins');
+            }
+        }
+
+        async function updateTimeframe() {
+            // Reload data with new timeframe
+            const response = await fetch('/api/settings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    symbol: symbolInput.value.toUpperCase() + 'USDT',
+                    timeframe: timeframeSelect.value
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                loadData();
+            }
+        }
+
         async function loadData() {
             await Promise.all([
                 loadStatus(),
@@ -410,8 +476,8 @@
                 const response = await fetch('/api/signals');
                 const data = await response.json();
                 
-                // Update price
-                document.getElementById('current-price').textContent = data.current_price ? data.current_price.toFixed(2) : '--';
+                // Update price with 4 decimal places
+                document.getElementById('current-price').textContent = data.current_price ? data.current_price.toFixed(4) : '--';
                 
                 // Update aggregated signal
                 const agg = data.aggregated;
@@ -621,21 +687,6 @@
                 tbody.innerHTML = html;
             } catch (e) {
                 console.error('Error loading history:', e);
-            }
-        }
-
-        async function updateSettings() {
-            try {
-                await fetch('/api/settings', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        symbol: symbolSelect.value,
-                        timeframe: timeframeSelect.value
-                    })
-                });
-            } catch (e) {
-                console.error('Error updating settings:', e);
             }
         }
 

@@ -12,13 +12,13 @@ BINANCE_SECRET_KEY = os.environ.get('BINANCE_SECRET_KEY', '')
 
 # Testnet für Paper Trading
 USE_TESTNET = True
-BASE_URL = 'https://testnet.binance.vision/api' if USE_TESTNET else 'https://api.binance.com'
+BASE_URL = 'https://testnet.binance.vision' if USE_TESTNET else 'https://api.binance.com'
 WS_URL = 'wss://stream.testnet.binance.vision:9443/ws' if USE_TESTNET else 'wss://stream.binance.com:9443/ws'
 
 # ==================== TRADING KONFIGURATION ====================
 COINS = [
     'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT',
-    'ADAUSDT', 'DOGEUSDT', 'AVAXUSDT', 'DOTUSDT', 'MATICUSDT',
+    'ADAUSDT', 'DOGEUSDT', 'AVAXUSDT', 'DOTUSDT', 'KITEUSDT',
     'LINKUSDT', 'LTCUSDT', 'UNIUSDT', 'ATOMUSDT', 'ETCUSDT'
 ]
 

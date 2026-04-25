@@ -51,12 +51,7 @@ def initialize_system():
     # Data Manager
     data_manager = get_data_manager()
     
-    # Lade historische Daten für alle Coins
-    for coin in COINS[:5]:  # Nur die ersten 5 für Performance
-        for tf in ['1h', '4h']:
-            data_manager.load_historical_data(coin, tf)
-    
-    # Starte Data Manager WebSocket
+    # Starte Data Manager WebSocket (keine Daten beim Start laden)
     data_manager.start()
     
     # Erstelle Bots
@@ -195,6 +190,48 @@ def api_settings():
         'symbol': current_symbol,
         'timeframe': current_timeframe
     })
+
+
+@app.route('/api/load-coin', methods=['POST'])
+def api_load_coin():
+    """Lade Daten für einen eingegebenen Coin"""
+    global current_symbol, current_timeframe
+    
+    try:
+        data = request.json
+        symbol = data.get('symbol', '').upper().strip()
+        timeframe = data.get('timeframe', current_timeframe)
+        
+        # Validiere Symbol format
+        if not symbol or len(symbol) == 0:
+            return jsonify({'error': 'Symbol cannot be empty'}), 400
+        
+        # Stelle sicher, dass es USDT endet wenn nicht explizit gesagt
+        if not symbol.endswith('USDT'):
+            symbol = symbol + 'USDT'
+        
+        # Lade Daten
+        result = data_manager.load_historical_data(symbol, timeframe)
+        
+        if result:
+            current_symbol = symbol
+            current_timeframe = timeframe
+            price = data_manager.get_current_price(symbol)
+            candles = data_manager.get_candles(symbol, timeframe)
+            
+            return jsonify({
+                'success': True,
+                'symbol': symbol,
+                'timeframe': timeframe,
+                'current_price': price,
+                'candles_loaded': len(candles)
+            })
+        else:
+            return jsonify({'error': f'Could not load data for {symbol}'}), 400
+            
+    except Exception as e:
+        logger.error(f"Error loading coin: {e}")
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/trading', methods=['POST'])

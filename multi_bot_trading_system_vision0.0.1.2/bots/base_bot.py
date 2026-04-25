@@ -155,33 +155,61 @@ class BaseBot(ABC):
         
         return sum(data[-period:]) / period
     
+    def _calculate_rma(self, data: List[float], period: int) -> float:
+        """
+        Berechne Wilder's Moving Average (RMA) - wie TradingView
+        Wird für RSI verwendet
+        """
+        if len(data) < period:
+            return 0
+        
+        # Erste RMA ist ein Simple Moving Average
+        rma = sum(data[:period]) / period
+        
+        # Berechne RMA für den Rest der Daten mit Wilder's Smoothing
+        for i in range(period, len(data)):
+            rma = (rma * (period - 1) + data[i]) / period
+        
+        return rma
+    
     def _calculate_rsi(self, closes: List[float], period: int = 14) -> float:
-        """Berechne RSI"""
+        """
+        Berechne RSI wie TradingView (mit Wilder's Moving Average)
+        
+        Formel:
+        change = close[i] - close[i-1]
+        up = RMA(max(change, 0), period)
+        down = RMA(max(-change, 0), period)
+        rsi = 100 - (100 / (1 + up/down))
+        """
         if len(closes) < period + 1:
             return 50
         
-        gains = []
-        losses = []
-        
+        # Berechne Änderungen
+        changes = []
         for i in range(1, len(closes)):
-            change = closes[i] - closes[i-1]
-            if change > 0:
-                gains.append(change)
-                losses.append(0)
-            else:
-                gains.append(0)
-                losses.append(abs(change))
+            changes.append(closes[i] - closes[i-1])
         
-        if len(gains) < period:
-            return 50
+        # Positive Änderungen (Gains)
+        ups = [max(change, 0) for change in changes]
         
-        avg_gain = sum(gains[-period:]) / period
-        avg_loss = sum(losses[-period:]) / period
+        # Negative Änderungen (Losses) - als positive Werte
+        downs = [abs(min(change, 0)) for change in changes]
         
-        if avg_loss == 0:
+        # Berechne RMA (Wilder's Moving Average)
+        up_rma = self._calculate_rma(ups, period)
+        down_rma = self._calculate_rma(downs, period)
+        
+        # Berechne RSI
+        if down_rma == 0:
+            if up_rma == 0:
+                return 50
             return 100
         
-        rs = avg_gain / avg_loss
+        if up_rma == 0:
+            return 0
+        
+        rs = up_rma / down_rma
         rsi = 100 - (100 / (1 + rs))
         
         return rsi
