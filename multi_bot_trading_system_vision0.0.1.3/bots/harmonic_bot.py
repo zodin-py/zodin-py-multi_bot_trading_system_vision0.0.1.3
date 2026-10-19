@@ -2,19 +2,22 @@
 """
 Harmonic Bot - Harmonische Pattern Erkennung
 Erkennt Gartley, Bat, Butterfly und andere harmonische Pattern
+
+Liest OHLCV-Daten aus dem IndicatorProvider.
 """
 
 from datetime import datetime
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from bots.base_bot import BaseBot, Signal, SignalType
 from config import BOT_WEIGHTS
+from indicators.provider import IndicatorProvider
 
 
 class HarmonicBot(BaseBot):
     """Harmonic Pattern Trading Bot"""
-    
-    def __init__(self):
+
+    def __init__(self, provider: Optional[IndicatorProvider] = None):
         super().__init__(name='Harmonic', weight=BOT_WEIGHTS.get('harmonic', 0.10))
         self.lookback_period = 200
         # Fibonacci Retracement Levels für Pattern
@@ -38,24 +41,33 @@ class HarmonicBot(BaseBot):
                 'CD': [0.618, 0.786, 1.0, 1.272, 1.618]
             }
         }
-    
-    def analyze(self, symbol: str, timeframe: str, data_manager) -> Signal:
+        self._provider = provider
+
+    @property
+    def provider(self) -> Optional[IndicatorProvider]:
+        return self._provider
+
+    @provider.setter
+    def provider(self, provider: IndicatorProvider):
+        self._provider = provider
+
+    def analyze(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> Signal:
         """
         Analysiere Harmonische Pattern und generiere Signal
-        
+
         Args:
             symbol: Trading-Paar
             timeframe: Timeframe
-            data_manager: DataManager Instanz
-            
+            provider: IndicatorProvider Instanz für Marktdaten und Indikatoren
+
         Returns:
             Signal: Trading-Signal
         """
         try:
-            # Hole Daten
-            data = self._get_ohlcv_data(symbol, timeframe, data_manager, periods=self.lookback_period)
-            
-            if data is None or len(data['closes']) < 50:
+            # Hole OHLCV-Daten vom Provider
+            ohlcv = provider.get_ohlcv(symbol, timeframe, periods=self.lookback_period)
+
+            if ohlcv is None or len(ohlcv[3]) < 50:  # closes is index 3
                 return Signal(
                     bot_name=self.name,
                     signal_type=SignalType.HOLD,
@@ -63,24 +75,32 @@ class HarmonicBot(BaseBot):
                     timestamp=datetime.now(),
                     details={'error': 'Insufficient data'}
                 )
-            
-            closes = data['closes']
-            highs = data['highs']
-            lows = data['lows']
-            
+
+            opens, highs, lows, closes, volumes = ohlcv
+
+            # Prüfe auf veraltete Daten
+            if provider.is_stale(symbol, timeframe):
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'Stale data', 'current_price': round(closes[-1], 2)}
+                )
+
             # Finde Swing Points
             swing_highs, swing_lows = self._find_swing_points(highs, lows)
-            
+
             # Suche nach harmonischen Pattern
             pattern = self._find_harmonic_pattern(swing_highs, swing_lows)
-            
+
             if pattern:
                 signal_type, confidence, action = pattern
             else:
                 signal_type = SignalType.HOLD
                 confidence = 30
                 action = 'No harmonic pattern found'
-            
+
             details = {
                 'current_price': round(closes[-1], 2),
                 'swing_highs': [round(h, 2) for h in swing_highs[-3:]],
@@ -88,7 +108,7 @@ class HarmonicBot(BaseBot):
                 'pattern': action.split(' - ')[0] if ' - ' in action else action,
                 'action': action
             }
-            
+
             return Signal(
                 bot_name=self.name,
                 signal_type=signal_type,
@@ -96,7 +116,7 @@ class HarmonicBot(BaseBot):
                 timestamp=datetime.now(),
                 details=details
             )
-            
+
         except Exception as e:
             return Signal(
                 bot_name=self.name,

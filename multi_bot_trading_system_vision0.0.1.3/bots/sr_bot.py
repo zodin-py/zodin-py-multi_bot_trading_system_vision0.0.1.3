@@ -2,40 +2,52 @@
 """
 SR Bot - Support/Resistance Detection
 Erkennt Support und Resistance Levels
+
+Liest OHLCV-Daten aus dem IndicatorProvider.
 """
 
 from datetime import datetime
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from bots.base_bot import BaseBot, Signal, SignalType
 from config import BOT_WEIGHTS
+from indicators.provider import IndicatorProvider
 
 
 class SRBot(BaseBot):
     """Support/Resistance Trading Bot"""
-    
-    def __init__(self):
+
+    def __init__(self, provider: Optional[IndicatorProvider] = None):
         super().__init__(name='SR', weight=BOT_WEIGHTS.get('sr', 0.15))
         self.lookback_period = 50
         self.tolerance = 0.002  # 0.2% Toleranz für Level-Erkennung
-    
-    def analyze(self, symbol: str, timeframe: str, data_manager) -> Signal:
+        self._provider = provider
+
+    @property
+    def provider(self) -> Optional[IndicatorProvider]:
+        return self._provider
+
+    @provider.setter
+    def provider(self, provider: IndicatorProvider):
+        self._provider = provider
+
+    def analyze(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> Signal:
         """
         Analysiere Support/Resistance und generiere Signal
-        
+
         Args:
             symbol: Trading-Paar
             timeframe: Timeframe
-            data_manager: DataManager Instanz
-            
+            provider: IndicatorProvider Instanz für Marktdaten und Indikatoren
+
         Returns:
             Signal: Trading-Signal
         """
         try:
-            # Hole Daten
-            data = self._get_ohlcv_data(symbol, timeframe, data_manager, periods=self.lookback_period + 20)
-            
-            if data is None or len(data['closes']) < self.lookback_period:
+            # Hole OHLCV-Daten vom Provider
+            ohlcv = provider.get_ohlcv(symbol, timeframe, periods=self.lookback_period + 20)
+
+            if ohlcv is None or len(ohlcv[3]) < self.lookback_period:  # closes is index 3
                 return Signal(
                     bot_name=self.name,
                     signal_type=SignalType.HOLD,
@@ -43,22 +55,30 @@ class SRBot(BaseBot):
                     timestamp=datetime.now(),
                     details={'error': 'Insufficient data'}
                 )
-            
-            closes = data['closes']
-            highs = data['highs']
-            lows = data['lows']
-            
+
+            opens, highs, lows, closes, volumes = ohlcv
+
             current_price = closes[-1]
-            
+
+            # Prüfe auf veraltete Daten
+            if provider.is_stale(symbol, timeframe):
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'Stale data', 'current_price': round(current_price, 2)}
+                )
+
             # Finde Support und Resistance Levels
             support_levels = self._find_support_levels(lows, closes)
             resistance_levels = self._find_resistance_levels(highs, closes)
-            
+
             # Analysiere Position relativ zu S/R
             signal_type, confidence, action = self._analyze_position(
                 current_price, support_levels, resistance_levels
             )
-            
+
             details = {
                 'current_price': round(current_price, 2),
                 'support_levels': [round(s, 2) for s in support_levels[:3]],
@@ -67,7 +87,7 @@ class SRBot(BaseBot):
                 'nearest_resistance': round(resistance_levels[0], 2) if resistance_levels else None,
                 'action': action
             }
-            
+
             return Signal(
                 bot_name=self.name,
                 signal_type=signal_type,
@@ -75,7 +95,7 @@ class SRBot(BaseBot):
                 timestamp=datetime.now(),
                 details=details
             )
-            
+
         except Exception as e:
             return Signal(
                 bot_name=self.name,

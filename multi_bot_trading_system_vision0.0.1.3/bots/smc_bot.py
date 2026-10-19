@@ -2,40 +2,52 @@
 """
 SMC Bot - Smart Money Concepts
 Erkennt Orderblocks und Fair Value Gaps (FVG)
+
+Liest OHLCV-Daten aus dem IndicatorProvider.
 """
 
 from datetime import datetime
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from bots.base_bot import BaseBot, Signal, SignalType
 from config import BOT_WEIGHTS
+from indicators.provider import IndicatorProvider
 
 
 class SMCBot(BaseBot):
     """Smart Money Concepts Trading Bot"""
-    
-    def __init__(self):
+
+    def __init__(self, provider: Optional[IndicatorProvider] = None):
         super().__init__(name='SMC', weight=BOT_WEIGHTS.get('smc', 0.15))
         self.lookback_period = 100
         self.fvg_threshold = 0.5  # % für FVG Erkennung
-    
-    def analyze(self, symbol: str, timeframe: str, data_manager) -> Signal:
+        self._provider = provider
+
+    @property
+    def provider(self) -> Optional[IndicatorProvider]:
+        return self._provider
+
+    @provider.setter
+    def provider(self, provider: IndicatorProvider):
+        self._provider = provider
+
+    def analyze(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> Signal:
         """
         Analysiere SMC Patterns und generiere Signal
-        
+
         Args:
             symbol: Trading-Paar
             timeframe: Timeframe
-            data_manager: DataManager Instanz
-            
+            provider: IndicatorProvider Instanz für Marktdaten und Indikatoren
+
         Returns:
             Signal: Trading-Signal
         """
         try:
-            # Hole Daten
-            data = self._get_ohlcv_data(symbol, timeframe, data_manager, periods=self.lookback_period)
-            
-            if data is None or len(data['closes']) < 20:
+            # Hole OHLCV-Daten vom Provider
+            ohlcv = provider.get_ohlcv(symbol, timeframe, periods=self.lookback_period)
+
+            if ohlcv is None or len(ohlcv[3]) < 20:  # closes is index 3
                 return Signal(
                     bot_name=self.name,
                     signal_type=SignalType.HOLD,
@@ -43,23 +55,30 @@ class SMCBot(BaseBot):
                     timestamp=datetime.now(),
                     details={'error': 'Insufficient data'}
                 )
-            
-            closes = data['closes']
-            highs = data['highs']
-            lows = data['lows']
-            volumes = data['volumes']
-            
+
+            opens, highs, lows, closes, volumes = ohlcv
+
+            # Prüfe auf veraltete Daten
+            if provider.is_stale(symbol, timeframe):
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'Stale data', 'current_price': round(closes[-1], 2)}
+                )
+
             # Finde Orderblocks
             buy_ob, sell_ob = self._find_orderblocks(closes, highs, lows, volumes)
-            
+
             # Finde FVGs
             bullish_fvg, bearish_fvg = self._find_fvgs(highs, lows, closes)
-            
+
             # Generiere Signal
             signal_type, confidence, action = self._analyze_smc(
                 closes[-1], buy_ob, sell_ob, bullish_fvg, bearish_fvg
             )
-            
+
             details = {
                 'current_price': round(closes[-1], 2),
                 'buy_orderblocks': [round(ob, 2) for ob in buy_ob[:3]],
@@ -68,7 +87,7 @@ class SMCBot(BaseBot):
                 'bearish_fvg': bearish_fvg,
                 'action': action
             }
-            
+
             return Signal(
                 bot_name=self.name,
                 signal_type=signal_type,
@@ -76,7 +95,7 @@ class SMCBot(BaseBot):
                 timestamp=datetime.now(),
                 details=details
             )
-            
+
         except Exception as e:
             return Signal(
                 bot_name=self.name,

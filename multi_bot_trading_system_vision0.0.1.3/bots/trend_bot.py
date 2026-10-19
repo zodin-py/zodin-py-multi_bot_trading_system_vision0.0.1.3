@@ -2,79 +2,130 @@
 """
 Trend Bot - Trendanalyse mit MAs und ADX
 Bestimmt Trendrichtung und -stärke
+
+Liest vorberechnete Indikatoren aus dem IndicatorProvider.
 """
 
 from datetime import datetime
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from bots.base_bot import BaseBot, Signal, SignalType
 from config import BOT_WEIGHTS, INDICATOR_PARAMS
+from indicators.provider import IndicatorProvider
 
 
 class TrendBot(BaseBot):
     """Trend Trading Bot - Moving Averages und ADX"""
-    
-    def __init__(self):
+
+    def __init__(self, provider: Optional[IndicatorProvider] = None):
         super().__init__(name='Trend', weight=BOT_WEIGHTS.get('trend', 0.20))
         self.ma_periods = [9, 21, 50, 200]  # Multiple MAs
         self.adx_period = INDICATOR_PARAMS.get('adx', {}).get('period', 14)
         self.trend_threshold = INDICATOR_PARAMS.get('adx', {}).get('trend_threshold', 25)
-    
-    def analyze(self, symbol: str, timeframe: str, data_manager) -> Signal:
+        self._provider = provider
+
+    @property
+    def provider(self) -> Optional[IndicatorProvider]:
+        return self._provider
+
+    @provider.setter
+    def provider(self, provider: IndicatorProvider):
+        self._provider = provider
+
+    def analyze(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> Signal:
         """
         Analysiere Trend und generiere Signal
-        
+
         Args:
             symbol: Trading-Paar
             timeframe: Timeframe
-            data_manager: DataManager Instanz
-            
+            provider: IndicatorProvider Instanz für Marktdaten und Indikatoren
+
         Returns:
             Signal: Trading-Signal
         """
         try:
-            # Hole Daten
-            data = self._get_ohlcv_data(symbol, timeframe, data_manager, periods=250)
-            
-            if data is None or len(data['closes']) < 50:
+            # Hole Indikatoren vom Provider
+            indicators = provider.get_indicators(symbol, timeframe)
+
+            if indicators is None:
                 return Signal(
                     bot_name=self.name,
                     signal_type=SignalType.HOLD,
                     confidence=0,
                     timestamp=datetime.now(),
-                    details={'error': 'Insufficient data'}
+                    details={'error': 'No indicator data available'}
                 )
-            
-            closes = data['closes']
-            highs = data['highs']
-            lows = data['lows']
-            
-            # Berechne MAs
-            ma_values = {}
-            for period in self.ma_periods:
-                ma_values[period] = self._calculate_sma(closes, period)
-            
-            # Berechne ADX
-            adx, plus_di, minus_di = self._calculate_adx(highs, lows, closes, self.adx_period)
-            
+
+            # Prüfe auf veraltete Daten
+            if provider.is_stale(symbol, timeframe):
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'Stale data'}
+                )
+
+            # Hole vorberechnete Werte
+            adx = indicators.get('adx')
+            plus_di = indicators.get('plus_di')
+            minus_di = indicators.get('minus_di')
+            ema_9 = indicators.get('ema_9')
+            ema_21 = indicators.get('ema_21')
+            ema_50 = indicators.get('ema_50')
+            ema_200 = indicators.get('ema_200')
+            sma_20 = indicators.get('sma_20')
+            sma_50 = indicators.get('sma_50')
+
+            if adx is None or plus_di is None or minus_di is None:
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'Trend indicators not available'}
+                )
+
+            # Hole aktuellen Preis
+            ohlcv = provider.get_ohlcv(symbol, timeframe, periods=2)
+            if ohlcv is None:
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'No price data'}
+                )
+            current_price = ohlcv[3][-1]  # closes[-1]
+
+            ma_values = {
+                9: ema_9 if ema_9 is not None else current_price,
+                21: ema_21 if ema_21 is not None else current_price,
+                50: ema_50 if ema_50 is not None else current_price,
+                200: ema_200 if ema_200 is not None else current_price,
+            }
+
             # Analysiere Trend
             signal_type, confidence, action = self._analyze_trend(
-                closes[-1], ma_values, adx, plus_di, minus_di
+                current_price, ma_values, adx, plus_di, minus_di
             )
-            
+
             details = {
-                'current_price': round(closes[-1], 2),
-                'ma9': round(ma_values[9], 2),
-                'ma21': round(ma_values[21], 2),
-                'ma50': round(ma_values[50], 2),
-                'ma200': round(ma_values[200], 2),
+                'current_price': round(current_price, 2),
+                'ema_9': round(ema_9, 2) if ema_9 else None,
+                'ema_21': round(ema_21, 2) if ema_21 else None,
+                'ema_50': round(ema_50, 2) if ema_50 else None,
+                'ema_200': round(ema_200, 2) if ema_200 else None,
+                'sma_20': round(sma_20, 2) if sma_20 else None,
+                'sma_50': round(sma_50, 2) if sma_50 else None,
                 'adx': round(adx, 2),
                 'plus_di': round(plus_di, 2),
                 'minus_di': round(minus_di, 2),
                 'trend_strength': 'Strong' if adx > self.trend_threshold else 'Weak',
                 'action': action
             }
-            
+
             return Signal(
                 bot_name=self.name,
                 signal_type=signal_type,
@@ -82,7 +133,7 @@ class TrendBot(BaseBot):
                 timestamp=datetime.now(),
                 details=details
             )
-            
+
         except Exception as e:
             return Signal(
                 bot_name=self.name,
