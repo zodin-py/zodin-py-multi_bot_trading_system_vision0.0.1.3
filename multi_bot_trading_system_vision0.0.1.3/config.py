@@ -15,6 +15,16 @@ USE_TESTNET = True
 BASE_URL = 'https://testnet.binance.vision' if USE_TESTNET else 'https://api.binance.com'
 WS_URL = 'wss://stream.testnet.binance.vision:9443/ws' if USE_TESTNET else 'wss://stream.binance.com:9443/ws'
 
+# ==================== CCXT / DATENLAYER ====================
+# ccxt behandelt Rate-Limits intern; this is the base interval in ms
+CCXT_RATE_LIMIT = int(os.environ.get('CCXT_RATE_LIMIT', '1000'))
+
+# Persistenter DuckDB-Cache für Kerzen & Indikatoren
+DUCKDB_PATH = os.environ.get('DUCKDB_PATH', os.path.join('.data', 'cache.duckdb'))
+
+# TTL (Sekunden) für gecachte Kerzen; ältere Daten werden verworfen/erneuert
+CACHE_TTL_SEC = int(os.environ.get('CACHE_TTL_SEC', '300'))
+
 # ==================== TRADING KONFIGURATION ====================
 COINS = [
     'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT',
@@ -35,6 +45,21 @@ TIMEFRAMES = {
 RISK_PERCENT = 1.0
 RISK_REWARD_RATIO = 2.0
 MAX_OPEN_TRADES = 5
+
+# Konfigurierbares tägliches Verlustlimit (in Account-Whährung, z.B. EUR/USDT)
+# Trading wird automatisch gestoppt (TRADING_HALTED), wenn daily_pnl <= -MAX_DAILY_LOSS
+MAX_DAILY_LOSS = float(os.environ.get('MAX_DAILY_LOSS', '10.0'))
+
+# Cooldown zwischen Trades pro Symbol in Sekunden
+TRADE_COOLDOWN_SEC = int(os.environ.get('TRADE_COOLDOWN_SEC', '60'))
+
+# Dynamische TR/TP-Berechnung aus Support/Resistance (Fallback: statisch/ATR)
+DYNAMIC_SL_TP_ENABLED = os.environ.get('DYNAMIC_SL_TP_ENABLED', 'true').lower() == 'true'
+
+# ==================== SERVER / PORTS ====================
+API_PORT = int(os.environ.get('API_PORT', '8000'))        # FastAPI REST
+MCP_PORT = int(os.environ.get('MCP_PORT', '8001'))        # MCP (falls HTTP-Modus)
+DASHBOARD_PORT = int(os.environ.get('DASHBOARD_PORT', '5000'))  # Flask Dashboard
 
 # ==================== BOT KONFIGURATION ====================
 BOT_WEIGHTS = {

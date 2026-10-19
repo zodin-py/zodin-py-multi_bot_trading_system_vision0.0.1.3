@@ -3,58 +3,81 @@
 MFI Bot - Money Flow Index Analyse
 Buy wenn MFI < 20 (oversold), Sell wenn MFI > 80 (overbought)
 Kombiniert Preis und Volumen
+
+Liest vorberechnete Indikatoren aus dem IndicatorProvider.
 """
 
 from datetime import datetime
-from typing import Tuple
+from typing import Tuple, Optional
 
 from bots.base_bot import BaseBot, Signal, SignalType
 from config import INDICATOR_PARAMS
+from indicators.provider import IndicatorProvider
 
 
 class MFIBot(BaseBot):
     """MFI (Money Flow Index) Trading Bot"""
-    
-    def __init__(self):
+
+    def __init__(self, provider: Optional[IndicatorProvider] = None):
         super().__init__(name='MFI', weight=INDICATOR_PARAMS.get('mfi', {}).get('weight', 0.10))
         self.period = INDICATOR_PARAMS.get('mfi', {}).get('period', 14)
         self.overbought = INDICATOR_PARAMS.get('mfi', {}).get('overbought', 80)
         self.oversold = INDICATOR_PARAMS.get('mfi', {}).get('oversold', 20)
-    
-    def analyze(self, symbol: str, timeframe: str, data_manager) -> Signal:
+        self._provider = provider
+
+    @property
+    def provider(self) -> Optional[IndicatorProvider]:
+        return self._provider
+
+    @provider.setter
+    def provider(self, provider: IndicatorProvider):
+        self._provider = provider
+
+    def analyze(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> Signal:
         """
         Analysiere MFI und generiere Signal
-        
+
         Args:
             symbol: Trading-Paar
             timeframe: Timeframe
-            data_manager: DataManager Instanz
-            
+            provider: IndicatorProvider Instanz für Marktdaten und Indikatoren
+
         Returns:
             Signal: Trading-Signal
         """
         try:
-            # Hole Daten
-            data = self._get_ohlcv_data(symbol, timeframe, data_manager, periods=self.period + 10)
-            
-            if data is None or len(data['closes']) < self.period + 1:
+            # Hole Indikatoren vom Provider
+            indicators = provider.get_indicators(symbol, timeframe)
+
+            if indicators is None:
                 return Signal(
                     bot_name=self.name,
                     signal_type=SignalType.HOLD,
                     confidence=0,
                     timestamp=datetime.now(),
-                    details={'error': 'Insufficient data'}
+                    details={'error': 'No indicator data available'}
                 )
-            
-            # Berechne MFI
-            mfi = self._calculate_mfi(
-                data['highs'],
-                data['lows'],
-                data['closes'],
-                data['volumes'],
-                self.period
-            )
-            
+
+            mfi = indicators.get('mfi')
+            if mfi is None:
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'MFI not available'}
+                )
+
+            # Prüfe auf veraltete Daten
+            if provider.is_stale(symbol, timeframe):
+                return Signal(
+                    bot_name=self.name,
+                    signal_type=SignalType.HOLD,
+                    confidence=0,
+                    timestamp=datetime.now(),
+                    details={'error': 'Stale data', 'mfi': round(mfi, 2)}
+                )
+
             # Bestimme Signal basierend auf MFI
             if mfi < self.oversold:
                 # Oversold -> Buy Signal (Volumen bestätigt)
@@ -82,14 +105,14 @@ class MFIBot(BaseBot):
                 else:
                     distance_from_bottom = mfi - self.oversold
                     confidence = (distance_from_bottom / (50 - self.oversold)) * 50
-                
+
                 signal_type = SignalType.HOLD
                 details = {
                     'mfi': round(mfi, 2),
                     'zone': 'neutral',
                     'action': 'Wait'
                 }
-            
+
             return Signal(
                 bot_name=self.name,
                 signal_type=signal_type,
@@ -97,7 +120,7 @@ class MFIBot(BaseBot):
                 timestamp=datetime.now(),
                 details=details
             )
-            
+
         except Exception as e:
             return Signal(
                 bot_name=self.name,
@@ -106,22 +129,22 @@ class MFIBot(BaseBot):
                 timestamp=datetime.now(),
                 details={'error': str(e)}
             )
-    
-    def calculate_probabilities(self, symbol: str, timeframe: str, data_manager) -> Tuple[float, float, float]:
+
+    def calculate_probabilities(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> Tuple[float, float, float]:
         """Berechne Buy/Sell/Hold Wahrscheinlichkeiten"""
         try:
-            signal = self.analyze(symbol, timeframe, data_manager)
+            signal = self.analyze(symbol, timeframe, provider)
             self.last_signal = signal
-            
+
             if signal.signal_type == SignalType.BUY:
                 return signal.confidence, 5, 100 - signal.confidence - 5
             elif signal.signal_type == SignalType.SELL:
                 return 5, signal.confidence, 100 - signal.confidence - 5
             else:
                 return 10, 10, 80
-                
+
         except Exception as e:
             return 0, 0, 100
-    
+
     def __repr__(self) -> str:
         return f"MFIBot(period={self.period}, oversold={self.oversold}, overbought={self.overbought})"

@@ -11,6 +11,7 @@ from typing import Dict, List, Optional, Tuple
 
 from bots.base_bot import BaseBot, Signal, SignalType
 from config import BOT_WEIGHTS, SIGNAL_THRESHOLDS
+from indicators.provider import IndicatorProvider
 
 
 logger = logging.getLogger(__name__)
@@ -58,15 +59,15 @@ class Brain:
         self.min_sell_prob = SIGNAL_THRESHOLDS.get('min_sell_probability', 65)
         self.min_confidence = SIGNAL_THRESHOLDS.get('min_confidence', 60)
     
-    def aggregate_signals(self, symbol: str, timeframe: str, data_manager) -> AggregatedSignal:
+    def aggregate_signals(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> AggregatedSignal:
         """
         Aggregiere alle Bot-Signale zu einem finalen Signal
-        
+
         Args:
             symbol: Trading-Paar
             timeframe: Timeframe
-            data_manager: DataManager Instanz
-            
+            provider: IndicatorProvider Instanz für Marktdaten und Indikatoren
+
         Returns:
             AggregatedSignal: Aggregiertes Signal
         """
@@ -75,7 +76,7 @@ class Brain:
             bot_signals = []
             for bot in self.bots:
                 if bot.is_enabled():
-                    signal = bot.analyze(symbol, timeframe, data_manager)
+                    signal = bot.analyze(symbol, timeframe, provider)
                     bot_signals.append(signal)
             
             # Berechne gewichtete Scores
@@ -196,19 +197,19 @@ class Brain:
             confidence = max(hold_pct, 50)
             return SignalType.HOLD, confidence
     
-    def get_bot_probabilities(self, symbol: str, timeframe: str, data_manager) -> Dict[str, Dict[str, float]]:
+    def get_bot_probabilities(self, symbol: str, timeframe: str, provider: IndicatorProvider) -> Dict[str, Dict[str, float]]:
         """
         Hole Buy/Sell/Hold Wahrscheinlichkeiten für jeden Bot
-        
+
         Returns:
             Dict: {bot_name: {'buy': %, 'sell': %, 'hold': %}}
         """
         probabilities = {}
-        
+
         for bot in self.bots:
             if bot.is_enabled():
                 try:
-                    buy, sell, hold = bot.calculate_probabilities(symbol, timeframe, data_manager)
+                    buy, sell, hold = bot.calculate_probabilities(symbol, timeframe, provider)
                     probabilities[bot.name] = {
                         'buy': round(buy, 2),
                         'sell': round(sell, 2),
@@ -223,7 +224,7 @@ class Brain:
                         'hold': 100,
                         'error': str(e)
                     }
-        
+
         return probabilities
     
     def get_last_signal(self) -> Optional[AggregatedSignal]:

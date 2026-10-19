@@ -4,7 +4,7 @@
 
 ### Issue tracker
 
-Issues and specs are tracked as GitHub issues in `zodin-py/zodin-py-multi_bot_trading_system_vision0.0.1.3`. Uses `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues and specs are tracked locally as markdown files under `.scratch/<feature>/`. No GitHub CLI required. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
