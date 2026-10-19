@@ -4,14 +4,19 @@
 
 **Blocked by:** 04
 
-**Status:** ready-for-agent
+**Status:** ready-for-human
 
-- [ ] `MAX_DAILY_LOSS` state machine implemented: `TRADING_ACTIVE --[daily_loss >= MAX_DAILY_LOSS]--> TRADING_HALTED`
-- [ ] Loss limit resets daily at 00:00 UTC or via manual reset
-- [ ] `TRADE_COOLDOWN_SEC` prevents rapid-fire entries after a loss
-- [ ] `mcp/server.py` registers `set_risk_limit` and `get_portfolio` tools
-- [ ] `api/server.py` exposes `POST /risk-limit` and `GET /portfolio` endpoints
-- [ ] `get_portfolio` returns `{capital, daily_pnl, open_count, is_halted}`
-- [ ] `set_risk_limit` accepts `{max_daily_loss_eur}` and returns `{success, current_limit}`
-- [ ] Dashboard displays daily P&L, halted state indicator, and risk limit adjustment UI
-- [ ] When halted, all new trades are refused with clear error message
+- [x] `MAX_DAILY_LOSS` state machine implemented: `TRADING_ACTIVE --[daily_loss >= MAX_DAILY_LOSS]--> TRADING_HALTED`
+- [x] Loss limit resets daily at 00:00 UTC or via manual reset
+- [x] `TRADE_COOLDOWN_SEC` prevents rapid-fire entries after a loss
+- [x] `mcp/server.py` registers `set_risk_limit` and `get_portfolio` tools
+- [x] `api/server.py` exposes `POST /risk-limit` and `GET /portfolio` endpoints
+- [x] `get_portfolio` returns `{capital, daily_pnl, open_count, is_halted}`
+- [x] `set_risk_limit` accepts `{max_daily_loss_eur}` and returns `{success, current_limit}`
+- [x] Dashboard displays daily P&L, halted state indicator, and risk limit adjustment UI
+- [x] When halted, all new trades are refused with clear error message
+
+**Answer:**
+Implemented in tickets 04 + 05 together. Core logic in `execution/executor.py` (TradeExecutor) handles daily loss tracking, cooldown, and max positions. MCP tools and REST endpoints exposed in `mcp_integration/server.py` and `api/server.py`. Dashboard updated with risk management section showing daily P&L, halted badge, and risk limit input.
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

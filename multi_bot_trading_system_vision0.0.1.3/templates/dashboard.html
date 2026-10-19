@@ -146,6 +146,43 @@
                 <div id="capital" class="text-2xl font-bold text-green-400">--</div>
                 <div id="capital-change" class="text-sm text-gray-500">--</div>
             </div>
+
+            <!-- Daily P&L / Halt -->
+            <div class="card rounded-xl p-4">
+                <div class="text-sm text-gray-400 mb-1">Täglicher P&L</div>
+                <div id="daily-pnl" class="text-2xl font-bold text-gray-400">--</div>
+                <div id="halted-badge" class="mt-1 hidden">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-500/20 text-red-400">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>Trading gestoppt
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Settings -->
+        <div class="card rounded-xl p-4 mb-6">
+            <h2 class="text-lg font-semibold mb-4">
+                <i class="fas fa-shield-alt mr-2 text-orange-400"></i>Risikomanagement
+            </h2>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <label class="text-sm text-gray-400">Max. täglicher Verlust (EUR):</label>
+                    <input
+                        type="number"
+                        id="risk-limit-input"
+                        step="0.1"
+                        min="0.1"
+                        class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm w-24 focus:outline-none focus:border-blue-500"
+                    />
+                    <button
+                        id="risk-limit-btn"
+                        class="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
+                        <i class="fas fa-save mr-1"></i>Speichern
+                    </button>
+                </div>
+                <span id="risk-limit-status" class="text-sm text-gray-400"></span>
+            </div>
         </div>
 
         <!-- Bot Signals Table -->
@@ -387,6 +424,7 @@
         timeframeSelect.addEventListener('change', updateTimeframe);
         tradingToggle.addEventListener('click', toggleTrading);
         document.getElementById('load-history').addEventListener('click', loadHistory);
+        document.getElementById('risk-limit-btn').addEventListener('click', setRiskLimit);
 
         // Functions
         async function loadSymbol() {
@@ -447,7 +485,8 @@
                 loadSignals(),
                 loadIndicators(),
                 loadOpenTrades(),
-                loadCapital()
+                loadCapital(),
+                loadPortfolio()
             ]);
         }
 
@@ -631,10 +670,62 @@
             try {
                 const response = await fetch('/api/capital');
                 const data = await response.json();
-                
+
                 document.getElementById('capital').textContent = data.capital.toFixed(2) + ' USDT';
             } catch (e) {
                 console.error('Error loading capital:', e);
+            }
+        }
+
+        async function loadPortfolio() {
+            try {
+                const response = await fetch('/api/portfolio');
+                const data = await response.json();
+
+                // Daily P&L
+                const pnlEl = document.getElementById('daily-pnl');
+                pnlEl.textContent = (data.daily_pnl >= 0 ? '+' : '') + data.daily_pnl.toFixed(2) + ' EUR';
+                pnlEl.className = `text-2xl font-bold ${data.daily_pnl >= 0 ? 'text-green-400' : 'text-red-400'}`;
+
+                // Halted badge
+                const badge = document.getElementById('halted-badge');
+                if (data.is_halted) {
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+
+                // Risk limit input
+                const limitResponse = await fetch('/api/risk/limit');
+                const limitData = await limitResponse.json();
+                document.getElementById('risk-limit-input').value = limitData.current_limit;
+            } catch (e) {
+                console.error('Error loading portfolio:', e);
+            }
+        }
+
+        async function setRiskLimit() {
+            const value = parseFloat(document.getElementById('risk-limit-input').value);
+            if (isNaN(value) || value <= 0) {
+                document.getElementById('risk-limit-status').textContent = 'Ungültiger Wert';
+                document.getElementById('risk-limit-status').className = 'text-sm text-red-400';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/risk/limit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ max_daily_loss_eur: value })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('risk-limit-status').textContent = 'Gespeichert ✓';
+                    document.getElementById('risk-limit-status').className = 'text-sm text-green-400';
+                    loadPortfolio();
+                }
+            } catch (e) {
+                console.error('Error setting risk limit:', e);
             }
         }
 

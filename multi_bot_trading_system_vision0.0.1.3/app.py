@@ -362,10 +362,33 @@ def api_capital():
     """Kapital"""
     if not executor:
         return jsonify({'error': 'Executor not initialized'})
-    
+
     return jsonify({
         'capital': executor.capital
     })
+
+
+@app.route('/api/portfolio')
+def api_portfolio():
+    """Portfolio status: capital, daily P&L, open count, halt state."""
+    if not executor:
+        return jsonify({'error': 'Executor not initialized'})
+
+    return jsonify(executor.get_portfolio())
+
+
+@app.route('/api/risk/limit', methods=['GET', 'POST'])
+def api_risk_limit():
+    """Get or set max daily loss limit."""
+    if request.method == 'POST':
+        data = request.json
+        from config import MAX_DAILY_LOSS
+        new_limit = float(data.get('max_daily_loss_eur', MAX_DAILY_LOSS))
+        import config
+        config.MAX_DAILY_LOSS = new_limit
+        return jsonify({'success': True, 'current_limit': new_limit})
+
+    return jsonify({'current_limit': MAX_DAILY_LOSS})
 
 
 # ==================== MAIN ====================
