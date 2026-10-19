@@ -15,6 +15,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from config import API_PORT, USE_TESTNET
@@ -121,6 +122,15 @@ app = FastAPI(
     description="REST API for multi-bot crypto trading analysis and execution",
     version="0.1.0",
     lifespan=lifespan,
+)
+
+# CORS middleware — allow Flask dashboard (port 5000) to call REST API (port 8000)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5000", "http://127.0.0.1:5000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

@@ -30,6 +30,10 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = 'trading_system_secret_key'
 
+# CORS for Flask endpoints (dashboard on 5000 calls FastAPI on 8000, but Flask still serves some endpoints)
+from flask_cors import CORS
+CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000"])
+
 # Globale Instanzen
 data_manager = None
 brain = None

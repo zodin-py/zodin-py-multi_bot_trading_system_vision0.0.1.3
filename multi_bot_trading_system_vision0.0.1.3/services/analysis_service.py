@@ -95,6 +95,9 @@ class AnalysisService:
             provider=self.provider,
         )
 
+        # Get current price
+        current_price = self.provider.market_data.get_current_price(normalized)
+
         # Build response matching AggregatedSignal.to_dict() + extra fields
         return {
             "symbol": normalized,
@@ -110,6 +113,7 @@ class AnalysisService:
                 timeframe=timeframe,
                 provider=self.provider,
             ),
+            "current_price": current_price,
             "timestamp": aggregated.timestamp.isoformat(),
             "details": aggregated.details,
         }

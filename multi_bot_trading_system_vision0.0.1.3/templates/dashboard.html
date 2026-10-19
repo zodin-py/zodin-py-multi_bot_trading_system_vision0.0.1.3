@@ -512,26 +512,26 @@
 
         async function loadSignals() {
             try {
-                const response = await fetch('/api/signals');
+                const response = await fetch(`/api/v1/analyze?symbol=${symbolInput.value.toUpperCase() + 'USDT'}&timeframe=${timeframeSelect.value}`);
                 const data = await response.json();
-                
+
                 // Update price with 4 decimal places
                 document.getElementById('current-price').textContent = data.current_price ? data.current_price.toFixed(4) : '--';
-                
+
                 // Update aggregated signal
-                const agg = data.aggregated;
+                const agg = data;
                 const signalEl = document.getElementById('agg-signal');
                 const confEl = document.getElementById('agg-confidence');
-                
-                if (agg) {
+
+                if (agg && agg.final_signal) {
                     signalEl.textContent = agg.final_signal.toUpperCase();
                     signalEl.className = `text-2xl font-bold ${
-                        agg.final_signal === 'buy' ? 'text-green-400' : 
+                        agg.final_signal === 'buy' ? 'text-green-400' :
                         agg.final_signal === 'sell' ? 'text-red-400' : 'text-gray-400'
                     }`;
                     confEl.textContent = `Konfidenz: ${agg.confidence.toFixed(1)}%`;
                 }
-                
+
                 // Update bot signals table
                 updateBotSignalsTable(data.bot_probabilities);
             } catch (e) {
@@ -592,34 +592,44 @@
 
         async function loadIndicators() {
             try {
-                const response = await fetch('/api/indicators');
+                const response = await fetch(`/api/v1/indicators?symbol=${symbolInput.value.toUpperCase() + 'USDT'}&timeframe=${timeframeSelect.value}`);
                 const data = await response.json();
-                
-                // RSI
-                if (data.rsi) {
-                    document.getElementById('rsi-value').textContent = data.rsi.value.toFixed(2);
-                    document.getElementById('rsi-buy').textContent = `${data.rsi.confidence.toFixed(0)}%`;
-                    document.getElementById('rsi-sell').textContent = `${(100 - data.rsi.confidence).toFixed(0)}%`;
-                    document.getElementById('rsi-buy-bar').style.width = `${data.rsi.confidence}%`;
-                    document.getElementById('rsi-sell-bar').style.width = `${100 - data.rsi.confidence}%`;
+                const ind = data.indicators;
+
+                // RSI (0-100)
+                if (ind.rsi !== undefined) {
+                    const rsiVal = ind.rsi;
+                    document.getElementById('rsi-value').textContent = rsiVal.toFixed(2);
+                    const rsiBuy = rsiVal < 30 ? Math.round((30 - rsiVal) / 30 * 100) : rsiVal > 70 ? 0 : Math.round(50 - (rsiVal - 50));
+                    const rsiSell = rsiVal > 70 ? Math.round((rsiVal - 70) / 30 * 100) : rsiVal < 30 ? 0 : Math.round(50 + (rsiVal - 50));
+                    document.getElementById('rsi-buy').textContent = `${rsiBuy}%`;
+                    document.getElementById('rsi-sell').textContent = `${rsiSell}%`;
+                    document.getElementById('rsi-buy-bar').style.width = `${rsiBuy}%`;
+                    document.getElementById('rsi-sell-bar').style.width = `${rsiSell}%`;
                 }
-                
+
                 // MACD
-                if (data.macd) {
-                    document.getElementById('macd-value').textContent = `MACD: ${data.macd.macd_line.toFixed(4)}`;
-                    document.getElementById('macd-buy').textContent = `${data.macd.confidence.toFixed(0)}%`;
-                    document.getElementById('macd-sell').textContent = `${(100 - data.macd.confidence).toFixed(0)}%`;
-                    document.getElementById('macd-buy-bar').style.width = `${data.macd.confidence}%`;
-                    document.getElementById('macd-sell-bar').style.width = `${100 - data.macd.confidence}%`;
+                if (ind.macd !== undefined && ind.macd_signal !== undefined) {
+                    document.getElementById('macd-value').textContent =
+                        `MACD: ${ind.macd.toFixed(4)}, Signal: ${ind.macd_signal.toFixed(4)}`;
+                    const macdBuy = ind.macd > ind.macd_signal ? 70 : 30;
+                    const macdSell = ind.macd < ind.macd_signal ? 70 : 30;
+                    document.getElementById('macd-buy').textContent = `${macdBuy}%`;
+                    document.getElementById('macd-sell').textContent = `${macdSell}%`;
+                    document.getElementById('macd-buy-bar').style.width = `${macdBuy}%`;
+                    document.getElementById('macd-sell-bar').style.width = `${macdSell}%`;
                 }
-                
-                // MFI
-                if (data.mfi) {
-                    document.getElementById('mfi-value').textContent = data.mfi.value.toFixed(2);
-                    document.getElementById('mfi-buy').textContent = `${data.mfi.confidence.toFixed(0)}%`;
-                    document.getElementById('mfi-sell').textContent = `${(100 - data.mfi.confidence).toFixed(0)}%`;
-                    document.getElementById('mfi-buy-bar').style.width = `${data.mfi.confidence}%`;
-                    document.getElementById('mfi-sell-bar').style.width = `${100 - data.mfi.confidence}%`;
+
+                // MFI (0-100)
+                if (ind.mfi !== undefined) {
+                    const mfiVal = ind.mfi;
+                    document.getElementById('mfi-value').textContent = mfiVal.toFixed(2);
+                    const mfiBuy = mfiVal < 20 ? Math.round((20 - mfiVal) / 20 * 100) : mfiVal > 80 ? 0 : 50;
+                    const mfiSell = mfiVal > 80 ? Math.round((mfiVal - 80) / 20 * 100) : mfiVal < 20 ? 0 : 50;
+                    document.getElementById('mfi-buy').textContent = `${mfiBuy}%`;
+                    document.getElementById('mfi-sell').textContent = `${mfiSell}%`;
+                    document.getElementById('mfi-buy-bar').style.width = `${mfiBuy}%`;
+                    document.getElementById('mfi-sell-bar').style.width = `${mfiSell}%`;
                 }
             } catch (e) {
                 console.error('Error loading indicators:', e);
@@ -628,38 +638,38 @@
 
         async function loadOpenTrades() {
             try {
-                const response = await fetch('/api/trades');
+                const response = await fetch('/api/v1/trades');
                 const data = await response.json();
-                
-                document.getElementById('open-trades-count').textContent = data.count;
-                
+
+                document.getElementById('open-trades-count').textContent = data.open_count || 0;
+
                 const tbody = document.getElementById('open-trades-body');
-                
-                if (data.trades.length === 0) {
+
+                if (!data.trades || data.trades.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="7" class="py-4 text-center text-gray-500">Keine offenen Trades</td></tr>';
                     return;
                 }
-                
+
                 let html = '';
                 for (const trade of data.trades) {
                     const sideClass = trade.side === 'long' ? 'text-green-400' : 'text-red-400';
                     html += `
                         <tr class="border-b border-slate-700/50">
-                            <td class="py-2">${trade.id}</td>
+                            <td class="py-2">${trade.trade_id || trade.id}</td>
                             <td class="py-2">${trade.symbol}</td>
-                            <td class="py-2 ${sideClass}">${trade.side.toUpperCase()}</td>
-                            <td class="py-2">${trade.entry_price.toFixed(2)}</td>
-                            <td class="py-2 text-red-400">${trade.stop_loss.toFixed(2)}</td>
-                            <td class="py-2 text-green-400">${trade.take_profit.toFixed(2)}</td>
+                            <td class="py-2 ${sideClass}">${trade.side?.toUpperCase() || 'LONG'}</td>
+                            <td class="py-2">${trade.entry_price?.toFixed(2) || '--'}</td>
+                            <td class="py-2 text-red-400">${trade.stop_loss?.toFixed(2) || '--'}</td>
+                            <td class="py-2 text-green-400">${trade.take_profit?.toFixed(2) || '--'}</td>
                             <td class="py-2">
-                                <button onclick="closeTrade('${trade.id}')" class="text-red-400 hover:text-red-300">
+                                <button onclick="closeTrade('${trade.trade_id || trade.id}')" class="text-red-400 hover:text-red-300">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </td>
                         </tr>
                     `;
                 }
-                
+
                 tbody.innerHTML = html;
             } catch (e) {
                 console.error('Error loading trades:', e);
@@ -668,7 +678,7 @@
 
         async function loadCapital() {
             try {
-                const response = await fetch('/api/capital');
+                const response = await fetch('/api/v1/portfolio');
                 const data = await response.json();
 
                 document.getElementById('capital').textContent = data.capital.toFixed(2) + ' USDT';
@@ -679,7 +689,7 @@
 
         async function loadPortfolio() {
             try {
-                const response = await fetch('/api/portfolio');
+                const response = await fetch('/api/v1/portfolio');
                 const data = await response.json();
 
                 // Daily P&L
@@ -696,7 +706,7 @@
                 }
 
                 // Risk limit input
-                const limitResponse = await fetch('/api/risk/limit');
+                const limitResponse = await fetch('/api/v1/risk/limit');
                 const limitData = await limitResponse.json();
                 document.getElementById('risk-limit-input').value = limitData.current_limit;
             } catch (e) {
@@ -713,7 +723,7 @@
             }
 
             try {
-                const response = await fetch('/api/risk/limit', {
+                const response = await fetch('/api/v1/risk/limit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ max_daily_loss_eur: value })
@@ -733,16 +743,16 @@
             try {
                 const startDate = document.getElementById('start-date').value;
                 const endDate = document.getElementById('end-date').value;
-                
-                let url = '/api/history';
+
+                let url = '/api/v1/trades/history';
                 const params = new URLSearchParams();
                 if (startDate) params.append('start_date', startDate);
                 if (endDate) params.append('end_date', endDate);
                 if (params.toString()) url += '?' + params.toString();
-                
+
                 const response = await fetch(url);
                 const data = await response.json();
-                
+
                 // Update stats
                 document.getElementById('stat-total').textContent = data.stats.total_trades;
                 document.getElementById('stat-winners').textContent = data.stats.winning_trades;
@@ -750,15 +760,15 @@
                 document.getElementById('stat-winrate').textContent = data.stats.win_rate.toFixed(1) + '%';
                 document.getElementById('stat-pnl').textContent = data.stats.total_pnl.toFixed(2);
                 document.getElementById('stat-pnl').className = `text-xl font-bold ${data.stats.total_pnl >= 0 ? 'text-green-400' : 'text-red-400'}`;
-                
+
                 // Update table
                 const tbody = document.getElementById('history-body');
-                
-                if (data.trades.length === 0) {
+
+                if (!data.trades || data.trades.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="7" class="py-4 text-center text-gray-500">Keine Historie</td></tr>';
                     return;
                 }
-                
+
                 let html = '';
                 for (const trade of data.trades.slice(0, 20)) {
                     const pnlClass = trade.pnl >= 0 ? 'text-green-400' : 'text-red-400';
@@ -767,14 +777,14 @@
                             <td class="py-2">${trade.id}</td>
                             <td class="py-2">${trade.symbol}</td>
                             <td class="py-2 ${trade.side === 'long' ? 'text-green-400' : 'text-red-400'}">${trade.side.toUpperCase()}</td>
-                            <td class="py-2">${trade.entry_price.toFixed(2)}</td>
+                            <td class="py-2">${trade.entry_price?.toFixed(2) || '--'}</td>
                             <td class="py-2">${trade.close_time ? new Date(trade.close_time).toLocaleDateString() : '--'}</td>
-                            <td class="py-2 ${pnlClass}">${trade.pnl.toFixed(2)}</td>
-                            <td class="py-2 ${pnlClass}">${trade.pnl_percent.toFixed(2)}%</td>
+                            <td class="py-2 ${pnlClass}">${trade.pnl?.toFixed(2) || '--'}</td>
+                            <td class="py-2 ${pnlClass}">${trade.pnl_percent?.toFixed(2) || '--'}%</td>
                         </tr>
                     `;
                 }
-                
+
                 tbody.innerHTML = html;
             } catch (e) {
                 console.error('Error loading history:', e);
@@ -809,11 +819,10 @@
 
         async function closeTrade(tradeId) {
             if (!confirm('Möchten Sie diesen Trade wirklich schließen?')) return;
-            
+
             try {
-                await fetch(`/api/trades/${tradeId}`, { method: 'DELETE' });
+                await fetch(`/api/v1/trades/${tradeId}`, { method: 'DELETE' });
                 loadOpenTrades();
-                loadCapital();
             } catch (e) {
                 console.error('Error closing trade:', e);
             }
