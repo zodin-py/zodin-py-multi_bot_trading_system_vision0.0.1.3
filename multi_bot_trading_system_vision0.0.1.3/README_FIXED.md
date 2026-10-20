@@ -15,10 +15,10 @@ Das System wurde vollständig überprüft und ist einsatzbereit!
 ## Starten
 
 ```bash
-python run.py
+python backend/run.py
 ```
 
-Das Dashboard ist dann erreichbar unter: **http://localhost:5000**
+Das Dashboard ist dann erreichbar unter: **http://127.0.0.1:5000**
 
 ## Features
 
@@ -63,7 +63,7 @@ Multi-Bot Trading System
 
 ## Konfiguration
 
-Alle Einstellungen sind in `config.py`:
+Alle Einstellungen sind in `backend/config.py`:
 
 - **COINS**: Handelbare Kryptowährungen
 - **TIMEFRAMES**: Verfügbare Zeitrahmen

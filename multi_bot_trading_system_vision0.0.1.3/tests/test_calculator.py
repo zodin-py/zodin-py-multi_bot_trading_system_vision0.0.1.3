@@ -17,8 +17,8 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 import numpy as np
 import pandas as pd
-from indicators.calculator import IndicatorCalculator
-from indicators.provider import MockIndicatorProvider
+from backend.indicators.calculator import IndicatorCalculator
+from backend.indicators.provider import MockIndicatorProvider
 
 
 # ---------- Helper: deterministische OHLCV Fixture ----------
@@ -86,7 +86,10 @@ def test_calculator_matches_pandas_ta_direct():
     assert vals_calc is not None
 
     # Direkt mit pandas_ta
-    import pandas_ta
+    try:
+        import pandas_ta as pandas_ta
+    except ImportError:
+        import pandas_ta_classic as pandas_ta
     df = pd.DataFrame({
         'open': [c['open'] for c in candles],
         'high': [c['high'] for c in candles],
@@ -162,7 +165,7 @@ def test_calculator_returns_none_for_insufficient_data():
 def test_mock_provider():
     """MockIndicatorProvider liefert deterministische Fixtures."""
     mock = MockIndicatorProvider()
-    from indicators.provider import _IndicatorFixture
+    from backend.indicators.provider import _IndicatorFixture
 
     mock.set_indicators('BTCUSDT', '1h', _IndicatorFixture(rsi=28.0, macd=-1.5, mfi=35.0))
 
@@ -176,7 +179,7 @@ def test_mock_provider():
 
 def test_provider_protocol_and_mock():
     """Provider-Protokoll und Mock-Implementierung validieren."""
-    from indicators.provider import IndicatorProvider, MockIndicatorProvider, _IndicatorFixture
+    from backend.indicators.provider import IndicatorProvider, MockIndicatorProvider, _IndicatorFixture
 
     # Prüfe Protocol-Signatur
     import inspect
@@ -222,8 +225,8 @@ def test_provider_protocol_and_mock():
 
 def test_calculator_adapter_integration():
     """Integration: MockProvider + Calculator zusammenarbeitend."""
-    from indicators.provider import MockIndicatorProviderAdapter, MockIndicatorProvider, _IndicatorFixture
-    from indicators.calculator import IndicatorCalculator
+    from backend.indicators.provider import MockIndicatorProviderAdapter, MockIndicatorProvider, _IndicatorFixture
+    from backend.indicators.calculator import IndicatorCalculator
 
     mock = MockIndicatorProvider()
     mock.set_indicators('BTCUSDT', '1h', _IndicatorFixture(
