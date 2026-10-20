@@ -114,11 +114,12 @@ class Trade:
 class TradeExecutor:
     """Trade Executor - führt Trades aus und verwaltet sie"""
 
-    def __init__(self, capital: float = INITIAL_CAPITAL):
+    def __init__(self, capital: float = INITIAL_CAPITAL, simulated: bool = False):
         self.capital = capital
         self.open_trades: Dict[str, Trade] = {}
         self.trade_history: List[Trade] = []
         self.trade_counter = 0
+        self._simulated = simulated
 
         # Daily loss tracking
         self.daily_pnl: float = 0.0
@@ -401,11 +402,12 @@ class TradeExecutor:
                 logger.warning(f"Invalid position size for {symbol}")
                 return None
 
-            # Place real order via ccxt
-            order_result = self._place_order(symbol, side, entry_price, quantity)
-            if order_result is None:
-                logger.error(f"Failed to place order for {symbol}")
-                return None
+            # Place real order via ccxt (skip in simulated mode for backtesting)
+            if not self._simulated:
+                order_result = self._place_order(symbol, side, entry_price, quantity)
+                if order_result is None:
+                    logger.error(f"Failed to place order for {symbol}")
+                    return None
 
             # Create trade record
             self.trade_counter += 1
@@ -424,7 +426,8 @@ class TradeExecutor:
             )
 
             self.open_trades[trade.id] = trade
-            self._save_trades()
+            if not self._simulated:
+                self._save_trades()
             self._record_trade_time(symbol)
 
             logger.info(

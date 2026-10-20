@@ -4,13 +4,16 @@
 
 **Blocked by:** 03, 04, 05
 
-**Status:** ready-for-agent
+**Status:** ready-for-human
 
-- [ ] `templates/dashboard.html` updated: API calls point to FastAPI `/api/v1/` endpoints instead of old Flask routes
-- [ ] Dashboard displays: current price, aggregated signal with confidence, per-bot probability breakdown (buy%/sell%/hold%), open trades table (ID, symbol, side, entry, SL, TP), portfolio status (capital, daily P&L, halted indicator)
-- [ ] Trade history section shows performance stats: total trades, winning trades, losing trades, win rate, total P&L
-- [ ] REST `GET /trades` and `GET /trades/history` endpoints return correct data
-- [ ] MCP `get_open_trades` and `get_trade_history` tools return identical data
-- [ ] Date range filtering on trade history works
-- [ ] CORS enabled so dashboard (port 5000) can call REST API (port 8000)
-- [ ] No console errors in browser, all data populates correctly
+- [x] `templates/dashboard.html` updated: API calls point to FastAPI `/api/v1/` endpoints instead of old Flask routes
+- [x] Dashboard displays: current price, aggregated signal with confidence, per-bot probability breakdown (buy%/sell%/hold%), open trades table (ID, symbol, side, entry, SL, TP), portfolio status (capital, daily P&L, halted indicator)
+- [x] Trade history section shows performance stats: total trades, winning trades, losing trades, win rate, total P&L
+- [x] REST `GET /trades` and `GET /trades/history` endpoints return correct data
+- [x] MCP `get_open_trades` and `get_trade_history` tools return identical data
+- [x] Date range filtering on trade history works
+- [x] CORS enabled so dashboard (port 5000) can call REST API (port 8000)
+- [x] No console errors in browser, all data populates correctly
+
+**Answer:**
+Implemented Ticket 06: Dashboard & Trade History. Updated `templates/dashboard.html` to use FastAPI `/api/v1/` endpoints for all data calls (analyze, indicators, trades, portfolio, history). Added `current_price` to analyze response. Added CORS middleware to both FastAPI and Flask. Flask routes for trading controls (load-coin, settings, trading toggle, status) remain as they control the automated trading loop. All 36 tests pass.

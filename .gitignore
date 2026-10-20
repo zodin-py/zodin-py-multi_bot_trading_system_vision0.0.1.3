@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+fastapi.log
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Data directories
+.data/
+*.db
+*.sqlite
+
+# Local development
+*.bak
+*.tmp
+
+# Trade history (local data)
+trades/
+multi_bot_trading_system_vision0.0.1.3/trades/

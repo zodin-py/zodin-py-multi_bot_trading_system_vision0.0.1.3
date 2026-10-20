@@ -163,9 +163,18 @@ class MarketCache:
                 "SELECT MAX(open_ts) AS ts FROM candles WHERE symbol = ? AND timeframe = ?",
                 [symbol, timeframe],
             ).df()
-        if df.empty or df['ts'].iloc[0] is None or (hasattr(df['ts'].iloc[0], '__float__') and not (df['ts'].iloc[0] == df['ts'].iloc[0])):
+        if df.empty:
             return None
-        return int(df['ts'].iloc[0])
+        val = df['ts'].iloc[0]
+        if val is None:
+            return None
+        # Handle NA/null from DuckDB
+        if hasattr(val, '__float__') and not (val == val):  # NaN check
+            return None
+        try:
+            return int(val)
+        except (ValueError, TypeError):
+            return None
 
     def purge_expired(self, retention_days: int = DEFAULT_RETENTION_DAYS) -> int:
         """Löscht Kerzen älter als retention_days. Gibt Anzahl gelöschter Zeilen zurück."""
