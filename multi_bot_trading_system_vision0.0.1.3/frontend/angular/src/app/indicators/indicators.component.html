@@ -1,0 +1,90 @@
+<div class="card rounded-xl p-4">
+  <h2 class="text-lg font-semibold mb-4">
+    <i class="fas fa-chart-line mr-2 text-green-400"></i>Indikatoren
+  </h2>
+  <div class="space-y-4">
+    <!-- RSI -->
+    <div class="bg-slate-800/50 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-medium">RSI (14)</span>
+        <span class="text-xl font-bold">{{ rsiValue }}</span>
+      </div>
+      <div class="flex items-center space-x-4 text-sm">
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-400">Buy</span>
+            <span class="text-green-400">{{ rsiBuy }}%</span>
+          </div>
+          <div class="w-full bg-slate-700 rounded-full h-2">
+            <div class="progress-bar bg-green-500 h-2 rounded-full" [style.width.%]="rsiBuy"></div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-400">Sell</span>
+            <span class="text-red-400">{{ rsiSell }}%</span>
+          </div>
+          <div class="w-full bg-slate-700 rounded-full h-2">
+            <div class="progress-bar bg-red-500 h-2 rounded-full" [style.width.%]="rsiSell"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MACD -->
+    <div class="bg-slate-800/50 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-medium">MACD</span>
+        <span class="text-sm">{{ macdValue }}</span>
+      </div>
+      <div class="flex items-center space-x-4 text-sm">
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-400">Buy</span>
+            <span class="text-green-400">{{ macdBuy }}%</span>
+          </div>
+          <div class="w-full bg-slate-700 rounded-full h-2">
+            <div class="progress-bar bg-green-500 h-2 rounded-full" [style.width.%]="macdBuy"></div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-400">Sell</span>
+            <span class="text-red-400">{{ macdSell }}%</span>
+          </div>
+          <div class="w-full bg-slate-700 rounded-full h-2">
+            <div class="progress-bar bg-red-500 h-2 rounded-full" [style.width.%]="macdSell"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MFI -->
+    <div class="bg-slate-800/50 rounded-lg p-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-medium">MFI (14)</span>
+        <span class="text-xl font-bold">{{ mfiValue }}</span>
+      </div>
+      <div class="flex items-center space-x-4 text-sm">
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-400">Buy</span>
+            <span class="text-green-400">{{ mfiBuy }}%</span>
+          </div>
+          <div class="w-full bg-slate-700 rounded-full h-2">
+            <div class="progress-bar bg-green-500 h-2 rounded-full" [style.width.%]="mfiBuy"></div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-400">Sell</span>
+            <span class="text-red-400">{{ mfiSell }}%</span>
+          </div>
+          <div class="w-full bg-slate-700 rounded-full h-2">
+            <div class="progress-bar bg-red-500 h-2 rounded-full" [style.width.%]="mfiSell"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

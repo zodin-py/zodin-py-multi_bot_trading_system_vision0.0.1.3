@@ -1,0 +1,7 @@
+<div class="card rounded-xl p-4">
+  <div class="text-sm text-gray-400 mb-1">Aktueller Preis</div>
+  <div class="text-2xl font-bold text-blue-400">
+    {{ price !== null ? price.toFixed(4) : '--' }}
+  </div>
+  <div class="text-sm text-gray-500">{{ priceChange }}</div>
+</div>

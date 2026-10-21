@@ -1,0 +1,66 @@
+<header class="bg-slate-900/80 border-b border-slate-700 sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo + Title -->
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-robot text-2xl text-blue-400"></i>
+          <h1 class="text-xl font-bold">Multi-Bot Trading System</h1>
+        </div>
+
+        <div id="status-indicator" class="flex items-center space-x-2">
+          <span
+            class="w-2 h-2 rounded-full pulse-dot"
+            [class]="statusDot"
+          ></span>
+          <span class="text-sm text-gray-400">{{ statusText }}</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center space-x-4">
+        <!-- Coin Input -->
+        <div class="flex items-center space-x-2">
+          <input
+            [(ngModel)]="symbol"
+            (keydown)="onSymbolKeydown($event)"
+            type="text"
+            placeholder="BTC"
+            class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500 w-24"
+          />
+          <button
+            (click)="loadCoin()"
+            [disabled]="loading"
+            class="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+          >
+            <i class="fas fa-search mr-1"></i>Laden
+          </button>
+        </div>
+
+        <!-- Timeframe Selection -->
+        <select
+          [(ngModel)]="timeframe"
+          class="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+        >
+          <option *ngFor="let tf of timeframes" [value]="tf.value">
+          {{ tf.label }}
+          </option>
+        </select>
+
+        <!-- Trading Toggle -->
+        <button
+          (click)="tradingActive ? stopTradingAction() : toggleTrading()"
+          [class]="tradingActive
+            ? 'bg-green-600 hover:bg-green-700'
+            : 'bg-red-600 hover:bg-red-700'"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+        >
+          <i
+            [class]="tradingActive ? 'fas fa-stop mr-2' : 'fas fa-play mr-2'"
+          ></i>
+          {{ tradingActive ? 'Stop' : 'Start' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

@@ -10,7 +10,7 @@ import threading
 import time
 from datetime import datetime
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 
 from backend import config
 from backend.aggregator import Brain
@@ -29,15 +29,23 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Flask App
+# Serve Angular build from dist/angular (production) or fallback to old template
+angular_dist = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..', 'frontend', 'angular', 'dist', 'angular')
+)
 template_dir = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', 'frontend', 'templates', 'templates')
 )
-app = Flask(__name__, template_folder=template_dir)
+app = Flask(__name__,
+            template_folder=template_dir,
+            static_folder=angular_dist if os.path.exists(angular_dist) else None,
+            static_url_path='')
 app.secret_key = 'trading_system_secret_key'
 
 # CORS for Flask endpoints (dashboard on 5000 calls FastAPI on 8000, but Flask still serves some endpoints)
+# Also allow Angular dev server on port 4200
 from flask_cors import CORS
-CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000"])
+CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000", "http://localhost:4200", "http://127.0.0.1:4200"])
 
 # Globale Instanzen
 data_manager = None
@@ -410,11 +418,44 @@ def api_risk_limit():
     return jsonify({'current_limit': config.MAX_DAILY_LOSS})
 
 
+# ==================== ANGULAR CATCH-ALL ====================
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_angular(path: str):
+    """
+    Serve Angular app for all non-API routes.
+    In production: serves static files from angular/dist/angular.
+    In dev: falls back to the old Flask template so the old dashboard still works.
+    """
+    # Let API routes through
+    if path.startswith('api/'):
+        # This will 404 and Flask will handle it normally
+        pass
+
+    # If Angular build exists, serve it (with SPA fallback to index.html)
+    if os.path.exists(angular_dist):
+        # Try to serve the requested file
+        if path and os.path.exists(os.path.join(angular_dist, path)):
+            return send_from_directory(angular_dist, path)
+        # SPA fallback: serve index.html for all other routes
+        return send_from_directory(angular_dist, 'index.html')
+
+    # Fallback: old Flask template (for backward compatibility)
+    return render_template('dashboard.html',
+                           coins=config.COINS,
+                           timeframes=config.TIMEFRAMES,
+                           current_symbol=current_symbol,
+                           current_timeframe=current_timeframe)
+
+
+from flask import send_from_directory
+
 # ==================== MAIN ====================
 
 if __name__ == '__main__':
     # Initialisiere System
     initialize_system()
-    
+
     # Starte Flask App
     app.run(debug=False, host='127.0.0.1', port=config.DASHBOARD_PORT, use_reloader=False)
