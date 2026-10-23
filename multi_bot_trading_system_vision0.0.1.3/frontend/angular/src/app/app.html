@@ -1,0 +1,48 @@
+<body class="gradient-bg min-h-screen text-white">
+  <!-- Header (standalone) -->
+  <app-header
+    (coinLoaded)="onCoinLoaded($event)"
+    (tradingToggled)="onTradingToggled($event)"
+  ></app-header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-6">
+    <!-- KPI Grid: 4 cards (grid-cols-1 md:grid-cols-4 gap-4 mb-6) -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <app-price-card [price]="currentPrice" [priceChange]="priceChange"></app-price-card>
+      <app-signal-card [signal]="aggregatedSignal" [confidence]="confidence"></app-signal-card>
+      <app-open-trades-card [count]="openTradesCount" [pnl]="openTradesPnl"></app-open-trades-card>
+      <app-capital-card [capital]="capital" [capitalChange]="capitalChange"></app-capital-card>
+    </div>
+
+    <!-- Risk Management (card rounded-xl p-4 mb-6) -->
+    <app-risk-management
+      [isHalted]="isHalted"
+      [dailyPnl]="dailyPnl"
+      (riskLimitChanged)="onRiskLimitChanged($event)"
+    ></app-risk-management>
+
+    <!-- Bot Signals (card rounded-xl p-4 mb-6) -->
+    <app-bot-signals
+      [probabilities]="botProbabilities"
+    ></app-bot-signals>
+
+    <!-- Two Column Layout: Indicators + Open Trades (card rounded-xl p-4) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <app-indicators [indicators]="indicators"></app-indicators>
+      <app-open-trades
+        [trades]="openTrades"
+        (close)="onCloseTrade($event)"
+      ></app-open-trades>
+    </div>
+
+    <!-- Trade History (card rounded-xl p-4 mt-6) -->
+    <app-trade-history
+      [history]="history"
+      (load)="onHistoryLoad($event)"
+    ></app-trade-history>
+  </main>
+
+  <!-- FontAwesome icons loaded globally -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
+</body>

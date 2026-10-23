@@ -1,43 +1,24 @@
 # Multi-Bot Trading System - Setup Guide
 
-## Status: FUNKTIONSFÄHIG ✓
-
-Das Projekt wurde vollständig konfiguriert und ist einsatzbereit.
-
 ## Installation
 
-### 1. Python Environment
-Ein virtuelles Python-Environment (venv) wurde automatisch erstellt:
+Installiere die in `requirements.txt` aufgeführten Abhängigkeiten in deiner Python-Umgebung:
 ```
-f:/Github projekte/zodin-py-multi_bot_trading_system_vision0.0.1.3/.venv/
+python -m pip install -r requirements.txt
 ```
-
-### 2. Dependencies
-Alle erforderlichen Pakete wurden installiert:
-- Flask 3.0.0 (Web Framework)
-- Binance Connector & python-binance (Börsen-API)
-- pandas & numpy (Datenverarbeitung)
-- pandas-ta (Technische Indikatoren)
-- websocket-client (Real-time Daten)
-- Weitere: aiohttp, orjson, cachetools
 
 ## Starten des Systems
 
-### Option 1: Über Terminal
+Im Projektverzeichnis:
 ```bash
-cd f:\Github projekte\zodin-py-multi_bot_trading_system_vision0.0.1.3\multi_bot_trading_system_vision0.0.1.2
-"f:/Github projekte/zodin-py-multi_bot_trading_system_vision0.0.1.3/.venv/Scripts/python.exe" app.py
+python backend/run.py
 ```
-
-### Option 2: Über VS Code
-- Öffne app.py
-- Klick auf "Run" oder drücke F5
 
 ## Web Interface
 
 Nach dem Start ist das Dashboard verfügbar unter:
 ```
-http://localhost:5000
+http://127.0.0.1:5000
 ```
 
 ### Verfügbare API Endpoints:
@@ -57,7 +38,7 @@ http://localhost:5000
 ## Konfiguration
 
 ### Binance API Keys (optional)
-In `config.py` können API Keys gesetzt werden:
+In `backend/config.py` können API Keys gesetzt werden:
 ```python
 BINANCE_API_KEY = os.environ.get('BINANCE_API_KEY', '')
 BINANCE_SECRET_KEY = os.environ.get('BINANCE_SECRET_KEY', '')
@@ -66,7 +47,7 @@ BINANCE_SECRET_KEY = os.environ.get('BINANCE_SECRET_KEY', '')
 Standardmäßig läuft das System im **TESTNET MODE** - keine echten Transaktionen!
 
 ### Trading Parameter
-In `config.py` können folgende Parameter angepasst werden:
+In `backend/config.py` können folgende Parameter angepasst werden:
 - `COINS` - Handelbare Kryptowährungen
 - `TIMEFRAMES` - Zeitrahmen
 - `RISK_PERCENT` - Risiko pro Trade

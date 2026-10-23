@@ -13,8 +13,8 @@ numpy>=1.26.0
 duckdb>=1.0.0
 
 # Technical Analysis
-# ta-lib is primary (needs C wheel), pandas-ta is fallback (pure Python)
-pandas-ta>=0.3.14b0
+# ta-lib is primary (needs C wheel); pandas-ta-classic is the Python fallback
+pandas-ta-classic>=0.8.32
 # ta-lib>=0.8.2  # enabled if buildable on this machine
 
 # WebSocket (used by ccxt internally / direct Binance streams)

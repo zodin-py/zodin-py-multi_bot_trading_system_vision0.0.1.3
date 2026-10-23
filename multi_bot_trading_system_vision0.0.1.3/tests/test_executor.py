@@ -14,9 +14,9 @@ sys.path.insert(0, str(PROJECT_ROOT))
 import pytest
 from unittest.mock import patch, MagicMock
 
-from execution.executor import TradeExecutor, Trade, TradeStatus, TradeSide
-from bots.base_bot import SignalType
-from indicators.provider import MockIndicatorProvider, _IndicatorFixture
+from backend.execution.executor import TradeExecutor, Trade, TradeStatus, TradeSide
+from backend.bots.base_bot import SignalType
+from backend.indicators.provider import MockIndicatorProvider, _IndicatorFixture
 
 
 # ---------- Fixtures ----------
@@ -25,7 +25,7 @@ from indicators.provider import MockIndicatorProvider, _IndicatorFixture
 def executor(tmp_path):
     """Fresh executor with zero capital for predictable tests."""
     # Override the trades history file to use a temp file
-    import execution.executor as exec_module
+    import backend.execution.executor as exec_module
     original_file = exec_module.TRADES_HISTORY_FILE
     temp_file = str(tmp_path / 'trades_test.json')
     exec_module.TRADES_HISTORY_FILE = temp_file
@@ -309,6 +309,16 @@ class TestDailyLossLimit:
     def test_trading_allowed_when_under_limit(self, executor):
         executor.daily_pnl = -5.0
         assert executor._check_daily_loss_limit() is False
+
+    def test_updated_limit_applies_to_existing_executor(self, executor, monkeypatch):
+        from backend import config
+
+        monkeypatch.setattr(config, 'MAX_DAILY_LOSS', 25.0)
+        executor.daily_pnl = -20.0
+        assert executor._check_daily_loss_limit() is False
+
+        monkeypatch.setattr(config, 'MAX_DAILY_LOSS', 10.0)
+        assert executor._check_daily_loss_limit() is True
 
     def test_capital_updated_on_close(self, executor):
         with patch.object(executor, '_place_order', return_value={'id': 'z'}):
