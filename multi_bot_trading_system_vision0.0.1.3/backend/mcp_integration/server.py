@@ -16,15 +16,20 @@ from mcp.server.mcpserver import MCPServer
 from mcp.server.stdio import stdio_server
 
 from backend.config import API_PORT, MCP_PORT
-from backend.services.analysis_service import init_analysis_service, get_analysis_service
-from backend.services.trade_service import get_trade_service
+from backend.container import get_container
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Global service instances
-_analysis_service = None
-_trade_service = None
+
+def _get_analysis_service():
+    """Get analysis service from DI container."""
+    return get_container().get('analysis_service')
+
+
+def _get_trade_executor():
+    """Get trade executor from DI container."""
+    return get_container().get('trade_executor')
 
 
 def create_mcp_server() -> MCPServer:
@@ -42,7 +47,7 @@ def create_mcp_server() -> MCPServer:
         description="Run full multi-bot analysis for a single coin symbol and timeframe",
     )
     async def analyze_coin(symbol: str, timeframe: str = "1h") -> Dict[str, Any]:
-        service = get_analysis_service()
+        service = _get_analysis_service()
         try:
             result = service.analyze_coin(symbol, timeframe)
             return result
@@ -56,7 +61,7 @@ def create_mcp_server() -> MCPServer:
         description="Get pre-computed technical indicator values for a symbol/timeframe",
     )
     async def get_indicators(symbol: str, timeframe: str = "1h") -> Dict[str, Any]:
-        service = get_analysis_service()
+        service = _get_analysis_service()
         try:
             result = service.get_indicators(symbol, timeframe)
             return result
@@ -70,7 +75,7 @@ def create_mcp_server() -> MCPServer:
         description="Get OHLCV candle data for a symbol/timeframe",
     )
     async def get_market_data(symbol: str, timeframe: str = "1h", limit: int = 50) -> Dict[str, Any]:
-        service = get_analysis_service()
+        service = _get_analysis_service()
         try:
             result = service.get_market_data(symbol, timeframe, limit)
             return result
@@ -84,7 +89,7 @@ def create_mcp_server() -> MCPServer:
         description="Get list of all supported trading symbols",
     )
     async def get_supported_symbols() -> Dict[str, Any]:
-        service = get_analysis_service()
+        service = _get_analysis_service()
         return {"symbols": service.get_supported_symbols()}
 
     @server.tool(
@@ -93,7 +98,7 @@ def create_mcp_server() -> MCPServer:
         description="Get supported timeframes with descriptions",
     )
     async def get_supported_timeframes() -> Dict[str, Any]:
-        service = get_analysis_service()
+        service = _get_analysis_service()
         return {"timeframes": service.get_supported_timeframes()}
 
     # ---- Trade tools (Ticket 04) ----
@@ -115,32 +120,26 @@ def create_mcp_server() -> MCPServer:
         Returns:
             Trade dict or error
         """
-        ts = get_trade_service()
-        try:
-            # Run analysis to get signal
-            analysis = get_analysis_service().analyze_coin(symbol, timeframe)
-            final_signal = analysis.get('final_signal')
-            confidence = analysis.get('confidence', 0)
+        analysis = _get_analysis_service().analyze_coin(symbol, timeframe)
+        final_signal = analysis.get('final_signal')
+        confidence = analysis.get('confidence', 0)
 
-            if confidence < 65:
-                return {
-                    'error': f'Signal confidence {confidence:.1f}% below threshold 65%',
-                    'final_signal': final_signal,
-                    'confidence': confidence,
-                }
+        if confidence < 65:
+            return {
+                'error': f'Signal confidence {confidence:.1f}% below threshold 65%',
+                'final_signal': final_signal,
+                'confidence': confidence,
+            }
 
-            # Map signal type
-            signal_map = {'buy': 'buy', 'sell': 'sell'}
-            signal_type = signal_map.get(final_signal, 'hold')
-            if signal_type == 'hold':
-                return {'error': 'No actionable signal (hold)', 'final_signal': final_signal}
+        # Map signal type
+        signal_map = {'buy': 'buy', 'sell': 'sell'}
+        signal_type = signal_map.get(final_signal, 'hold')
+        if signal_type == 'hold':
+            return {'error': 'No actionable signal (hold)', 'final_signal': final_signal}
 
-            result = ts.open_trade(symbol, timeframe, signal_type)
-            return result
-
-        except Exception as e:
-            logger.error(f"open_trade error: {e}")
-            return {"error": str(e)}
+        ts = _get_trade_executor()
+        result = ts.open_trade(symbol, timeframe, signal_type)
+        return result
 
     @server.tool(
         name="close_trade",
@@ -148,7 +147,7 @@ def create_mcp_server() -> MCPServer:
         description="Close an open trade at the current market price.",
     )
     async def close_trade(trade_id: str, reason: str = "manual") -> Dict[str, Any]:
-        ts = get_trade_service()
+        ts = _get_trade_executor()
         try:
             result = ts.close_trade(trade_id, reason=reason)
             return result
@@ -162,7 +161,7 @@ def create_mcp_server() -> MCPServer:
         description="Get all currently open trades with entry, SL, TP, and side.",
     )
     async def get_open_trades() -> Dict[str, Any]:
-        ts = get_trade_service()
+        ts = _get_trade_executor()
         return {"trades": ts.get_open_trades(), "count": len(ts.get_open_trades())}
 
     @server.tool(
@@ -174,7 +173,7 @@ def create_mcp_server() -> MCPServer:
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
     ) -> Dict[str, Any]:
-        ts = get_trade_service()
+        ts = _get_trade_executor()
         return ts.get_trade_history(start_date=start_date, end_date=end_date)
 
     @server.tool(
@@ -183,7 +182,7 @@ def create_mcp_server() -> MCPServer:
         description="Get portfolio status including capital, daily P&L, open trades, halt status.",
     )
     async def get_portfolio() -> Dict[str, Any]:
-        ts = get_trade_service()
+        ts = _get_trade_executor()
         return ts.get_portfolio()
 
     @server.tool(
@@ -195,7 +194,7 @@ def create_mcp_server() -> MCPServer:
         """Update MAX_DAILY_LOSS from config at runtime."""
         import backend.config as config
         config.MAX_DAILY_LOSS = max_daily_loss_eur
-        ts = get_trade_service()
+        ts = _get_trade_executor()
         return {"success": True, "current_limit": max_daily_loss_eur}
 
     return server
@@ -219,7 +218,7 @@ async def main():
     from backend.execution.executor import TradeExecutor
     from backend.services.trade_service import init_trade_service
 
-    svc = get_analysis_service()
+    svc = _get_analysis_service()
     executor = TradeExecutor()
     init_trade_service(svc.market_data, executor, svc.provider)
     logger.info("Trade service initialized")

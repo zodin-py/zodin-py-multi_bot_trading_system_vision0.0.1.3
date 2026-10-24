@@ -4,7 +4,7 @@
 
 **Blocked by:** 02-di-container
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] `config.py` retains global keys (Binance API, ports, coins, timeframes)
 - [ ] Add Pydantic `BaseSettings` validation for critical config values

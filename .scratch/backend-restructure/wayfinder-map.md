@@ -24,10 +24,11 @@ Transform the monolithic backend into a clean, domain-driven modular structure w
 - [x] **Wayfinder Map as Markdown**: Saved to `.scratch/backend-restructure/wayfinder-map.md`
 - [x] **Glossary Correction**: SR, SMC, Harmonic, Trend → Strategies (not indicators)
 - [x] **Tickets Created**: 14 child tickets in `.scratch/backend-restructure/issues/` (see below)
+- [x] **All 14 tickets completed**: 01-14
 
 ## Tickets (Child Issues)
 
-| # | Title | Blocked By |
+| # | Title | Blocked BY |
 |---|-------|------------|
 | 01 | Launcher + Dev Server | — |
 | 02 | DI Container | — |
@@ -44,7 +45,9 @@ Transform the monolithic backend into a clean, domain-driven modular structure w
 | 13 | Config Cleanup | 02 |
 | 14 | Integration Verification | 11, 12, 13 |
 
-**Frontier** (open, unblocked): 01, 02, 03
+**Completed** (all verified): 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14
+
+**Frontier** (open, unblocked): — (all tickets complete)
 
 ## Not yet specified
 

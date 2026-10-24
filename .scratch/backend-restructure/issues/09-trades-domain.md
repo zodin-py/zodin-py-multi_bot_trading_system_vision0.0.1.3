@@ -4,7 +4,7 @@
 
 **Blocked by:** 08-execution-domain-split, 07-analysis-service
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] `domains/trades/models.py` — `Trade`, `TradeType`, `PnLResult`, `TradeSummary` Pydantic models
 - [ ] `domains/trades/repository.py` — Trade persistence (JSON file reading/writing, query helpers)

@@ -4,7 +4,7 @@
 
 **Blocked by:** 08-execution-domain-split, 09-trades-domain
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] **Portfolio Domain:**
   - [ ] `domains/portfolio/models.py` — `Portfolio`, `CapitalSnapshot`, `DailyPnL`, `OpenPosition`

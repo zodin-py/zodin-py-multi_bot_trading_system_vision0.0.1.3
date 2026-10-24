@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] `backend/domains/` directory created
 - [ ] Subdirectories: `data/`, `indicators/`, `strategies/`, `analysis/`, `execution/`, `trades/`, `portfolio/`, `risk/`, `api/`

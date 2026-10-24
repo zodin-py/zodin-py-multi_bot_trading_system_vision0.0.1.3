@@ -4,7 +4,7 @@
 
 **Blocked by:** 11-api-routes-split, 12-mcp-integration, 13-config-cleanup
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] Run `python backend/launcher.py` — both FastAPI and Angular Dev Server start
 - [ ] Swagger UI at `http://localhost:8000/docs` loads without errors
