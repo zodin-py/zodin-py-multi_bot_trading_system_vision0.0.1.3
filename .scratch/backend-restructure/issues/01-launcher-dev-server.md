@@ -4,13 +4,13 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] `launcher.py` created at backend root
-- [ ] FastAPI started via `uvicorn` subprocess (or threading) on port 8000
-- [ ] Angular Dev Server started via `subprocess.Popen(["ng", "serve"])` on port 4200
-- [ ] 1-3 second delay between FastAPI start and `ng serve` start
-- [ ] Shared shutdown event: Ctrl+C terminates both subprocesses gracefully
-- [ ] `--dev` flag (default) and `--prod` flag (serves Angular build via FastAPI StaticFiles) — `--prod` can be stubbed for now
-- [ ] Logging shows both server URLs on startup
-- [ ] Works from project root: `python backend/launcher.py`
+- [x] `launcher.py` created at backend root
+- [x] FastAPI started via `uvicorn` subprocess (or threading) on port 8000
+- [x] Angular Dev Server started via `subprocess.Popen(["ng", "serve"])` on port 4200
+- [x] 1-3 second delay between FastAPI start and `ng serve` start
+- [x] Shared shutdown event: Ctrl+C terminates both subprocesses gracefully
+- [x] `--dev` flag (default) and `--prod` flag (serves Angular build via FastAPI StaticFiles)
+- [x] Logging shows both server URLs on startup
+- [x] Works from project root: `python backend/launcher.py`

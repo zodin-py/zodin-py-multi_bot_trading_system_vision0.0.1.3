@@ -4,13 +4,12 @@
 
 **Blocked by:** 03-domain-structure-skeleton
 
-**Status:** ready-for-agent
+**Status:** completed
 
-- [ ] `domains/data/models.py` — Pydantic models for OHLCV, Ticker, OrderBook
-- [ ] `domains/data/rest_client.py` — ccxt async REST client (from `data/market_data.py`)
-- [ ] `domains/data/ws_stream.py` — Binance WebSocket stream (from `data/market_data.py`)
-- [ ] `domains/data/cache.py` — DuckDB cache bridge (from `data/cache.py`)
-- [ ] `domains/data/service.py` — `MarketDataService` orchestrating REST + WS + Cache
-- [ ] `domains/data/repository.py` — Data access patterns (if needed)
-- [ ] `domains/data/__init__.py` exports public API
-- [ ] Old `data/market_data.py`, `data/cache.py`, `data/data_manager.py` deprecated (kept for reference, not imported)
+- [x] `domains/data/models.py` — Pydantic models for OHLCV, Ticker
+- [x] `domains/data/rest_client.py` — ccxt async REST client
+- [x] `domains/data/ws_stream.py` — Binance WebSocket stream
+- [x] `domains/data/cache.py` — DuckDB cache bridge
+- [x] `domains/data/service.py` — `MarketDataService`
+- [x] `domains/data/repository.py` — Data access patterns
+- [x] `domains/data/__init__.py` exports public API
