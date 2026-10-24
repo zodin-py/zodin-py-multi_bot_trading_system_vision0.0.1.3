@@ -1,11 +1,23 @@
-"""Strategies domain package.
+"""Strategies domain — SR, SMC, Harmonic, Trend pattern bots.
 
-Contains trading strategy implementations (SR, SMC, Harmonic, Trend) and base strategy class.
+Each bot analyses market structure (support/resistance, order blocks,
+harmonic patterns, MA alignment) and emits weighted buy/sell/hold signals.
 """
 
-from .base import *
-from .sr_bot import *
-from .smc_bot import *
-from .harmonic_bot import *
-from .trend_bot import *
-from .service import *
+from backend.domains.strategies.base import StrategyBot, Signal, SignalType
+from backend.domains.strategies.sr_bot import SRBot
+from backend.domains.strategies.smc_bot import SMCBot
+from backend.domains.strategies.harmonic_bot import HarmonicBot
+from backend.domains.strategies.trend_bot import TrendBot
+from backend.domains.strategies.service import StrategiesService
+
+__all__ = [
+    'StrategyBot',
+    'Signal',
+    'SignalType',
+    'SRBot',
+    'SMCBot',
+    'HarmonicBot',
+    'TrendBot',
+    'StrategiesService',
+]

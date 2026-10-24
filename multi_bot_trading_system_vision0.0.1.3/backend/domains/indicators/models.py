@@ -50,6 +50,9 @@ class IndicatorValues(BaseModel):
     # Extra fields (pivots, Ichimoku, etc.)
     extra: Dict[str, Any] = Field(default_factory=dict)
 
+    # Historical OHLCV candles (optional, for pattern bots)
+    ohlcv_history: List[Dict[str, float]] = Field(default_factory=list, description="Historische Kerzen für Pattern-Erkennung")
+
     def to_dict(self) -> Dict[str, Any]:
         return {
             'symbol': self.symbol,

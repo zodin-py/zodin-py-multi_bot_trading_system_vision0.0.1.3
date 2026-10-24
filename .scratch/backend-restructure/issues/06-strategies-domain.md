@@ -4,7 +4,7 @@
 
 **Blocked by:** 03-domain-structure-skeleton, 05-indicators-domain
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] `domains/strategies/base.py` — `StrategyBot` abstract base (inherits from `BaseBot` or similar)
 - [ ] `domains/strategies/sr_bot.py` — Support/Resistance bot (from `bots/sr_bot.py`)
