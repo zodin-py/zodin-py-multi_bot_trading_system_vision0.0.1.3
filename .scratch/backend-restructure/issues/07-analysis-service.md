@@ -4,7 +4,7 @@
 
 **Blocked by:** 05-indicators-domain, 06-strategies-domain, 02-di-container
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] `domains/analysis/models.py` — `AggregatedSignal`, `BotSignal`, `SignalType` Pydantic models
 - [ ] `domains/analysis/brain.py` — `Brain` class (from `aggregator/brain.py`) weighting 7 bot signals
