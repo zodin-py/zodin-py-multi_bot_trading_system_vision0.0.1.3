@@ -4,7 +4,7 @@
 
 **Blocked by:** 07-analysis-service, 09-trades-domain, 10-portfolio-risk, 02-di-container
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] `domains/api/models.py` — Pydantic request/response models (AnalyzeRequest, AnalyzeResponse, IndicatorsResponse, MarketDataResponse, TradeRequest, etc.)
 - [ ] `domains/api/dependencies.py` — FastAPI `Depends()` for DI container services (AnalysisService, TradeService, etc.)
