@@ -9,7 +9,7 @@
 | **Data Manager** | Kern-Komponente für Datenabfrage, Caching und Verteilung. Verwaltet WebSocket-Verbindung zu Binance und historische Daten. |
 | **Brain** | Signal-Aggregator — gewichtet und kombiniert Signale aller Bots zu einem finalen Trading-Signal. |
 | **Executor** | Trade-Ausführungs-Engine — verwaltet offene Positionen, berechnet SL/TP, führt Orders aus. |
-| **Bot** | Einzige Analyse-Einheit (RSI, MACD, MFI, SR, SMC, Harmonic, Trend). Jeder Bot generiert ein Signal mit Konfidenz. |
+| **Bot** | Einzige Analyse-Einheit. Jeder Bot generiert ein Signal mit Konfidenz. Unterscheidung: **Indicator Bots** (RSI, MACD, MFI) berechnen Signale aus technischen Indikatoren; **Strategy Bots** (SR, SMC, Harmonic, Trend) erkennen Preis-Patterns und Marktstruktur. |
 
 ## Binance & API
 
@@ -38,19 +38,41 @@
 | **Drawdown** | Rückgang des Kapitals vom Hochpunkt. |
 | **Max Daily Loss** | Maximal zulässiger Verlust pro Tag (hier konfigurierbar, z.B. 10€). |
 
-## Technische Indikatoren
+## Technische Indikatoren (Quelle: tradingview-ta → TradingView scrape)
 
 | Indikator | Zweck | Standard-Parameter |
 |-----------|-------|-------------------|
 | **RSI** | Relative Strength Index — misst Überkauft/Überverkauft | Periode 14, OB 70, OS 30 |
 | **MACD** | Moving Average Convergence Divergence — Trend & Momentum | Fast 12, Slow 26, Signal 9 |
-| **MFI** | Money Flow Index — RSI mit Volumen | Periode 14, OB 80, OS 20 |
-| **SMA** | Simple Moving Average — Glätteter Durchschnitt | Periode variabel |
-| **EMA** | Exponential Moving Average — Gewichtetere SMA | Periode variabel |
-| **ADX** | Average Directional Index — Trendstärke | Periode 14, Threshold 25 |
+| **MACD.signal** | MACD Signal Line | — |
+| **Stoch.K / Stoch.D** | Stochastic Oscillator | K: 14, D: 3 |
+| **CCI20** | Commodity Channel Index (20) | Periode 20 |
+| **ADX / ADX+DI / ADX-DI** | Average Directional Index — Trendstärke | Periode 14 |
+| **AO** | Awesome Oscillator | — |
+| **Mom** | Momentum | — |
+| **EMA5..EMA200** | Exponential Moving Averages | 5, 10, 20, 30, 50, 100, 200 |
+| **SMA5..SMA200** | Simple Moving Averages | 5, 10, 20, 30, 50, 100, 200 |
+| **BB.lower / BB.upper** | Bollinger Bands | Periode 20, StdDev 2 |
+| **P.SAR** | Parabolic Stop and Reverse | — |
+| **Pivots (Classic/Fib/Camarilla/Woodie/DeMark)** | Support/Resistance Levels | — |
+| **Ichimoku.BLine** | Ichimoku Base Line | — |
+| **VWMA** | Volume Weighted MA | — |
+| **HullMA9** | Hull Moving Average | Periode 9 |
+| **UO** | Ultimate Oscillator | — |
+| **W.R** | Williams %R | — |
+| **BBPower** | Bollinger Band Power | — |
+| **close, open, high, low, volume, change** | OHLCV + Volume | — |
+
+> **Hinweis**: Alle Indikatoren werden via `tradingview-ta` von TradingView gescraped (inoffiziell, Rate-Limits möglich). **MFI, ATR sind nicht in tradingview-ta enthalten** → lokale Berechnung als Fallback in `IndicatorProvider`.
+
+## Strategien (Pattern/Struktur-Erkennung)
+
+| Strategie | Zweck | Standard-Parameter |
+|-----------|-------|-------------------|
 | **S/R** | Support & Resistance — Preis-Level wo Kauf-/Verkaufsdruck entsteht | Lookback 50 |
 | **SMC** | Smart Money Concepts — Order Blocks & Fair Value Gaps | Lookback 100 |
 | **Harmonic** | Harmonische Pattern (Gartley, Bat, Butterfly) — Fibonacci-Retracements | Lookback 200 |
+| **Trend** | Trend-Following via MA Alignment (EMA 9/21/50/200) + ADX/DI | EMA periods, ADX threshold |
 
 ## Signal-Typen
 
@@ -85,19 +107,23 @@
 | `MIN_SELL_PROBABILITY` | 65% | Minimale Sell-Konfidenz für Trade |
 | `MAX_DAILY_LOSS` | 10 EUR | Maximaler Verlust pro Tag |
 
-## Dateien & Struktur
+## Dateien & Struktur (geplant nach Restructure)
 
 | Pfad | Zweck |
 |------|-------|
-| `config.py` | Alle Konfigurationsparameter |
-| `data/data_manager.py` | Datenabfrage & WebSocket |
-| `bots/base_bot.py` | Basisklasse aller Bots |
-| `bots/*.py` | Einzelne Bot-Implementierungen |
-| `indicators/*.py` | Indikator-spezifische Bots |
-| `aggregator/brain.py` | Signal-Aggregation |
-| `execution/executor.py` | Trade-Ausführung & SL/TP |
-| `app.py` | Flask Web-Interface |
-| `run.py` | Start-Skript |
+| `config.py` | Globale Konfiguration |
+| `container.py` | DI Container — Service-Instanzen & Wiring |
+| `launcher.py` | Entry Point — startet FastAPI + Angular Dev Server |
+| `main.py` | FastAPI App Factory (`create_app`) |
+| `domains/data/` | Market Data (REST, WS, Cache, Provider) |
+| `domains/indicators/` | Indikator-Abruf via `tradingview-ta` (RSI, MACD, Stoch, ADX, EMAs, SMAs, BB, Pivots...) + lokaler Fallback für MFI, ATR |
+| `domains/strategies/` | Strategie-Bots (SR, SMC, Harmonic, Trend) |
+| `domains/analysis/` | Aggregation (Brain) + AnalysisService |
+| `domains/execution/` | Order-Ausführung, SL/TP, Position-Sizing |
+| `domains/trades/` | Trade-Lifecycle, History, Persistenz |
+| `domains/portfolio/` | Kapital, P&L, Aggregation |
+| `domains/risk/` | Daily Loss Limit, Cooldown, Trading Halt |
+| `domains/api/` | FastAPI Routes, Models, Dependencies |
 
 ## Status-Codes
 
