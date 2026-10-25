@@ -2,49 +2,58 @@
   <!-- Header (standalone) -->
   <app-header
     (coinLoaded)="onCoinLoaded($event)"
-    (tradingToggled)="onTradingToggled($event)"
   ></app-header>
 
   <!-- Main Content -->
   <main class="container mx-auto px-4 py-6">
-    <!-- KPI Grid: 4 cards (grid-cols-1 md:grid-cols-4 gap-4 mb-6) -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <!-- KPI Grid: Price + Wallet + Indicators -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <app-price-card [price]="currentPrice" [priceChange]="priceChange"></app-price-card>
-      <app-signal-card [signal]="aggregatedSignal" [confidence]="confidence"></app-signal-card>
-      <app-open-trades-card [count]="openTradesCount" [pnl]="openTradesPnl"></app-open-trades-card>
-      <app-capital-card
-        [capital]="capital"
-        [capitalChange]="capitalChange"
-        [capitalError]="capitalError"
-      ></app-capital-card>
+
+      <!-- Wallet Summary Card -->
+      <div class="card rounded-xl p-4" *ngIf="wallet">
+        <h2 class="text-lg font-semibold mb-4">
+          <i class="fas fa-wallet mr-2 text-yellow-400"></i>Wallet
+        </h2>
+        <div class="space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">Total</span>
+            <span class="text-xl font-bold text-green-400">{{ wallet.total_usdt | number:'1.2-2' }} USDT</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">Assets</span>
+            <span class="font-bold">{{ wallet.balances.length }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indicators Preview Card -->
+      <div class="card rounded-xl p-4" *ngIf="indicators">
+        <h2 class="text-lg font-semibold mb-4">
+          <i class="fas fa-chart-line mr-2 text-green-400"></i>Indicators
+        </h2>
+        <div class="space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">RSI (last)</span>
+            <span class="font-bold" *ngIf="indicators.rsi.length">{{ indicators.rsi[indicators.rsi.length - 1] | number:'1.2-2' }}</span>
+            <span class="font-bold text-gray-400" *ngIf="!indicators.rsi.length">--</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">MACD (last)</span>
+            <span class="font-bold" *ngIf="indicators.macd.length">{{ indicators.macd[indicators.macd.length - 1] | number:'1.4-4' }}</span>
+            <span class="font-bold text-gray-400" *ngIf="!indicators.macd.length">--</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-400">EMA (last)</span>
+            <span class="font-bold" *ngIf="indicators.ema.length">{{ indicators.ema[indicators.ema.length - 1] | number:'1.2-2' }}</span>
+            <span class="font-bold text-gray-400" *ngIf="!indicators.ema.length">--</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Risk Management (card rounded-xl p-4 mb-6) -->
-    <app-risk-management
-      [isHalted]="isHalted"
-      [dailyPnl]="dailyPnl"
-      (riskLimitChanged)="onRiskLimitChanged($event)"
-    ></app-risk-management>
-
-    <!-- Bot Signals (card rounded-xl p-4 mb-6) -->
-    <app-bot-signals
-      [probabilities]="botProbabilities"
-    ></app-bot-signals>
-
-    <!-- Two Column Layout: Indicators + Open Trades (card rounded-xl p-4) -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <app-indicators [indicators]="indicators"></app-indicators>
-      <app-open-trades
-        [trades]="openTrades"
-        (close)="onCloseTrade($event)"
-      ></app-open-trades>
-    </div>
-
-    <!-- Trade History (card rounded-xl p-4 mt-6) -->
-    <app-trade-history
-      [history]="history"
-      (load)="onHistoryLoad($event)"
-    ></app-trade-history>
+    <!-- Full Indicators Component -->
+    <app-indicators [indicators]="indicators"></app-indicators>
   </main>
 
   <!-- FontAwesome icons loaded globally -->

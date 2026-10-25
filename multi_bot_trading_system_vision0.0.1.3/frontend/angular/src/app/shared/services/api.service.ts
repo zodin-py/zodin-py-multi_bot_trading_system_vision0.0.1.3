@@ -3,20 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import {
-  AggregatedSignal,
-  BotProbabilities,
-  HistoryResponse,
-  HistoryStats,
+  PriceResponse,
+  WalletResponse,
   IndicatorsResponse,
   LoadCoinResponse,
-  OpenTradesResponse,
-  PortfolioResponse,
-  RiskLimitResponse,
-  RiskLimitSetResponse,
-  SignalsResponse,
   StatusResponse,
-  Trade,
-  TradingActionResponse,
 } from '../models/api.models';
 
 /**
@@ -52,61 +43,25 @@ export class ApiService {
     });
   }
 
-  // ---- Signals ---------------------------------------------------------
+  // ---- Price ---------------------------------------------------------
 
-  getSignals(): Observable<SignalsResponse> {
-    return this.http.get<SignalsResponse>('/api/signals');
-  }
-
-  getIndicators(): Observable<IndicatorsResponse> {
-    return this.http.get<IndicatorsResponse>('/api/indicators');
-  }
-
-  // ---- Trades ----------------------------------------------------------
-
-  getOpenTrades(): Observable<OpenTradesResponse> {
-    return this.http.get<OpenTradesResponse>('/api/trades');
-  }
-
-  closeTrade(tradeId: string, reason = 'manual'): Observable<Trade> {
-    return this.http.delete<Trade>(`/api/trades/${encodeURIComponent(tradeId)}`, {
-      params: { reason },
+  getPrice(coin: string = 'btc'): Observable<PriceResponse> {
+    return this.http.get<PriceResponse>('/api/price', {
+      params: { coin: coin.toLowerCase() },
     });
   }
 
-  getHistory(
-    startDate?: string,
-    endDate?: string,
-  ): Observable<HistoryResponse> {
-    let params = new HttpParams();
-    if (startDate) params = params.set('start_date', startDate);
-    if (endDate) params = params.set('end_date', endDate);
-    return this.http.get<HistoryResponse>('/api/history', { params });
+  // ---- Wallet ---------------------------------------------------------
+
+  getWallet(): Observable<WalletResponse> {
+    return this.http.get<WalletResponse>('/api/wallet');
   }
 
-  // ---- Portfolio / risk -------------------------------------------------
+  // ---- Indicators ---------------------------------------------------------
 
-  getPortfolio(): Observable<PortfolioResponse> {
-    return this.http.get<PortfolioResponse>('/api/portfolio');
-  }
-
-  getRiskLimit(): Observable<RiskLimitResponse> {
-    return this.http.get<RiskLimitResponse>('/api/risk/limit');
-  }
-
-  setRiskLimit(maxDailyLossEur: number): Observable<RiskLimitSetResponse> {
-    return this.http.post<RiskLimitSetResponse>('/api/risk/limit', {
-      max_daily_loss_eur: maxDailyLossEur,
+  getIndicators(coin: string = 'btc', tf: string = '1h'): Observable<IndicatorsResponse> {
+    return this.http.get<IndicatorsResponse>('/api/indicators', {
+      params: { coin: coin.toLowerCase(), tf },
     });
-  }
-
-  // ---- Trading control --------------------------------------------------
-
-  startTrading(): Observable<TradingActionResponse> {
-    return this.http.post<TradingActionResponse>('/api/trading', { action: 'start' });
-  }
-
-  stopTrading(): Observable<TradingActionResponse> {
-    return this.http.post<TradingActionResponse>('/api/trading', { action: 'stop' });
   }
 }

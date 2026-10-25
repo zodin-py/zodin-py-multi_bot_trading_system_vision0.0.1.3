@@ -5,15 +5,15 @@
     "timeframe": "1h",
     "side": "long",
     "entry_price": 100.0,
-    "quantity": 50.0,
+    "quantity": 2.5,
     "stop_loss": 98.0,
     "take_profit": 104.0,
-    "status": "closed",
-    "open_time": "2026-10-19T22:50:54.849711",
-    "close_time": "2026-10-19T22:50:54.850700",
-    "pnl": 150.0,
-    "pnl_percent": 3.0,
-    "notes": "manual",
+    "status": "open",
+    "open_time": "2026-10-25T16:38:54.858819",
+    "close_time": null,
+    "pnl": 0,
+    "pnl_percent": 0,
+    "notes": "",
     "sl_source": "sr_level"
   }
 ]

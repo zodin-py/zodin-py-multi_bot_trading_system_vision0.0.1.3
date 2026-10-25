@@ -59,29 +59,29 @@
       </div>
     </div>
 
-    <!-- MFI -->
+    <!-- EMA -->
     <div class="bg-slate-800/50 rounded-lg p-4">
       <div class="flex items-center justify-between mb-2">
-        <span class="font-medium">MFI (14)</span>
-        <span class="text-xl font-bold">{{ mfiValue }}</span>
+        <span class="font-medium">EMA (20)</span>
+        <span class="text-xl font-bold">{{ emaValue }}</span>
       </div>
       <div class="flex items-center space-x-4 text-sm">
         <div class="flex-1">
           <div class="flex justify-between mb-1">
             <span class="text-gray-400">Buy</span>
-            <span class="text-green-400">{{ mfiBuy }}%</span>
+            <span class="text-green-400">{{ emaBuy }}%</span>
           </div>
           <div class="w-full bg-slate-700 rounded-full h-2">
-            <div class="progress-bar bg-green-500 h-2 rounded-full" [style.width.%]="mfiBuy"></div>
+            <div class="progress-bar bg-green-500 h-2 rounded-full" [style.width.%]="emaBuy"></div>
           </div>
         </div>
         <div class="flex-1">
           <div class="flex justify-between mb-1">
             <span class="text-gray-400">Sell</span>
-            <span class="text-red-400">{{ mfiSell }}%</span>
+            <span class="text-red-400">{{ emaSell }}%</span>
           </div>
           <div class="w-full bg-slate-700 rounded-full h-2">
-            <div class="progress-bar bg-red-500 h-2 rounded-full" [style.width.%]="mfiSell"></div>
+            <div class="progress-bar bg-red-500 h-2 rounded-full" [style.width.%]="emaSell"></div>
           </div>
         </div>
       </div>

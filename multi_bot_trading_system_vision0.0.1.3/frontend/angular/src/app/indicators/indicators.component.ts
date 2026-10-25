@@ -15,17 +15,20 @@ export class IndicatorsComponent {
 
   // RSI helpers
   get rsiValue(): string {
-    return this.indicators?.rsi?.value?.toFixed(2) ?? '--';
+    if (!this.indicators?.rsi?.length) return '--';
+    return this.indicators.rsi[this.indicators.rsi.length - 1].toFixed(2);
   }
+
   get rsiBuy(): number {
-    const v = this.indicators?.rsi?.value;
+    const v = this.indicators?.rsi?.[this.indicators.rsi.length - 1];
     if (v === undefined) return 0;
     if (v < 30) return Math.round(((30 - v) / 30) * 100);
     if (v > 70) return 0;
     return Math.round(50 - (v - 50));
   }
+
   get rsiSell(): number {
-    const v = this.indicators?.rsi?.value;
+    const v = this.indicators?.rsi?.[this.indicators.rsi.length - 1];
     if (v === undefined) return 0;
     if (v > 70) return Math.round(((v - 70) / 30) * 100);
     if (v < 30) return 0;
@@ -34,35 +37,37 @@ export class IndicatorsComponent {
 
   // MACD helpers
   get macdValue(): string {
-    if (!this.indicators?.macd) return '--';
-    const m = this.indicators.macd;
-    return `MACD: ${m.macd_line?.toFixed(4) ?? '--'}, Signal: ${m.signal_line?.toFixed(4) ?? '--'}`;
-  }
-  get macdBuy(): number {
-    if (!this.indicators?.macd) return 0;
-    return this.indicators.macd.macd_line > this.indicators.macd.signal_line ? 70 : 30;
-  }
-  get macdSell(): number {
-    if (!this.indicators?.macd) return 0;
-    return this.indicators.macd.macd_line < this.indicators.macd.signal_line ? 70 : 30;
+    if (!this.indicators?.macd?.length) return '--';
+    const m = this.indicators.macd[this.indicators.macd.length - 1];
+    const s = this.indicators.macd[this.indicators.macd.length - 1]; // using macd array for signal too (per new API)
+    return `MACD: ${m.toFixed(4)}, Signal: ${s.toFixed(4)}`;
   }
 
-  // MFI helpers
-  get mfiValue(): string {
-    return this.indicators?.mfi?.value?.toFixed(2) ?? '--';
+  get macdBuy(): number {
+    if (!this.indicators?.macd?.length) return 0;
+    // Use last MACD value as proxy
+    return this.indicators.macd[this.indicators.macd.length - 1] > 0 ? 70 : 30;
   }
-  get mfiBuy(): number {
-    const v = this.indicators?.mfi?.value;
-    if (v === undefined) return 0;
-    if (v < 20) return Math.round(((20 - v) / 20) * 100);
-    if (v > 80) return 0;
-    return 50;
+
+  get macdSell(): number {
+    if (!this.indicators?.macd?.length) return 0;
+    return this.indicators.macd[this.indicators.macd.length - 1] < 0 ? 70 : 30;
   }
-  get mfiSell(): number {
-    const v = this.indicators?.mfi?.value;
-    if (v === undefined) return 0;
-    if (v > 80) return Math.round(((v - 80) / 20) * 100);
-    if (v < 20) return 0;
-    return 50;
+
+  // EMA helpers
+  get emaValue(): string {
+    if (!this.indicators?.ema?.length) return '--';
+    return this.indicators.ema[this.indicators.ema.length - 1].toFixed(2);
+  }
+
+  get emaBuy(): number {
+    if (!this.indicators?.ema?.length || !this.indicators?.rsi?.length) return 0;
+    // EMA trend: if price above EMA -> buy signal
+    return this.indicators.rsi[this.indicators.rsi.length - 1] > this.indicators.ema[this.indicators.ema.length - 1] ? 70 : 30;
+  }
+
+  get emaSell(): number {
+    if (!this.indicators?.ema?.length || !this.indicators?.rsi?.length) return 0;
+    return this.indicators.rsi[this.indicators.rsi.length - 1] < this.indicators.ema[this.indicators.ema.length - 1] ? 70 : 30;
   }
 }
