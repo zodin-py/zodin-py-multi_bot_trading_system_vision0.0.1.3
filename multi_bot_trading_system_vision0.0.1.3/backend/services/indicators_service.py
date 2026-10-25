@@ -1,4 +1,4 @@
-"""Indicators service — fetches indicators via tradingview-ta + local computation."""
+"""Indicators service — fetches indicators via ccxt REST (OHLCV candles needed)."""
 
 from __future__ import annotations
 
@@ -16,36 +16,28 @@ logger = logging.getLogger(__name__)
 class IndicatorService:
     """Fetch technical indicators (RSI, MACD, EMA) from OHLCV candles.
 
-    Uses CCXT to fetch OHLCV candles and custom numpy/pandas computation
-    for indicator arrays. The spec requires "last 20 indicator values"
-    consistent with TradingView calculations.
+    Uses CCXT to fetch OHLCV candles (50 most recent) and computes
+    indicator arrays locally via pandas.
     """
 
-    _exchange: Optional[ccxt.binance] = None
-    _lookback: int = 50  # fetch this many candles, return last 20 indicators
-
-    @property
-    def exchange(self) -> ccxt.binance:
-        if self._exchange is None:
-            self._exchange = ccxt.binance({"enableRateLimit": True})
-        return self._exchange
+    def __init__(self, lookback: int = 50) -> None:
+        self._lookback = lookback
 
     @staticmethod
     def _normalize_coin(coin: str) -> Optional[str]:
-        """Normalize coin symbol: append /USDT if not present."""
+        """Normalize coin symbol to BTC/USDT format."""
         symbol = coin.strip().upper()
         if symbol.endswith('/USDT'):
             return symbol
         if not symbol.endswith('USDT'):
-            return symbol + '/USDT'
-        # Has USDT suffix but no slash - add slash
-        return symbol[:-4] + '/' + symbol[-4:]
+            return symbol + 'USDT'
+        return symbol[:-4] + '/USDT'
 
     @staticmethod
     def _format_symbol_for_response(symbol: str) -> str:
         """Format symbol for API response (BTCUSDT -> BTC/USDT)."""
         if '/' in symbol:
-            return symbol  # Already formatted
+            return symbol
         if symbol.endswith("USDT") and len(symbol) > 4:
             return symbol[:-4] + "/" + symbol[-4:]
         return symbol
@@ -57,28 +49,50 @@ class IndicatorService:
         mapping = {"1m": "1m", "5m": "5m", "15m": "15m", "1h": "1h", "4h": "4h", "1d": "1d"}
         return mapping.get(tf_lower, "1h")
 
-    def _get_ohlcv(self, symbol: str, timeframe: str, limit: int = 50) -> Optional[List[Dict[str, float]]]:
-        """Fetch OHLCV candles from ccxt."""
+    def get_indicators(self, coin: str, timeframe: str = "1h") -> Optional[Dict[str, Any]]:
+        """Return last 20 values for RSI, MACD, EMA.
+
+        Returns dict with arrays for rsi, macd, signal, hist, ema, plus metadata.
+        """
         try:
-            raw = self.exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=limit)
-            return [
-                {
-                    "time": float(c[0]),
-                    "open": float(c[1]),
-                    "high": float(c[2]),
-                    "low": float(c[3]),
-                    "close": float(c[4]),
-                    "volume": float(c[5]),
-                }
-                for c in raw
-            ]
+            symbol = self._normalize_coin(coin)
+            if symbol is None:
+                return None
+
+            tf = self._normalize_timeframe(timeframe)
+
+            # Fetch ~50 candles
+            exchange = ccxt.binance({'enableRateLimit': True, 'timeout': 15000})
+            raw = exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=self._lookback)
+
+            if len(raw) < 30:
+                return None
+
+            closes = [float(c[4]) for c in raw]
+            df = pd.DataFrame({"close": closes})
+
+            # Compute indicators
+            rsi_vals = self._compute_rsi(df["close"])
+            macd_vals, signal_vals, hist_vals = self._compute_macd(df["close"])
+            ema_vals = self._compute_ema(df["close"])
+
+            return {
+                "rsi": rsi_vals,
+                "macd": macd_vals,
+                "signal": signal_vals,
+                "hist": hist_vals,
+                "ema": ema_vals,
+                "timeframe": tf,
+                "symbol": self._format_symbol_for_response(symbol),
+            }
+
         except Exception as e:
-            logger.warning(f"Failed to fetch OHLCV for {symbol}/{timeframe}: {e}")
+            logger.warning(f"Failed to get indicators for {coin}/{timeframe}: {e}")
             return None
 
     @staticmethod
     def _compute_rsi(closes: pd.Series, period: int = 14) -> List[float]:
-        """Compute RSI using Wilder's smoothing (same as TradingView/pandas_ta)."""
+        """Compute RSI using Wilder's smoothing."""
         delta = closes.diff()
         gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
@@ -107,57 +121,3 @@ class IndicatorService:
         """Compute EMA."""
         ema = closes.ewm(span=period, adjust=False).mean()
         return ema.dropna().tolist()[-20:]
-
-    def get_indicators(
-        self, coin: str, timeframe: str = "1h"
-    ) -> Optional[Dict[str, Any]]:
-        """Return last 20 values for RSI, MACD line+signal+hist, and EMA.
-
-        Returns dict with arrays for rsi, macd, signal, hist, ema, plus metadata.
-        Returns None on error.
-        """
-        try:
-            symbol = self._normalize_coin(coin)
-            if symbol is None:
-                return None
-
-            tf = self._normalize_timeframe(timeframe)
-
-            # Fetch ~50 candles to ensure we have enough for 20 indicator values
-            candles = self._get_ohlcv(symbol, tf, limit=self._lookback)
-            if candles is None:
-                return None
-
-            if len(candles) < 30:
-                return None
-
-            df = pd.DataFrame(candles)
-            closes = df["close"]
-
-            # Compute indicator arrays
-            rsi_vals = self._compute_rsi(closes, period=14)
-            macd_vals, signal_vals, hist_vals = self._compute_macd(closes)
-            ema_vals = self._compute_ema(closes, period=20)
-
-            return {
-                "rsi": rsi_vals,
-                "macd": macd_vals,
-                "signal": signal_vals,
-                "hist": hist_vals,
-                "ema": ema_vals,
-                "timeframe": tf,
-                "symbol": self._format_symbol_for_response(symbol),
-            }
-
-        except Exception as e:
-            logger.warning(f"Failed to get indicators for {coin}/{timeframe}: {e}")
-            return None
-
-    def get_indicators_with_history(
-        self, coin: str, timeframe: str = "1h", limit: int = 20
-    ) -> Optional[Dict[str, Any]]:
-        """Get indicators with explicit limit parameter.
-
-        Alias for get_indicators — ensures last `limit` values are returned.
-        """
-        return self.get_indicators(coin, timeframe)

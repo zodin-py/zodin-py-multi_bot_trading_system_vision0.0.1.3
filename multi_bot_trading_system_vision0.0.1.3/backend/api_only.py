@@ -1,11 +1,11 @@
 """Multi-Bot Trading System - API only mode (no frontend).
 
 Usage:
-    python backend/api_only.py
-    cd multi_bot_trading_system_vision0.0.1.3 && venv/Scripts/python.exe -m backend.api_only
+    venv/Scripts/python.exe -m backend.api_only
 
 Serves only the /api/* endpoints on port 5000.
-No SPA fallback, no Angular build required.
+WebSocket provides live price updates in background.
+No Angular build required.
 """
 
 import logging
@@ -13,9 +13,7 @@ import os
 import sys
 from datetime import datetime
 
-# Add project root to path so local `backend` package takes precedence over installed package
-# File location: backend/api_only.py
-# Project root: backend/api_only.py -> .. = project root
+# Add project root to path
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
@@ -23,11 +21,9 @@ if PROJECT_ROOT not in sys.path:
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-# Import via backend package (now has __init__.py)
 from backend import config
 from backend.services.indicators_service import IndicatorService
 from backend.services.price_service import PriceService
-from backend.services.wallet_service import WalletService
 
 # --- Logging ---------------------------------------------------------------
 
@@ -42,21 +38,22 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'trading_system_secret_key')
 
-# Allow Angular dev server (port 4200) to call these endpoints
 CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
                    "http://localhost:4200", "http://127.0.0.1:4200"])
 
 # --- Services --------------------------------------------------------------
 
 price_service = PriceService()
-wallet_service = WalletService()
 indicators_service = IndicatorService()
+
+# Start WebSocket price stream immediately
+PriceService.start()
 
 # --- Routes ----------------------------------------------------------------
 
 @app.route('/api/price')
 def api_price():
-    """Get live price for a coin."""
+    """Get live price for a coin (instant from cache)."""
     coin = request.args.get('coin', '').strip()
     if not coin:
         return jsonify({"error": "Missing coin parameter", "data": None}), 400
@@ -68,18 +65,9 @@ def api_price():
     return jsonify(result)
 
 
-@app.route('/api/wallet')
-def api_wallet():
-    """Get Binance Spot wallet balances."""
-    result = wallet_service.get_wallet_sync()
-    if result is None or 'error' in result:
-        return jsonify({"error": "Could not fetch wallet", "data": None}), 500
-    return jsonify(result)
-
-
 @app.route('/api/indicators')
 def api_indicators():
-    """Get technical indicators (RSI, MACD, EMA) for a coin/timeframe."""
+    """Get technical indicators (RSI, MACD, EMA)."""
     coin = request.args.get("coin", "").strip()
     if not coin:
         return jsonify({"error": "Coin parameter is required", "data": None}), 400
@@ -119,9 +107,8 @@ def root():
     return jsonify({
         'service': 'Multi-Bot Trading System (API only)',
         'endpoints': {
-            'GET /api/price?coin=xxx': 'Live price',
-            'GET /api/wallet': 'Wallet balances',
-            'GET /api/indicators?coin=xxx&tf=1h': 'Technical indicators',
+            'GET /api/price?coin=xxx': 'Live price (WebSocket cached)',
+            'GET /api/indicators?coin=xxx&tf=1h': 'Technical indicators (RSI, MACD, EMA)',
             'GET /api/status': 'Health check',
             'GET/POST /api/settings': 'Settings',
         },
@@ -131,5 +118,8 @@ def root():
 # --- Main ------------------------------------------------------------------
 
 if __name__ == '__main__':
-    logger.info("Starting API-only server (no frontend)…")
-    app.run(debug=False, host='127.0.0.1', port=config.DASHBOARD_PORT, use_reloader=False)
+    logger.info("Starting API-only server (WebSocket price feed)…")
+    try:
+        app.run(debug=False, host='127.0.0.1', port=config.DASHBOARD_PORT, use_reloader=False)
+    finally:
+        PriceService.stop()

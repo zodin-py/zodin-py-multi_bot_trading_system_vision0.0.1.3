@@ -38,7 +38,7 @@ class TradingConfig(BaseSettings):
     # Minimal coin list for lookup validation
     COINS: List[str] = Field(
         default=[
-            'BTCUSDT', 'ETHUSDT', 'SOLUSDT',
+            'BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'ADAUSDT', 'BNBUSDT', 'XRPUSDT', 'LTCUSDT', 'DOTUSDT', 'DOGEUSDT', 'AVAXUSDT',
         ],
         description='List of supported trading symbols'
     )

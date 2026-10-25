@@ -85,11 +85,13 @@ class TestIndicatorsService:
         assert result is None
 
     def test_normalize_coin(self):
-        """Test coin normalization."""
+        """Test coin normalization - ensures proper USDT suffix and slash."""
         assert IndicatorService._normalize_coin('btc') == 'BTCUSDT'
         assert IndicatorService._normalize_coin('BTC') == 'BTCUSDT'
-        assert IndicatorService._normalize_coin('btcusdt') == 'BTCUSDT'
-        assert IndicatorService._normalize_coin('BTCUSDT') == 'BTCUSDT'
+        # Already has USDT suffix - add slash
+        assert IndicatorService._normalize_coin('btcusdt') == 'BTC/USDT'
+        assert IndicatorService._normalize_coin('BTCUSDT') == 'BTC/USDT'
+        assert IndicatorService._normalize_coin('ETH/USDT') == 'ETH/USDT'
 
     def test_format_symbol_for_response(self):
         """Test symbol formatting for response."""
