@@ -21,24 +21,25 @@ class IndicatorService:
     consistent with TradingView calculations.
     """
 
-    def __init__(self, exchange_id: str = "binance", lookback: int = 50) -> None:
-        self._exchange_id = exchange_id
-        self._lookback = lookback  # fetch this many candles, return last 20 indicators
-        self._exchange = self._create_exchange()
+    _exchange: Optional[ccxt.binance] = None
+    _lookback: int = 50  # fetch this many candles, return last 20 indicators
 
-    def _create_exchange(self) -> ccxt.binance:
-        return ccxt.binance({"enableRateLimit": True})
+    @property
+    def exchange(self) -> ccxt.binance:
+        if self._exchange is None:
+            self._exchange = ccxt.binance({"enableRateLimit": True})
+        return self._exchange
 
     @staticmethod
     def _normalize_coin(coin: str) -> Optional[str]:
-        """Normalize coin symbol: append USDT if not present.
-
-        For ccxt OHLCV fetch, use BTCUSDT format (without slash).
-        """
+        """Normalize coin symbol: append /USDT if not present."""
         symbol = coin.strip().upper()
-        if not symbol.endswith("USDT"):
-            symbol = symbol + "USDT"
-        return symbol if symbol else None
+        if symbol.endswith('/USDT'):
+            return symbol
+        if not symbol.endswith('USDT'):
+            return symbol + '/USDT'
+        # Has USDT suffix but no slash - add slash
+        return symbol[:-4] + '/' + symbol[-4:]
 
     @staticmethod
     def _format_symbol_for_response(symbol: str) -> str:
@@ -59,8 +60,7 @@ class IndicatorService:
     def _get_ohlcv(self, symbol: str, timeframe: str, limit: int = 50) -> Optional[List[Dict[str, float]]]:
         """Fetch OHLCV candles from ccxt."""
         try:
-            exchange = ccxt.binance({"enableRateLimit": True})
-            raw = exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=limit)
+            raw = self.exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=limit)
             return [
                 {
                     "time": float(c[0]),

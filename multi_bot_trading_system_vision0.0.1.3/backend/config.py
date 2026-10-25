@@ -85,6 +85,9 @@ class TradingConfig(BaseSettings):
     # ==================== DEFAULT QUOTE ====================
     DEFAULT_QUOTE: str = Field(default='USDT', description='Default quote currency')
 
+    # --- Backward-compatible module-level exports ---
+    # (exposed at bottom of file)
+
     model_config = SettingsConfigDict(
         env_prefix='TRADING_',
         env_file='.env',
@@ -145,6 +148,7 @@ BACKTEST_MODE: bool = config.BACKTEST_MODE if hasattr(config, 'BACKTEST_MODE') e
 INITIAL_CAPITAL: float = config.INITIAL_CAPITAL if hasattr(config, 'INITIAL_CAPITAL') else 10000.0
 COINS: List[str] = config.COINS
 TIMEFRAMES: Dict[str, str] = config.TIMEFRAMES
+DEFAULT_QUOTE: str = config.DEFAULT_QUOTE
 
 
 __all__ = [
