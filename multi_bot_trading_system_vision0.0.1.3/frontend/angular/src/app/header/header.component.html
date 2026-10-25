@@ -4,16 +4,8 @@
       <!-- Logo + Title -->
       <div class="flex items-center space-x-4">
         <div class="flex items-center space-x-2">
-          <i class="fas fa-robot text-2xl text-blue-400"></i>
+          <i class="fas fa-chart-line text-2xl text-blue-400"></i>
           <h1 class="text-xl font-bold">Multi-Bot Trading System</h1>
-        </div>
-
-        <div id="status-indicator" class="flex items-center space-x-2">
-          <span
-            class="w-2 h-2 rounded-full pulse-dot"
-            [class]="statusDot"
-          ></span>
-          <span class="text-sm text-gray-400">{{ statusText }}</span>
         </div>
       </div>
 
@@ -46,20 +38,6 @@
           {{ tf.label }}
           </option>
         </select>
-
-        <!-- Trading Toggle -->
-        <button
-          (click)="tradingActive ? stopTradingAction() : toggleTrading()"
-          [class]="tradingActive
-            ? 'bg-green-600 hover:bg-green-700'
-            : 'bg-red-600 hover:bg-red-700'"
-          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-        >
-          <i
-            [class]="tradingActive ? 'fas fa-stop mr-2' : 'fas fa-play mr-2'"
-          ></i>
-          {{ tradingActive ? 'Stop' : 'Start' }}
-        </button>
       </div>
     </div>
   </div>
