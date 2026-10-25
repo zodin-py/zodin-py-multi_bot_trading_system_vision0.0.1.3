@@ -9,7 +9,7 @@ import { PriceCardComponent } from './kpi/price-card.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
 
 import { ApiService } from './shared/services/api.service';
-import { PriceResponse, WalletResponse, IndicatorsResponse } from './shared/models/api.models';
+import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
 
 @Component({
   selector: 'app-root',
@@ -30,14 +30,17 @@ export class App implements OnInit, OnDestroy {
   private readonly refreshInterval = 5000;
   private sub?: Subscription;
 
-  // Data state
+  // State synced with header
+  currentCoin = 'BTC';
+  currentTimeframe = '1h';
+
   currentPrice: number | null = null;
   priceChange = '--';
-  wallet: WalletResponse | null = null;
   indicators: IndicatorsResponse | null = null;
 
-  // Header emits
   onCoinLoaded(cmd: { symbol: string; timeframe: string }): void {
+    this.currentCoin = cmd.symbol;
+    this.currentTimeframe = cmd.timeframe;
     this.loadAllData();
   }
 
@@ -51,19 +54,14 @@ export class App implements OnInit, OnDestroy {
   }
 
   loadAllData(): void {
-    this.api.getPrice().subscribe({
+    this.api.getPrice(this.currentCoin).subscribe({
       next: (p: PriceResponse) => {
         this.currentPrice = p.price;
       },
       error: (err) => console.error('Price error:', err),
     });
 
-    this.api.getWallet().subscribe({
-      next: (w: WalletResponse) => (this.wallet = w),
-      error: (err) => console.error('Wallet error:', err),
-    });
-
-    this.api.getIndicators().subscribe({
+    this.api.getIndicators(this.currentCoin, this.currentTimeframe).subscribe({
       next: (i: IndicatorsResponse) => (this.indicators = i),
       error: (err) => console.error('Indicators error:', err),
     });

@@ -62,8 +62,14 @@ class IndicatorService:
             tf = self._normalize_timeframe(timeframe)
 
             # Fetch ~50 candles
-            exchange = ccxt.binance({'enableRateLimit': True, 'timeout': 15000})
-            raw = exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=self._lookback)
+            exchange = ccxt.binance({'enableRateLimit': True, 'timeout': 20000, 'options': {'defaultType': 'spot'}})
+            try:
+                raw = exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=self._lookback)
+            except Exception:
+                # Retry with bybit as fallback
+                import ccxt as ccxt2
+                bybit = ccxt2.bybit({'enableRateLimit': True, 'timeout': 20000})
+                raw = bybit.fetch_ohlcv(symbol, timeframe=timeframe, limit=self._lookback)
 
             if len(raw) < 30:
                 return None

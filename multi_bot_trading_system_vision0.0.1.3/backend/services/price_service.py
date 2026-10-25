@@ -195,16 +195,16 @@ class PriceService:
     def _fetch_price_rest(cls, symbol: str) -> Dict[str, Any]:
         """REST fallback for price fetch using spot market."""
         import ccxt
+        exchange_symbol = symbol.replace("/", "")
         try:
-            # ccxt expects symbol without slash (BTCUSDT not BTC/USDT)
-            exchange_symbol = symbol.replace("/", "")
             exchange = ccxt.binance({
                 'enableRateLimit': True,
-                'timeout': 15000,
+                'timeout': 20000,
                 'options': {'defaultType': 'spot'},
+                'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
             })
+            # Try spot first
             ticker = exchange.fetch_ticker(exchange_symbol)
-            # Return with slash format for consistency
             return {
                 'symbol': symbol,
                 'price': ticker.get('last', 0.0),
@@ -214,4 +214,22 @@ class PriceService:
             }
         except Exception as e:
             logger.warning(f"REST fallback failed for {symbol}: {e}")
-            return {'error': 'Coin not found', 'data': None}
+            # Retry with bybit as fallback
+            try:
+                import ccxt as ccxt2
+                bybit = ccxt2.bybit({
+                    'enableRateLimit': True,
+                    'timeout': 20000,
+                    'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
+                })
+                ticker = bybit.fetch_ticker(exchange_symbol)
+                return {
+                    'symbol': symbol,
+                    'price': ticker.get('last', 0.0),
+                    'timestamp': datetime.fromtimestamp(
+                        ticker.get('timestamp', 0) / 1000, tz=timezone.utc
+                    ).isoformat(),
+                }
+            except Exception as e2:
+                logger.warning(f"Bybit fallback also failed for {symbol}: {e2}")
+                return {'error': 'Coin not found', 'data': None}

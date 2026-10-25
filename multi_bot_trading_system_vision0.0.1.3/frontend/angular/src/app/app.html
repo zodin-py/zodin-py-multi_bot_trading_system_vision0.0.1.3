@@ -6,49 +6,38 @@
 
   <!-- Main Content -->
   <main class="container mx-auto px-4 py-6">
-    <!-- KPI Grid: Price + Wallet + Indicators -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <!-- KPI Grid: Price + Indicators -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <!-- Price Card -->
       <app-price-card [price]="currentPrice" [priceChange]="priceChange"></app-price-card>
-
-      <!-- Wallet Summary Card -->
-      <div class="card rounded-xl p-4" *ngIf="wallet">
-        <h2 class="text-lg font-semibold mb-4">
-          <i class="fas fa-wallet mr-2 text-yellow-400"></i>Wallet
-        </h2>
-        <div class="space-y-2">
-          <div class="flex justify-between text-sm">
-            <span class="text-gray-400">Total</span>
-            <span class="text-xl font-bold text-green-400">{{ wallet.total_usdt | number:'1.2-2' }} USDT</span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span class="text-gray-400">Assets</span>
-            <span class="font-bold">{{ wallet.balances.length }}</span>
-          </div>
-        </div>
-      </div>
 
       <!-- Indicators Preview Card -->
       <div class="card rounded-xl p-4" *ngIf="indicators">
         <h2 class="text-lg font-semibold mb-4">
-          <i class="fas fa-chart-line mr-2 text-green-400"></i>Indicators
+          <i class="fas fa-chart-line mr-2 text-green-400"></i>Indicators ({{ indicators.symbol }} · {{ indicators.timeframe }})
         </h2>
         <div class="space-y-2">
           <div class="flex justify-between text-sm">
-            <span class="text-gray-400">RSI (last)</span>
+            <span class="text-gray-400">RSI (14)</span>
             <span class="font-bold" *ngIf="indicators.rsi.length">{{ indicators.rsi[indicators.rsi.length - 1] | number:'1.2-2' }}</span>
             <span class="font-bold text-gray-400" *ngIf="!indicators.rsi.length">--</span>
           </div>
           <div class="flex justify-between text-sm">
-            <span class="text-gray-400">MACD (last)</span>
+            <span class="text-gray-400">MACD</span>
             <span class="font-bold" *ngIf="indicators.macd.length">{{ indicators.macd[indicators.macd.length - 1] | number:'1.4-4' }}</span>
             <span class="font-bold text-gray-400" *ngIf="!indicators.macd.length">--</span>
           </div>
           <div class="flex justify-between text-sm">
-            <span class="text-gray-400">EMA (last)</span>
+            <span class="text-gray-400">EMA (20)</span>
             <span class="font-bold" *ngIf="indicators.ema.length">{{ indicators.ema[indicators.ema.length - 1] | number:'1.2-2' }}</span>
             <span class="font-bold text-gray-400" *ngIf="!indicators.ema.length">--</span>
           </div>
         </div>
+      </div>
+
+      <!-- Loading state when no data -->
+      <div class="card rounded-xl p-4 flex items-center justify-center md:col-span-2" *ngIf="!indicators">
+        <span class="text-gray-400">Loading indicators for {{ currentCoin }}...</span>
       </div>
     </div>
 

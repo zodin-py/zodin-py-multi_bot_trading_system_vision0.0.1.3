@@ -49,6 +49,14 @@ indicators_service = IndicatorService()
 # Start WebSocket price stream immediately
 PriceService.start()
 
+# --- Constants ----------------------------------------------------------------
+
+SUPPORTED_COINS = [
+    'BTC', 'ETH', 'SOL', 'ADA', 'BNB',
+    'XRP', 'LTC', 'DOT', 'DOGE', 'AVAX',
+]
+
+
 # --- Routes ----------------------------------------------------------------
 
 @app.route('/api/price')
@@ -63,6 +71,12 @@ def api_price():
         return jsonify({"error": "Coin not found", "data": None}), 404
 
     return jsonify(result)
+
+
+@app.route('/api/coins')
+def api_coins():
+    """Return the list of supported coins."""
+    return jsonify(SUPPORTED_COINS)
 
 
 @app.route('/api/indicators')

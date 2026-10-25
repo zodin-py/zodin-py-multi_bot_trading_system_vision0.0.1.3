@@ -1,7 +1,6 @@
-import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Output, EventEmitter, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
 
 import { TIMEFRAMES } from '../shared/models/timeframes';
 import { ApiService } from '../shared/services/api.service';
@@ -18,40 +17,31 @@ export interface HeaderCommand {
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   readonly timeframes = TIMEFRAMES;
 
+  // Fixed coin list
+  coins = ['BTC', 'ETH', 'SOL', 'ADA', 'BNB', 'XRP', 'LTC', 'DOT', 'DOGE', 'AVAX'];
   symbol = 'BTC';
   timeframe = '1h';
-
-  loading = false;
 
   @Output() coinLoaded = new EventEmitter<HeaderCommand>();
 
   private readonly api = inject(ApiService);
 
-  loadCoin(): void {
-    const symbol = this.symbol.trim().toUpperCase();
-    if (!symbol) {
-      return;
-    }
-    this.loading = true;
-    this.api
-      .loadCoin(symbol, this.timeframe)
-      .pipe(finalize(() => (this.loading = false)))
-      .subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.coinLoaded.emit({ symbol: res.symbol, timeframe: res.timeframe });
-          }
-        },
-        error: (err: unknown) => console.error('Error loading coin:', err),
-      });
+  ngOnInit(): void {
+    this.emitLoad();
   }
 
-  onSymbolKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      this.loadCoin();
-    }
+  emitLoad(): void {
+    this.coinLoaded.emit({ symbol: this.symbol, timeframe: this.timeframe });
+  }
+
+  onCoinChange(): void {
+    this.emitLoad();
+  }
+
+  onTimeframeChange(): void {
+    this.emitLoad();
   }
 }
