@@ -52,6 +52,7 @@ export class App implements OnInit, OnDestroy {
   openTradesCount = 0;
   openTradesPnl: number | null = null;
   capital: number | null = null;
+  capitalError: string | null = null;
   capitalChange = '--';
   dailyPnl: number | null = null;
   isHalted = false;
@@ -118,10 +119,15 @@ export class App implements OnInit, OnDestroy {
     this.api.getPortfolio().subscribe({
       next: (p: PortfolioResponse) => {
         this.capital = p.capital;
+        this.capitalError = null;
         this.dailyPnl = p.daily_pnl;
         this.isHalted = p.is_halted;
       },
-      error: (err) => console.error('Portfolio error:', err),
+      error: (err) => {
+        this.capital = null;
+        this.capitalError = err.error?.error ?? 'Binance-Guthaben konnte nicht geladen werden.';
+        console.error('Portfolio error:', err);
+      },
     });
 
     this.api.getRiskLimit().subscribe({

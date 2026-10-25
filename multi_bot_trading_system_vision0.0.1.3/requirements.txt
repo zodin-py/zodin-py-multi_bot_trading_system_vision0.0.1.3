@@ -26,9 +26,13 @@ aiohttp>=3.9.0
 # REST API
 fastapi>=0.110.0
 uvicorn>=0.27.0
+pydantic-settings>=2.0.0
 
 # MCP Server SDK
 mcp>=1.0.0
+
+# TradingView indicator provider
+tradingview-ta>=3.3.0
 
 # Logging / Config
 python-dotenv==1.0.0

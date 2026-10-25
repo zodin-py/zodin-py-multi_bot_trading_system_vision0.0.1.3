@@ -36,6 +36,14 @@ def executor(tmp_path):
         exec_module.TRADES_HISTORY_FILE = original_file
 
 
+@pytest.fixture(autouse=True)
+def force_testnet_for_tests(monkeypatch):
+    """Keep tests isolated from any live-trading settings in the developer's .env."""
+    from backend import config
+
+    monkeypatch.setattr(config.config, 'USE_TESTNET', True)
+
+
 @pytest.fixture
 def mock_provider():
     return MockIndicatorProvider()
@@ -346,11 +354,63 @@ class TestQueryHelpers:
         assert stats['win_rate'] == 0.0
 
     def test_portfolio(self, executor):
-        p = executor.get_portfolio()
+        with patch.object(executor, 'get_account_capital', return_value=10000.0):
+            p = executor.get_portfolio()
         assert p['capital'] == 10000.0
         assert p['open_count'] == 0
         assert p['is_halted'] is False
         assert p['is_halted'] is False
+
+    def test_get_account_capital_fetches_and_caches_binance_balance(self, executor, monkeypatch):
+        from backend import config
+
+        monkeypatch.setattr(config.config, 'BINANCE_API_KEY', 'test-key')
+        monkeypatch.setattr(config.config, 'BINANCE_SECRET_KEY', 'test-secret')
+        exchange = MagicMock()
+        exchange.fetch_balance.return_value = {'total': {'USDT': 1234.56}}
+        with patch.object(executor, '_create_exchange', return_value=exchange):
+            assert executor.get_account_capital() == 1234.56
+            assert executor.get_account_capital() == 1234.56
+
+        exchange.fetch_balance.assert_called_once_with()
+        exchange.close.assert_called_once_with()
+
+    def test_get_account_capital_requires_api_keys(self, executor, monkeypatch):
+        from backend import config
+
+        monkeypatch.setattr(config.config, 'BINANCE_API_KEY', '')
+        monkeypatch.setattr(config.config, 'BINANCE_SECRET_KEY', '')
+        with pytest.raises(RuntimeError, match='API keys are not configured'):
+            executor.get_account_capital()
+
+    def test_get_account_capital_explains_invalid_timestamp(self, executor, monkeypatch):
+        import ccxt
+        from backend import config
+
+        monkeypatch.setattr(config.config, 'BINANCE_API_KEY', 'test-key')
+        monkeypatch.setattr(config.config, 'BINANCE_SECRET_KEY', 'test-secret')
+        exchange = MagicMock()
+        exchange.fetch_balance.side_effect = ccxt.InvalidNonce('invalid timestamp')
+        with patch.object(executor, '_create_exchange', return_value=exchange):
+            with pytest.raises(RuntimeError, match='synchronize Windows time'):
+                executor.get_account_capital()
+
+        exchange.close.assert_called_once_with()
+
+    def test_live_trade_refreshes_capital_before_sizing(self, executor, monkeypatch):
+        from backend import config
+
+        monkeypatch.setattr(config.config, 'USE_TESTNET', False)
+        with patch.object(executor, 'get_account_capital', return_value=500.0) as get_capital:
+            with patch.object(executor, '_place_order', return_value={'id': 'live-order'}):
+                trade = executor.open_trade(
+                    'BTCUSDT', '1h', SignalType.BUY,
+                    entry_price=100.0, support_levels=[98.0], atr=1.0,
+                )
+
+        assert trade is not None
+        assert executor.capital == 500.0
+        get_capital.assert_called_once_with()
 
 
 # ---------- To/From Dict ----------

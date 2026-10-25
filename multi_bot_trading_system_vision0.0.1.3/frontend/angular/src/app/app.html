@@ -12,7 +12,11 @@
       <app-price-card [price]="currentPrice" [priceChange]="priceChange"></app-price-card>
       <app-signal-card [signal]="aggregatedSignal" [confidence]="confidence"></app-signal-card>
       <app-open-trades-card [count]="openTradesCount" [pnl]="openTradesPnl"></app-open-trades-card>
-      <app-capital-card [capital]="capital" [capitalChange]="capitalChange"></app-capital-card>
+      <app-capital-card
+        [capital]="capital"
+        [capitalChange]="capitalChange"
+        [capitalError]="capitalError"
+      ></app-capital-card>
     </div>
 
     <!-- Risk Management (card rounded-xl p-4 mb-6) -->

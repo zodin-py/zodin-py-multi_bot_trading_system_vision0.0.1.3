@@ -3,4 +3,6 @@
 Manages persistence of trade records.
 """
 
-pass
+from backend.domains.execution.repository import TradeRepository as TradesRepository
+
+__all__ = ["TradesRepository"]

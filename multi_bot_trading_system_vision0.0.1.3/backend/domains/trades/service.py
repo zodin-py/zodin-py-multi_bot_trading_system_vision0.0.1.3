@@ -3,4 +3,6 @@
 Coordinates trade management operations.
 """
 
-pass
+from backend.domains.execution.service import ExecutionService as TradesService
+
+__all__ = ["TradesService"]

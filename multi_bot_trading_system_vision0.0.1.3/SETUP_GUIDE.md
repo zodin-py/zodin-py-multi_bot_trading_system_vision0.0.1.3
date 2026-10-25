@@ -2,23 +2,44 @@
 
 ## Installation
 
-Installiere die in `requirements.txt` aufgeführten Abhängigkeiten in deiner Python-Umgebung:
-```
-python -m pip install -r requirements.txt
+Installiere Python 3.11 oder neuer. Öffne PowerShell im Repository-Ordner und führe aus:
+
+```powershell
+cd .\multi_bot_trading_system_vision0.0.1.3
+python -m venv "$env:USERPROFILE\venvs\multi-bot"
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" -m pip install --upgrade pip
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" -m pip install -r requirements.txt
 ```
 
 ## Starten des Systems
 
-Im Projektverzeichnis:
-```bash
-python backend/run.py
+Installiere zuerst Node.js. Baue danach Angular und starte den Server im Ordner `multi_bot_trading_system_vision0.0.1.3`:
+
+```powershell
+cd .\frontend\angular
+npm install
+npm run build
+cd ..\..
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" .\backend\run.py
 ```
 
 ## Web Interface
 
-Nach dem Start ist das Dashboard verfügbar unter:
+Nach dem Angular-Build liefert der Server ausschließlich das Frontend aus `frontend/angular/dist/angular/browser` aus. Das Dashboard ist unter `http://127.0.0.1:5000` verfügbar. Beim Laden eines Coins ruft die Anwendung Marktdaten von Binance ab; eine Internetverbindung ist dafür erforderlich.
+
+Zum Beenden `Ctrl+C` im Server-Terminal drücken. Für einen späteren Start zuerst wieder in den Projektordner wechseln und die Umgebung aktivieren:
+
+```powershell
+cd .\multi_bot_trading_system_vision0.0.1.3
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" .\backend\run.py
 ```
-http://127.0.0.1:5000
+
+## Tests
+
+Im Projektordner mit aktivierter virtueller Umgebung:
+
+```powershell
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" -m pytest tests
 ```
 
 ### Verfügbare API Endpoints:
@@ -37,14 +58,30 @@ http://127.0.0.1:5000
 
 ## Konfiguration
 
-### Binance API Keys (optional)
-In `backend/config.py` können API Keys gesetzt werden:
-```python
-BINANCE_API_KEY = os.environ.get('BINANCE_API_KEY', '')
-BINANCE_SECRET_KEY = os.environ.get('BINANCE_SECRET_KEY', '')
+### Binance API Keys
+Lege die Schlüssel **nicht** in den Python-Quellcode. Erstelle im Projektordner
+`multi_bot_trading_system_vision0.0.1.3` eine Datei `.env` (neben `backend/` und
+`frontend/`) und trage dort deine Schlüssel ein:
+
+```dotenv
+TRADING_BINANCE_API_KEY=dein_api_key
+TRADING_BINANCE_SECRET_KEY=dein_api_secret
+TRADING_USE_TESTNET=true
 ```
 
-Standardmäßig läuft das System im **TESTNET MODE** - keine echten Transaktionen!
+Die Konfiguration lädt `.env` beim Start aus dem aktuellen Projektordner. Die
+Datei `.env` ist von Git ausgeschlossen. Im Testnet funktionieren nur API
+Schlüssel, die im Binance-Testnet erstellt wurden. **TESTNET bleibt standardmäßig
+aktiv**; für Live-Handel darf `TRADING_USE_TESTNET` nicht leichtfertig auf
+`false` gesetzt werden.
+
+Für dein echtes Binance-Konto muss in `.env` ausdrücklich
+`TRADING_USE_TESTNET=false` stehen. Dann zeigt das Dashboard das gesamte
+USDT-Guthaben (frei und in offenen Orders gebunden) und die Order-Ausführung
+verwendet ebenfalls Binance Live. Dafür muss der Binance-API-Schlüssel
+Kontostand lesen und Spot-Trading ausführen dürfen. **Auszahlungen niemals
+aktivieren.** Ein Fehler beim Abrufen wird angezeigt; das Dashboard ersetzt ihn
+nicht still durch das Papier-Startkapital von 10.000.
 
 ### Trading Parameter
 In `backend/config.py` können folgende Parameter angepasst werden:

@@ -1,7 +1,8 @@
 <div class="card rounded-xl p-4">
-  <div class="text-sm text-gray-400 mb-1">Kapital</div>
+  <div class="text-sm text-gray-400 mb-1">Binance-Guthaben (USDT)</div>
   <div class="text-2xl font-bold text-green-400">
     {{ capital !== null ? capital.toFixed(2) + ' USDT' : '--' }}
   </div>
+  <div *ngIf="capitalError" class="text-sm text-red-400">{{ capitalError }}</div>
   <div class="text-sm text-gray-500">{{ capitalChange }}</div>
 </div>

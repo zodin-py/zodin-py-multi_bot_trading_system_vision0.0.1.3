@@ -10,7 +10,8 @@ import threading
 import time
 from datetime import datetime
 
-from flask import Flask, jsonify, render_template, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
+from werkzeug.utils import safe_join
 
 from backend import config
 from backend.aggregator import Brain
@@ -29,17 +30,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Flask App
-# Serve Angular build from dist/angular (production) or fallback to old template
+# Serve the Angular browser build in production.
 angular_dist = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', 'frontend', 'angular', 'dist', 'angular')
+    os.path.join(
+        os.path.dirname(__file__),
+        '..',
+        'frontend',
+        'angular',
+        'dist',
+        'angular',
+        'browser',
+    )
 )
-template_dir = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', 'frontend', 'templates', 'templates')
-)
-app = Flask(__name__,
-            template_folder=template_dir,
-            static_folder=angular_dist if os.path.exists(angular_dist) else None,
-            static_url_path='')
+app = Flask(__name__, static_folder=None)
 app.secret_key = 'trading_system_secret_key'
 
 # CORS for Flask endpoints (dashboard on 5000 calls FastAPI on 8000, but Flask still serves some endpoints)
@@ -166,16 +169,6 @@ def stop_trading():
 
 
 # ==================== ROUTES ====================
-
-@app.route('/')
-def index():
-    """Hauptseite - Dashboard"""
-    return render_template('dashboard.html',
-                           coins=COINS,
-                           timeframes=TIMEFRAMES,
-                           current_symbol=current_symbol,
-                           current_timeframe=current_timeframe)
-
 
 @app.route('/api/status')
 def api_status():
@@ -391,7 +384,11 @@ def api_portfolio():
     if not executor:
         return jsonify({'error': 'Executor not initialized'})
 
-    return jsonify(executor.get_portfolio())
+    try:
+        return jsonify(executor.get_portfolio())
+    except RuntimeError as exc:
+        logger.error("Could not load portfolio: %s", exc)
+        return jsonify({'error': str(exc)}), 502
 
 
 @app.route('/api/risk/limit', methods=['GET', 'POST'])
@@ -418,38 +415,28 @@ def api_risk_limit():
     return jsonify({'current_limit': config.MAX_DAILY_LOSS})
 
 
-# ==================== ANGULAR CATCH-ALL ====================
+# ==================== ANGULAR FRONTEND ====================
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_angular(path: str):
-    """
-    Serve Angular app for all non-API routes.
-    In production: serves static files from angular/dist/angular.
-    In dev: falls back to the old Flask template so the old dashboard still works.
-    """
-    # Let API routes through
+    """Serve Angular assets and route requests to the Angular SPA."""
     if path.startswith('api/'):
-        # This will 404 and Flask will handle it normally
-        pass
+        return jsonify({'error': 'Not found'}), 404
 
-    # If Angular build exists, serve it (with SPA fallback to index.html)
-    if os.path.exists(angular_dist):
-        # Try to serve the requested file
-        if path and os.path.exists(os.path.join(angular_dist, path)):
-            return send_from_directory(angular_dist, path)
-        # SPA fallback: serve index.html for all other routes
-        return send_from_directory(angular_dist, 'index.html')
+    index_file = os.path.join(angular_dist, 'index.html')
+    if not os.path.isfile(index_file):
+        return jsonify({
+            'error': (
+                'Angular build not found. Run npm install and npm run build '
+                'in frontend/angular.'
+            )
+        }), 503
 
-    # Fallback: old Flask template (for backward compatibility)
-    return render_template('dashboard.html',
-                           coins=config.COINS,
-                           timeframes=config.TIMEFRAMES,
-                           current_symbol=current_symbol,
-                           current_timeframe=current_timeframe)
-
-
-from flask import send_from_directory
+    requested_file = safe_join(angular_dist, path) if path else None
+    if requested_file and os.path.isfile(requested_file):
+        return send_from_directory(angular_dist, path)
+    return send_from_directory(angular_dist, 'index.html')
 
 # ==================== MAIN ====================
 

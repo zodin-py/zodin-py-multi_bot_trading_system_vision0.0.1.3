@@ -16,8 +16,8 @@ class TradingConfig(BaseSettings):
     """Core trading configuration with type validation and lazy getters."""
 
     # ==================== BINANCE API KONFIGURATION ====================
-    BINANCE_API_KEY: str = Field(default='', description='Binance API Key')
-    BINANCE_SECRET_KEY: str = Field(default='', description='Binance Secret Key')
+    BINANCE_API_KEY: str = Field(default='', repr=False, description='Binance API Key')
+    BINANCE_SECRET_KEY: str = Field(default='', repr=False, description='Binance Secret Key')
 
     USE_TESTNET: bool = Field(default=True, description='Use Binance Testnet')
 

@@ -6,10 +6,13 @@ from backend.domains.indicators.local_calculator import LocalIndicatorCalculator
 from backend.domains.indicators.composite_provider import CompositeProvider
 from backend.domains.indicators.service import IndicatorService
 
+LocalCalculator = LocalIndicatorCalculator
+
 __all__ = [
     'IndicatorValues',
     'IndicatorProvider',
     'TradingViewProvider',
+    'LocalCalculator',
     'LocalIndicatorCalculator',
     'CompositeProvider',
     'IndicatorService',

@@ -15,6 +15,7 @@ Unterstützt:
 
 import json
 import logging
+import math
 import os
 import time
 from dataclasses import dataclass, field
@@ -120,6 +121,8 @@ class TradeExecutor:
         self.trade_history: List[Trade] = []
         self.trade_counter = 0
         self._simulated = simulated
+        self._account_balance_cache: Optional[float] = None
+        self._account_balance_cache_at = 0.0
 
         # Daily loss tracking
         self.daily_pnl: float = 0.0
@@ -379,6 +382,9 @@ class TradeExecutor:
                 logger.warning(f"Invalid signal type: {signal}")
                 return None
 
+            if not self._simulated and not config.config.USE_TESTNET:
+                self.capital = self.get_account_capital()
+
             # Determine S/R levels (prefer passed values, fallback to empty)
             if not self.dynamic_sl_tp:
                 # Static SL/TP
@@ -448,14 +454,7 @@ class TradeExecutor:
         Returns the order dict on success, None on failure.
         """
         try:
-            exchange = ccxt.binance({
-                'apiKey': os.environ.get('BINANCE_API_KEY', ''),
-                'secret': os.environ.get('BINANCE_SECRET_KEY', ''),
-                'enableRateLimit': True,
-                'options': {'defaultType': 'spot'},
-            })
-            if os.environ.get('USE_TESTNET', 'true').lower() == 'true':
-                exchange.set_sandbox_mode(True)
+            exchange = self._create_exchange()
 
             # Market order (fills at current market price)
             order = exchange.create_order(
@@ -627,6 +626,7 @@ class TradeExecutor:
 
     def get_portfolio(self) -> Dict[str, Any]:
         """Get portfolio status."""
+        self.capital = self.get_account_capital()
         daily_halted = self._check_daily_loss_limit()
         return {
             'capital': round(self.capital, 2),
@@ -636,6 +636,65 @@ class TradeExecutor:
             'max_open_trades': self.max_open_trades,
             'trade_cooldown_sec': self.cooldown_sec,
         }
+
+    def get_account_capital(self) -> float:
+        """Return the account's total USDT balance from the configured Binance market."""
+        now = time.monotonic()
+        if (
+            self._account_balance_cache is not None
+            and now - self._account_balance_cache_at < 30
+        ):
+            return self._account_balance_cache
+
+        if not config.config.BINANCE_API_KEY or not config.config.BINANCE_SECRET_KEY:
+            raise RuntimeError('Binance API keys are not configured')
+
+        exchange = self._create_exchange()
+        try:
+            balance = exchange.fetch_balance()
+            total = balance.get('total')
+            if not isinstance(total, dict):
+                raise RuntimeError('Binance returned an invalid balance response')
+
+            capital = float(total.get('USDT') or 0.0)
+            if not math.isfinite(capital) or capital < 0:
+                raise RuntimeError('Binance returned an invalid USDT balance')
+
+            self._account_balance_cache = capital
+            self._account_balance_cache_at = now
+            return capital
+        except ccxt.InvalidNonce as exc:
+            logger.error("Binance rejected the account request timestamp")
+            raise RuntimeError(
+                'Binance rejected the request timestamp; synchronize Windows time and verify the API key'
+            ) from exc
+        except ccxt.AuthenticationError as exc:
+            logger.error("Binance rejected the account API credentials")
+            raise RuntimeError(
+                'Binance rejected the API credentials; verify they belong to the selected network and allow balance reads'
+            ) from exc
+        except ccxt.BaseError as exc:
+            logger.error(
+                "Could not fetch Binance account balance: %s",
+                type(exc).__name__,
+            )
+            raise RuntimeError(
+                'Could not fetch Binance USDT balance; check API access and key permissions'
+            ) from exc
+        finally:
+            exchange.close()
+
+    @staticmethod
+    def _create_exchange() -> ccxt.binance:
+        exchange = ccxt.binance({
+            'apiKey': config.config.BINANCE_API_KEY,
+            'secret': config.config.BINANCE_SECRET_KEY,
+            'enableRateLimit': True,
+            'options': {'defaultType': 'spot'},
+        })
+        if config.config.USE_TESTNET:
+            exchange.set_sandbox_mode(True)
+        return exchange
 
     def __repr__(self) -> str:
         return (

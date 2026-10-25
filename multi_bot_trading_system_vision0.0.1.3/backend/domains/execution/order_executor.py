@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import logging
-import os
 from typing import Optional
 
 import ccxt
+
+from backend.config import config
 
 logger = logging.getLogger(__name__)
 
@@ -14,14 +15,14 @@ logger = logging.getLogger(__name__)
 class OrderExecutor:
     """Places market and limit orders via ccxt on Binance Testnet."""
 
-    def __init__(self, use_testnet: bool = True):
-        self._use_testnet = use_testnet
+    def __init__(self, use_testnet: Optional[bool] = None):
+        self._use_testnet = config.USE_TESTNET if use_testnet is None else use_testnet
         self._exchange = self._create_exchange()
 
     def _create_exchange(self) -> ccxt.binance:
         exchange = ccxt.binance({
-            'apiKey': os.environ.get('BINANCE_API_KEY', ''),
-            'secret': os.environ.get('BINANCE_SECRET_KEY', ''),
+            'apiKey': config.BINANCE_API_KEY,
+            'secret': config.BINANCE_SECRET_KEY,
             'enableRateLimit': True,
             'options': {'defaultType': 'spot'},
         })
