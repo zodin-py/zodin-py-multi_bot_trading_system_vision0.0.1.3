@@ -32,6 +32,44 @@ class PriceService:
     _last_update: float = 0.0
     _lock = threading.Lock()
 
+    # Wiederverwendbare ccxt-Instanzen: jede neue Instanz lädt sonst komplett
+    # die Binance-Marktliste (~2-3s pro Request statt ~0,3s).
+    # Der Klassen-Identitäts-Guard (_binance_cls) stellt sicher, dass ein
+    # Austausch von ccxt.binance (z. B. Tests mit Mocks) die Instanz neu
+    # aufbaut, statt eine veraltete Cached-Instanz zu verwenden.
+    _binance = None
+    _binance_cls = None
+    _bybit = None
+    _bybit_cls = None
+    _exchange_lock = threading.Lock()
+
+    @classmethod
+    def _get_binance(cls):
+        import ccxt
+        with cls._exchange_lock:
+            if cls._binance is None or cls._binance_cls is not ccxt.binance:
+                cls._binance_cls = ccxt.binance
+                cls._binance = ccxt.binance({
+                    'enableRateLimit': True,
+                    'timeout': 20000,
+                    'options': {'defaultType': 'spot'},
+                    'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
+                })
+            return cls._binance
+
+    @classmethod
+    def _get_bybit(cls):
+        import ccxt
+        with cls._exchange_lock:
+            if cls._bybit is None or cls._bybit_cls is not ccxt.bybit:
+                cls._bybit_cls = ccxt.bybit
+                cls._bybit = ccxt.bybit({
+                    'enableRateLimit': True,
+                    'timeout': 20000,
+                    'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
+                })
+            return cls._bybit
+
     # WebSocket URL — !miniTicker@arr gives ALL markets in one stream
     WS_URL = "wss://stream.binance.com:9443/stream?streams=!miniTicker@arr"
 
@@ -193,18 +231,17 @@ class PriceService:
 
     @classmethod
     def _fetch_price_rest(cls, symbol: str) -> Dict[str, Any]:
-        """REST fallback for price fetch using spot market."""
-        import ccxt
+        """REST fallback for price fetch using spot market.
+
+        Uses cached ccxt exchange instances — creating a fresh ccxt.binance()
+        per request reloads the full market list (~2-3s vs ~0.3s).
+        """
         exchange_symbol = symbol.replace("/", "")
         try:
-            exchange = ccxt.binance({
-                'enableRateLimit': True,
-                'timeout': 20000,
-                'options': {'defaultType': 'spot'},
-                'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
-            })
+            exchange = cls._get_binance()
             # Try spot first
             ticker = exchange.fetch_ticker(exchange_symbol)
+            print(f"[price_service] API-Rohdaten für {exchange_symbol}: {ticker}")  # mein testtttttttttttttttttttttttttttttttt
             return {
                 'symbol': symbol,
                 'price': ticker.get('last', 0.0),
@@ -216,12 +253,7 @@ class PriceService:
             logger.warning(f"REST fallback failed for {symbol}: {e}")
             # Retry with bybit as fallback
             try:
-                import ccxt as ccxt2
-                bybit = ccxt2.bybit({
-                    'enableRateLimit': True,
-                    'timeout': 20000,
-                    'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
-                })
+                bybit = cls._get_bybit()
                 ticker = bybit.fetch_ticker(exchange_symbol)
                 return {
                     'symbol': symbol,

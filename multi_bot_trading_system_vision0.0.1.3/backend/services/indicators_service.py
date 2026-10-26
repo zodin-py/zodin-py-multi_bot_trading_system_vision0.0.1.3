@@ -26,6 +26,28 @@ class IndicatorService:
         self._rsi_params: Dict[str, Any] = dict(config.INDICATOR_PARAMS.get('rsi', {}))
         self._rsi_length: int = int(self._rsi_params.get('length', 14))
         self._rsi_source: str = str(self._rsi_params.get('source', 'close')).strip().lower()
+        # Wiederverwendbare ccxt-Instanzen (pro Service-Instanz, die die App
+        # genau einmal erzeugt): jede neue ccxt-Instanz lädt sonst komplett die
+        # Marktliste (~2-3s pro Request statt ~0,3s).
+        self._binance = None
+        self._bybit = None
+
+    def _get_binance(self):
+        if self._binance is None:
+            self._binance = ccxt.binance({
+                'enableRateLimit': True,
+                'timeout': 20000,
+                'options': {'defaultType': 'spot'},
+            })
+        return self._binance
+
+    def _get_bybit(self):
+        if self._bybit is None:
+            self._bybit = ccxt.bybit({
+                'enableRateLimit': True,
+                'timeout': 20000,
+            })
+        return self._bybit
 
     @staticmethod
     def _normalize_coin(coin: str) -> Optional[str]:
@@ -65,14 +87,13 @@ class IndicatorService:
 
             tf = self._normalize_timeframe(timeframe)
 
-            # Fetch ~50 candles
-            exchange = ccxt.binance({'enableRateLimit': True, 'timeout': 20000, 'options': {'defaultType': 'spot'}})
+            # Fetch ~50 candles (cached exchange instances — see _get_binance)
+            exchange = self._get_binance()
             try:
                 raw = exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=self._lookback)
             except Exception:
                 # Retry with bybit as fallback
-                import ccxt as ccxt2
-                bybit = ccxt2.bybit({'enableRateLimit': True, 'timeout': 20000})
+                bybit = self._get_bybit()
                 raw = bybit.fetch_ohlcv(symbol, timeframe=timeframe, limit=self._lookback)
 
             if len(raw) < 30:

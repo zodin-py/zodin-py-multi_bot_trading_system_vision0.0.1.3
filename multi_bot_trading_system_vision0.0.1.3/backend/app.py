@@ -50,6 +50,11 @@ price_service = PriceService()
 wallet_service = WalletService()
 indicators_service = IndicatorService()
 
+# WebSocket-Preisfeed starten (wie in api_only.py) — ohne diesen Aufruf ist der
+# Preis-Cache immer leer und jeder /api/price-Request fällt auf den langsamen
+# REST-Fallback (~3s pro Request statt ~0ms aus dem Cache).
+PriceService.start()
+
 # Globale Instanzen - minimal
 data_manager = None
 brain = None
