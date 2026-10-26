@@ -22,6 +22,10 @@ class IndicatorService:
 
     def __init__(self, lookback: int = 50) -> None:
         self._lookback = lookback
+        # RSI parameters come from config (length + source), e.g. length=14, source=close
+        self._rsi_params: Dict[str, Any] = dict(config.INDICATOR_PARAMS.get('rsi', {}))
+        self._rsi_length: int = int(self._rsi_params.get('length', 14))
+        self._rsi_source: str = str(self._rsi_params.get('source', 'close')).strip().lower()
 
     @staticmethod
     def _normalize_coin(coin: str) -> Optional[str]:
@@ -74,11 +78,12 @@ class IndicatorService:
             if len(raw) < 30:
                 return None
 
-            closes = [float(c[4]) for c in raw]
+            # Compute indicators — RSI uses the configured length + source
+            closes = self._extract_source_series(raw)
             df = pd.DataFrame({"close": closes})
 
             # Compute indicators
-            rsi_vals = self._compute_rsi(df["close"])
+            rsi_vals = self._compute_rsi(df["close"], period=self._rsi_length)
             macd_vals, signal_vals, hist_vals = self._compute_macd(df["close"])
             ema_vals = self._compute_ema(df["close"])
 
@@ -95,6 +100,22 @@ class IndicatorService:
         except Exception as e:
             logger.warning(f"Failed to get indicators for {coin}/{timeframe}: {e}")
             return None
+
+    @staticmethod
+    def _extract_source_series(raw: List[List[float]], source: str = "close") -> List[float]:
+        """Extract the price series for the configured RSI source from OHLCV candles.
+
+        OHLCV column order: [timestamp, open, high, low, close, volume].
+        Default source is 'close' (TradingView default for RSI).
+        """
+        source_map = {
+            "open": 1,
+            "high": 2,
+            "low": 3,
+            "close": 4,
+        }
+        idx = source_map.get(source, 4)
+        return [float(c[idx]) for c in raw]
 
     @staticmethod
     def _compute_rsi(closes: pd.Series, period: int = 14) -> List[float]:

@@ -63,7 +63,8 @@ class TradingConfig(BaseSettings):
     INDICATOR_PARAMS: Dict[str, Any] = Field(
         default={
             'rsi': {
-                'period': 14,
+                'length': 14,
+                'source': 'close',
                 'overbought': 70,
                 'oversold': 30,
                 'weight': 0.15
