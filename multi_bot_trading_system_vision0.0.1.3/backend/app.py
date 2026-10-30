@@ -1,6 +1,6 @@
 # filepath: app.py
-"""Multi-Bot Trading System - Flask Web Interface (Minimal Mode)"""
 
+import json
 import logging
 import math
 import os
@@ -65,6 +65,9 @@ trading_thread = None
 # Aktuelle Auswahl
 current_symbol = 'BTCUSDT'
 current_timeframe = '1h'
+
+# Trades History
+TRADES_HISTORY_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'trades', 'trades_history.json'))
 
 
 def initialize_system():
@@ -159,6 +162,83 @@ def api_settings():
         'symbol': current_symbol,
         'timeframe': current_timeframe
     })
+
+
+# ==================== TRADES ROUTES ====================
+
+def _load_trades() -> list:
+    """Load trades history from JSON file."""
+    try:
+        with open(TRADES_HISTORY_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        logger.warning(f"Invalid JSON in {TRADES_HISTORY_FILE}")
+        return []
+
+
+@app.route('/api/trades')
+def api_get_trades():
+    """Get trades history."""
+    trades = _load_trades()
+    return jsonify(trades)
+
+
+@app.route('/api/trades', methods=['POST'])
+def api_create_trade():
+    """Create a new trade."""
+    data = request.json or {}
+    trades = _load_trades()
+
+    # Generate new ID
+    trade_id = f"TRD{len(trades) + 1:05d}"
+    trade = {
+        'id': trade_id,
+        'symbol': data.get('symbol', ''),
+        'timeframe': data.get('timeframe', '1h'),
+        'side': data.get('side', 'long'),
+        'entry_price': float(data.get('entry_price', 0)),
+        'quantity': float(data.get('quantity', 0)),
+        'stop_loss': float(data.get('stop_loss', 0)),
+        'take_profit': float(data.get('take_profit', 0)),
+        'status': 'open',
+        'open_time': datetime.now().isoformat(),
+        'close_time': None,
+        'pnl': 0,
+        'pnl_percent': 0,
+        'notes': data.get('notes', ''),
+        'sl_source': data.get('sl_source', 'sr_level')
+    }
+    trades.append(trade)
+    with open(TRADES_HISTORY_FILE, 'w', encoding='utf-8') as f:
+        json.dump(trades, f, indent=2, ensure_ascii=False)
+
+    return jsonify({'success': True, 'trade': trade})
+
+
+@app.route('/api/trades/<trade_id>', methods=['PUT'])
+def api_update_trade(trade_id: str):
+    """Update a trade (e.g., close it)."""
+    trades = _load_trades()
+    trade = None
+    for t in trades:
+        if t.get('id') == trade_id:
+            trade = t
+            break
+
+    if trade is None:
+        return jsonify({'error': 'Trade not found'}), 404
+
+    data = request.json or {}
+    for field in ['status', 'close_time', 'pnl', 'pnl_percent', 'notes']:
+        if field in data:
+            trade[field] = data[field]
+
+    with open(TRADES_HISTORY_FILE, 'w', encoding='utf-8') as f:
+        json.dump(trades, f, indent=2, ensure_ascii=False)
+
+    return jsonify({'success': True, 'trade': trade})
 
 
 # ==================== ANGULAR FRONTEND ====================

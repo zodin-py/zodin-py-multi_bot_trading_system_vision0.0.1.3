@@ -6,6 +6,8 @@ import {
   PriceResponse,
   IndicatorsResponse,
   StatusResponse,
+  WalletResponse,
+  Trade,
 } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
@@ -40,5 +42,17 @@ export class ApiService {
     return this.http.get<IndicatorsResponse>('/api/indicators', {
       params: { coin, tf },
     });
+  }
+
+  /** Fetch Binance Spot wallet balances. */
+  getWallet(): Observable<WalletResponse> {
+    return this.http.get<WalletResponse>('/api/wallet');
+  }
+
+  /** Fetch trades history. If n is provided, only the last n entries are returned. */
+  getTrades(n?: number): Observable<Trade[]> {
+    let params = new HttpParams();
+    if (typeof n === 'number' && n > 0) params = params.set('limit', n.toString());
+    return this.http.get<Trade[]>('/api/trades', { params });
   }
 }

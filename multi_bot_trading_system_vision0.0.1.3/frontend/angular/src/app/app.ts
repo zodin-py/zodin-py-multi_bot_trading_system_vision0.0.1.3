@@ -7,6 +7,8 @@ import { interval, Subscription } from 'rxjs';
 import { HeaderComponent } from './header/header.component';
 import { PriceCardComponent } from './kpi/price-card.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
+import { WalletComponent } from './wallet/wallet.component';
+import { TradesComponent } from './trades/trades.component';
 
 import { ApiService } from './shared/services/api.service';
 import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
@@ -21,6 +23,8 @@ import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
     HeaderComponent,
     PriceCardComponent,
     IndicatorsComponent,
+    WalletComponent,
+    TradesComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -37,6 +41,9 @@ export class App implements OnInit, OnDestroy {
   currentPrice: number | null = null;
   priceChange = '--';
   indicators: IndicatorsResponse | null = null;
+
+  // Trades limit — user can set this in the UI
+  tradesLimit = 10;
 
   onCoinLoaded(cmd: { symbol: string; timeframe: string }): void {
     this.currentCoin = cmd.symbol;

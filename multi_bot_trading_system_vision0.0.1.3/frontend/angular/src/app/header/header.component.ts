@@ -20,8 +20,8 @@ export interface HeaderCommand {
 export class HeaderComponent implements OnInit {
   readonly timeframes = TIMEFRAMES;
 
-  // Fixed coin list
-  coins = ['BTC', 'ETH', 'SOL', 'ADA', 'BNB', 'XRP', 'LTC', 'DOT', 'DOGE', 'AVAX'];
+  // Auto-suggest suggestions based on commonly used coins
+  suggestedCoins = ['BTC', 'ETH', 'SOL', 'ADA', 'BNB', 'XRP', 'LTC', 'DOT', 'DOGE', 'AVAX'];
   symbol = 'BTC';
   timeframe = '1h';
 

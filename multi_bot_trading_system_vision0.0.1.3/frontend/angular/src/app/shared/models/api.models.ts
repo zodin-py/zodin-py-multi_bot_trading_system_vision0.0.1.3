@@ -53,3 +53,21 @@ export interface SettingsResponse {
   symbol: string;
   timeframe: string;
 }
+
+export interface Trade {
+  id: string;
+  symbol: string;
+  timeframe: string;
+  side: 'long' | 'short';
+  entry_price: number;
+  quantity: number;
+  stop_loss: number;
+  take_profit: number;
+  status: 'open' | 'closed';
+  open_time: string;
+  close_time: string | null;
+  pnl: number;
+  pnl_percent: number;
+  notes: string;
+  sl_source: string;
+}

@@ -1,0 +1,48 @@
+<div class="card rounded-xl p-4">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold">
+      <i class="fas fa-wallet mr-2 text-yellow-400"></i>Wallet
+    </h2>
+    <button
+      (click)="loadWallet()"
+      class="text-xs text-blue-400 hover:text-blue-300"
+    >
+      <i class="fas fa-sync-alt"></i> Aktualisieren
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="flex items-center justify-center py-8">
+      <i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>
+    </div>
+  } @else if (error) {
+    <div class="text-red-400 text-sm text-center py-4">{{ error }}</div>
+  } @else if (wallet) {
+    <div class="mb-3">
+      <div class="text-sm text-gray-400">Gesamtwert</div>
+      <div class="text-2xl font-bold text-green-400">
+        {{ wallet.total_usdt | number:'1.2-2' }} USDT
+      </div>
+    </div>
+
+    @if (wallet.balances.length) {
+      <div class="space-y-2 max-h-64 overflow-y-auto">
+        @for (b of wallet.balances; track b.asset) {
+          <div class="flex justify-between text-sm bg-slate-800/50 rounded p-2">
+            <span class="font-medium">{{ b.asset }}</span>
+            <span class="text-gray-400">
+              {{ b.free }} / {{ b.locked }} locked
+            </span>
+            <span class="text-green-400">
+              {{ b.usdt_value | number:'1.2-2' }}
+            </span>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="text-gray-400 text-sm text-center py-4">
+        Keine Positionen vorhanden
+      </div>
+    }
+  }
+</div>
