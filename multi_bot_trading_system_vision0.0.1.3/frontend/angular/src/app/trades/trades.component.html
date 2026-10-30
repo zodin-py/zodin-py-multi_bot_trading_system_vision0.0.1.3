@@ -1,0 +1,58 @@
+<div class="card rounded-xl p-4">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold">
+      <i class="fas fa-history mr-2 text-blue-400"></i>Trades History
+    </h2>
+    <button
+      (click)="loadTrades()"
+      class="text-xs text-blue-400 hover:text-blue-300"
+    >
+      <i class="fas fa-sync-alt"></i> Aktualisieren
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="flex items-center justify-center py-8">
+      <i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>
+    </div>
+  } @else if (error) {
+    <div class="text-red-400 text-sm text-center py-4">{{ error }}</div>
+  } @else if (trades.length) {
+    <div class="space-y-2 max-h-80 overflow-y-auto">
+      @for (trade of trades; track trade.id) {
+        <div class="bg-slate-800/50 rounded-lg p-3 text-sm">
+          <div class="flex justify-between mb-1">
+            <span class="font-semibold">{{ trade.symbol }}</span>
+            <span
+              class="px-2 py-0.5 rounded text-xs"
+              [class]="trade.status === 'open'
+                ? 'bg-green-500/20 text-green-400'
+                : 'bg-gray-500/20 text-gray-400'"
+            >
+              {{ trade.status === 'open' ? 'Open' : 'Closed' }}
+            </span>
+          </div>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-300">
+            <span>Side: <span class="font-medium text-white">{{ trade.side | uppercase }}</span></span>
+            <span>Qty: {{ trade.quantity }}</span>
+            <span>Entry: {{ trade.entry_price | number:'1.2-2' }}</span>
+            <span>SL/TP: {{ trade.stop_loss }} / {{ trade.take_profit }}</span>
+            <span>PnL:
+              <span [class]="trade.pnl >= 0 ? 'text-green-400' : 'text-red-400'">
+                {{ trade.pnl | number:'1.2-2' }} USDT ({{ trade.pnl_percent }}%)
+              </span>
+            </span>
+            <span>Open: {{ trade.open_time | date:'dd.MM.yyyy HH:mm' }}</span>
+          </div>
+          @if (trade.notes) {
+            <div class="text-xs text-gray-500 mt-1">{{ trade.notes }}</div>
+          }
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="text-gray-400 text-sm text-center py-8">
+      Keine Trades in der History
+    </div>
+  }
+</div>
