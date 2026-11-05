@@ -118,6 +118,7 @@ def get_ws_url() -> str:
 
 # The central config instance - all imports should use `from backend.config import config`
 # and access values via config.X or the convenience exports below.
+# Note: TradingConfig() reads from .env file automatically via pydantic_settings.
 config = TradingConfig()
 
 # Export individual values for backward compatibility with existing code that does

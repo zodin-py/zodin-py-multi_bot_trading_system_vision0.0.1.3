@@ -47,7 +47,11 @@ CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000", "http://loc
 
 # Service instances (minimal mode - no heavy trading components)
 price_service = PriceService()
-wallet_service = WalletService()
+try:
+    wallet_service = WalletService()
+except ValueError as e:
+    logger.warning(f'Wallet service not initialized: {e}')
+    wallet_service = None
 indicators_service = IndicatorService()
 
 # WebSocket-Preisfeed starten (wie in api_only.py) — ohne diesen Aufruf ist der
@@ -106,6 +110,11 @@ def api_price():
 @app.route('/api/wallet')
 def api_wallet():
     """Get Binance Spot wallet balances."""
+    if wallet_service is None:
+        return jsonify({
+            'error': 'Wallet service not configured. Set BINANCE_API_KEY and BINANCE_SECRET_KEY in .env',
+            'data': None
+        }), 503
     result = wallet_service.get_wallet_sync()
     if result is None or 'error' in result:
         return jsonify({"error": "Could not fetch wallet", "data": None}), 500

@@ -116,6 +116,31 @@ def api_settings():
     return jsonify({'symbol': 'BTCUSDT', 'timeframe': '1h'})
 
 
+@app.route('/api/wallet')
+def api_wallet():
+    """Get Binance Spot wallet balances."""
+    from backend.services.wallet_service import WalletService
+    try:
+        wallet_service = WalletService()
+        result = wallet_service.get_wallet_sync()
+        if result is None or 'error' in result:
+            return jsonify({"error": "Could not fetch wallet", "data": None}), 500
+        return jsonify(result)
+    except ValueError as e:
+        # API keys not configured
+        return jsonify({"error": str(e), "data": None}), 401
+    except Exception as e:
+        return jsonify({"error": "Wallet service error", "data": None}), 500
+
+
+@app.route('/api/trades')
+def api_get_trades():
+    """Get trades history."""
+    from backend.app import _load_trades
+    trades = _load_trades()
+    return jsonify(trades)
+
+
 @app.route('/')
 def root():
     return jsonify({

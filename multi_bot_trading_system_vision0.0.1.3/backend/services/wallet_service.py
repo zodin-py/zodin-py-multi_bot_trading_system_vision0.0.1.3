@@ -22,6 +22,12 @@ class WalletService:
     @property
     def exchange(self) -> ccxt.binance:
         if self._exchange is None:
+            # Check if API keys are configured
+            if not config.BINANCE_API_KEY or not config.BINANCE_SECRET_KEY:
+                raise ValueError(
+                    'Binance API keys not configured. '
+                    'Set TRADING_BINANCE_API_KEY and TRADING_BINANCE_SECRET_KEY in .env'
+                )
             self._exchange = ccxt.binance({
                 'apiKey': config.BINANCE_API_KEY,
                 'secret': config.BINANCE_SECRET_KEY,
@@ -44,6 +50,11 @@ class WalletService:
         }
         """
         try:
+            # Check if exchange is properly initialized
+            if self._exchange is None:
+                raise RuntimeError('Wallet service exchange not initialized. '
+                                   'Check that Binance API keys are valid.')
+
             balances = self.exchange.fetch_balance()
             result: Dict[str, Any] = {
                 'balances': [],
@@ -84,9 +95,11 @@ class WalletService:
                         price_ticker = self.exchange.fetch_ticker(f'{asset}USDT')
                         asset_price = price_ticker.get('last', 0.0)
                         usdt_value = (free + locked) * asset_price
-                    except Exception:
+                    except Exception as e:
                         # If price fetch fails, skip this asset's USDT conversion
-                        continue
+                        # but still include the asset with usdt_value=0
+                        logger.warning(f'Could not fetch price for {asset}: {e}')
+                        usdt_value = 0.0
 
                 result['balances'].append({
                     'asset': asset,
@@ -102,7 +115,7 @@ class WalletService:
             return result
 
         except Exception as e:
-            logger.error(f'Wallet fetch failed: {e}')
+            logger.error(f'Wallet fetch failed: {e}', exc_info=True)
             return {
                 'balances': [],
                 'total_usdt': 0.0,

@@ -21,7 +21,7 @@ cd .\frontend\angular
 npm install
 npm run build
 cd ..\..
-& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" .\backend\run.py
+& ".\venv\Scripts\python.exe backend/api_only.py
 ```
 
 Der Server liefert das Angular-Frontend aus `frontend/angular/dist/angular/browser` aus; ein Angular-Build ist erforderlich. Das Dashboard ist danach unter `http://127.0.0.1:5000` erreichbar. Beim Laden eines Coins werden Marktdaten von Binance abgerufen; dafür ist eine Internetverbindung erforderlich.
