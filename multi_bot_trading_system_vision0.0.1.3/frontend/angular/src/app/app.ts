@@ -7,6 +7,7 @@ import { interval, Subscription } from 'rxjs';
 import { HeaderComponent } from './header/header.component';
 import { PriceCardComponent } from './kpi/price-card.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
+import { NewsComponent } from './news/news.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { TradesComponent } from './trades/trades.component';
 
@@ -23,6 +24,7 @@ import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
     HeaderComponent,
     PriceCardComponent,
     IndicatorsComponent,
+    NewsComponent,
     WalletComponent,
     TradesComponent,
   ],

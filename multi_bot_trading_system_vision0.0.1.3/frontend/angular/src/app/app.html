@@ -6,7 +6,7 @@
 
   <!-- Main Content -->
   <main class="container mx-auto px-4 py-6">
-    <!-- KPI Grid: Price + Indicators -->
+    <!-- KPI Grid: Price + Wallet -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
       <!-- Price Card -->
       <app-price-card [price]="currentPrice" [priceChange]="priceChange"></app-price-card>
@@ -66,6 +66,9 @@
 
     <!-- Full Indicators Component -->
     <app-indicators [indicators]="indicators"></app-indicators>
+
+    <!-- News Agent Card -->
+    <app-news></app-news>
   </main>
 
   <!-- FontAwesome icons loaded globally -->
