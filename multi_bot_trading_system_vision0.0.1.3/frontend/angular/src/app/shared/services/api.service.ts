@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import {
   PriceResponse,
@@ -8,6 +8,8 @@ import {
   StatusResponse,
   WalletResponse,
   Trade,
+  NewsItem,
+  NewsResponse,
 } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
@@ -54,5 +56,10 @@ export class ApiService {
     let params = new HttpParams();
     if (typeof n === 'number' && n > 0) params = params.set('limit', n.toString());
     return this.http.get<Trade[]>('/api/trades', { params });
+  }
+
+  /** Fetch latest news from configured sources. */
+  getNews(): Observable<NewsItem[]> {
+    return this.http.get<NewsResponse>('/api/news').pipe(map((response) => response.items));
   }
 }

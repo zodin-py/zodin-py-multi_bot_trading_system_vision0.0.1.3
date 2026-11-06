@@ -1,0 +1,69 @@
+{
+  "general": {
+    "sources": [
+      {
+        "name": "Binance",
+        "type": "api",
+        "url": "https://api.binance.com/api/v3/ticker/24hr",
+        "enabled": true,
+        "items": []
+      },
+      {
+        "name": "Google News",
+        "type": "rss",
+        "url": "https://news.google.com/rss/search?q=crypto&hl=en-US&gl=US&ceid=US:en",
+        "enabled": true,
+        "items": []
+      },
+      {
+        "name": "Bitcoin News",
+        "type": "rss",
+        "url": "https://www.bitcoinnews.com/feed/",
+        "enabled": true,
+        "items": []
+      }
+    ]
+  },
+  "people_monitoring": [
+    {
+      "name": "Donald Trump",
+      "platform": "X",
+      "username": "realDonaldTrump",
+      "topics": ["Bitcoin", "Crypto", "Regulation"],
+      "enabled": true,
+      "posts": []
+    },
+    {
+      "name": "Elon Musk",
+      "platform": "X",
+      "username": "elonmusk",
+      "topics": ["Bitcoin", "Crypto", "Technology"],
+      "enabled": true,
+      "posts": []
+    }
+  ],
+  "coins": [
+    {
+      "name": "KITE",
+      "symbol": "KITE",
+      "sources": [
+        {
+          "name": "KITE Official Website",
+          "type": "website",
+          "url": "https://kite.com/",
+          "enabled": true,
+          "items": []
+        },
+        {
+          "name": "KITE News RSS",
+          "type": "rss",
+          "url": "https://kite.com/news/rss/",
+          "enabled": true,
+          "items": []
+        }
+      ],
+      "news": []
+    }
+  ],
+  "seen_items": []
+}

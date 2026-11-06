@@ -46,6 +46,63 @@ siehe [SETUP_GUIDE.md](./SETUP_GUIDE.md). Testnet ist standardmäßig aktiv. Fü
 Live-Kontostand und Live-Orders muss `TRADING_USE_TESTNET=false` ausdrücklich
 gesetzt werden. Die API-Berechtigung für Auszahlungen darf nicht aktiviert sein.
 
+## Crypto Information Collector
+
+Zusätzlich zum Trading-System gibt es einen separaten, modularen Crypto Information Collector. Er wird mit `python main.py` gestartet und liest die zentrale Konfiguration aus `config.json`.
+
+Beispiel:
+
+```bash
+cd .\multi_bot_trading_system_vision0.0.1.3
+.\venv\Scripts\python.exe main.py
+```
+
+Die Datei `config.json` steuert allgemeine Quellen, überwachte Personen und einzelne Coins. Ein Eintrag kann wie folgt hinzugefügt werden:
+
+```json
+{
+  "general": {
+    "sources": [
+      {
+        "name": "Binance",
+        "type": "api",
+        "url": "https://api.binance.com/api/v3/ticker/24hr",
+        "enabled": true,
+        "items": []
+      }
+    ]
+  },
+  "people_monitoring": [
+    {
+      "name": "Vitalik Buterin",
+      "platform": "X",
+      "username": "VitalikButerin",
+      "topics": ["Ethereum", "Crypto"],
+      "enabled": true,
+      "posts": []
+    }
+  ],
+  "coins": [
+    {
+      "name": "KITE",
+      "symbol": "KITE",
+      "sources": [
+        {
+          "name": "KITE News RSS",
+          "type": "rss",
+          "url": "https://example.com/kite-rss.xml",
+          "enabled": true,
+          "items": []
+        }
+      ],
+      "news": []
+    }
+  ]
+}
+```
+
+Für X-Posts müssen in einer lokalen `.env`-Datei zumindest `X_BEARER_TOKEN` oder `X_API_KEY` gesetzt werden. Wenn keine Berechtigungen existieren, meldet das Programm verständlich, dass das X-Modul nicht verfügbar ist.
+
 ## Features
 - RSI, MACD, MFI Indikatoren
 - Support/Resistance Erkennung

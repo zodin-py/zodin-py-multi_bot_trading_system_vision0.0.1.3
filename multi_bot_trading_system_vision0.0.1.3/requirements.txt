@@ -19,6 +19,7 @@ pandas-ta-classic>=0.8.32
 
 # WebSocket (used by ccxt internally / direct Binance streams)
 websockets>=12.0
+websocket-client>=1.8.0
 
 # Async
 aiohttp>=3.9.0

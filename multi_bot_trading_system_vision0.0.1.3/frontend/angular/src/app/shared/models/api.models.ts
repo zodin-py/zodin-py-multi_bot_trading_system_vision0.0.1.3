@@ -71,3 +71,21 @@ export interface Trade {
   notes: string;
   sl_source: string;
 }
+
+export interface NewsItem {
+  id: string;
+  title: string;
+  source: string;
+  url: string;
+  summary: string;
+  date: string;
+  kind: 'rss' | 'api' | 'x' | 'website';
+  topics?: string[];
+}
+
+export interface NewsResponse {
+  success: boolean;
+  total_new: number;
+  items: NewsItem[];
+  error?: string;
+}

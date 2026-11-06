@@ -54,6 +54,9 @@ except ValueError as e:
     wallet_service = None
 indicators_service = IndicatorService()
 
+# Initialize News service
+from backend.News_card.news_service import collect_news, get_news_items, load_news_config
+
 # WebSocket-Preisfeed starten (wie in api_only.py) — ohne diesen Aufruf ist der
 # Preis-Cache immer leer und jeder /api/price-Request fällt auf den langsamen
 # REST-Fallback (~3s pro Request statt ~0ms aus dem Cache).
@@ -69,6 +72,9 @@ trading_thread = None
 # Aktuelle Auswahl
 current_symbol = 'BTCUSDT'
 current_timeframe = '1h'
+
+# News service instance
+news_service = None
 
 # Trades History
 TRADES_HISTORY_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'trades', 'trades_history.json'))
@@ -142,6 +148,34 @@ def api_indicators_view():
         return jsonify({"error": "Coin not found", "data": None}), 404
 
     return jsonify(result)
+
+
+@app.route('/api/news')
+def api_news():
+    """Get latest news from configured sources.
+
+    Returns news items from enabled RSS feeds, Binance API, and X (Twitter) accounts.
+    Useful for the News Agent section in the Angular frontend.
+    """
+    try:
+        # Collect news from all enabled sources
+        result = collect_news()
+
+        # Get fresh items (not already seen)
+        items = get_news_items()
+
+        return jsonify({
+            "success": True,
+            "total_new": result.get("total_new", 0),
+            "items": items[:50],  # Limit to 50 most recent
+        })
+    except Exception as e:
+        logger.error(f"Error collecting news: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e),
+            "items": [],
+        }), 500
 
 
 @app.route('/api/status')

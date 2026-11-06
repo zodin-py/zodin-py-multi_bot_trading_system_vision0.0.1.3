@@ -2,8 +2,21 @@
   <h2 class="text-lg font-semibold mb-4">
     <i class="fas fa-newspaper mr-2 text-green-400"></i>News Agent
   </h2>
-  <div class="text-sm text-gray-300">
-    <p>News agent section placeholder</p>
-    <p>News will be displayed here</p>
+  <div class="text-sm text-gray-300" *ngIf="loading">
+    <p>Loading news...</p>
+  </div>
+  <div *ngIf="!loading && error" class="alert alert-danger mt-3">
+    <p>Error: {{ error }}</p>
+  </div>
+  <div *ngIf="!loading && !error" class="mt-3">
+    <p *ngIf="newsItems.length === 0">No new news.</p>
+    <div *ngFor="let item of newsItems" class="news-item mb-3 p-3 rounded border">
+      <h3 class="font-medium mb-1"><a [href]="item.url" target="_blank" rel="noopener noreferrer">{{ item.title }}</a></h3>
+      <p class="text-xs text-gray-400 mb-1"><small>Source: {{ item.source }} | {{ item.date }}</small></p>
+      <p class="text-sm line-clamp-2">{{ item.summary }}</p>
+      <p class="text-xs text-gray-500">
+        <small>Kind: {{ item.kind }}<span *ngIf="item.topics?.length"> | Topics: {{ item.topics?.join(', ') }}</span></small>
+      </p>
+    </div>
   </div>
 </div>
