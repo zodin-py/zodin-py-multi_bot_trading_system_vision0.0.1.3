@@ -12,7 +12,7 @@ npm run build
 cd ..\..
 ```
 
-### Run the backend API (API only mode)
+### Run the backend API (API-only mode)
 ```powershell
 & "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" -m backend.api_only
 ```
@@ -37,7 +37,7 @@ This is a **multi-bot trading system** with the following structure:
 
 ### Backend (Python)
 - `backend/app.py` - Flask dashboard server with API endpoints
-- `backend/api_only.py` - FastAPI-only mode (no Angular build required)
+- `backend/api_only.py` - Flask API-only mode, including `/api/news` (no Angular build required)
 - `backend/config.py` - Pydantic BaseSettings configuration
 - `backend/services/` - Service modules:
   - `indicators_service.py` - Technical indicators (RSI, MACD, EMA) via CCXT
@@ -55,7 +55,7 @@ This is a **multi-bot trading system** with the following structure:
 1. Price service fetches live prices via Binance WebSocket (`!miniTicker@arr`)
 2. Indicators service fetches OHLCV candles via CCXT and computes RSI/MACD/EMA
 3. Wallet service fetches Binance Spot account balances (requires API keys)
-4. Angular frontend consumes API endpoints (`/api/price`, `/api/indicators`, `/api/wallet`)
+4. Angular frontend consumes API endpoints (`/api/price`, `/api/indicators`, `/api/wallet`, `/api/news`)
 
 ## Key Areas for Future Work
 

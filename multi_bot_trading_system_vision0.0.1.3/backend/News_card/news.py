@@ -179,7 +179,7 @@ def load_config() -> Dict[str, Any]:
     path = config_path()
     config = load_json(path)
     if not config:
-        config = default_config()
+        # config = default_config()
         save_json_atomic(path, config)
     return ensure_config(config)
 
@@ -338,11 +338,11 @@ def collect_rss_source(source: Dict[str, Any]) -> Tuple[List[Dict[str, Any]], st
 
     items: List[Dict[str, Any]] = []
     for node in root.iter("item"):
-        title = "".join(node.iterfindtext("title", default=""))
-        link = "".join(node.iterfindtext("link", default=""))
-        summary = "".join(node.iterfindtext("description", default=""))
-        guid = "".join(node.iterfindtext("guid", default=""))
-        pub = "".join(node.iterfindtext("pubDate", default="")) or "".join(node.iterfindtext("published", default=""))
+        title = node.findtext("title", default="")
+        link = node.findtext("link", default="")
+        summary = node.findtext("description", default="")
+        guid = node.findtext("guid", default="")
+        pub = node.findtext("pubDate", default="") or node.findtext("published", default="")
         if not title and not link:
             continue
         item = normalize_item(source.get("name", "RSS"), {

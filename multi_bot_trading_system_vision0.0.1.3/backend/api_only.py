@@ -24,6 +24,7 @@ from flask_cors import CORS
 from backend import config
 from backend.services.indicators_service import IndicatorService
 from backend.services.price_service import PriceService
+from backend.News_card.news_service import collect_news, get_news_items
 
 # --- Logging ---------------------------------------------------------------
 
@@ -107,6 +108,26 @@ def api_status():
     })
 
 
+@app.route('/api/news')
+def api_news():
+    """Get latest news from configured sources."""
+    try:
+        result = collect_news()
+        items = get_news_items()
+        return jsonify({
+            "success": True,
+            "total_new": result.get("total_new", 0),
+            "items": items[:50],
+        })
+    except Exception as e:
+        logger.error(f"Error collecting news: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e),
+            "items": [],
+        }), 500
+
+
 @app.route('/api/settings', methods=['GET', 'POST'])
 def api_settings():
     """Get or update current symbol/timeframe settings."""
@@ -148,6 +169,7 @@ def root():
         'endpoints': {
             'GET /api/price?coin=xxx': 'Live price (WebSocket cached)',
             'GET /api/indicators?coin=xxx&tf=1h': 'Technical indicators (RSI, MACD, EMA)',
+            'GET /api/news': 'Latest news from configured sources',
             'GET /api/status': 'Health check',
             'GET/POST /api/settings': 'Settings',
         },

@@ -2,68 +2,1087 @@
   "general": {
     "sources": [
       {
-        "name": "Binance",
-        "type": "api",
-        "url": "https://api.binance.com/api/v3/ticker/24hr",
-        "enabled": true,
-        "items": []
-      },
-      {
         "name": "Google News",
         "type": "rss",
         "url": "https://news.google.com/rss/search?q=crypto&hl=en-US&gl=US&ceid=US:en",
         "enabled": true,
-        "items": []
-      },
-      {
-        "name": "Bitcoin News",
-        "type": "rss",
-        "url": "https://www.bitcoinnews.com/feed/",
-        "enabled": true,
-        "items": []
+        "items": [
+          {
+            "date": "2026-11-06T20:09:18Z",
+            "title": "Apple, Meta reject OKX–ICE tokenized stock plans, leaving crypto firms as the ones to watch - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPbFdQRy1WbjNxQk90c1ZBTlpxY3o5QUhKQXF3TndFY0d5WTVYUkFEczhsdktBenRkXzdudFZ5dTUyNk5nbUlWbklnTnFidmNyRUo1ZVBTTmhoVU5HOUZTQVFKdHVHWUVRcGJuMVZleWJtZkdndlZ5VmdDTEw3b0oySDNJVlh3ZlBXdHN2dXNyNDI3QW1UNnpHZWFOZTdnSFpMMV9QeWlBcnFPQ3NZaU1SMWtYMEpZWXBwOExmWUtvaWtmVzRQSWN5Wl9BYnY?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizAFBVV95cUxPbFdQRy1WbjNxQk90c1ZBTlpxY3o5QUhKQXF3TndFY0d5WTVYUkFEczhsdktBenRkXzdudFZ5dTUyNk5nbUlWbklnTnFidmNyRUo1ZVBTTmhoVU5HOUZTQVFKdHVHWUVRcGJuMVZleWJtZkdndlZ5VmdDTEw3b0oySDNJVlh3ZlBXdHN2dXNyNDI3QW1UNnpHZWFOZTdnSFpMMV9QeWlBcnFPQ3NZaU1SMWtYMEpZWXBwOExmWUtvaWtmVzRQSWN5Wl9BYnY?oc=5\" target=\"_blank\">Apple, Meta reject OKX–ICE tokenized stock plans, leaving crypto firms as the ones to watch</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMizAFBVV95cUxPbFdQRy1WbjNxQk90c1ZBTlpxY3o5QUhKQXF3TndFY0d5WTVYUkFEczhsdktBenRkXzdudFZ5dTUyNk5nbUlWbklnTnFidmNyRUo1ZVBTTmhoVU5HOUZTQVFKdHVHWUVRcGJuMVZleWJtZkdndlZ5VmdDTEw3b0oySDNJVlh3ZlBXdHN2dXNyNDI3QW1UNnpHZWFOZTdnSFpMMV9QeWlBcnFPQ3NZaU1SMWtYMEpZWXBwOExmWUtvaWtmVzRQSWN5Wl9BYnY",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T20:03:59Z",
+            "title": "BTC price range on Nov 6, 2026 at 4pm EST Crypto Prediction Market - Robinhood",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQR0VJY2VuZnBKd3FfMXZUQVo5SHJTS2tTUnpUVGRiQk9QczNYQjktUHB2LWdDMkZpUnJXVFZGWE5sZFRReFhHcG9aa2EzV1dYa19Eclozd3A4bF83aUlQWERYMUpObWtpaTR4TGNLSVhFQkZWWHNadzhRZTRaUGo3ZFN3UzhvVnlwV3BFelBYVk9yejBUclI4VW1BcURBUlZ1cW1wRnpIV0V2dDg4ZElaczZNbnI?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxQR0VJY2VuZnBKd3FfMXZUQVo5SHJTS2tTUnpUVGRiQk9QczNYQjktUHB2LWdDMkZpUnJXVFZGWE5sZFRReFhHcG9aa2EzV1dYa19Eclozd3A4bF83aUlQWERYMUpObWtpaTR4TGNLSVhFQkZWWHNadzhRZTRaUGo3ZFN3UzhvVnlwV3BFelBYVk9yejBUclI4VW1BcURBUlZ1cW1wRnpIV0V2dDg4ZElaczZNbnI?oc=5\" target=\"_blank\">BTC price range on Nov 6, 2026 at 4pm EST Crypto Prediction Market</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Robinhood</font>",
+            "id": "CBMitAFBVV95cUxQR0VJY2VuZnBKd3FfMXZUQVo5SHJTS2tTUnpUVGRiQk9QczNYQjktUHB2LWdDMkZpUnJXVFZGWE5sZFRReFhHcG9aa2EzV1dYa19Eclozd3A4bF83aUlQWERYMUpObWtpaTR4TGNLSVhFQkZWWHNadzhRZTRaUGo3ZFN3UzhvVnlwV3BFelBYVk9yejBUclI4VW1BcURBUlZ1cW1wRnpIV0V2dDg4ZElaczZNbnI",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T20:03:59Z",
+            "title": "XRP price at Nov 6, 2026 at 4pm EST Crypto Prediction Market - Robinhood",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQYVUxRlJJdEpMUXZNSEJGQWR1dGJCak9sN3dKdFc5VjNBMkhNMnZ2V1MxdkdDM0s2WHJ3VFZ4TGlFbVYzSkxWSGxHbEUwd1lBWmRFOGV1eWJJVEdOSHF3cU9WX1ZhTDBjNkd5clFMdEZJTWlsLWZzSmlrS0ZkRHpfQURreGhjS0dSdEpOdlRrWTQ3MzYtTDgzb3VIM3Y5WjJ3eWF5RDJfbnpnSnhl?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxQYVUxRlJJdEpMUXZNSEJGQWR1dGJCak9sN3dKdFc5VjNBMkhNMnZ2V1MxdkdDM0s2WHJ3VFZ4TGlFbVYzSkxWSGxHbEUwd1lBWmRFOGV1eWJJVEdOSHF3cU9WX1ZhTDBjNkd5clFMdEZJTWlsLWZzSmlrS0ZkRHpfQURreGhjS0dSdEpOdlRrWTQ3MzYtTDgzb3VIM3Y5WjJ3eWF5RDJfbnpnSnhl?oc=5\" target=\"_blank\">XRP price at Nov 6, 2026 at 4pm EST Crypto Prediction Market</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Robinhood</font>",
+            "id": "CBMirAFBVV95cUxQYVUxRlJJdEpMUXZNSEJGQWR1dGJCak9sN3dKdFc5VjNBMkhNMnZ2V1MxdkdDM0s2WHJ3VFZ4TGlFbVYzSkxWSGxHbEUwd1lBWmRFOGV1eWJJVEdOSHF3cU9WX1ZhTDBjNkd5clFMdEZJTWlsLWZzSmlrS0ZkRHpfQURreGhjS0dSdEpOdlRrWTQ3MzYtTDgzb3VIM3Y5WjJ3eWF5RDJfbnpnSnhl",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T20:03:57Z",
+            "title": "BTC price on Nov 6, 2026 at 4pm EST Crypto Prediction Market - Robinhood",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOcmRTV3k5TnBTMm5udVZpXy1xQTNYSmtacHIzVDZldHpaZHNHdzRuNUpnUkpUdkxDNy1OUGpRWU85STByRFJScDN3NUFkbENsdGE4dWRjY3F2aC16SDFET1JvTmRocHhfd3lORVNfaW1hVmhoX0VGT05UUWNnQm9RR2t0dXYxNXFsdVJ0NGFfWVJKMWlpUjc4QVZ4MGNVR2pIQUdZTnkySnhuZjUt?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxOcmRTV3k5TnBTMm5udVZpXy1xQTNYSmtacHIzVDZldHpaZHNHdzRuNUpnUkpUdkxDNy1OUGpRWU85STByRFJScDN3NUFkbENsdGE4dWRjY3F2aC16SDFET1JvTmRocHhfd3lORVNfaW1hVmhoX0VGT05UUWNnQm9RR2t0dXYxNXFsdVJ0NGFfWVJKMWlpUjc4QVZ4MGNVR2pIQUdZTnkySnhuZjUt?oc=5\" target=\"_blank\">BTC price on Nov 6, 2026 at 4pm EST Crypto Prediction Market</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Robinhood</font>",
+            "id": "CBMirAFBVV95cUxOcmRTV3k5TnBTMm5udVZpXy1xQTNYSmtacHIzVDZldHpaZHNHdzRuNUpnUkpUdkxDNy1OUGpRWU85STByRFJScDN3NUFkbENsdGE4dWRjY3F2aC16SDFET1JvTmRocHhfd3lORVNfaW1hVmhoX0VGT05UUWNnQm9RR2t0dXYxNXFsdVJ0NGFfWVJKMWlpUjc4QVZ4MGNVR2pIQUdZTnkySnhuZjUt",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T20:03:00Z",
+            "title": "How Russia’s central bank plans to give the FSB access to crypto exchange customers’ personal data - Meduza",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQbFdFQXhTR29LaDNqU1psb0hGXzJvLUdDS1BGUjB0X2hZRjM2RWRKNHIzd25mRVh1eHVkUGpFSGdqRk9qbVByZ1dYVjdnWjYyUTdQRXFuLWkycGRudEExcGNKWFNTOXd5UzdZeERfZkdJcWcza2pCcFB4UzU0UEpGeHlDX09QOWdJWlBkM0RCZlh1VHlKbW81bFdob0d0d2FmaFFoQ3RMUm42N1R1VVhxdFhHbVVvOUZhSmhoRE1yNXJMd9IBxwFBVV95cUxOQ1BjWXlWeWRLMi1TYy14YTZ1SGxIa0RFclJja2llaGcwd2dfV0pnUmdqS1VDOUpLajZjc2M0YWppRW04MzJDYWhmb0p4amRvMmZxeFNuSDE5MWtCWmtFTWllNF9UcDcyQnllVGdqMElPOWVvdFhZYmRjNS04UENuLU9fVXdFazlFLTgwSGF0RTA2RkpuWW9CWkI1SmhDUVFFM3JZd1BDZ2NIT09tY0ZaeHJvc0o2RTludU41dU1rX0RrSExuTjYw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwgFBVV95cUxQbFdFQXhTR29LaDNqU1psb0hGXzJvLUdDS1BGUjB0X2hZRjM2RWRKNHIzd25mRVh1eHVkUGpFSGdqRk9qbVByZ1dYVjdnWjYyUTdQRXFuLWkycGRudEExcGNKWFNTOXd5UzdZeERfZkdJcWcza2pCcFB4UzU0UEpGeHlDX09QOWdJWlBkM0RCZlh1VHlKbW81bFdob0d0d2FmaFFoQ3RMUm42N1R1VVhxdFhHbVVvOUZhSmhoRE1yNXJMd9IBxwFBVV95cUxOQ1BjWXlWeWRLMi1TYy14YTZ1SGxIa0RFclJja2llaGcwd2dfV0pnUmdqS1VDOUpLajZjc2M0YWppRW04MzJDYWhmb0p4amRvMmZxeFNuSDE5MWtCWmtFTWllNF9UcDcyQnllVGdqMElPOWVvdFhZYmRjNS04UENuLU9fVXdFazlFLTgwSGF0RTA2RkpuWW9CWkI1SmhDUVFFM3JZd1BDZ2NIT09tY0ZaeHJvc0o2RTludU41dU1rX0RrSExuTjYw?oc=5\" target=\"_blank\">How Russia’s central bank plans to give the FSB access to crypto exchange customers’ personal data</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Meduza</font>",
+            "id": "CBMiwgFBVV95cUxQbFdFQXhTR29LaDNqU1psb0hGXzJvLUdDS1BGUjB0X2hZRjM2RWRKNHIzd25mRVh1eHVkUGpFSGdqRk9qbVByZ1dYVjdnWjYyUTdQRXFuLWkycGRudEExcGNKWFNTOXd5UzdZeERfZkdJcWcza2pCcFB4UzU0UEpGeHlDX09QOWdJWlBkM0RCZlh1VHlKbW81bFdob0d0d2FmaFFoQ3RMUm42N1R1VVhxdFhHbVVvOUZhSmhoRE1yNXJMd9IBxwFBVV95cUxOQ1BjWXlWeWRLMi1TYy14YTZ1SGxIa0RFclJja2llaGcwd2dfV0pnUmdqS1VDOUpLajZjc2M0YWppRW04MzJDYWhmb0p4amRvMmZxeFNuSDE5MWtCWmtFTWllNF9UcDcyQnllVGdqMElPOWVvdFhZYmRjNS04UENuLU9fVXdFazlFLTgwSGF0RTA2RkpuWW9CWkI1SmhDUVFFM3JZd1BDZ2NIT09tY0ZaeHJvc0o2RTludU41dU1rX0RrSExuTjYw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T20:00:30Z",
+            "title": "Greece ends years of crypto tax uncertainty with new 10% levy on Bitcoin profits - CryptoSlate",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPMU5yRmplTUtsLW1KcnRNUU5XVXBDRVcyQnZhWm42NkZDLVBId1BDRG1XNkhSSVZnM0FETS1ZaDlMVENSTGdwTUhTeUM2d3ZlMGQtYzVrYUkzTUdsM2NwbGNKeGR4STdmcXU1d3J4RTRkQVV5UzN5UldwaXVzT2JYNjc0UlNMUHMzSExMWlZmRDJ4V0lVVlVqeW1zdjVVWWNZaWpjYVlkcw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMipwFBVV95cUxPMU5yRmplTUtsLW1KcnRNUU5XVXBDRVcyQnZhWm42NkZDLVBId1BDRG1XNkhSSVZnM0FETS1ZaDlMVENSTGdwTUhTeUM2d3ZlMGQtYzVrYUkzTUdsM2NwbGNKeGR4STdmcXU1d3J4RTRkQVV5UzN5UldwaXVzT2JYNjc0UlNMUHMzSExMWlZmRDJ4V0lVVlVqeW1zdjVVWWNZaWpjYVlkcw?oc=5\" target=\"_blank\">Greece ends years of crypto tax uncertainty with new 10% levy on Bitcoin profits</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CryptoSlate</font>",
+            "id": "CBMipwFBVV95cUxPMU5yRmplTUtsLW1KcnRNUU5XVXBDRVcyQnZhWm42NkZDLVBId1BDRG1XNkhSSVZnM0FETS1ZaDlMVENSTGdwTUhTeUM2d3ZlMGQtYzVrYUkzTUdsM2NwbGNKeGR4STdmcXU1d3J4RTRkQVV5UzN5UldwaXVzT2JYNjc0UlNMUHMzSExMWlZmRDJ4V0lVVlVqeW1zdjVVWWNZaWpjYVlkcw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T19:49:29Z",
+            "title": "Will the Democratic sweep cloud crypto market structure? - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOeXo2QU8zUUVCRkNlVG1LZnNvTDVHYXNqSnVoN1dQYWJEcGFvclpKZV9Kc3plSTZCaThPTWFDVDJydldCeWtUSkpMQ0JIU0tDbl9YdS15d0FOX3NjbFRoTnBfSHFvM2ZfNVFESVRDa0dleENpeGozQnh1S2g3SXlfQlI4SmQzTUZXanlDU0JwTQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMijwFBVV95cUxOeXo2QU8zUUVCRkNlVG1LZnNvTDVHYXNqSnVoN1dQYWJEcGFvclpKZV9Kc3plSTZCaThPTWFDVDJydldCeWtUSkpMQ0JIU0tDbl9YdS15d0FOX3NjbFRoTnBfSHFvM2ZfNVFESVRDa0dleENpeGozQnh1S2g3SXlfQlI4SmQzTUZXanlDU0JwTQ?oc=5\" target=\"_blank\">Will the Democratic sweep cloud crypto market structure?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMijwFBVV95cUxOeXo2QU8zUUVCRkNlVG1LZnNvTDVHYXNqSnVoN1dQYWJEcGFvclpKZV9Kc3plSTZCaThPTWFDVDJydldCeWtUSkpMQ0JIU0tDbl9YdS15d0FOX3NjbFRoTnBfSHFvM2ZfNVFESVRDa0dleENpeGozQnh1S2g3SXlfQlI4SmQzTUZXanlDU0JwTQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T19:38:47Z",
+            "title": "Crypto ETF Outflows Top $540M on Thursday - Bitcoin Foundation",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSkR4NXFYQXpRZU82OVFua3pwSWZjUnVzQnRVR1ktRGk4TzByRU1QMWlUNmlMZHJTMzhTaWtfc2l6dTFENzVLS0FqOUE0QXN0NDk2Rl96SUVnQmt2M21EYy1LcDZpVTc1bnFuN29lQWNNWTVUTnNhVDNGM3BPWHM4cG9HMGdtTjBkWkdtYzBRZ29TV3dpQWtZSVRycDBJZHND?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMioAFBVV95cUxNSkR4NXFYQXpRZU82OVFua3pwSWZjUnVzQnRVR1ktRGk4TzByRU1QMWlUNmlMZHJTMzhTaWtfc2l6dTFENzVLS0FqOUE0QXN0NDk2Rl96SUVnQmt2M21EYy1LcDZpVTc1bnFuN29lQWNNWTVUTnNhVDNGM3BPWHM4cG9HMGdtTjBkWkdtYzBRZ29TV3dpQWtZSVRycDBJZHND?oc=5\" target=\"_blank\">Crypto ETF Outflows Top $540M on Thursday</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Foundation</font>",
+            "id": "CBMioAFBVV95cUxNSkR4NXFYQXpRZU82OVFua3pwSWZjUnVzQnRVR1ktRGk4TzByRU1QMWlUNmlMZHJTMzhTaWtfc2l6dTFENzVLS0FqOUE0QXN0NDk2Rl96SUVnQmt2M21EYy1LcDZpVTc1bnFuN29lQWNNWTVUTnNhVDNGM3BPWHM4cG9HMGdtTjBkWkdtYzBRZ29TV3dpQWtZSVRycDBJZHND",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T19:35:58Z",
+            "title": "Coinbase has news for gold holders - TheStreet",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNejZIYjVGXzd4cDVmUVNQY19PWDVDNWtxVkFvVjZsYkhRNUNjT0ppSFRUZHVoLVB6OWFnOUdOR1dWNHlWZnFEdDZIclhjWEV4Q3ZOaVdCRE9MYWhxTi1ZVlFXaUdWaUh3eFk5YlJTX0daejFTalhlYU0xNXBQenVkdA?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMigAFBVV95cUxNejZIYjVGXzd4cDVmUVNQY19PWDVDNWtxVkFvVjZsYkhRNUNjT0ppSFRUZHVoLVB6OWFnOUdOR1dWNHlWZnFEdDZIclhjWEV4Q3ZOaVdCRE9MYWhxTi1ZVlFXaUdWaUh3eFk5YlJTX0daejFTalhlYU0xNXBQenVkdA?oc=5\" target=\"_blank\">Coinbase has news for gold holders</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TheStreet</font>",
+            "id": "CBMigAFBVV95cUxNejZIYjVGXzd4cDVmUVNQY19PWDVDNWtxVkFvVjZsYkhRNUNjT0ppSFRUZHVoLVB6OWFnOUdOR1dWNHlWZnFEdDZIclhjWEV4Q3ZOaVdCRE9MYWhxTi1ZVlFXaUdWaUh3eFk5YlJTX0daejFTalhlYU0xNXBQenVkdA",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T19:30:00Z",
+            "title": "Store with 1 million K-pop fans is adding crypto payments - TheStreet",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPbUkySE5mMS1rM2piclpBcUpBbDdMaWJLQ29SWVVnb2FHZzdteUFRLVB4dnR3VHAzT0toMTVDT3NUR2pYUVBHeGhSZldxUU5zM05RbnhDNklYVXVabjRtLVdRQjlfSWZXbnFYZHVXU2NlaTNBTEw3Vm42UkxiWVEyVUZqRFllVDg4djhDX0Y5b2Z5T0Zpd2o1VUZSajdQUQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxPbUkySE5mMS1rM2piclpBcUpBbDdMaWJLQ29SWVVnb2FHZzdteUFRLVB4dnR3VHAzT0toMTVDT3NUR2pYUVBHeGhSZldxUU5zM05RbnhDNklYVXVabjRtLVdRQjlfSWZXbnFYZHVXU2NlaTNBTEw3Vm42UkxiWVEyVUZqRFllVDg4djhDX0Y5b2Z5T0Zpd2o1VUZSajdQUQ?oc=5\" target=\"_blank\">Store with 1 million K-pop fans is adding crypto payments</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TheStreet</font>",
+            "id": "CBMingFBVV95cUxPbUkySE5mMS1rM2piclpBcUpBbDdMaWJLQ29SWVVnb2FHZzdteUFRLVB4dnR3VHAzT0toMTVDT3NUR2pYUVBHeGhSZldxUU5zM05RbnhDNklYVXVabjRtLVdRQjlfSWZXbnFYZHVXU2NlaTNBTEw3Vm42UkxiWVEyVUZqRFllVDg4djhDX0Y5b2Z5T0Zpd2o1VUZSajdQUQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T19:00:01Z",
+            "title": "Ex-FBI agent stole over $2 million in crypto, including from crime victims - The Washington Post",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQRUtyY2d5N1k5eXkzWDNWZlhmdC1qaG5vcEpKc3hMMGFFR1BqMXU5Um1qUDhRNUk3R0luWi16OEFLQ2lpM3pVTER6ZVV0NERjN2lnZ29RakNxVUF3QV9xVXV1RE9JMkVOQnhnNFJmNnZzUjZndC1Qc29OT2tyald3M2k3NlE0VDFKUEQza3ZVT1BqVHc5cXJSRnpXYndJNEZ0cFpMSHc0Yk9HbkJkck1ibmxxTEVYZjB2d3dtQk9uUkh1WE0?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwwFBVV95cUxQRUtyY2d5N1k5eXkzWDNWZlhmdC1qaG5vcEpKc3hMMGFFR1BqMXU5Um1qUDhRNUk3R0luWi16OEFLQ2lpM3pVTER6ZVV0NERjN2lnZ29RakNxVUF3QV9xVXV1RE9JMkVOQnhnNFJmNnZzUjZndC1Qc29OT2tyald3M2k3NlE0VDFKUEQza3ZVT1BqVHc5cXJSRnpXYndJNEZ0cFpMSHc0Yk9HbkJkck1ibmxxTEVYZjB2d3dtQk9uUkh1WE0?oc=5\" target=\"_blank\">Ex-FBI agent stole over $2 million in crypto, including from crime victims</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Washington Post</font>",
+            "id": "CBMiwwFBVV95cUxQRUtyY2d5N1k5eXkzWDNWZlhmdC1qaG5vcEpKc3hMMGFFR1BqMXU5Um1qUDhRNUk3R0luWi16OEFLQ2lpM3pVTER6ZVV0NERjN2lnZ29RakNxVUF3QV9xVXV1RE9JMkVOQnhnNFJmNnZzUjZndC1Qc29OT2tyald3M2k3NlE0VDFKUEQza3ZVT1BqVHc5cXJSRnpXYndJNEZ0cFpMSHc0Yk9HbkJkck1ibmxxTEVYZjB2d3dtQk9uUkh1WE0",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:57:00Z",
+            "title": "What If the Only Companies That Let Their Stocks Be Tokenized Are Crypto Firms? - Barron's",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPZ0ZpT1E3NUlNZEdscUhGM3hoNnNLdkRobmpldkZDWnRIMDNKUzE0MmZSRDlJSUkwRG1aR0tMRDJnUkJuS1U0VHFtV01DOThTTURQTnd2V0ZrcFl1VU9MNF9nWlpWaVJiSkQzM0RjQXFWOWpBSEkzcnpSQWdMblhGeElzd3dxS1c3U3VxQU5n?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPZ0ZpT1E3NUlNZEdscUhGM3hoNnNLdkRobmpldkZDWnRIMDNKUzE0MmZSRDlJSUkwRG1aR0tMRDJnUkJuS1U0VHFtV01DOThTTURQTnd2V0ZrcFl1VU9MNF9nWlpWaVJiSkQzM0RjQXFWOWpBSEkzcnpSQWdMblhGeElzd3dxS1c3U3VxQU5n?oc=5\" target=\"_blank\">What If the Only Companies That Let Their Stocks Be Tokenized Are Crypto Firms?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Barron's</font>",
+            "id": "CBMijgFBVV95cUxPZ0ZpT1E3NUlNZEdscUhGM3hoNnNLdkRobmpldkZDWnRIMDNKUzE0MmZSRDlJSUkwRG1aR0tMRDJnUkJuS1U0VHFtV01DOThTTURQTnd2V0ZrcFl1VU9MNF9nWlpWaVJiSkQzM0RjQXFWOWpBSEkzcnpSQWdMblhGeElzd3dxS1c3U3VxQU5n",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:53:47Z",
+            "title": "Anthropic IPO token offer shuts out U.S. investors - TheStreet",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPeERLdEN0ZHFtYnhLaGJDOU5PeVR0VTQtdmtwVzZDWmFrTW5pVFBUWGp5Y3k2YUMtYmJEWVpvLVlzZHVqMG13cVRxTWpldEtyUDdFYmQtYS12aFVhVE9nLTlGeVdEcUJkNXdsazJlZm1uY2w1allBTkVKZVZwcklkTDUxUWItRVhpaWxhdEhR?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPeERLdEN0ZHFtYnhLaGJDOU5PeVR0VTQtdmtwVzZDWmFrTW5pVFBUWGp5Y3k2YUMtYmJEWVpvLVlzZHVqMG13cVRxTWpldEtyUDdFYmQtYS12aFVhVE9nLTlGeVdEcUJkNXdsazJlZm1uY2w1allBTkVKZVZwcklkTDUxUWItRVhpaWxhdEhR?oc=5\" target=\"_blank\">Anthropic IPO token offer shuts out U.S. investors</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TheStreet</font>",
+            "id": "CBMijgFBVV95cUxPeERLdEN0ZHFtYnhLaGJDOU5PeVR0VTQtdmtwVzZDWmFrTW5pVFBUWGp5Y3k2YUMtYmJEWVpvLVlzZHVqMG13cVRxTWpldEtyUDdFYmQtYS12aFVhVE9nLTlGeVdEcUJkNXdsazJlZm1uY2w1allBTkVKZVZwcklkTDUxUWItRVhpaWxhdEhR",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:53:33Z",
+            "title": "Will the Democratic sweep cloud crypto market structure? - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPMkZCcHE3SWExbnFGRzVWUHFKb2k0dGFTSjRYVE9XUFR4OUl3d1RDUk5Wc3RVZ202YndRX1FlMDU4OWJvNHdJVkV3ekVmR0dXNGdLb0UwOGpqdG85VTZWNnNVc19kZjkyU01pcXctblBSQkxMbGRMR2JPY1ZycXBvLTd1ZndmY1VnN3FJ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiiwFBVV95cUxPMkZCcHE3SWExbnFGRzVWUHFKb2k0dGFTSjRYVE9XUFR4OUl3d1RDUk5Wc3RVZ202YndRX1FlMDU4OWJvNHdJVkV3ekVmR0dXNGdLb0UwOGpqdG85VTZWNnNVc19kZjkyU01pcXctblBSQkxMbGRMR2JPY1ZycXBvLTd1ZndmY1VnN3FJ?oc=5\" target=\"_blank\">Will the Democratic sweep cloud crypto market structure?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMiiwFBVV95cUxPMkZCcHE3SWExbnFGRzVWUHFKb2k0dGFTSjRYVE9XUFR4OUl3d1RDUk5Wc3RVZ202YndRX1FlMDU4OWJvNHdJVkV3ekVmR0dXNGdLb0UwOGpqdG85VTZWNnNVc19kZjkyU01pcXctblBSQkxMbGRMR2JPY1ZycXBvLTd1ZndmY1VnN3FJ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:47:45Z",
+            "title": "Russia finalizes crypto trading rules ahead of Nov. 17 rollout - TradingView",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPX0dST3lGYWltcmlWYzEyMnQ3bDhhQ0w5SmJrOUUtQ2FEdVlYWkZIcmRydW1zakRXZlNMZXlTcFNIVkhWVWxrekJzNGhwLUNzdWhpaW1LUmpzeF9JSFN5eTNOWlcxT011d3hfTFN3WDRuN19INXdEb296NmNaTlhrWEtjV2wyRVU2Um9CY0NvZVlVYjJiQ3JlUGhCSm9yUllrS0x4MldiMjNEdUVnNl9EcmdldUY2TFBENjktZ1NZZlluMnM?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwwFBVV95cUxPX0dST3lGYWltcmlWYzEyMnQ3bDhhQ0w5SmJrOUUtQ2FEdVlYWkZIcmRydW1zakRXZlNMZXlTcFNIVkhWVWxrekJzNGhwLUNzdWhpaW1LUmpzeF9JSFN5eTNOWlcxT011d3hfTFN3WDRuN19INXdEb296NmNaTlhrWEtjV2wyRVU2Um9CY0NvZVlVYjJiQ3JlUGhCSm9yUllrS0x4MldiMjNEdUVnNl9EcmdldUY2TFBENjktZ1NZZlluMnM?oc=5\" target=\"_blank\">Russia finalizes crypto trading rules ahead of Nov. 17 rollout</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TradingView</font>",
+            "id": "CBMiwwFBVV95cUxPX0dST3lGYWltcmlWYzEyMnQ3bDhhQ0w5SmJrOUUtQ2FEdVlYWkZIcmRydW1zakRXZlNMZXlTcFNIVkhWVWxrekJzNGhwLUNzdWhpaW1LUmpzeF9JSFN5eTNOWlcxT011d3hfTFN3WDRuN19INXdEb296NmNaTlhrWEtjV2wyRVU2Um9CY0NvZVlVYjJiQ3JlUGhCSm9yUllrS0x4MldiMjNEdUVnNl9EcmdldUY2TFBENjktZ1NZZlluMnM",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:45:51Z",
+            "title": "Blumenthal Gets Ready To Investigate \"Crypto Corruption\" - New Haven Independent",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNc1dEUTZsWFh0VmFsSlVzUHhUbTNienA2b3BfMlVEQzJoR0NHakZtdXdJZXNJZEVkeWVIN3h2TTBWaFUtaWZGQXNMM2VEN3lvWXlUZC13a3FGVTA3N0VnYWhUc05ua19mczZJd09GQlVnbEt3VFpDOUNjVEJCR1ZjdXRoZVY4eGhrTWg2OWtKOHpVYTlSeHN0NENNdlFteGJHNXV5Tg?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMipAFBVV95cUxNc1dEUTZsWFh0VmFsSlVzUHhUbTNienA2b3BfMlVEQzJoR0NHakZtdXdJZXNJZEVkeWVIN3h2TTBWaFUtaWZGQXNMM2VEN3lvWXlUZC13a3FGVTA3N0VnYWhUc05ua19mczZJd09GQlVnbEt3VFpDOUNjVEJCR1ZjdXRoZVY4eGhrTWg2OWtKOHpVYTlSeHN0NENNdlFteGJHNXV5Tg?oc=5\" target=\"_blank\">Blumenthal Gets Ready To Investigate \"Crypto Corruption\"</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">New Haven Independent</font>",
+            "id": "CBMipAFBVV95cUxNc1dEUTZsWFh0VmFsSlVzUHhUbTNienA2b3BfMlVEQzJoR0NHakZtdXdJZXNJZEVkeWVIN3h2TTBWaFUtaWZGQXNMM2VEN3lvWXlUZC13a3FGVTA3N0VnYWhUc05ua19mczZJd09GQlVnbEt3VFpDOUNjVEJCR1ZjdXRoZVY4eGhrTWg2OWtKOHpVYTlSeHN0NENNdlFteGJHNXV5Tg",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:31:06Z",
+            "title": "Bitcoin’s ‘Best Buying Opportunity Ever’ Is Here, Mark Moss Says, but ‘Crypto Is Dead’ - Benzinga",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNRzl4Z21YU1ZpcnJWSVJ6cW9UeFNIelFVcEI0TVZSRFdTR2EzbjA2ZFJnZzBPLW9RTElJcnFFR3ZZdVBXeFVLaDM4VzMyem1WQ2diQVZFdWkzRkw4d3M2RkYyeGQ5RFo2RVViQWhpRXZzRWxYMFA0ZjdWdzdoNldRTlFFY011U2xsemQ0dWgyMVVUaURHVGlZalV0NTA1UlAtaTh0S1JacHZwb0FYNEd3MjNUMzlxWlAwWFpjelZ1cXJiVHE3SVlBMG9vbFlrYTNOWDRpNUFrZnQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi2AFBVV95cUxNRzl4Z21YU1ZpcnJWSVJ6cW9UeFNIelFVcEI0TVZSRFdTR2EzbjA2ZFJnZzBPLW9RTElJcnFFR3ZZdVBXeFVLaDM4VzMyem1WQ2diQVZFdWkzRkw4d3M2RkYyeGQ5RFo2RVViQWhpRXZzRWxYMFA0ZjdWdzdoNldRTlFFY011U2xsemQ0dWgyMVVUaURHVGlZalV0NTA1UlAtaTh0S1JacHZwb0FYNEd3MjNUMzlxWlAwWFpjelZ1cXJiVHE3SVlBMG9vbFlrYTNOWDRpNUFrZnQ?oc=5\" target=\"_blank\">Bitcoin’s ‘Best Buying Opportunity Ever’ Is Here, Mark Moss Says, but ‘Crypto Is Dead’</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Benzinga</font>",
+            "id": "CBMi2AFBVV95cUxNRzl4Z21YU1ZpcnJWSVJ6cW9UeFNIelFVcEI0TVZSRFdTR2EzbjA2ZFJnZzBPLW9RTElJcnFFR3ZZdVBXeFVLaDM4VzMyem1WQ2diQVZFdWkzRkw4d3M2RkYyeGQ5RFo2RVViQWhpRXZzRWxYMFA0ZjdWdzdoNldRTlFFY011U2xsemQ0dWgyMVVUaURHVGlZalV0NTA1UlAtaTh0S1JacHZwb0FYNEd3MjNUMzlxWlAwWFpjelZ1cXJiVHE3SVlBMG9vbFlrYTNOWDRpNUFrZnQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:29:00Z",
+            "title": "Trump administration moves closer to allowing crypto in 401(k) retirement plans - The Block",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbFZHNVhlbDdUckFldTRpNzFQTl9sREZ2Y0NNOEpUX0RQSTExTzBiWlpZLXU4Yl9hamdjM0dDX1JqOG02d045bTVndnNXMGF4TnVMazZpVmNFTUUxTEJUR1lEUnJjbklFNV9YQjFrYTFYN1duUGZTd1FTZ3FoQW1BQnZfeWJ3WFlQQ1NHNVpvVlY4b2szdEpvSTVwSk80UlRIOExsM2o3ajhyMjlsZkNER3VXSlF6S0UyNDFDNWlHd2lsM256UXJrWQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbFZHNVhlbDdUckFldTRpNzFQTl9sREZ2Y0NNOEpUX0RQSTExTzBiWlpZLXU4Yl9hamdjM0dDX1JqOG02d045bTVndnNXMGF4TnVMazZpVmNFTUUxTEJUR1lEUnJjbklFNV9YQjFrYTFYN1duUGZTd1FTZ3FoQW1BQnZfeWJ3WFlQQ1NHNVpvVlY4b2szdEpvSTVwSk80UlRIOExsM2o3ajhyMjlsZkNER3VXSlF6S0UyNDFDNWlHd2lsM256UXJrWQ?oc=5\" target=\"_blank\">Trump administration moves closer to allowing crypto in 401(k) retirement plans</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Block</font>",
+            "id": "CBMiyAFBVV95cUxPbFZHNVhlbDdUckFldTRpNzFQTl9sREZ2Y0NNOEpUX0RQSTExTzBiWlpZLXU4Yl9hamdjM0dDX1JqOG02d045bTVndnNXMGF4TnVMazZpVmNFTUUxTEJUR1lEUnJjbklFNV9YQjFrYTFYN1duUGZTd1FTZ3FoQW1BQnZfeWJ3WFlQQ1NHNVpvVlY4b2szdEpvSTVwSk80UlRIOExsM2o3ajhyMjlsZkNER3VXSlF6S0UyNDFDNWlHd2lsM256UXJrWQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:08:58Z",
+            "title": "Microsoft winds down Oracle AI cloud deal as older chips fall short - Crypto News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBZQzcwNF9qWHdKNmJSYmlnbGtZMVJkcVZmMmxPOWRHUmZjX1FpMk84QXhHVU02bm82bVA3TkpIRXA5eFlETmhoYUFCVk1sMGdFZjBqV2F6NlpRUlNIaW5iQWlDU1pyWHZyRHQxeA?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMibEFVX3lxTFBZQzcwNF9qWHdKNmJSYmlnbGtZMVJkcVZmMmxPOWRHUmZjX1FpMk84QXhHVU02bm82bVA3TkpIRXA5eFlETmhoYUFCVk1sMGdFZjBqV2F6NlpRUlNIaW5iQWlDU1pyWHZyRHQxeA?oc=5\" target=\"_blank\">Microsoft winds down Oracle AI cloud deal as older chips fall short</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Crypto News</font>",
+            "id": "CBMibEFVX3lxTFBZQzcwNF9qWHdKNmJSYmlnbGtZMVJkcVZmMmxPOWRHUmZjX1FpMk84QXhHVU02bm82bVA3TkpIRXA5eFlETmhoYUFCVk1sMGdFZjBqV2F6NlpRUlNIaW5iQWlDU1pyWHZyRHQxeA",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:08:46Z",
+            "title": "Standard Chartered and SBI back crypto insurance firm - TheStreet",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPaHc1bEZRNjJVbFFzS2d0bzVXdkstQ1gwUnB4NTRkN1c3QzIyYmlPWVBpZEZOWlRlN2sxWXZxcW14YWxaV1JGWlFocGJqeXVHcHRDUFdfUzZXZmhNMWhxTDk5b3NITjkteEI0ZnhtXzJmRVBYdExLXzBDR3BRNm5RR2pVM0t3bTY4N2NpY01YVmRDdw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxPaHc1bEZRNjJVbFFzS2d0bzVXdkstQ1gwUnB4NTRkN1c3QzIyYmlPWVBpZEZOWlRlN2sxWXZxcW14YWxaV1JGWlFocGJqeXVHcHRDUFdfUzZXZmhNMWhxTDk5b3NITjkteEI0ZnhtXzJmRVBYdExLXzBDR3BRNm5RR2pVM0t3bTY4N2NpY01YVmRDdw?oc=5\" target=\"_blank\">Standard Chartered and SBI back crypto insurance firm</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TheStreet</font>",
+            "id": "CBMikgFBVV95cUxPaHc1bEZRNjJVbFFzS2d0bzVXdkstQ1gwUnB4NTRkN1c3QzIyYmlPWVBpZEZOWlRlN2sxWXZxcW14YWxaV1JGWlFocGJqeXVHcHRDUFdfUzZXZmhNMWhxTDk5b3NITjkteEI0ZnhtXzJmRVBYdExLXzBDR3BRNm5RR2pVM0t3bTY4N2NpY01YVmRDdw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:05:30Z",
+            "title": "Dogecoin price on Nov 6, 2026 at 2pm EST Crypto Prediction Market - Robinhood",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOamVlXzJQZDlZeS0zeFRTN3cwa1BtYkYyWFcxTmdtZ25oeWNaRFJxajI4cHZmc0taU1hyYmtaT1pjX2ZZcmk0dUNELWdkRnM2ZWVuUUUzNFdhanEtb2R6OUtzMG1JOVpoWTA3N0R0Q2Nlc2lGUGdkMkdQUHFUeUtickRneHFhMEFvZVNvRGFwLXNHRUstbW9ZTGdDeC1fXzhGSG9qUXI1QlduMUJ5WktnUURxQQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxOamVlXzJQZDlZeS0zeFRTN3cwa1BtYkYyWFcxTmdtZ25oeWNaRFJxajI4cHZmc0taU1hyYmtaT1pjX2ZZcmk0dUNELWdkRnM2ZWVuUUUzNFdhanEtb2R6OUtzMG1JOVpoWTA3N0R0Q2Nlc2lGUGdkMkdQUHFUeUtickRneHFhMEFvZVNvRGFwLXNHRUstbW9ZTGdDeC1fXzhGSG9qUXI1QlduMUJ5WktnUURxQQ?oc=5\" target=\"_blank\">Dogecoin price on Nov 6, 2026 at 2pm EST Crypto Prediction Market</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Robinhood</font>",
+            "id": "CBMiswFBVV95cUxOamVlXzJQZDlZeS0zeFRTN3cwa1BtYkYyWFcxTmdtZ25oeWNaRFJxajI4cHZmc0taU1hyYmtaT1pjX2ZZcmk0dUNELWdkRnM2ZWVuUUUzNFdhanEtb2R6OUtzMG1JOVpoWTA3N0R0Q2Nlc2lGUGdkMkdQUHFUeUtickRneHFhMEFvZVNvRGFwLXNHRUstbW9ZTGdDeC1fXzhGSG9qUXI1QlduMUJ5WktnUURxQQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T18:00:00Z",
+            "title": "White House reviewing SEC crypto broker-dealer draft - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQV2Q4WjdyaUdOekFMRVNOdGxXb3U5YzduN0ZlT0pxUERGaEI3NGVOaE9tUmVTRzl4UUZvMGxGRTdENFV0dkVCQXZBSWs2dlBfX1hfbXF0ZDhKYXB1Tm53eUczTF9pRzY2UlZtd3Z3OGIyU1d6aGoxUzFZdHMwcU4tQ2c4V1kwQQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMihgFBVV95cUxQV2Q4WjdyaUdOekFMRVNOdGxXb3U5YzduN0ZlT0pxUERGaEI3NGVOaE9tUmVTRzl4UUZvMGxGRTdENFV0dkVCQXZBSWs2dlBfX1hfbXF0ZDhKYXB1Tm53eUczTF9pRzY2UlZtd3Z3OGIyU1d6aGoxUzFZdHMwcU4tQ2c4V1kwQQ?oc=5\" target=\"_blank\">White House reviewing SEC crypto broker-dealer draft</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMihgFBVV95cUxQV2Q4WjdyaUdOekFMRVNOdGxXb3U5YzduN0ZlT0pxUERGaEI3NGVOaE9tUmVTRzl4UUZvMGxGRTdENFV0dkVCQXZBSWs2dlBfX1hfbXF0ZDhKYXB1Tm53eUczTF9pRzY2UlZtd3Z3OGIyU1d6aGoxUzFZdHMwcU4tQ2c4V1kwQQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:52:51Z",
+            "title": "Nubank, Mercado Pago Halt Crypto Transactions on Provider Snags - Bloomberg.com",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQdlZ6YWtITlA4aEd2MlpnUVpnTUU4clVQMVFNd2pzNFpJaHdQaWxxaE92WmlWOG5fRUhUdllVb1lrX0pPem5OUmYxcUluc3RPRHp6X0hQZXloTXF1YmZPQ3pIZHFNMWktRndXREVjY0t0dG9YdnpTSGZWMllINThxVVZPaUJHeFVMZEQxSWtBYUlxNzZCbUxMMGFSX0c0N3d3T2tCeXNibV8wUXZ5ZXcyb0IyVmM?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxQdlZ6YWtITlA4aEd2MlpnUVpnTUU4clVQMVFNd2pzNFpJaHdQaWxxaE92WmlWOG5fRUhUdllVb1lrX0pPem5OUmYxcUluc3RPRHp6X0hQZXloTXF1YmZPQ3pIZHFNMWktRndXREVjY0t0dG9YdnpTSGZWMllINThxVVZPaUJHeFVMZEQxSWtBYUlxNzZCbUxMMGFSX0c0N3d3T2tCeXNibV8wUXZ5ZXcyb0IyVmM?oc=5\" target=\"_blank\">Nubank, Mercado Pago Halt Crypto Transactions on Provider Snags</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bloomberg.com</font>",
+            "id": "CBMitAFBVV95cUxQdlZ6YWtITlA4aEd2MlpnUVpnTUU4clVQMVFNd2pzNFpJaHdQaWxxaE92WmlWOG5fRUhUdllVb1lrX0pPem5OUmYxcUluc3RPRHp6X0hQZXloTXF1YmZPQ3pIZHFNMWktRndXREVjY0t0dG9YdnpTSGZWMllINThxVVZPaUJHeFVMZEQxSWtBYUlxNzZCbUxMMGFSX0c0N3d3T2tCeXNibV8wUXZ5ZXcyb0IyVmM",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:49:33Z",
+            "title": "Bitcoin price dips under $75K as crypto markets miss tech-stock rebound - TradingView",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOVmxIVXZ1R2xBUkNnZ3B2cGhha2l5TlE1cDRkUTBSbDlSM0tTVkc4SWN5MjV6MjRvT1E1NkdfYUdMcm1ha05ydHB2b0FnVFJwZ0Z2UlhVV3NaVy1FME0yU256ZENqTWctb1JRZXpjN1hCaFBJRXJ5NWx3dkIwc1lkSXJ3cVNQTkNNcFdpQVlMQU92N2dBeHBUYnJGS2lGSFJhdjZtZjVZUVAySUpJTEMzT0RoQVNod093TjFweXZfOS0ya244RnNJM0V1RTBVU3c?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizwFBVV95cUxOVmxIVXZ1R2xBUkNnZ3B2cGhha2l5TlE1cDRkUTBSbDlSM0tTVkc4SWN5MjV6MjRvT1E1NkdfYUdMcm1ha05ydHB2b0FnVFJwZ0Z2UlhVV3NaVy1FME0yU256ZENqTWctb1JRZXpjN1hCaFBJRXJ5NWx3dkIwc1lkSXJ3cVNQTkNNcFdpQVlMQU92N2dBeHBUYnJGS2lGSFJhdjZtZjVZUVAySUpJTEMzT0RoQVNod093TjFweXZfOS0ya244RnNJM0V1RTBVU3c?oc=5\" target=\"_blank\">Bitcoin price dips under $75K as crypto markets miss tech-stock rebound</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TradingView</font>",
+            "id": "CBMizwFBVV95cUxOVmxIVXZ1R2xBUkNnZ3B2cGhha2l5TlE1cDRkUTBSbDlSM0tTVkc4SWN5MjV6MjRvT1E1NkdfYUdMcm1ha05ydHB2b0FnVFJwZ0Z2UlhVV3NaVy1FME0yU256ZENqTWctb1JRZXpjN1hCaFBJRXJ5NWx3dkIwc1lkSXJ3cVNQTkNNcFdpQVlMQU92N2dBeHBUYnJGS2lGSFJhdjZtZjVZUVAySUpJTEMzT0RoQVNod093TjFweXZfOS0ya244RnNJM0V1RTBVU3c",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:47:46Z",
+            "title": "Nubank, Mercado Pago halt crypto transfers after external provider disruption - Central Oregon Daily",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxNZEZEVV9QMzhveE5vd19tWG1VNm51d0I1dF9sQjlITE9JV29INTI2ZU1FemRXRjlieFdBNzgwWlNZWE5oWVpXVkJEUjdmek5Tb0JDd0NSbmJRMjBJaktQSWd0enNIcWdqNktOSGlVdi1nVlNQMUdXeGd0a2FqbUpXRno5YkcxWTdLOWJsVkFGOHM4OF9kZEp2dENaT0JaaHFpMFQwclBLWUxXY2NuUXlQX1g4cWszYkFQQjVFUjVZMkpRS0IwdEtoM0VmNTk4dElNN3ZIVF95UndJOFp3Z3J4VHV1Rkp5U1RIa0FDT0NtZ0pKR1EteDV2ZUlHSmtweDFzR1g4XzRB?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMihgJBVV95cUxNZEZEVV9QMzhveE5vd19tWG1VNm51d0I1dF9sQjlITE9JV29INTI2ZU1FemRXRjlieFdBNzgwWlNZWE5oWVpXVkJEUjdmek5Tb0JDd0NSbmJRMjBJaktQSWd0enNIcWdqNktOSGlVdi1nVlNQMUdXeGd0a2FqbUpXRno5YkcxWTdLOWJsVkFGOHM4OF9kZEp2dENaT0JaaHFpMFQwclBLWUxXY2NuUXlQX1g4cWszYkFQQjVFUjVZMkpRS0IwdEtoM0VmNTk4dElNN3ZIVF95UndJOFp3Z3J4VHV1Rkp5U1RIa0FDT0NtZ0pKR1EteDV2ZUlHSmtweDFzR1g4XzRB?oc=5\" target=\"_blank\">Nubank, Mercado Pago halt crypto transfers after external provider disruption</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Central Oregon Daily</font>",
+            "id": "CBMihgJBVV95cUxNZEZEVV9QMzhveE5vd19tWG1VNm51d0I1dF9sQjlITE9JV29INTI2ZU1FemRXRjlieFdBNzgwWlNZWE5oWVpXVkJEUjdmek5Tb0JDd0NSbmJRMjBJaktQSWd0enNIcWdqNktOSGlVdi1nVlNQMUdXeGd0a2FqbUpXRno5YkcxWTdLOWJsVkFGOHM4OF9kZEp2dENaT0JaaHFpMFQwclBLWUxXY2NuUXlQX1g4cWszYkFQQjVFUjVZMkpRS0IwdEtoM0VmNTk4dElNN3ZIVF95UndJOFp3Z3J4VHV1Rkp5U1RIa0FDT0NtZ0pKR1EteDV2ZUlHSmtweDFzR1g4XzRB",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:42:31Z",
+            "title": "US Sanctions 45 More Targets Tied to Alleged Crypto Scam Empire Prince Group - Decrypt",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPZ1ZSTzEzUFNsaTlyOVRqQld6ZGJvcEtRM3dZakdKQXMyZGEza0hDS1dDd19iWldIODI0c2VwY25NQ3FPV3k4X1FXUVBaNFMwbjJjdWhqZkh6WUVlSUhQSG5TUTJ3bjRMdzBhNjEzbU9zY2VtR2ZqUnRPWi1sRklwUUZhTUtuaW1HRTdkOWl1UVJfT3c3VWRHbmEtdGNYQmNTc0pDRg?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMipAFBVV95cUxPZ1ZSTzEzUFNsaTlyOVRqQld6ZGJvcEtRM3dZakdKQXMyZGEza0hDS1dDd19iWldIODI0c2VwY25NQ3FPV3k4X1FXUVBaNFMwbjJjdWhqZkh6WUVlSUhQSG5TUTJ3bjRMdzBhNjEzbU9zY2VtR2ZqUnRPWi1sRklwUUZhTUtuaW1HRTdkOWl1UVJfT3c3VWRHbmEtdGNYQmNTc0pDRg?oc=5\" target=\"_blank\">US Sanctions 45 More Targets Tied to Alleged Crypto Scam Empire Prince Group</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Decrypt</font>",
+            "id": "CBMipAFBVV95cUxPZ1ZSTzEzUFNsaTlyOVRqQld6ZGJvcEtRM3dZakdKQXMyZGEza0hDS1dDd19iWldIODI0c2VwY25NQ3FPV3k4X1FXUVBaNFMwbjJjdWhqZkh6WUVlSUhQSG5TUTJ3bjRMdzBhNjEzbU9zY2VtR2ZqUnRPWi1sRklwUUZhTUtuaW1HRTdkOWl1UVJfT3c3VWRHbmEtdGNYQmNTc0pDRg",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:39:00Z",
+            "title": "Where People Get Their Crypto Information From Can Be as Important as the Information Itself - Gainesville Sun",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxNdVZ2V0JDVG5MMVM5bkx0VXc2MHVTOTdzY0twTDBZN213VjJsblZHNmVCSHVJQVB5WWYxVDRxSmpBWk9NdEhxbjBtMWJoa0ZWS01XWUdPaGJrRUk0aUNPNGgyb1NmM0k4NXdxb0MtQm5QN0FfY1NKSUFESHRMSlRVSkF4VlJGeTBVTmJsNUY2SURPMWlxTENtcWhRVTh6d0JFaW5Gdmd0U2JwYXJVeTVxalVrLW1iV3BlYWUxWHpUR1pUXzhuWFJ2SDRQUUF1aFl1R2xodGxURDR5SndzOHM2UkNTXzdYWld1OUZlMEFKc3NQZXRSOG15SU1YSmtvdHVad2FZQlpOanlGZw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiigJBVV95cUxNdVZ2V0JDVG5MMVM5bkx0VXc2MHVTOTdzY0twTDBZN213VjJsblZHNmVCSHVJQVB5WWYxVDRxSmpBWk9NdEhxbjBtMWJoa0ZWS01XWUdPaGJrRUk0aUNPNGgyb1NmM0k4NXdxb0MtQm5QN0FfY1NKSUFESHRMSlRVSkF4VlJGeTBVTmJsNUY2SURPMWlxTENtcWhRVTh6d0JFaW5Gdmd0U2JwYXJVeTVxalVrLW1iV3BlYWUxWHpUR1pUXzhuWFJ2SDRQUUF1aFl1R2xodGxURDR5SndzOHM2UkNTXzdYWld1OUZlMEFKc3NQZXRSOG15SU1YSmtvdHVad2FZQlpOanlGZw?oc=5\" target=\"_blank\">Where People Get Their Crypto Information From Can Be as Important as the Information Itself</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Gainesville Sun</font>",
+            "id": "CBMiigJBVV95cUxNdVZ2V0JDVG5MMVM5bkx0VXc2MHVTOTdzY0twTDBZN213VjJsblZHNmVCSHVJQVB5WWYxVDRxSmpBWk9NdEhxbjBtMWJoa0ZWS01XWUdPaGJrRUk0aUNPNGgyb1NmM0k4NXdxb0MtQm5QN0FfY1NKSUFESHRMSlRVSkF4VlJGeTBVTmJsNUY2SURPMWlxTENtcWhRVTh6d0JFaW5Gdmd0U2JwYXJVeTVxalVrLW1iV3BlYWUxWHpUR1pUXzhuWFJ2SDRQUUF1aFl1R2xodGxURDR5SndzOHM2UkNTXzdYWld1OUZlMEFKc3NQZXRSOG15SU1YSmtvdHVad2FZQlpOanlGZw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:37:00Z",
+            "title": "Bitcoin struggles below $76,000 as strong US jobs report adds to crypto market pressure - Economies.com",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQQUtsY0JxZlZqS2JnOU80VDVHb0dGREE2VUtHU2FzaEZiM0VENUpyaVZmYjJ2MTlqZ1FZY2VCWmVVSG9VbXdxSG12V3VHcjFTUVFIMkZIOWJJVTlvRWM1MFZpaVRYT08zR1VtRWY0dmtDd1JQaExRVkJ6VHU1WEo2MHpFZ0ZxM3c4NlUxZXBCWVc5QmpXcFh5TW9lbUtZaU1WcDFwYTNrZTdmMHhiZ0x0QXk0OXpFcDNuUGpzRFY1NF8xRzV3UXh5Q0x3?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiygFBVV95cUxQQUtsY0JxZlZqS2JnOU80VDVHb0dGREE2VUtHU2FzaEZiM0VENUpyaVZmYjJ2MTlqZ1FZY2VCWmVVSG9VbXdxSG12V3VHcjFTUVFIMkZIOWJJVTlvRWM1MFZpaVRYT08zR1VtRWY0dmtDd1JQaExRVkJ6VHU1WEo2MHpFZ0ZxM3c4NlUxZXBCWVc5QmpXcFh5TW9lbUtZaU1WcDFwYTNrZTdmMHhiZ0x0QXk0OXpFcDNuUGpzRFY1NF8xRzV3UXh5Q0x3?oc=5\" target=\"_blank\">Bitcoin struggles below $76,000 as strong US jobs report adds to crypto market pressure</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Economies.com</font>",
+            "id": "CBMiygFBVV95cUxQQUtsY0JxZlZqS2JnOU80VDVHb0dGREE2VUtHU2FzaEZiM0VENUpyaVZmYjJ2MTlqZ1FZY2VCWmVVSG9VbXdxSG12V3VHcjFTUVFIMkZIOWJJVTlvRWM1MFZpaVRYT08zR1VtRWY0dmtDd1JQaExRVkJ6VHU1WEo2MHpFZ0ZxM3c4NlUxZXBCWVc5QmpXcFh5TW9lbUtZaU1WcDFwYTNrZTdmMHhiZ0x0QXk0OXpFcDNuUGpzRFY1NF8xRzV3UXh5Q0x3",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:25:06Z",
+            "title": "Post-Election Crypto Opportunity Could Make SATO Super - ETF Database",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNLXAxTmpTRlQyZnBoQUtZeHNwOFh4dlhKU2p1WW12cU9hWmRrUWpydEF6eWtxM3hnazIyLXQwT2FJUVpSOTZYazRZNmE5VHV4QndIMEJ3NWN3TGtYZVRCSW5ET180RWNFTHZHUWtIWGo5Z0JJUFlLSU9hR09fVHVvdUptZ2VpYlhtTU9PUk4zbnJoQ09BVzdRNzZIYzVIVjBZeVJj?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiowFBVV95cUxNLXAxTmpTRlQyZnBoQUtZeHNwOFh4dlhKU2p1WW12cU9hWmRrUWpydEF6eWtxM3hnazIyLXQwT2FJUVpSOTZYazRZNmE5VHV4QndIMEJ3NWN3TGtYZVRCSW5ET180RWNFTHZHUWtIWGo5Z0JJUFlLSU9hR09fVHVvdUptZ2VpYlhtTU9PUk4zbnJoQ09BVzdRNzZIYzVIVjBZeVJj?oc=5\" target=\"_blank\">Post-Election Crypto Opportunity Could Make SATO Super</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">ETF Database</font>",
+            "id": "CBMiowFBVV95cUxNLXAxTmpTRlQyZnBoQUtZeHNwOFh4dlhKU2p1WW12cU9hWmRrUWpydEF6eWtxM3hnazIyLXQwT2FJUVpSOTZYazRZNmE5VHV4QndIMEJ3NWN3TGtYZVRCSW5ET180RWNFTHZHUWtIWGo5Z0JJUFlLSU9hR09fVHVvdUptZ2VpYlhtTU9PUk4zbnJoQ09BVzdRNzZIYzVIVjBZeVJj",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:23:47Z",
+            "title": "People’s Bank of China Halts Solana Shanghai Event Over Unauthorized Crypto Promotion: 7 outlets compared - NewsCord",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQX0VmTXpLWnNJVU5EVnowOU4xNk5oQWplTlVmaUM4emlQNXNHUzZGMWtPOVA0UDRvbFZGRFNLRlZBb0Fob0xWYXpNc01EejRvblBTMW9QMk1RRFFQa1REWk93UGNkWl9yc2g3RGpCT1hXSmhKUFJwQnh3WkY3OWt3ZFBndWdIMGNrYnc4cWpJYnpaUXY4ZUlOYTVXSVlWZ2pEcWNSY0t0MmhJODFUSzJtMGtwN3BkVE9wZlhkWnp2U3ctNUJBcnBUbGlvNVdtMXY5aG9TZzVzNS1SZ1A2a25icTJxRkhxSXRTcEE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi6gFBVV95cUxQX0VmTXpLWnNJVU5EVnowOU4xNk5oQWplTlVmaUM4emlQNXNHUzZGMWtPOVA0UDRvbFZGRFNLRlZBb0Fob0xWYXpNc01EejRvblBTMW9QMk1RRFFQa1REWk93UGNkWl9yc2g3RGpCT1hXSmhKUFJwQnh3WkY3OWt3ZFBndWdIMGNrYnc4cWpJYnpaUXY4ZUlOYTVXSVlWZ2pEcWNSY0t0MmhJODFUSzJtMGtwN3BkVE9wZlhkWnp2U3ctNUJBcnBUbGlvNVdtMXY5aG9TZzVzNS1SZ1A2a25icTJxRkhxSXRTcEE?oc=5\" target=\"_blank\">People’s Bank of China Halts Solana Shanghai Event Over Unauthorized Crypto Promotion: 7 outlets compared</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NewsCord</font>",
+            "id": "CBMi6gFBVV95cUxQX0VmTXpLWnNJVU5EVnowOU4xNk5oQWplTlVmaUM4emlQNXNHUzZGMWtPOVA0UDRvbFZGRFNLRlZBb0Fob0xWYXpNc01EejRvblBTMW9QMk1RRFFQa1REWk93UGNkWl9yc2g3RGpCT1hXSmhKUFJwQnh3WkY3OWt3ZFBndWdIMGNrYnc4cWpJYnpaUXY4ZUlOYTVXSVlWZ2pEcWNSY0t0MmhJODFUSzJtMGtwN3BkVE9wZlhkWnp2U3ctNUJBcnBUbGlvNVdtMXY5aG9TZzVzNS1SZ1A2a25icTJxRkhxSXRTcEE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:19:00Z",
+            "title": "Binance $6.3 billion heist to prompt closer scrutiny by insurers - Reuters",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNWG84THVjeHZPNm5hOXJKYzlNeVJsYXNxMnFiWXVLYVB4N2dCSVNZU2JGcHIyMjZ4MUZUV21uVmRGam5lMHNOZkZCMEZURXRqNzZUNUNKTU84ZHhxX3BJVzhTZ2I5UzZ4VUt4WW5PVEkyMmhOVGM0aTZHS1JCMlFwU0wteW5OcmI4WUV6M083b1dERXNUblRUWmdBR25sVHNBR01ZZVJMaE9SSXhFbDVuV0daLWhfQQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxNWG84THVjeHZPNm5hOXJKYzlNeVJsYXNxMnFiWXVLYVB4N2dCSVNZU2JGcHIyMjZ4MUZUV21uVmRGam5lMHNOZkZCMEZURXRqNzZUNUNKTU84ZHhxX3BJVzhTZ2I5UzZ4VUt4WW5PVEkyMmhOVGM0aTZHS1JCMlFwU0wteW5OcmI4WUV6M083b1dERXNUblRUWmdBR25sVHNBR01ZZVJMaE9SSXhFbDVuV0daLWhfQQ?oc=5\" target=\"_blank\">Binance $6.3 billion heist to prompt closer scrutiny by insurers</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Reuters</font>",
+            "id": "CBMitgFBVV95cUxNWG84THVjeHZPNm5hOXJKYzlNeVJsYXNxMnFiWXVLYVB4N2dCSVNZU2JGcHIyMjZ4MUZUV21uVmRGam5lMHNOZkZCMEZURXRqNzZUNUNKTU84ZHhxX3BJVzhTZ2I5UzZ4VUt4WW5PVEkyMmhOVGM0aTZHS1JCMlFwU0wteW5OcmI4WUV6M083b1dERXNUblRUWmdBR25sVHNBR01ZZVJMaE9SSXhFbDVuV0daLWhfQQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:16:10Z",
+            "title": "Crypto Turmoil, Fintech Rules, and Mexico Sovereign Rating - Mexico Business News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPNGgxeHFaTHdTZWVNZjFJY3JvQWpNeWxSRno3a3RUeXVmRjQ3Z3dzMWdoWmdZb2F2SFQ1QVhKTFdvYmJudWdCdGJhSjhEenFqbUZKVS1fNDhEQ2NobWpZendCY3J3WmJaak02ZzFQUTR0azdqeGNNRTFwdFdCTG5TdzZURVpyWkxvV28tQ2IyWTZ5UmVCQjNnYnJzVHMzQQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxPNGgxeHFaTHdTZWVNZjFJY3JvQWpNeWxSRno3a3RUeXVmRjQ3Z3dzMWdoWmdZb2F2SFQ1QVhKTFdvYmJudWdCdGJhSjhEenFqbUZKVS1fNDhEQ2NobWpZendCY3J3WmJaak02ZzFQUTR0azdqeGNNRTFwdFdCTG5TdzZURVpyWkxvV28tQ2IyWTZ5UmVCQjNnYnJzVHMzQQ?oc=5\" target=\"_blank\">Crypto Turmoil, Fintech Rules, and Mexico Sovereign Rating</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Mexico Business News</font>",
+            "id": "CBMingFBVV95cUxPNGgxeHFaTHdTZWVNZjFJY3JvQWpNeWxSRno3a3RUeXVmRjQ3Z3dzMWdoWmdZb2F2SFQ1QVhKTFdvYmJudWdCdGJhSjhEenFqbUZKVS1fNDhEQ2NobWpZendCY3J3WmJaak02ZzFQUTR0azdqeGNNRTFwdFdCTG5TdzZURVpyWkxvV28tQ2IyWTZ5UmVCQjNnYnJzVHMzQQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:11:09Z",
+            "title": "Nubank halts crypto withdrawals, deposits after external provider disruption - Central Oregon Daily",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxPWGM2S0pVWTRMWm1YSktRS3YtZnZRb19fU052Rmg2MHdPOW9vUFBCakNEdG1VdmlNQ0RCcWxlVUVSeU44U3IwQ3FuLURmQkJNUjdIcUhqQjdPbXQyUkRFaGswbDctYWdIQzYzZGxVN1dNczBmS1pFVmktaDdQeGNwUzRDdWt5SDN3Zlg5ZmJNeHhSRnN1YmJfYkptcHNjVzB1d0ZjZWJ4T3lDank0cnp6OUFlOUN2c2NUZ0pZb1NCelBYVlNfTElzdTJTVnV2MlJNUUlKa3lkbWJhMHF6OFYza1ZScHI1NkJwM0EwOURqY2xVdmNxaHN6RWhWRGt1S3dvV2wzZw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMihAJBVV95cUxPWGM2S0pVWTRMWm1YSktRS3YtZnZRb19fU052Rmg2MHdPOW9vUFBCakNEdG1VdmlNQ0RCcWxlVUVSeU44U3IwQ3FuLURmQkJNUjdIcUhqQjdPbXQyUkRFaGswbDctYWdIQzYzZGxVN1dNczBmS1pFVmktaDdQeGNwUzRDdWt5SDN3Zlg5ZmJNeHhSRnN1YmJfYkptcHNjVzB1d0ZjZWJ4T3lDank0cnp6OUFlOUN2c2NUZ0pZb1NCelBYVlNfTElzdTJTVnV2MlJNUUlKa3lkbWJhMHF6OFYza1ZScHI1NkJwM0EwOURqY2xVdmNxaHN6RWhWRGt1S3dvV2wzZw?oc=5\" target=\"_blank\">Nubank halts crypto withdrawals, deposits after external provider disruption</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Central Oregon Daily</font>",
+            "id": "CBMihAJBVV95cUxPWGM2S0pVWTRMWm1YSktRS3YtZnZRb19fU052Rmg2MHdPOW9vUFBCakNEdG1VdmlNQ0RCcWxlVUVSeU44U3IwQ3FuLURmQkJNUjdIcUhqQjdPbXQyUkRFaGswbDctYWdIQzYzZGxVN1dNczBmS1pFVmktaDdQeGNwUzRDdWt5SDN3Zlg5ZmJNeHhSRnN1YmJfYkptcHNjVzB1d0ZjZWJ4T3lDank0cnp6OUFlOUN2c2NUZ0pZb1NCelBYVlNfTElzdTJTVnV2MlJNUUlKa3lkbWJhMHF6OFYza1ZScHI1NkJwM0EwOURqY2xVdmNxaHN6RWhWRGt1S3dvV2wzZw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:05:11Z",
+            "title": "FBI agent pleads guilty to stealing $2.4 million in crypto from nation-state hackers - The Record from Recorded Future News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPeWdtencwYUc0ZDJWbFQ4VWZwdl96MDM5N2NDNl82VHRrTmRQTEpUbkYxN3dGcTBtVWU2dnVoT3BZaGJRWXFFVVlmR05tZ2MzUFZQZk9HazV2bzN6ME40OVhNSTZGWS1OS2hGSjJUTXVZbXE3blA5LWNmQkdXSEp4M1RRVDhBaWFSUm43d213?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPeWdtencwYUc0ZDJWbFQ4VWZwdl96MDM5N2NDNl82VHRrTmRQTEpUbkYxN3dGcTBtVWU2dnVoT3BZaGJRWXFFVVlmR05tZ2MzUFZQZk9HazV2bzN6ME40OVhNSTZGWS1OS2hGSjJUTXVZbXE3blA5LWNmQkdXSEp4M1RRVDhBaWFSUm43d213?oc=5\" target=\"_blank\">FBI agent pleads guilty to stealing $2.4 million in crypto from nation-state hackers</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Record from Recorded Future News</font>",
+            "id": "CBMijgFBVV95cUxPeWdtencwYUc0ZDJWbFQ4VWZwdl96MDM5N2NDNl82VHRrTmRQTEpUbkYxN3dGcTBtVWU2dnVoT3BZaGJRWXFFVVlmR05tZ2MzUFZQZk9HazV2bzN6ME40OVhNSTZGWS1OS2hGSjJUTXVZbXE3blA5LWNmQkdXSEp4M1RRVDhBaWFSUm43d213",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:04:22Z",
+            "title": "Former FBI Agent Pleads Guilty to Stealing $2.47 Million in Crypto From Investigations - Bitcoin Magazine",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE51d25ic0FDNXBKWEprWjZHbUUzbFE4SDU5NWJZZHJnbkIzTGdUVGIzUFl0RGM5TnFqaGNzTE5pMEc1cGVmWDkwdHViUXNSbU1TZHNIVFRUTklYdkVENmt3VTM3RmdNX21BUVVyeXNtaTRNZV9tbFgzUQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMieEFVX3lxTE51d25ic0FDNXBKWEprWjZHbUUzbFE4SDU5NWJZZHJnbkIzTGdUVGIzUFl0RGM5TnFqaGNzTE5pMEc1cGVmWDkwdHViUXNSbU1TZHNIVFRUTklYdkVENmt3VTM3RmdNX21BUVVyeXNtaTRNZV9tbFgzUQ?oc=5\" target=\"_blank\">Former FBI Agent Pleads Guilty to Stealing $2.47 Million in Crypto From Investigations</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Magazine</font>",
+            "id": "CBMieEFVX3lxTE51d25ic0FDNXBKWEprWjZHbUUzbFE4SDU5NWJZZHJnbkIzTGdUVGIzUFl0RGM5TnFqaGNzTE5pMEc1cGVmWDkwdHViUXNSbU1TZHNIVFRUTklYdkVENmt3VTM3RmdNX21BUVVyeXNtaTRNZV9tbFgzUQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T17:00:00Z",
+            "title": "Bitcoin rebounds after sell-off, and the White House gets crypto broker rules - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNcmxlQzBkTHF1b3BTYnNTRXB5TWl5cThxVzJJTlJXZldVMXJFaEtoeDRDODdIZ0xOaWZkeC1DNHNsb3pGbDVwM2stVXFEUTNHb25kUDliVDhPX1NpaGNPRVgtbXY4Y3hxTzg4QTFOc1ZiM1NQRF9MTGJSc3FSeXh6dTY0Yzg?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMihAFBVV95cUxNcmxlQzBkTHF1b3BTYnNTRXB5TWl5cThxVzJJTlJXZldVMXJFaEtoeDRDODdIZ0xOaWZkeC1DNHNsb3pGbDVwM2stVXFEUTNHb25kUDliVDhPX1NpaGNPRVgtbXY4Y3hxTzg4QTFOc1ZiM1NQRF9MTGJSc3FSeXh6dTY0Yzg?oc=5\" target=\"_blank\">Bitcoin rebounds after sell-off, and the White House gets crypto broker rules</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMihAFBVV95cUxNcmxlQzBkTHF1b3BTYnNTRXB5TWl5cThxVzJJTlJXZldVMXJFaEtoeDRDODdIZ0xOaWZkeC1DNHNsb3pGbDVwM2stVXFEUTNHb25kUDliVDhPX1NpaGNPRVgtbXY4Y3hxTzg4QTFOc1ZiM1NQRF9MTGJSc3FSeXh6dTY0Yzg",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:58:34Z",
+            "title": "The crypto industry has found new ways to grow. Making money from them is another story - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQYmNwSDNwZWVBOFp2LV9LODUwMTVLSnlDanZfblBRT252bUowOTJMWXVFcjJaUk1BTGEwcWxkVGpVN2taSWhEa0h5ZkRfYXE3YWIxUDAzQWNRVkFKdTBHMEpQSTdYUUNkMldQQkhUMnRCR2dQOHJHdmNubDdjT1hlOTh6LWppNHA4ZGplN3JMdk56TXhIbnVmNDdGVGNHai1ZdmhsdTVmZVV0Y3UxMmtaS3pZbjhhVE5iaDcyem0welFoOHEtM21hVElB?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiygFBVV95cUxQYmNwSDNwZWVBOFp2LV9LODUwMTVLSnlDanZfblBRT252bUowOTJMWXVFcjJaUk1BTGEwcWxkVGpVN2taSWhEa0h5ZkRfYXE3YWIxUDAzQWNRVkFKdTBHMEpQSTdYUUNkMldQQkhUMnRCR2dQOHJHdmNubDdjT1hlOTh6LWppNHA4ZGplN3JMdk56TXhIbnVmNDdGVGNHai1ZdmhsdTVmZVV0Y3UxMmtaS3pZbjhhVE5iaDcyem0welFoOHEtM21hVElB?oc=5\" target=\"_blank\">The crypto industry has found new ways to grow. Making money from them is another story</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMiygFBVV95cUxQYmNwSDNwZWVBOFp2LV9LODUwMTVLSnlDanZfblBRT252bUowOTJMWXVFcjJaUk1BTGEwcWxkVGpVN2taSWhEa0h5ZkRfYXE3YWIxUDAzQWNRVkFKdTBHMEpQSTdYUUNkMldQQkhUMnRCR2dQOHJHdmNubDdjT1hlOTh6LWppNHA4ZGplN3JMdk56TXhIbnVmNDdGVGNHai1ZdmhsdTVmZVV0Y3UxMmtaS3pZbjhhVE5iaDcyem0welFoOHEtM21hVElB",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:52:08Z",
+            "title": "Did Binance’s $6.3 Billion Crypto Hack Just Expose an Even Bigger Risk for Bitcoin Investors? - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQV1J4MU5ib0dzWGZ2aUpHNHVLdW5ha1VJTG4wZ19nMnJTejFvTWYwMWRJZFJSd1VCOFJyaE5aY19sRWNOYU1TTEZ5R3BUUmxUVEhPRGhWZmppMmFrVl8tNUZ3bDJTbzUxelFkZWtRSlNWRkdBbEwzZF90R3dyLUR3ekhyYWdvVHZBdWplY3VrdFExUQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxQV1J4MU5ib0dzWGZ2aUpHNHVLdW5ha1VJTG4wZ19nMnJTejFvTWYwMWRJZFJSd1VCOFJyaE5aY19sRWNOYU1TTEZ5R3BUUmxUVEhPRGhWZmppMmFrVl8tNUZ3bDJTbzUxelFkZWtRSlNWRkdBbEwzZF90R3dyLUR3ekhyYWdvVHZBdWplY3VrdFExUQ?oc=5\" target=\"_blank\">Did Binance’s $6.3 Billion Crypto Hack Just Expose an Even Bigger Risk for Bitcoin Investors?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMikgFBVV95cUxQV1J4MU5ib0dzWGZ2aUpHNHVLdW5ha1VJTG4wZ19nMnJTejFvTWYwMWRJZFJSd1VCOFJyaE5aY19sRWNOYU1TTEZ5R3BUUmxUVEhPRGhWZmppMmFrVl8tNUZ3bDJTbzUxelFkZWtRSlNWRkdBbEwzZF90R3dyLUR3ekhyYWdvVHZBdWplY3VrdFExUQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:43:47Z",
+            "title": "Final Crypto 401(k) Rule Enters OIRA Review Before Federal Register Publication - Bitcoin Foundation",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQamxxYVBfMW1lcVdjQnZCeFp1LWhTZWd1NTBzZVl3S0JUaTV4Z2g4c2stLWd2V0tvRjZfY3VfZlluMVlHR2xwaktRZWR5S2dhMFJoR1Nuc0MxU0IxNzBYSExTcmtLRWR2TmJ1OVVDVTBVdWR2S3J1eVVZNzB1X3NBODljdy1hQ3JXdEJoOHJCYkQteVdrOFBsT0ZhSE9iMTdKdjB0R2djcDFKX29JMm5GVzR4dG5xUFZRZ1lBdzI3bXo3ak4tUWlEbDhR?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiygFBVV95cUxQamxxYVBfMW1lcVdjQnZCeFp1LWhTZWd1NTBzZVl3S0JUaTV4Z2g4c2stLWd2V0tvRjZfY3VfZlluMVlHR2xwaktRZWR5S2dhMFJoR1Nuc0MxU0IxNzBYSExTcmtLRWR2TmJ1OVVDVTBVdWR2S3J1eVVZNzB1X3NBODljdy1hQ3JXdEJoOHJCYkQteVdrOFBsT0ZhSE9iMTdKdjB0R2djcDFKX29JMm5GVzR4dG5xUFZRZ1lBdzI3bXo3ak4tUWlEbDhR?oc=5\" target=\"_blank\">Final Crypto 401(k) Rule Enters OIRA Review Before Federal Register Publication</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Foundation</font>",
+            "id": "CBMiygFBVV95cUxQamxxYVBfMW1lcVdjQnZCeFp1LWhTZWd1NTBzZVl3S0JUaTV4Z2g4c2stLWd2V0tvRjZfY3VfZlluMVlHR2xwaktRZWR5S2dhMFJoR1Nuc0MxU0IxNzBYSExTcmtLRWR2TmJ1OVVDVTBVdWR2S3J1eVVZNzB1X3NBODljdy1hQ3JXdEJoOHJCYkQteVdrOFBsT0ZhSE9iMTdKdjB0R2djcDFKX29JMm5GVzR4dG5xUFZRZ1lBdzI3bXo3ak4tUWlEbDhR",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:42:27Z",
+            "title": "Nubank Pauses Crypto Withdrawals and Deposits, Points to External Verification Provider - Disruption Banking",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPUUQ1OUtYSENBWXM2Nk9SYTl6b29QT09sMG9RSk5RYm5mcHdWWGJUeU9wZVY3X0k4RzQ3M3hTdzFOSktZY0ZvcVZVZEg5cmhIaWFuYkxPbjM5T044cW5pcFllbS1jamFhZDlka0tJYzRENjlWYXBGNm9lRWhxaHdlc09teHlIZHhMUElpWkV6dUdHYXhFM29BTUhqWWtQNUZZQ2NTR19wZWwxWHhKaUFYTTdfeWdqNVZuRWNNT0YxeldSSG1uUm5Lb0Fvb1o?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizAFBVV95cUxPUUQ1OUtYSENBWXM2Nk9SYTl6b29QT09sMG9RSk5RYm5mcHdWWGJUeU9wZVY3X0k4RzQ3M3hTdzFOSktZY0ZvcVZVZEg5cmhIaWFuYkxPbjM5T044cW5pcFllbS1jamFhZDlka0tJYzRENjlWYXBGNm9lRWhxaHdlc09teHlIZHhMUElpWkV6dUdHYXhFM29BTUhqWWtQNUZZQ2NTR19wZWwxWHhKaUFYTTdfeWdqNVZuRWNNT0YxeldSSG1uUm5Lb0Fvb1o?oc=5\" target=\"_blank\">Nubank Pauses Crypto Withdrawals and Deposits, Points to External Verification Provider</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Disruption Banking</font>",
+            "id": "CBMizAFBVV95cUxPUUQ1OUtYSENBWXM2Nk9SYTl6b29QT09sMG9RSk5RYm5mcHdWWGJUeU9wZVY3X0k4RzQ3M3hTdzFOSktZY0ZvcVZVZEg5cmhIaWFuYkxPbjM5T044cW5pcFllbS1jamFhZDlka0tJYzRENjlWYXBGNm9lRWhxaHdlc09teHlIZHhMUElpWkV6dUdHYXhFM29BTUhqWWtQNUZZQ2NTR19wZWwxWHhKaUFYTTdfeWdqNVZuRWNNT0YxeldSSG1uUm5Lb0Fvb1o",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:41:29Z",
+            "title": "Crypto Card Provider Gnosis Pay Says Hackers Accessed Customer Data - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOclFMUzdiS2xJOG5fb1IzV1NrMTZOSXJYSXR0Y0szRUp1eWxfSTQwaFNLUEFILUdHekhBNEw5V01ldmFicFV5c2ZfTmV3Rk81eVlVNFpFS0VGYmFtbmxZaEdHMXd2emNtSDJrNm9HdHZWVy1WMG40eFRBNGUybkxLaUgyYmdmbWxkZmFXNDd0WmNzdkhRSlk0UWplUGI?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMinAFBVV95cUxOclFMUzdiS2xJOG5fb1IzV1NrMTZOSXJYSXR0Y0szRUp1eWxfSTQwaFNLUEFILUdHekhBNEw5V01ldmFicFV5c2ZfTmV3Rk81eVlVNFpFS0VGYmFtbmxZaEdHMXd2emNtSDJrNm9HdHZWVy1WMG40eFRBNGUybkxLaUgyYmdmbWxkZmFXNDd0WmNzdkhRSlk0UWplUGI?oc=5\" target=\"_blank\">Crypto Card Provider Gnosis Pay Says Hackers Accessed Customer Data</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMinAFBVV95cUxOclFMUzdiS2xJOG5fb1IzV1NrMTZOSXJYSXR0Y0szRUp1eWxfSTQwaFNLUEFILUdHekhBNEw5V01ldmFicFV5c2ZfTmV3Rk81eVlVNFpFS0VGYmFtbmxZaEdHMXd2emNtSDJrNm9HdHZWVy1WMG40eFRBNGUybkxLaUgyYmdmbWxkZmFXNDd0WmNzdkhRSlk0UWplUGI",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:41:29Z",
+            "title": "Crypto Card Provider Gnosis Pay Says Hackers Accessed Customer Data - Decrypt",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQTEJIUlNWLTRTWDRLVDZ4SEpIdTRNcUVVZVkyOTBZY2MzUDd6M0Job1p2VTZVQVgzVkRGMnhzYURhcTdLSXctQnQ2cHlpeEJSd2NHWk9PWEpWZHVPUllpelBILU1IRzlFWjFMUlR3VVJPdDljcWdGQW04ZkVqTk9hRENtVV9yQQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMihgFBVV95cUxQTEJIUlNWLTRTWDRLVDZ4SEpIdTRNcUVVZVkyOTBZY2MzUDd6M0Job1p2VTZVQVgzVkRGMnhzYURhcTdLSXctQnQ2cHlpeEJSd2NHWk9PWEpWZHVPUllpelBILU1IRzlFWjFMUlR3VVJPdDljcWdGQW04ZkVqTk9hRENtVV9yQQ?oc=5\" target=\"_blank\">Crypto Card Provider Gnosis Pay Says Hackers Accessed Customer Data</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Decrypt</font>",
+            "id": "CBMihgFBVV95cUxQTEJIUlNWLTRTWDRLVDZ4SEpIdTRNcUVVZVkyOTBZY2MzUDd6M0Job1p2VTZVQVgzVkRGMnhzYURhcTdLSXctQnQ2cHlpeEJSd2NHWk9PWEpWZHVPUllpelBILU1IRzlFWjFMUlR3VVJPdDljcWdGQW04ZkVqTk9hRENtVV9yQQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:37:36Z",
+            "title": "Crypto Derivatives are Intensifying Regulatory and Competitive Tensions on Wall Street, Cryptoast - Morgan Lewis",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQa2l5bmxDTTIyazJJRURuQXdqeWo1YkVuZURFa096OVBxckRESUJNcy1UUERIRWM0X3gxSEZjUlJJVTRGT2Nwejh3WUU4d0NyYkllMHczLUNCOFJhdmtsY1U4V1dwY2pYTnJMNEIzSU5LS29lemE2c0IzOHVieEFGQm8ySkpQN3BKQzQ5eTJEclRpQkFuUDY2T29aZUhHbTJFalZnVTFJMmpRajZwX2MxQk9wYTh5V2pqY0JIcTBTVjZiZVRvN0xqSFBRS0JPV0tXSW0w?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi0wFBVV95cUxQa2l5bmxDTTIyazJJRURuQXdqeWo1YkVuZURFa096OVBxckRESUJNcy1UUERIRWM0X3gxSEZjUlJJVTRGT2Nwejh3WUU4d0NyYkllMHczLUNCOFJhdmtsY1U4V1dwY2pYTnJMNEIzSU5LS29lemE2c0IzOHVieEFGQm8ySkpQN3BKQzQ5eTJEclRpQkFuUDY2T29aZUhHbTJFalZnVTFJMmpRajZwX2MxQk9wYTh5V2pqY0JIcTBTVjZiZVRvN0xqSFBRS0JPV0tXSW0w?oc=5\" target=\"_blank\">Crypto Derivatives are Intensifying Regulatory and Competitive Tensions on Wall Street, Cryptoast</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Morgan Lewis</font>",
+            "id": "CBMi0wFBVV95cUxQa2l5bmxDTTIyazJJRURuQXdqeWo1YkVuZURFa096OVBxckRESUJNcy1UUERIRWM0X3gxSEZjUlJJVTRGT2Nwejh3WUU4d0NyYkllMHczLUNCOFJhdmtsY1U4V1dwY2pYTnJMNEIzSU5LS29lemE2c0IzOHVieEFGQm8ySkpQN3BKQzQ5eTJEclRpQkFuUDY2T29aZUhHbTJFalZnVTFJMmpRajZwX2MxQk9wYTh5V2pqY0JIcTBTVjZiZVRvN0xqSFBRS0JPV0tXSW0w",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:34:07Z",
+            "title": "Crypto Liquidations Top $1 Billion as Bitcoin Tests 11-Week Low - Decrypt",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPYmNjZ3d4TmQ5anpMSVRzdGRiQzJEaDRleFE0NVFpOG9NSTRMSHdGLVM4S3RDajhZSWNpbEZ3VVhsXy04Y2FDeENjRy12NkxTMUtpc2dzUGU1UjNXRlFlbXE4ZXNFSFVsdXoxWUhVT2VGR1hQbmd2NUxHTmpVT3lUNUprZ0RoTmM?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMihwFBVV95cUxPYmNjZ3d4TmQ5anpMSVRzdGRiQzJEaDRleFE0NVFpOG9NSTRMSHdGLVM4S3RDajhZSWNpbEZ3VVhsXy04Y2FDeENjRy12NkxTMUtpc2dzUGU1UjNXRlFlbXE4ZXNFSFVsdXoxWUhVT2VGR1hQbmd2NUxHTmpVT3lUNUprZ0RoTmM?oc=5\" target=\"_blank\">Crypto Liquidations Top $1 Billion as Bitcoin Tests 11-Week Low</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Decrypt</font>",
+            "id": "CBMihwFBVV95cUxPYmNjZ3d4TmQ5anpMSVRzdGRiQzJEaDRleFE0NVFpOG9NSTRMSHdGLVM4S3RDajhZSWNpbEZ3VVhsXy04Y2FDeENjRy12NkxTMUtpc2dzUGU1UjNXRlFlbXE4ZXNFSFVsdXoxWUhVT2VGR1hQbmd2NUxHTmpVT3lUNUprZ0RoTmM",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T16:21:00Z",
+            "title": "This Week In Security: More Linux Bugs, Biggest Crypto Theft Ever, Prusa Printers, Residential Proxies - Hackaday",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNenhnaERkSE5pSzE4cjJuaDBMYVd0dUx6dDRZNGlib3lPYXBWZ3lwb2lvcFNhaE5qY1RrdEgwNFRaQ05wcmhiMTRFZnBtMDdOWklpYjRock95LVdQNHRLYkNvaUo0UzM4SlNpemcxN3phNmFld095cGhQNy03WkFrMVM2MVlvZVV2ZTVlbHhkcVFtMHRRNkVNRUtiZzBhZ2gzYjBESGZ1anVKdzhMUUZCUGlsZnQyNFhOVnBJaWJmYjRwQlJKX1ZPZ2N6OA?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiywFBVV95cUxNenhnaERkSE5pSzE4cjJuaDBMYVd0dUx6dDRZNGlib3lPYXBWZ3lwb2lvcFNhaE5qY1RrdEgwNFRaQ05wcmhiMTRFZnBtMDdOWklpYjRock95LVdQNHRLYkNvaUo0UzM4SlNpemcxN3phNmFld095cGhQNy03WkFrMVM2MVlvZVV2ZTVlbHhkcVFtMHRRNkVNRUtiZzBhZ2gzYjBESGZ1anVKdzhMUUZCUGlsZnQyNFhOVnBJaWJmYjRwQlJKX1ZPZ2N6OA?oc=5\" target=\"_blank\">This Week In Security: More Linux Bugs, Biggest Crypto Theft Ever, Prusa Printers, Residential Proxies</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Hackaday</font>",
+            "id": "CBMiywFBVV95cUxNenhnaERkSE5pSzE4cjJuaDBMYVd0dUx6dDRZNGlib3lPYXBWZ3lwb2lvcFNhaE5qY1RrdEgwNFRaQ05wcmhiMTRFZnBtMDdOWklpYjRock95LVdQNHRLYkNvaUo0UzM4SlNpemcxN3phNmFld095cGhQNy03WkFrMVM2MVlvZVV2ZTVlbHhkcVFtMHRRNkVNRUtiZzBhZ2gzYjBESGZ1anVKdzhMUUZCUGlsZnQyNFhOVnBJaWJmYjRwQlJKX1ZPZ2N6OA",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:53:54Z",
+            "title": "VisionSys AI closes $125M share placement payable in crypto - Dealroom",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNcXczSGlHblpJdDN1NlctQnEtZFFsNkFJNll0bEtiMWgxeGQ5N2g5LWp3bVBBSHpKOVlRWkxSNncxRzNXZ2JyQks4endibWwzamRHd1Y0MVRBek9GTV9kUHRaZDEwaENxTURQYjVSN2o0T0JLSVkyM0owWTZDX2J6TWpRQ0xBMjdLNWh4OE92eFFhaTVEQUhr?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMilwFBVV95cUxNcXczSGlHblpJdDN1NlctQnEtZFFsNkFJNll0bEtiMWgxeGQ5N2g5LWp3bVBBSHpKOVlRWkxSNncxRzNXZ2JyQks4endibWwzamRHd1Y0MVRBek9GTV9kUHRaZDEwaENxTURQYjVSN2o0T0JLSVkyM0owWTZDX2J6TWpRQ0xBMjdLNWh4OE92eFFhaTVEQUhr?oc=5\" target=\"_blank\">VisionSys AI closes $125M share placement payable in crypto</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Dealroom</font>",
+            "id": "CBMilwFBVV95cUxNcXczSGlHblpJdDN1NlctQnEtZFFsNkFJNll0bEtiMWgxeGQ5N2g5LWp3bVBBSHpKOVlRWkxSNncxRzNXZ2JyQks4endibWwzamRHd1Y0MVRBek9GTV9kUHRaZDEwaENxTURQYjVSN2o0T0JLSVkyM0owWTZDX2J6TWpRQ0xBMjdLNWh4OE92eFFhaTVEQUhr",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:53:45Z",
+            "title": "The crypto industry has found new ways to grow. Making money from them is another story - Cryptonews.net",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5VQUpjYU9Xd2phS214MEpscDNwMFExbFNqUjRwN3FHQUxlWmY3MmgzVUl0NTVyaWNvaW85WW9uWEREZTJTNGI3UDA3SEdabUkwUmZHV0NsU1Y?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiWEFVX3lxTE5VQUpjYU9Xd2phS214MEpscDNwMFExbFNqUjRwN3FHQUxlWmY3MmgzVUl0NTVyaWNvaW85WW9uWEREZTJTNGI3UDA3SEdabUkwUmZHV0NsU1Y?oc=5\" target=\"_blank\">The crypto industry has found new ways to grow. Making money from them is another story</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Cryptonews.net</font>",
+            "id": "CBMiWEFVX3lxTE5VQUpjYU9Xd2phS214MEpscDNwMFExbFNqUjRwN3FHQUxlWmY3MmgzVUl0NTVyaWNvaW85WW9uWEREZTJTNGI3UDA3SEdabUkwUmZHV0NsU1Y",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:53:33Z",
+            "title": "Insurers Probe Crypto Firms After $6.3B Binance Hack [2026] - shattered.io",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPMnlJWGowUThCOU9jVzVnZWxWN2gtTUl6YlBkby1nYVpHRm1VRjdGalcwaWFfOHBsZ0lWMFJvSUJGRWdhaDJkZVZzZU5LRmRsVzdjOVhxanVabjZnTnZTTzAxdXlGQ1hiMmpmTGxLNGlJczFxNlhXcXZaRjZ6c1p3LTVGOA?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMigwFBVV95cUxPMnlJWGowUThCOU9jVzVnZWxWN2gtTUl6YlBkby1nYVpHRm1VRjdGalcwaWFfOHBsZ0lWMFJvSUJGRWdhaDJkZVZzZU5LRmRsVzdjOVhxanVabjZnTnZTTzAxdXlGQ1hiMmpmTGxLNGlJczFxNlhXcXZaRjZ6c1p3LTVGOA?oc=5\" target=\"_blank\">Insurers Probe Crypto Firms After $6.3B Binance Hack [2026]</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">shattered.io</font>",
+            "id": "CBMigwFBVV95cUxPMnlJWGowUThCOU9jVzVnZWxWN2gtTUl6YlBkby1nYVpHRm1VRjdGalcwaWFfOHBsZ0lWMFJvSUJGRWdhaDJkZVZzZU5LRmRsVzdjOVhxanVabjZnTnZTTzAxdXlGQ1hiMmpmTGxLNGlJczFxNlhXcXZaRjZ6c1p3LTVGOA",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:36:11Z",
+            "title": "Crypto 401(k) rule reaches White House for final review - Crypto News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1qU042a3Rxb0t0dHhfNVVZYVMyNUEzdGEtVUpYaklJbjNFb0lvVDZPQV9Nb3VHRjNwLVhLcFZMWTNhUUYxcWxJdnZOeGhoR0UzVDYyYkdTdWNBRXdDTEVLSE93dG1qbTNGMGw5c0JGTQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMib0FVX3lxTE1qU042a3Rxb0t0dHhfNVVZYVMyNUEzdGEtVUpYaklJbjNFb0lvVDZPQV9Nb3VHRjNwLVhLcFZMWTNhUUYxcWxJdnZOeGhoR0UzVDYyYkdTdWNBRXdDTEVLSE93dG1qbTNGMGw5c0JGTQ?oc=5\" target=\"_blank\">Crypto 401(k) rule reaches White House for final review</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Crypto News</font>",
+            "id": "CBMib0FVX3lxTE1qU042a3Rxb0t0dHhfNVVZYVMyNUEzdGEtVUpYaklJbjNFb0lvVDZPQV9Nb3VHRjNwLVhLcFZMWTNhUUYxcWxJdnZOeGhoR0UzVDYyYkdTdWNBRXdDTEVLSE93dG1qbTNGMGw5c0JGTQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:26:38Z",
+            "title": "The crypto industry has found new ways to grow. Making money from them is another story - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNbm5JbzZXUURHSWpRYk4zSmZpMW5rclRKN3Q3RmRyQ3hxVUtOOHBPQl9pVE5YQ3BiWGtnblIxVy12cURzS3hxaTE4VUs0Ul9PaDNJaXN3WG9hc19LeDdvelVQdVdOWmphdHZTNEdtdjJsNFBBbndKcUJvWjUyQkpDNE1LUHFHWXJyYmtEMHdEc2I3N3loWU5yZDFrWV93NmFYZWFBc3lqaHhTSkkyLUVoRHAyZTFoVEMzUktxV05RVnJjVklvWmdKOHVJVmtwQQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizgFBVV95cUxNbm5JbzZXUURHSWpRYk4zSmZpMW5rclRKN3Q3RmRyQ3hxVUtOOHBPQl9pVE5YQ3BiWGtnblIxVy12cURzS3hxaTE4VUs0Ul9PaDNJaXN3WG9hc19LeDdvelVQdVdOWmphdHZTNEdtdjJsNFBBbndKcUJvWjUyQkpDNE1LUHFHWXJyYmtEMHdEc2I3N3loWU5yZDFrWV93NmFYZWFBc3lqaHhTSkkyLUVoRHAyZTFoVEMzUktxV05RVnJjVklvWmdKOHVJVmtwQQ?oc=5\" target=\"_blank\">The crypto industry has found new ways to grow. Making money from them is another story</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMizgFBVV95cUxNbm5JbzZXUURHSWpRYk4zSmZpMW5rclRKN3Q3RmRyQ3hxVUtOOHBPQl9pVE5YQ3BiWGtnblIxVy12cURzS3hxaTE4VUs0Ul9PaDNJaXN3WG9hc19LeDdvelVQdVdOWmphdHZTNEdtdjJsNFBBbndKcUJvWjUyQkpDNE1LUHFHWXJyYmtEMHdEc2I3N3loWU5yZDFrWV93NmFYZWFBc3lqaHhTSkkyLUVoRHAyZTFoVEMzUktxV05RVnJjVklvWmdKOHVJVmtwQQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:26:32Z",
+            "title": "Trump’s Plan to Let 401(k)s Hold Crypto Is Almost Final: When Can Savers Buy In? - BeInCrypto",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5TcWRxanR1dVgyUFNQcTRYV2Zhazd6THFxZzJacWFCWlBTcWxlc0hVVUUxcHZ0YWxFaFRVVG9TUVZydzZCNjFuRTgtMWdfczltOFNHMm1rVXRseDhyQ29NYXE1STJqSTNETjZR?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMia0FVX3lxTE5TcWRxanR1dVgyUFNQcTRYV2Zhazd6THFxZzJacWFCWlBTcWxlc0hVVUUxcHZ0YWxFaFRVVG9TUVZydzZCNjFuRTgtMWdfczltOFNHMm1rVXRseDhyQ29NYXE1STJqSTNETjZR?oc=5\" target=\"_blank\">Trump’s Plan to Let 401(k)s Hold Crypto Is Almost Final: When Can Savers Buy In?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">BeInCrypto</font>",
+            "id": "CBMia0FVX3lxTE5TcWRxanR1dVgyUFNQcTRYV2Zhazd6THFxZzJacWFCWlBTcWxlc0hVVUUxcHZ0YWxFaFRVVG9TUVZydzZCNjFuRTgtMWdfczltOFNHMm1rVXRseDhyQ29NYXE1STJqSTNETjZR",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:23:53Z",
+            "title": "Insurers increase scrutiny on crypto firms after $6.3B Binance hack - report (AIG:NYSE) - Seeking Alpha",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNWFVWTEJsa0ZQa1BLb3BjbnBQY1FFSkJhT1UwZnhDSXRQc1JqU05GSDE3YmJMT0lKb0VZVVhmR2VfaWhTeE1rMWFwYmNHN25PNVdRQWE2cmpYcncybGw1VDQwU0RzZ0dOeUJQSTh3NmVpT3lmTXA4NWxuRDJwdnRIZDZzWlFTcVNveHlGYmxhcjJwQ2Y5ajlNeTdYcEttTi1XUF9QTDFybzdvQ2JjU1l5ZEZn?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMisgFBVV95cUxNWFVWTEJsa0ZQa1BLb3BjbnBQY1FFSkJhT1UwZnhDSXRQc1JqU05GSDE3YmJMT0lKb0VZVVhmR2VfaWhTeE1rMWFwYmNHN25PNVdRQWE2cmpYcncybGw1VDQwU0RzZ0dOeUJQSTh3NmVpT3lmTXA4NWxuRDJwdnRIZDZzWlFTcVNveHlGYmxhcjJwQ2Y5ajlNeTdYcEttTi1XUF9QTDFybzdvQ2JjU1l5ZEZn?oc=5\" target=\"_blank\">Insurers increase scrutiny on crypto firms after $6.3B Binance hack - report (AIG:NYSE)</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Seeking Alpha</font>",
+            "id": "CBMisgFBVV95cUxNWFVWTEJsa0ZQa1BLb3BjbnBQY1FFSkJhT1UwZnhDSXRQc1JqU05GSDE3YmJMT0lKb0VZVVhmR2VfaWhTeE1rMWFwYmNHN25PNVdRQWE2cmpYcncybGw1VDQwU0RzZ0dOeUJQSTh3NmVpT3lmTXA4NWxuRDJwdnRIZDZzWlFTcVNveHlGYmxhcjJwQ2Y5ajlNeTdYcEttTi1XUF9QTDFybzdvQ2JjU1l5ZEZn",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:17:41Z",
+            "title": "🚨𝗕𝗥𝗘𝗔𝗞𝗜𝗡𝗚: 🇺🇸 A rule easing access to crypto, private equity and real estate in 401(k) retirement plans has reached the White House for final review ahead of public release. - Moomoo",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPTWFMNzNtRXpCZHNydUFMMHI3WS12TEhxNW4zSWtJeURFSTVSa0dVVnZDclgyMkpVQzFjazM3NGQtNWFBYjg4YzFuTjhoWjF3Q0VtTmE0UzhjcFMydllZa2RNZEdMR2FHaGV3ck1pQUJlSVVncXN5eUhpR0tQRkI0YlFPQm9HTEd3YUw4aE9OLW80X2dHaVBrMjJwZjhNYXFpOWxuRC1VMTFYZ0l0?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxPTWFMNzNtRXpCZHNydUFMMHI3WS12TEhxNW4zSWtJeURFSTVSa0dVVnZDclgyMkpVQzFjazM3NGQtNWFBYjg4YzFuTjhoWjF3Q0VtTmE0UzhjcFMydllZa2RNZEdMR2FHaGV3ck1pQUJlSVVncXN5eUhpR0tQRkI0YlFPQm9HTEd3YUw4aE9OLW80X2dHaVBrMjJwZjhNYXFpOWxuRC1VMTFYZ0l0?oc=5\" target=\"_blank\">🚨𝗕𝗥𝗘𝗔𝗞𝗜𝗡𝗚: 🇺🇸 A rule easing access to crypto, private equity and real estate in 401(k) retirement plans has reached the White House for final review ahead of public release.</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Moomoo</font>",
+            "id": "CBMirAFBVV95cUxPTWFMNzNtRXpCZHNydUFMMHI3WS12TEhxNW4zSWtJeURFSTVSa0dVVnZDclgyMkpVQzFjazM3NGQtNWFBYjg4YzFuTjhoWjF3Q0VtTmE0UzhjcFMydllZa2RNZEdMR2FHaGV3ck1pQUJlSVVncXN5eUhpR0tQRkI0YlFPQm9HTEd3YUw4aE9OLW80X2dHaVBrMjJwZjhNYXFpOWxuRC1VMTFYZ0l0",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:11:09Z",
+            "title": "Crypto 401(k) Rule Enters Final White House Review - The Defiant",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQY3FZeFlOeXlrRFFpZzdkVk1hcUFBM3ZRUGRpMHJqNDVBdWNlQjdoRlA1eE0zUjBVZl9tRHI4XzA0YjIwdU1MckRtWDNsWlgtcEU1N0IxOHdDZDdHb0RMVWJoaDdXLXFieGZkVUd1a1l1TEVWR3VGTzZEM3N4ekxhSVI4Zng5cWU3MlgxUzMyNE1xQVYwblE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMilgFBVV95cUxQY3FZeFlOeXlrRFFpZzdkVk1hcUFBM3ZRUGRpMHJqNDVBdWNlQjdoRlA1eE0zUjBVZl9tRHI4XzA0YjIwdU1MckRtWDNsWlgtcEU1N0IxOHdDZDdHb0RMVWJoaDdXLXFieGZkVUd1a1l1TEVWR3VGTzZEM3N4ekxhSVI4Zng5cWU3MlgxUzMyNE1xQVYwblE?oc=5\" target=\"_blank\">Crypto 401(k) Rule Enters Final White House Review</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Defiant</font>",
+            "id": "CBMilgFBVV95cUxQY3FZeFlOeXlrRFFpZzdkVk1hcUFBM3ZRUGRpMHJqNDVBdWNlQjdoRlA1eE0zUjBVZl9tRHI4XzA0YjIwdU1MckRtWDNsWlgtcEU1N0IxOHdDZDdHb0RMVWJoaDdXLXFieGZkVUd1a1l1TEVWR3VGTzZEM3N4ekxhSVI4Zng5cWU3MlgxUzMyNE1xQVYwblE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:09:02Z",
+            "title": "Rule to Allow Crypto in 401(k)s Arrives at White House for Final Review - Bitcoin Magazine",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1yR3BrektlS3pwUTVpRDU0bHFtdFRBX1VRQnZoanZHc0l6d1d5ZjRUelh2YVlWbkF1QzhaUDg1WmxMNEN1SXpRN0JmUTd6T2QwaDRvTVoySXh6ZzVCcm5jNXBJeTVTMi01MDh4d2kwN045UU1qeE9INjcweFg?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMifEFVX3lxTE1yR3BrektlS3pwUTVpRDU0bHFtdFRBX1VRQnZoanZHc0l6d1d5ZjRUelh2YVlWbkF1QzhaUDg1WmxMNEN1SXpRN0JmUTd6T2QwaDRvTVoySXh6ZzVCcm5jNXBJeTVTMi01MDh4d2kwN045UU1qeE9INjcweFg?oc=5\" target=\"_blank\">Rule to Allow Crypto in 401(k)s Arrives at White House for Final Review</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Magazine</font>",
+            "id": "CBMifEFVX3lxTE1yR3BrektlS3pwUTVpRDU0bHFtdFRBX1VRQnZoanZHc0l6d1d5ZjRUelh2YVlWbkF1QzhaUDg1WmxMNEN1SXpRN0JmUTd6T2QwaDRvTVoySXh6ZzVCcm5jNXBJeTVTMi01MDh4d2kwN045UU1qeE9INjcweFg",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T15:03:25Z",
+            "title": "What Are Crypto Derivatives? Futures, Perpetuals and Options Explained - The Defiant",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNS2VPRmhWSkphRHFqY2ZYZVF4YmxwWmJjV2dUUXVzUFdvZmdfQy1kVDRuTUM2Zm90M211QXhrSGtwZlh5c1BUSkdkTkJMd2tCckF5djJSVjVWMDJRc0VhVkduMEhIa0xCRl9WaF9jcmRJM1hYelRRa21qTmZkM2otUkhvOEN1ME5DZ20tWk15OXVJcWp1d3pKVzNvR3BwMm9KOVhFYUpB?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMipgFBVV95cUxNS2VPRmhWSkphRHFqY2ZYZVF4YmxwWmJjV2dUUXVzUFdvZmdfQy1kVDRuTUM2Zm90M211QXhrSGtwZlh5c1BUSkdkTkJMd2tCckF5djJSVjVWMDJRc0VhVkduMEhIa0xCRl9WaF9jcmRJM1hYelRRa21qTmZkM2otUkhvOEN1ME5DZ20tWk15OXVJcWp1d3pKVzNvR3BwMm9KOVhFYUpB?oc=5\" target=\"_blank\">What Are Crypto Derivatives? Futures, Perpetuals and Options Explained</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Defiant</font>",
+            "id": "CBMipgFBVV95cUxNS2VPRmhWSkphRHFqY2ZYZVF4YmxwWmJjV2dUUXVzUFdvZmdfQy1kVDRuTUM2Zm90M211QXhrSGtwZlh5c1BUSkdkTkJMd2tCckF5djJSVjVWMDJRc0VhVkduMEhIa0xCRl9WaF9jcmRJM1hYelRRa21qTmZkM2otUkhvOEN1ME5DZ20tWk15OXVJcWp1d3pKVzNvR3BwMm9KOVhFYUpB",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:54:53Z",
+            "title": "Bitcoin Bulls Face Macro Mayhem: Can Crypto Fundamentals Win the Battle? - Benzinga",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQTGs3ODQ1Y2lQTVg5aDFMN1MzNHJYUTNDbUdvQUZaeEpsUWdkQlBJbUxLOUl3dE51cmMwS2hJaS1mRU9CT1JJZER3M1RPN2c1NmxISGx3ZURIYVRwWXFDVWR5dVQxcjBBTHhkdUpSbWh5QTJJUVdkdlRMSU1HV3ZtQUoxbGdISHBPbHJKSzQ3OS0zbjVLMlpvOTN6bVgtdGx5VThETU5CYk9FMHhYRFpOYmlpWmlYVVZBaUV5ZGRNTnIyYl9rLVVKOF9ITW4?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizAFBVV95cUxQTGs3ODQ1Y2lQTVg5aDFMN1MzNHJYUTNDbUdvQUZaeEpsUWdkQlBJbUxLOUl3dE51cmMwS2hJaS1mRU9CT1JJZER3M1RPN2c1NmxISGx3ZURIYVRwWXFDVWR5dVQxcjBBTHhkdUpSbWh5QTJJUVdkdlRMSU1HV3ZtQUoxbGdISHBPbHJKSzQ3OS0zbjVLMlpvOTN6bVgtdGx5VThETU5CYk9FMHhYRFpOYmlpWmlYVVZBaUV5ZGRNTnIyYl9rLVVKOF9ITW4?oc=5\" target=\"_blank\">Bitcoin Bulls Face Macro Mayhem: Can Crypto Fundamentals Win the Battle?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Benzinga</font>",
+            "id": "CBMizAFBVV95cUxQTGs3ODQ1Y2lQTVg5aDFMN1MzNHJYUTNDbUdvQUZaeEpsUWdkQlBJbUxLOUl3dE51cmMwS2hJaS1mRU9CT1JJZER3M1RPN2c1NmxISGx3ZURIYVRwWXFDVWR5dVQxcjBBTHhkdUpSbWh5QTJJUVdkdlRMSU1HV3ZtQUoxbGdISHBPbHJKSzQ3OS0zbjVLMlpvOTN6bVgtdGx5VThETU5CYk9FMHhYRFpOYmlpWmlYVVZBaUV5ZGRNTnIyYl9rLVVKOF9ITW4",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:53:09Z",
+            "title": "Incoming Democrats are more pro-crypto than before - Fox News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFByU2lkcWRZWUpBdy1NTkJNWE1yTjNjbVZPblB4UnMtNWtxREF2eEE0RmdjbVJOMVhsU2hTaHNENDF3dzBMMkNVUkFMQ25GeDZ1WHZtMWZn?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiVkFVX3lxTFByU2lkcWRZWUpBdy1NTkJNWE1yTjNjbVZPblB4UnMtNWtxREF2eEE0RmdjbVJOMVhsU2hTaHNENDF3dzBMMkNVUkFMQ25GeDZ1WHZtMWZn?oc=5\" target=\"_blank\">Incoming Democrats are more pro-crypto than before</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Fox News</font>",
+            "id": "CBMiVkFVX3lxTFByU2lkcWRZWUpBdy1NTkJNWE1yTjNjbVZPblB4UnMtNWtxREF2eEE0RmdjbVJOMVhsU2hTaHNENDF3dzBMMkNVUkFMQ25GeDZ1WHZtMWZn",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:46:09Z",
+            "title": "White House looks to review SEC crypto rule changes - Fox Business",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1xN3QyVlNzMGgzRlpkUzhjVDVjd3EydzBOZUN4cDlCMjRoYkZUV1VOSzhsMC1JRXJJR3U2aFBXV1Z5TkV5dS00eUFDVEt0SUlYSGlUMm5tNzRKdkE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiW0FVX3lxTE1xN3QyVlNzMGgzRlpkUzhjVDVjd3EydzBOZUN4cDlCMjRoYkZUV1VOSzhsMC1JRXJJR3U2aFBXV1Z5TkV5dS00eUFDVEt0SUlYSGlUMm5tNzRKdkE?oc=5\" target=\"_blank\">White House looks to review SEC crypto rule changes</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Fox Business</font>",
+            "id": "CBMiW0FVX3lxTE1xN3QyVlNzMGgzRlpkUzhjVDVjd3EydzBOZUN4cDlCMjRoYkZUV1VOSzhsMC1JRXJJR3U2aFBXV1Z5TkV5dS00eUFDVEt0SUlYSGlUMm5tNzRKdkE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:39:43Z",
+            "title": "US Treasury, Fed withdraw $250 crypto Travel Rule proposal. What does it mean? - Crypto News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNejBXT3BtZmt2OXZYVmpWNnlvQXVyOXJKNVZFVGpoQ3pzMTg4WGdkaTFwZGVFeDBOZ0U2ZzFrWm9wanoyWFFQLTM0Ykh4NmliR3NTR0VsTTREYkgtMEY1dENKQU45aGJKcllMVEJPcERzMk9qbFlaeGlQT0dvLV9KM25FckJmRmRuYVdBQTQ2cWtiMHhEODNQME5QNA?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMimwFBVV95cUxNejBXT3BtZmt2OXZYVmpWNnlvQXVyOXJKNVZFVGpoQ3pzMTg4WGdkaTFwZGVFeDBOZ0U2ZzFrWm9wanoyWFFQLTM0Ykh4NmliR3NTR0VsTTREYkgtMEY1dENKQU45aGJKcllMVEJPcERzMk9qbFlaeGlQT0dvLV9KM25FckJmRmRuYVdBQTQ2cWtiMHhEODNQME5QNA?oc=5\" target=\"_blank\">US Treasury, Fed withdraw $250 crypto Travel Rule proposal. What does it mean?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Crypto News</font>",
+            "id": "CBMimwFBVV95cUxNejBXT3BtZmt2OXZYVmpWNnlvQXVyOXJKNVZFVGpoQ3pzMTg4WGdkaTFwZGVFeDBOZ0U2ZzFrWm9wanoyWFFQLTM0Ykh4NmliR3NTR0VsTTREYkgtMEY1dENKQU45aGJKcllMVEJPcERzMk9qbFlaeGlQT0dvLV9KM25FckJmRmRuYVdBQTQ2cWtiMHhEODNQME5QNA",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:33:49Z",
+            "title": "Thailand moves to block Bitget as crypto exchange's local acquisition faces uncertainty - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOOG90RHphdkwycUFVUHl2U3IteTc5bXg4bFhfU20zTVNYQVdYa3lxOWhwRkJtZ1pHUHdMb3hWLWt5aFloMWZ2TnNfVWRZQUYxLVVnbDFERlh4dmVKejNCYXU5RXVHSGlGVnhmVkQzX0phMm9YVWpZU0dSMDllTmdDdVJwMmMwbU1PQjRWNWM3QXhDVkFKZ012UUp5U3pEbHFZZFltOXQ1UmNZRWNIOFNDQ1B3Q2s2M2ZDWTJTNnpYVUNmOHM0Qm51VDg5Tzk?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizAFBVV95cUxOOG90RHphdkwycUFVUHl2U3IteTc5bXg4bFhfU20zTVNYQVdYa3lxOWhwRkJtZ1pHUHdMb3hWLWt5aFloMWZ2TnNfVWRZQUYxLVVnbDFERlh4dmVKejNCYXU5RXVHSGlGVnhmVkQzX0phMm9YVWpZU0dSMDllTmdDdVJwMmMwbU1PQjRWNWM3QXhDVkFKZ012UUp5U3pEbHFZZFltOXQ1UmNZRWNIOFNDQ1B3Q2s2M2ZDWTJTNnpYVUNmOHM0Qm51VDg5Tzk?oc=5\" target=\"_blank\">Thailand moves to block Bitget as crypto exchange's local acquisition faces uncertainty</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMizAFBVV95cUxOOG90RHphdkwycUFVUHl2U3IteTc5bXg4bFhfU20zTVNYQVdYa3lxOWhwRkJtZ1pHUHdMb3hWLWt5aFloMWZ2TnNfVWRZQUYxLVVnbDFERlh4dmVKejNCYXU5RXVHSGlGVnhmVkQzX0phMm9YVWpZU0dSMDllTmdDdVJwMmMwbU1PQjRWNWM3QXhDVkFKZ012UUp5U3pEbHFZZFltOXQ1UmNZRWNIOFNDQ1B3Q2s2M2ZDWTJTNnpYVUNmOHM0Qm51VDg5Tzk",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:33:46Z",
+            "title": "Bank of Russia Sets Nov. 17 Start for Crypto Trading Rules With 300,000-Ruble Cap - Bitcoin Foundation",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPZ2NSdDlpb0dyMG5teVRSTzJNMHhudVlYWklxZUhocVRpVUZUNXdPN09Dd0lBWFI1elBkNHlOejJQOGFEdnIwX1VDdWtRX2NhRlRBM0s0NWd5Rnd6VnI3M0ZhWkQ5aFgwcUlkeG5XaDVGTDNhVFJCSU8tdWNpdkhFUGYyeFJRbjRwMjNLYUJ2cVFGLTc4VnJEcDZLS2o4Qkxsc3A2bm1ZbkZ0SFN3eE1lR0N4RVVHajItUnktWS1QNUFRc3dDcE1abWFyMk0?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizAFBVV95cUxPZ2NSdDlpb0dyMG5teVRSTzJNMHhudVlYWklxZUhocVRpVUZUNXdPN09Dd0lBWFI1elBkNHlOejJQOGFEdnIwX1VDdWtRX2NhRlRBM0s0NWd5Rnd6VnI3M0ZhWkQ5aFgwcUlkeG5XaDVGTDNhVFJCSU8tdWNpdkhFUGYyeFJRbjRwMjNLYUJ2cVFGLTc4VnJEcDZLS2o4Qkxsc3A2bm1ZbkZ0SFN3eE1lR0N4RVVHajItUnktWS1QNUFRc3dDcE1abWFyMk0?oc=5\" target=\"_blank\">Bank of Russia Sets Nov. 17 Start for Crypto Trading Rules With 300,000-Ruble Cap</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Foundation</font>",
+            "id": "CBMizAFBVV95cUxPZ2NSdDlpb0dyMG5teVRSTzJNMHhudVlYWklxZUhocVRpVUZUNXdPN09Dd0lBWFI1elBkNHlOejJQOGFEdnIwX1VDdWtRX2NhRlRBM0s0NWd5Rnd6VnI3M0ZhWkQ5aFgwcUlkeG5XaDVGTDNhVFJCSU8tdWNpdkhFUGYyeFJRbjRwMjNLYUJ2cVFGLTc4VnJEcDZLS2o4Qkxsc3A2bm1ZbkZ0SFN3eE1lR0N4RVVHajItUnktWS1QNUFRc3dDcE1abWFyMk0",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:33:46Z",
+            "title": "Greece Approves 10% Crypto Gains Tax Starting in 2027 - Bitcoin Foundation",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOR2V6SE5Dc3g2U1BTNWZMYmZROU55MnFQOWV1MjhUNENmeVM4dlNYS2ZnQ05LXzRNQ0JWYUI0V3VadVcxWlU4RXV4dGR3M2dWb0xYUVZrUW9PZEtpYUc3VUlaYWxWZUNQOGtxUFBPRmxiQ0NCYmFDNjVYUVFzMWhZMGNtb2owXzE0ZDF2eDBjVkRFN1FoQWRHcE1iNmczRGw0?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMioAFBVV95cUxOR2V6SE5Dc3g2U1BTNWZMYmZROU55MnFQOWV1MjhUNENmeVM4dlNYS2ZnQ05LXzRNQ0JWYUI0V3VadVcxWlU4RXV4dGR3M2dWb0xYUVZrUW9PZEtpYUc3VUlaYWxWZUNQOGtxUFBPRmxiQ0NCYmFDNjVYUVFzMWhZMGNtb2owXzE0ZDF2eDBjVkRFN1FoQWRHcE1iNmczRGw0?oc=5\" target=\"_blank\">Greece Approves 10% Crypto Gains Tax Starting in 2027</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Foundation</font>",
+            "id": "CBMioAFBVV95cUxOR2V6SE5Dc3g2U1BTNWZMYmZROU55MnFQOWV1MjhUNENmeVM4dlNYS2ZnQ05LXzRNQ0JWYUI0V3VadVcxWlU4RXV4dGR3M2dWb0xYUVZrUW9PZEtpYUc3VUlaYWxWZUNQOGtxUFBPRmxiQ0NCYmFDNjVYUVFzMWhZMGNtb2owXzE0ZDF2eDBjVkRFN1FoQWRHcE1iNmczRGw0",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:16:28Z",
+            "title": "Crypto exchange marketing: How to promote with paid ads - Crypto News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQYjhQeXpkc01Oc2xDVEhCRngwNDQwcnNpWVZuSXRVWTBwbzJDMTVlMUVPUFJJU0VELXdpQWpkQWdDQ0lQQV9BTHg0dDY4VkNKQ2JMYlZZdG9YSFhMeG9hTWs0Mk54UW80VFhDNWU1am01TEVLWmRHQnFsSE02SU5SOA?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMigAFBVV95cUxQYjhQeXpkc01Oc2xDVEhCRngwNDQwcnNpWVZuSXRVWTBwbzJDMTVlMUVPUFJJU0VELXdpQWpkQWdDQ0lQQV9BTHg0dDY4VkNKQ2JMYlZZdG9YSFhMeG9hTWs0Mk54UW80VFhDNWU1am01TEVLWmRHQnFsSE02SU5SOA?oc=5\" target=\"_blank\">Crypto exchange marketing: How to promote with paid ads</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Crypto News</font>",
+            "id": "CBMigAFBVV95cUxQYjhQeXpkc01Oc2xDVEhCRngwNDQwcnNpWVZuSXRVWTBwbzJDMTVlMUVPUFJJU0VELXdpQWpkQWdDQ0lQQV9BTHg0dDY4VkNKQ2JMYlZZdG9YSFhMeG9hTWs0Mk54UW80VFhDNWU1am01TEVLWmRHQnFsSE02SU5SOA",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:11:10Z",
+            "title": "Launching chair bid, Waters targets crypto, prediction markets, private equity - Live Updates - Politico",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOWE1MbVpLblNXVWI3OHNPby1XN2RXYklaTlY5MTIyOVNzTHFqbHFwZVFYQnZ2UV9xdGlreno4WnBZRDlFeGpNbnM0dDlGOXUwUXRTYndPcEMweXluWHFDTTluckZRbjVEeGZhWkYxMlppUWh1WWtuNWdMbDZWZ1ZRdzV0WjRtdnpZVmk2QTJ1aXRmM2RxUzNPa251U00wNEdoNHFSUExYOWRoMVM0a3RWejdMaGhTcmZPM2JWbUpBa09FLTNfUFdJNGhJMXpIQW9DTjE2VUhn?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi1gFBVV95cUxOWE1MbVpLblNXVWI3OHNPby1XN2RXYklaTlY5MTIyOVNzTHFqbHFwZVFYQnZ2UV9xdGlreno4WnBZRDlFeGpNbnM0dDlGOXUwUXRTYndPcEMweXluWHFDTTluckZRbjVEeGZhWkYxMlppUWh1WWtuNWdMbDZWZ1ZRdzV0WjRtdnpZVmk2QTJ1aXRmM2RxUzNPa251U00wNEdoNHFSUExYOWRoMVM0a3RWejdMaGhTcmZPM2JWbUpBa09FLTNfUFdJNGhJMXpIQW9DTjE2VUhn?oc=5\" target=\"_blank\">Launching chair bid, Waters targets crypto, prediction markets, private equity - Live Updates</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Politico</font>",
+            "id": "CBMi1gFBVV95cUxOWE1MbVpLblNXVWI3OHNPby1XN2RXYklaTlY5MTIyOVNzTHFqbHFwZVFYQnZ2UV9xdGlreno4WnBZRDlFeGpNbnM0dDlGOXUwUXRTYndPcEMweXluWHFDTTluckZRbjVEeGZhWkYxMlppUWh1WWtuNWdMbDZWZ1ZRdzV0WjRtdnpZVmk2QTJ1aXRmM2RxUzNPa251U00wNEdoNHFSUExYOWRoMVM0a3RWejdMaGhTcmZPM2JWbUpBa09FLTNfUFdJNGhJMXpIQW9DTjE2VUhn",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:10:30Z",
+            "title": "As Democrats Win Congress, AAA Features Wasel & Wasel Crypto Arbitrator to Bridge US-Offshore Law - markets.businessinsider.com",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxQQ2I2RkxkMEV2Z0FLenN3Q3RVNktlX0piTTFJWnVheWlBQWsyRnBicXhLQmRhRE1ncng2SE5LaENYWTJpMmdkcGRPR0lLd0lfZEhHSEtsUUpZaDhoeDdVemNyQ1BYSExHY0xnUWlYd05HMGtFc2RaMWdnN09UdjRyTlN5MkpFYTNleV9ZajRlY1NXczNiRzlXTGxmSEZpWUc3UldpcTR6UEI4MEFiNUY1MWRYMVAzcFpRS3p0ZE8xSzRoa3B5VTlDS044TDV2ZXFIcFNnYlhhQzVoZlprUUdsWVZMVDVCUnhl?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi6AFBVV95cUxQQ2I2RkxkMEV2Z0FLenN3Q3RVNktlX0piTTFJWnVheWlBQWsyRnBicXhLQmRhRE1ncng2SE5LaENYWTJpMmdkcGRPR0lLd0lfZEhHSEtsUUpZaDhoeDdVemNyQ1BYSExHY0xnUWlYd05HMGtFc2RaMWdnN09UdjRyTlN5MkpFYTNleV9ZajRlY1NXczNiRzlXTGxmSEZpWUc3UldpcTR6UEI4MEFiNUY1MWRYMVAzcFpRS3p0ZE8xSzRoa3B5VTlDS044TDV2ZXFIcFNnYlhhQzVoZlprUUdsWVZMVDVCUnhl?oc=5\" target=\"_blank\">As Democrats Win Congress, AAA Features Wasel & Wasel Crypto Arbitrator to Bridge US-Offshore Law</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">markets.businessinsider.com</font>",
+            "id": "CBMi6AFBVV95cUxQQ2I2RkxkMEV2Z0FLenN3Q3RVNktlX0piTTFJWnVheWlBQWsyRnBicXhLQmRhRE1ncng2SE5LaENYWTJpMmdkcGRPR0lLd0lfZEhHSEtsUUpZaDhoeDdVemNyQ1BYSExHY0xnUWlYd05HMGtFc2RaMWdnN09UdjRyTlN5MkpFYTNleV9ZajRlY1NXczNiRzlXTGxmSEZpWUc3UldpcTR6UEI4MEFiNUY1MWRYMVAzcFpRS3p0ZE8xSzRoa3B5VTlDS044TDV2ZXFIcFNnYlhhQzVoZlprUUdsWVZMVDVCUnhl",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:04:18Z",
+            "title": "$3.1B in Stolen Binance Crypto Has Yet to Be Laundered: Elliptic - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNTmhUSkNUUG1EMnJqYVhMR2dOelVQdUU5aVdzdW5scUprUWdsX3l1ckNENkcxX2VlZzBQQ041SW0wYk5nYUtRTDI2bFZVWlBXbjExQVlVSURaQW82X09hY3F2SjEycWdiSTFZRWZqV1kyMjRvMzAzcjdTRi1MYmU1UnVFZjJWZUdYWlpseTlzbEZGdjBsSkE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMilgFBVV95cUxNTmhUSkNUUG1EMnJqYVhMR2dOelVQdUU5aVdzdW5scUprUWdsX3l1ckNENkcxX2VlZzBQQ041SW0wYk5nYUtRTDI2bFZVWlBXbjExQVlVSURaQW82X09hY3F2SjEycWdiSTFZRWZqV1kyMjRvMzAzcjdTRi1MYmU1UnVFZjJWZUdYWlpseTlzbEZGdjBsSkE?oc=5\" target=\"_blank\">$3.1B in Stolen Binance Crypto Has Yet to Be Laundered: Elliptic</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMilgFBVV95cUxNTmhUSkNUUG1EMnJqYVhMR2dOelVQdUU5aVdzdW5scUprUWdsX3l1ckNENkcxX2VlZzBQQ041SW0wYk5nYUtRTDI2bFZVWlBXbjExQVlVSURaQW82X09hY3F2SjEycWdiSTFZRWZqV1kyMjRvMzAzcjdTRi1MYmU1UnVFZjJWZUdYWlpseTlzbEZGdjBsSkE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T14:00:00Z",
+            "title": "Robinhood's crypto chain out-earned Ethereum in network revenue last quarter, exec says | CoinDesk Videos - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPMW9RWUw3WWhrRDJRWk93eGVFZzRaTTlPTWdLdlA2S3hXeEZyOVBPMGhISlV5ZWFpZ2sxMXUyZzI2RGRUb3Z1Ukxmb0tGLWd2S2xGdEZmbDJhcU1RUlZFMjE0V1IxWkVfQU5TRHg3WW5ydGJVMGhBVVFPZkdSc0hoN2E5TkJLUXh2bWdNdGxuRi1YM000SDQwYUdIamZ2ZkZ3R0NBWm5HN0xGSkhPSEJISVIwS01OXzkt?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiuAFBVV95cUxPMW9RWUw3WWhrRDJRWk93eGVFZzRaTTlPTWdLdlA2S3hXeEZyOVBPMGhISlV5ZWFpZ2sxMXUyZzI2RGRUb3Z1Ukxmb0tGLWd2S2xGdEZmbDJhcU1RUlZFMjE0V1IxWkVfQU5TRHg3WW5ydGJVMGhBVVFPZkdSc0hoN2E5TkJLUXh2bWdNdGxuRi1YM000SDQwYUdIamZ2ZkZ3R0NBWm5HN0xGSkhPSEJISVIwS01OXzkt?oc=5\" target=\"_blank\">Robinhood's crypto chain out-earned Ethereum in network revenue last quarter, exec says | CoinDesk Videos</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMiuAFBVV95cUxPMW9RWUw3WWhrRDJRWk93eGVFZzRaTTlPTWdLdlA2S3hXeEZyOVBPMGhISlV5ZWFpZ2sxMXUyZzI2RGRUb3Z1Ukxmb0tGLWd2S2xGdEZmbDJhcU1RUlZFMjE0V1IxWkVfQU5TRHg3WW5ydGJVMGhBVVFPZkdSc0hoN2E5TkJLUXh2bWdNdGxuRi1YM000SDQwYUdIamZ2ZkZ3R0NBWm5HN0xGSkhPSEJISVIwS01OXzkt",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T13:48:46Z",
+            "title": "North Korean Hackers Stole $7.61 Billion in Crypto in 2026 Without Breaking Code - Bitcoin Foundation",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNMDY3UnY3ZUh1SFllbVNIRzBCVzN1YzFuZ08tQnhaSzNEY05YdTdjMUliaWNqdmVtWDYyeTc3TDN3cXFkbld0eTFESHpnTHRyZUlBaWZPRFNGcFh5aXlpeEhuTlMtVXY0NFFuNHR1b2V5LW1OeThTdWRTMWw5dldKRDViNmsxbUhHbTNPdUpDN2lWaHVEVExTX2tHMDBrNDA4VndyVlczdFlzUll2V2I0ZmdKT1c3ODB3OHNZa2RaWHlBZw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwgFBVV95cUxNMDY3UnY3ZUh1SFllbVNIRzBCVzN1YzFuZ08tQnhaSzNEY05YdTdjMUliaWNqdmVtWDYyeTc3TDN3cXFkbld0eTFESHpnTHRyZUlBaWZPRFNGcFh5aXlpeEhuTlMtVXY0NFFuNHR1b2V5LW1OeThTdWRTMWw5dldKRDViNmsxbUhHbTNPdUpDN2lWaHVEVExTX2tHMDBrNDA4VndyVlczdFlzUll2V2I0ZmdKT1c3ODB3OHNZa2RaWHlBZw?oc=5\" target=\"_blank\">North Korean Hackers Stole $7.61 Billion in Crypto in 2026 Without Breaking Code</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Foundation</font>",
+            "id": "CBMiwgFBVV95cUxNMDY3UnY3ZUh1SFllbVNIRzBCVzN1YzFuZ08tQnhaSzNEY05YdTdjMUliaWNqdmVtWDYyeTc3TDN3cXFkbld0eTFESHpnTHRyZUlBaWZPRFNGcFh5aXlpeEhuTlMtVXY0NFFuNHR1b2V5LW1OeThTdWRTMWw5dldKRDViNmsxbUhHbTNPdUpDN2lWaHVEVExTX2tHMDBrNDA4VndyVlczdFlzUll2V2I0ZmdKT1c3ODB3OHNZa2RaWHlBZw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T13:42:15Z",
+            "title": "France’s €100,000 self-custody crypto reporting amendment falls after budget vote - Digital Watch Observatory",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE9CenF5V3U5QnNZekJGdzV3cm1YRGVVczBOVEZ4WkRYdkVDbXdzZUx1WkliclBVRm1SMW1oakdHQWkyYmdJN3QwRUY3T1FrZkdMbUp4RG5qaXdzanhRTERNVy1TVlVmdnpRUXgzQWwyTk9hOFE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMic0FVX3lxTE9CenF5V3U5QnNZekJGdzV3cm1YRGVVczBOVEZ4WkRYdkVDbXdzZUx1WkliclBVRm1SMW1oakdHQWkyYmdJN3QwRUY3T1FrZkdMbUp4RG5qaXdzanhRTERNVy1TVlVmdnpRUXgzQWwyTk9hOFE?oc=5\" target=\"_blank\">France’s €100,000 self-custody crypto reporting amendment falls after budget vote</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Digital Watch Observatory</font>",
+            "id": "CBMic0FVX3lxTE9CenF5V3U5QnNZekJGdzV3cm1YRGVVczBOVEZ4WkRYdkVDbXdzZUx1WkliclBVRm1SMW1oakdHQWkyYmdJN3QwRUY3T1FrZkdMbUp4RG5qaXdzanhRTERNVy1TVlVmdnpRUXgzQWwyTk9hOFE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T13:19:40Z",
+            "title": "Investors in Trump’s Crypto Coin Are Now Screwed Beyond Belief - Futurism",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQWU5GQURRcFBwNnFyOE1ibnVRbXExd2F2aks0aFU0Ql84STRfVGQ5SF9GSEV5WUFBRnlWVzZzQnRmYktoQ1VrdzlnaklFVjJybndQbVJmQkEzTng3WVRQN2Npb216LUx1bWRkazdTU21nZ3JuZWlTcVBKZHV1TUZxRjJzS2JzNk0?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMihwFBVV95cUxQWU5GQURRcFBwNnFyOE1ibnVRbXExd2F2aks0aFU0Ql84STRfVGQ5SF9GSEV5WUFBRnlWVzZzQnRmYktoQ1VrdzlnaklFVjJybndQbVJmQkEzTng3WVRQN2Npb216LUx1bWRkazdTU21nZ3JuZWlTcVBKZHV1TUZxRjJzS2JzNk0?oc=5\" target=\"_blank\">Investors in Trump’s Crypto Coin Are Now Screwed Beyond Belief</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Futurism</font>",
+            "id": "CBMihwFBVV95cUxQWU5GQURRcFBwNnFyOE1ibnVRbXExd2F2aks0aFU0Ql84STRfVGQ5SF9GSEV5WUFBRnlWVzZzQnRmYktoQ1VrdzlnaklFVjJybndQbVJmQkEzTng3WVRQN2Npb216LUx1bWRkazdTU21nZ3JuZWlTcVBKZHV1TUZxRjJzS2JzNk0",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T13:10:45Z",
+            "title": "EU expands Ukraine sanctions push with new office and crypto task force - The Kyiv Independent",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQUVhWR2RzSVg5U0MzOFE5REd3bFY1MWQzYmJvbVJCWktkSDhPQzBibnZXdjZaazlfRG9kcFc2d2tnQ1V4VWFXNTlmTDhjSGhjSmJuRDJSWW5fWTZlNlUyNTNZTmt4R244ZVhDLVFNQk4yZzRPMWtndDI4UGhpT1BmQVJ3bXQwbXpJelBIN1RXRWx0MlJKcEYtLVUyRVh0enZSNlE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiogFBVV95cUxQUVhWR2RzSVg5U0MzOFE5REd3bFY1MWQzYmJvbVJCWktkSDhPQzBibnZXdjZaazlfRG9kcFc2d2tnQ1V4VWFXNTlmTDhjSGhjSmJuRDJSWW5fWTZlNlUyNTNZTmt4R244ZVhDLVFNQk4yZzRPMWtndDI4UGhpT1BmQVJ3bXQwbXpJelBIN1RXRWx0MlJKcEYtLVUyRVh0enZSNlE?oc=5\" target=\"_blank\">EU expands Ukraine sanctions push with new office and crypto task force</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Kyiv Independent</font>",
+            "id": "CBMiogFBVV95cUxQUVhWR2RzSVg5U0MzOFE5REd3bFY1MWQzYmJvbVJCWktkSDhPQzBibnZXdjZaazlfRG9kcFc2d2tnQ1V4VWFXNTlmTDhjSGhjSmJuRDJSWW5fWTZlNlUyNTNZTmt4R244ZVhDLVFNQk4yZzRPMWtndDI4UGhpT1BmQVJ3bXQwbXpJelBIN1RXRWx0MlJKcEYtLVUyRVh0enZSNlE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T13:00:08Z",
+            "title": "Ripple CEO Pushes Back on Crypto Setback Fears: ‘Pro-Crypto Members Won on Both Sides’ - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQYjc3azRLVEFqM0VIRThPRTZ4c1ZDano4Sng2SVhHWTQxR0pHc19Ec2htd1oyc0Q3ODZJWGpmaVlCOERmQlJQTHYzV3JzaDM4ZVAtWGgyWUY1TEw5a1J5bGI5RU5UWGRZdlByYkJnYUVJeC0tWHVYRGp1RVhURHFrOW1hSlVFODNZUlUtY0VRS0NURHNONVZtb21B?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMimgFBVV95cUxQYjc3azRLVEFqM0VIRThPRTZ4c1ZDano4Sng2SVhHWTQxR0pHc19Ec2htd1oyc0Q3ODZJWGpmaVlCOERmQlJQTHYzV3JzaDM4ZVAtWGgyWUY1TEw5a1J5bGI5RU5UWGRZdlByYkJnYUVJeC0tWHVYRGp1RVhURHFrOW1hSlVFODNZUlUtY0VRS0NURHNONVZtb21B?oc=5\" target=\"_blank\">Ripple CEO Pushes Back on Crypto Setback Fears: ‘Pro-Crypto Members Won on Both Sides’</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMimgFBVV95cUxQYjc3azRLVEFqM0VIRThPRTZ4c1ZDano4Sng2SVhHWTQxR0pHc19Ec2htd1oyc0Q3ODZJWGpmaVlCOERmQlJQTHYzV3JzaDM4ZVAtWGgyWUY1TEw5a1J5bGI5RU5UWGRZdlByYkJnYUVJeC0tWHVYRGp1RVhURHFrOW1hSlVFODNZUlUtY0VRS0NURHNONVZtb21B",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T13:00:00Z",
+            "title": "Binance: What the Largest Ever Crypto Hack Means for Cyber Resilience - Finextra Research",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOVy1hcmJDZUNSUE55TDk3eFo3SEl2UEhPMTJPZm1pOW1aTkVBeFdOX0xwb3UwdnI4SEZ0NmZnRjhHYnlLeU1WeDF3Q3pRWXlIR0lNVEhYclpqUWFORGdQY0N6amFLelVmc2w1SGhwX1R2aGozbWZ3YlItYVlyWnVzb1NqWXFwU3VQeXg5bk1WWDNadmtnd0dDRG5PaktpQlZfWHhmaDhEcU5HdG5CLTdQTg?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMisAFBVV95cUxOVy1hcmJDZUNSUE55TDk3eFo3SEl2UEhPMTJPZm1pOW1aTkVBeFdOX0xwb3UwdnI4SEZ0NmZnRjhHYnlLeU1WeDF3Q3pRWXlIR0lNVEhYclpqUWFORGdQY0N6amFLelVmc2w1SGhwX1R2aGozbWZ3YlItYVlyWnVzb1NqWXFwU3VQeXg5bk1WWDNadmtnd0dDRG5PaktpQlZfWHhmaDhEcU5HdG5CLTdQTg?oc=5\" target=\"_blank\">Binance: What the Largest Ever Crypto Hack Means for Cyber Resilience</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Finextra Research</font>",
+            "id": "CBMisAFBVV95cUxOVy1hcmJDZUNSUE55TDk3eFo3SEl2UEhPMTJPZm1pOW1aTkVBeFdOX0xwb3UwdnI4SEZ0NmZnRjhHYnlLeU1WeDF3Q3pRWXlIR0lNVEhYclpqUWFORGdQY0N6amFLelVmc2w1SGhwX1R2aGozbWZ3YlItYVlyWnVzb1NqWXFwU3VQeXg5bk1WWDNadmtnd0dDRG5PaktpQlZfWHhmaDhEcU5HdG5CLTdQTg",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T12:50:01Z",
+            "title": "South Korea Seeks Fourth Delay to Crypto Tax Until 2029 - Digital Watch Observatory",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9mRFMwem9mS1Vfcmw0WVpoUzFqSVFzWmVRX3prSEtPRThPMF92M3plOW01VDhUUFJWRlFNS1hzNHBBN1RMUXpTTWIwVk1fSnVYUm9xbGdyUDV5WGhiX2JGZ1pqSGxZTXJGajFRUjRfekNiSGFr?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMidEFVX3lxTE9mRFMwem9mS1Vfcmw0WVpoUzFqSVFzWmVRX3prSEtPRThPMF92M3plOW01VDhUUFJWRlFNS1hzNHBBN1RMUXpTTWIwVk1fSnVYUm9xbGdyUDV5WGhiX2JGZ1pqSGxZTXJGajFRUjRfekNiSGFr?oc=5\" target=\"_blank\">South Korea Seeks Fourth Delay to Crypto Tax Until 2029</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Digital Watch Observatory</font>",
+            "id": "CBMidEFVX3lxTE9mRFMwem9mS1Vfcmw0WVpoUzFqSVFzWmVRX3prSEtPRThPMF92M3plOW01VDhUUFJWRlFNS1hzNHBBN1RMUXpTTWIwVk1fSnVYUm9xbGdyUDV5WGhiX2JGZ1pqSGxZTXJGajFRUjRfekNiSGFr",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T12:33:00Z",
+            "title": "Crypto ETFs see over half a billion dollars in outflows amid post-midterm market slide - The Block",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNdGk4YU9HOXhSWlZ1ZXRVYXVxME5ObnQ2U05TcV81TEFWSWFHekItZWNwanZjWXJHNTBMSmE0Y1RlRXZRakpMNEFJc1FnWnN6YjJfQmtSaFVXUmZhRjFQUDR3UldjRmQ5M1RmRkd2N3lBSEtwbTNDYjNKUV9sLXNONVpCSzZUcERpbVVVTHlFNmxTaFcxNkFiNnp4Rk1LYkFTMTA5LVhXZi1aV3UzdDRlQ096X19GRjZGci1CUzROTUZGWW5mWDcyQ180RC1QYkpRb0pjUjJUUXo?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi2AFBVV95cUxNdGk4YU9HOXhSWlZ1ZXRVYXVxME5ObnQ2U05TcV81TEFWSWFHekItZWNwanZjWXJHNTBMSmE0Y1RlRXZRakpMNEFJc1FnWnN6YjJfQmtSaFVXUmZhRjFQUDR3UldjRmQ5M1RmRkd2N3lBSEtwbTNDYjNKUV9sLXNONVpCSzZUcERpbVVVTHlFNmxTaFcxNkFiNnp4Rk1LYkFTMTA5LVhXZi1aV3UzdDRlQ096X19GRjZGci1CUzROTUZGWW5mWDcyQ180RC1QYkpRb0pjUjJUUXo?oc=5\" target=\"_blank\">Crypto ETFs see over half a billion dollars in outflows amid post-midterm market slide</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Block</font>",
+            "id": "CBMi2AFBVV95cUxNdGk4YU9HOXhSWlZ1ZXRVYXVxME5ObnQ2U05TcV81TEFWSWFHekItZWNwanZjWXJHNTBMSmE0Y1RlRXZRakpMNEFJc1FnWnN6YjJfQmtSaFVXUmZhRjFQUDR3UldjRmQ5M1RmRkd2N3lBSEtwbTNDYjNKUV9sLXNONVpCSzZUcERpbVVVTHlFNmxTaFcxNkFiNnp4Rk1LYkFTMTA5LVhXZi1aV3UzdDRlQ096X19GRjZGci1CUzROTUZGWW5mWDcyQ180RC1QYkpRb0pjUjJUUXo",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T12:26:12Z",
+            "title": "South Korea’s GOPAX halts crypto trading, withdrawals after hacking threat - Crypto News",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE84QUNGWXFwWmdWR3p1QUFxVWV6ODhSc0Nac1dYOVRZSndtRFctS1N0eWROeGExcnM2VjVpMC01THBJRGVDMDNrZWlPVXR6SUZTQkg3aTM0SG8xS0d5dWFGYWpWdGNwRnNIOGNORFQybl9XcjY3eGc?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMidkFVX3lxTE84QUNGWXFwWmdWR3p1QUFxVWV6ODhSc0Nac1dYOVRZSndtRFctS1N0eWROeGExcnM2VjVpMC01THBJRGVDMDNrZWlPVXR6SUZTQkg3aTM0SG8xS0d5dWFGYWpWdGNwRnNIOGNORFQybl9XcjY3eGc?oc=5\" target=\"_blank\">South Korea’s GOPAX halts crypto trading, withdrawals after hacking threat</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Crypto News</font>",
+            "id": "CBMidkFVX3lxTE84QUNGWXFwWmdWR3p1QUFxVWV6ODhSc0Nac1dYOVRZSndtRFctS1N0eWROeGExcnM2VjVpMC01THBJRGVDMDNrZWlPVXR6SUZTQkg3aTM0SG8xS0d5dWFGYWpWdGNwRnNIOGNORFQybl9XcjY3eGc",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T12:24:53Z",
+            "title": "India warns of AI-powered attacks targeting crypto exchanges - Digital Watch Observatory",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9wUU41VnBwUGl3Y2F5M3pJNlFtNVFjMFBtSjU0UDRhX19JVWlsdVNnemFyS2Y2OWR4Mi1ESTVZUm1HQW93MW85SURKek50NGRLSnQzQnB1RDQ0cC1fdE9Hc0R2ZzJJNmxySFZ4a0ZCOVVHbHEyUlE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMidkFVX3lxTE9wUU41VnBwUGl3Y2F5M3pJNlFtNVFjMFBtSjU0UDRhX19JVWlsdVNnemFyS2Y2OWR4Mi1ESTVZUm1HQW93MW85SURKek50NGRLSnQzQnB1RDQ0cC1fdE9Hc0R2ZzJJNmxySFZ4a0ZCOVVHbHEyUlE?oc=5\" target=\"_blank\">India warns of AI-powered attacks targeting crypto exchanges</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Digital Watch Observatory</font>",
+            "id": "CBMidkFVX3lxTE9wUU41VnBwUGl3Y2F5M3pJNlFtNVFjMFBtSjU0UDRhX19JVWlsdVNnemFyS2Y2OWR4Mi1ESTVZUm1HQW93MW85SURKek50NGRLSnQzQnB1RDQ0cC1fdE9Hc0R2ZzJJNmxySFZ4a0ZCOVVHbHEyUlE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T12:03:24Z",
+            "title": "Crypto heavyweight eyes Hong Kong expansion to tap growing tokenisation demand - South China Morning Post",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQZHdGVnozNExTUXpTZnRxVXNUV3VEbnpFaEF6aE5VbjFVUmtKRUxjRE80cEJKT0w3aGlFd19DT1p4TEdVQ0JUdFFJTy12STd3a3JUTEpaYnNVZ1hmSlpSa0pxNVJHaU40aWF3b2Nsa0ZyX1ZVRnplR2JIR0R5QUdaVEhYN3VmM19JU2UxbFROdlRTcXdWbHF6aFltcV9CVFNYdW5hLTROU19OR1ZybjFxNFdxX2Jlc2ZGMUJXZzZncFBaMWpOSVNULVhTcHV5Y040T2phdzhlazRXbUE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi2wFBVV95cUxQZHdGVnozNExTUXpTZnRxVXNUV3VEbnpFaEF6aE5VbjFVUmtKRUxjRE80cEJKT0w3aGlFd19DT1p4TEdVQ0JUdFFJTy12STd3a3JUTEpaYnNVZ1hmSlpSa0pxNVJHaU40aWF3b2Nsa0ZyX1ZVRnplR2JIR0R5QUdaVEhYN3VmM19JU2UxbFROdlRTcXdWbHF6aFltcV9CVFNYdW5hLTROU19OR1ZybjFxNFdxX2Jlc2ZGMUJXZzZncFBaMWpOSVNULVhTcHV5Y040T2phdzhlazRXbUE?oc=5\" target=\"_blank\">Crypto heavyweight eyes Hong Kong expansion to tap growing tokenisation demand</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">South China Morning Post</font>",
+            "id": "CBMi2wFBVV95cUxQZHdGVnozNExTUXpTZnRxVXNUV3VEbnpFaEF6aE5VbjFVUmtKRUxjRE80cEJKT0w3aGlFd19DT1p4TEdVQ0JUdFFJTy12STd3a3JUTEpaYnNVZ1hmSlpSa0pxNVJHaU40aWF3b2Nsa0ZyX1ZVRnplR2JIR0R5QUdaVEhYN3VmM19JU2UxbFROdlRTcXdWbHF6aFltcV9CVFNYdW5hLTROU19OR1ZybjFxNFdxX2Jlc2ZGMUJXZzZncFBaMWpOSVNULVhTcHV5Y040T2phdzhlazRXbUE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T12:00:00Z",
+            "title": "Why gold prices are surprisingly low : Planet Money - NPR",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNbUkwN09ZMnFIYkdla1U3Uk52WnhBYW9yQ0EzV2dpVkkxRmxsMEFVNUNWQXB1RVNfaUJ0SG80Y2ptdExSdVpXbzNjVlE0b2dCbENHRG9WLV84MlJINkVjU0tzM2lCb1UtWVFVWWJvUmxuTGVkU29NS3U4TVZ5RjZCdlhSN0F6TnFEa0Z6TndpNklYODJvT0NwZFI2OUxxU2JXS0NmT0F3?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMipgFBVV95cUxNbUkwN09ZMnFIYkdla1U3Uk52WnhBYW9yQ0EzV2dpVkkxRmxsMEFVNUNWQXB1RVNfaUJ0SG80Y2ptdExSdVpXbzNjVlE0b2dCbENHRG9WLV84MlJINkVjU0tzM2lCb1UtWVFVWWJvUmxuTGVkU29NS3U4TVZ5RjZCdlhSN0F6TnFEa0Z6TndpNklYODJvT0NwZFI2OUxxU2JXS0NmT0F3?oc=5\" target=\"_blank\">Why gold prices are surprisingly low : Planet Money</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">NPR</font>",
+            "id": "CBMipgFBVV95cUxNbUkwN09ZMnFIYkdla1U3Uk52WnhBYW9yQ0EzV2dpVkkxRmxsMEFVNUNWQXB1RVNfaUJ0SG80Y2ptdExSdVpXbzNjVlE0b2dCbENHRG9WLV84MlJINkVjU0tzM2lCb1UtWVFVWWJvUmxuTGVkU29NS3U4TVZ5RjZCdlhSN0F6TnFEa0Z6TndpNklYODJvT0NwZFI2OUxxU2JXS0NmT0F3",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T11:49:35Z",
+            "title": "Bitcoin steadies after AI-led selloff as eyes turn to latest U.S. jobs figures: Crypto Markets Today - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPVVRaMk1UVUMwbjVpUmRnTGpWS3BwSFBKUDlreEdzRGhlMDFvNGlrQTI1NmFkT2g3Vm5vOUN6WGc5WWt0ZGVSNk13X0ZvTVlaUnF6Sm5lTmNLNGJURDBLZnZSb0hvcXpGVF9tVnJLWER3NU4xdVpKbXFKSnFxLUxUR0Q4Ny05aGgyd2lhSEFaRHRPdVYxNTQ5OGtHX0s?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMinAFBVV95cUxPVVRaMk1UVUMwbjVpUmRnTGpWS3BwSFBKUDlreEdzRGhlMDFvNGlrQTI1NmFkT2g3Vm5vOUN6WGc5WWt0ZGVSNk13X0ZvTVlaUnF6Sm5lTmNLNGJURDBLZnZSb0hvcXpGVF9tVnJLWER3NU4xdVpKbXFKSnFxLUxUR0Q4Ny05aGgyd2lhSEFaRHRPdVYxNTQ5OGtHX0s?oc=5\" target=\"_blank\">Bitcoin steadies after AI-led selloff as eyes turn to latest U.S. jobs figures: Crypto Markets Today</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMinAFBVV95cUxPVVRaMk1UVUMwbjVpUmRnTGpWS3BwSFBKUDlreEdzRGhlMDFvNGlrQTI1NmFkT2g3Vm5vOUN6WGc5WWt0ZGVSNk13X0ZvTVlaUnF6Sm5lTmNLNGJURDBLZnZSb0hvcXpGVF9tVnJLWER3NU4xdVpKbXFKSnFxLUxUR0Q4Ny05aGgyd2lhSEFaRHRPdVYxNTQ5OGtHX0s",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T11:26:22Z",
+            "title": "Binance $6.3 Billion Crypto Theft Expected to Trigger Tougher Insurance Security Reviews - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOOF9YaTJJWTFzVlJ4eG5BbjV1d0FiZkx4ZEVsenh2dGFxcXRkYnBjVGlSVnhyU2NHeFQ0dzA1ZXJxWS1teFZVOERxUVFqeEJxcExyZGlTVEREQVZXd0pwd3lqb1E2Y3FjUlVMTjhEZlZGenVGV054azA1Rm9odUUwajcwYUxyZzNldzdERHZ4R1Rsa0diSnc?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMilgFBVV95cUxOOF9YaTJJWTFzVlJ4eG5BbjV1d0FiZkx4ZEVsenh2dGFxcXRkYnBjVGlSVnhyU2NHeFQ0dzA1ZXJxWS1teFZVOERxUVFqeEJxcExyZGlTVEREQVZXd0pwd3lqb1E2Y3FjUlVMTjhEZlZGenVGV054azA1Rm9odUUwajcwYUxyZzNldzdERHZ4R1Rsa0diSnc?oc=5\" target=\"_blank\">Binance $6.3 Billion Crypto Theft Expected to Trigger Tougher Insurance Security Reviews</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMilgFBVV95cUxOOF9YaTJJWTFzVlJ4eG5BbjV1d0FiZkx4ZEVsenh2dGFxcXRkYnBjVGlSVnhyU2NHeFQ0dzA1ZXJxWS1teFZVOERxUVFqeEJxcExyZGlTVEREQVZXd0pwd3lqb1E2Y3FjUlVMTjhEZlZGenVGV054azA1Rm9odUUwajcwYUxyZzNldzdERHZ4R1Rsa0diSnc",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T11:18:46Z",
+            "title": "Waters’ Investor-Rights Plan Could Put SEC at Center of New Crypto Market Structure Bill - Bitcoin Foundation",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNOHVGM2UzVFBBWll1MXFQTGQycVVKRDk1Q0s4SXVTS0FQc3VVZEcwUDVYbGZ4VnpyRXNFOEFnbktUZVdFUmw4bjZFS05VRUMxUzU3LUhQQXI2SWVtSFpaaFN1d0h6Y0RwRTA1V3pRQ0RKMG8yWHFWaEt1ckUyZXFRVF9GaUN0MXZ6SktGY3RDd0N0QWFHWGJTZmQ2VWdhcDdTZXl5MUhYci1uSG0xdnNaNDdFVlpxbVJfdnM4MGJLUFd4ZkZqcXhwcnFDaEdTOVk?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizwFBVV95cUxNOHVGM2UzVFBBWll1MXFQTGQycVVKRDk1Q0s4SXVTS0FQc3VVZEcwUDVYbGZ4VnpyRXNFOEFnbktUZVdFUmw4bjZFS05VRUMxUzU3LUhQQXI2SWVtSFpaaFN1d0h6Y0RwRTA1V3pRQ0RKMG8yWHFWaEt1ckUyZXFRVF9GaUN0MXZ6SktGY3RDd0N0QWFHWGJTZmQ2VWdhcDdTZXl5MUhYci1uSG0xdnNaNDdFVlpxbVJfdnM4MGJLUFd4ZkZqcXhwcnFDaEdTOVk?oc=5\" target=\"_blank\">Waters’ Investor-Rights Plan Could Put SEC at Center of New Crypto Market Structure Bill</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bitcoin Foundation</font>",
+            "id": "CBMizwFBVV95cUxNOHVGM2UzVFBBWll1MXFQTGQycVVKRDk1Q0s4SXVTS0FQc3VVZEcwUDVYbGZ4VnpyRXNFOEFnbktUZVdFUmw4bjZFS05VRUMxUzU3LUhQQXI2SWVtSFpaaFN1d0h6Y0RwRTA1V3pRQ0RKMG8yWHFWaEt1ckUyZXFRVF9GaUN0MXZ6SktGY3RDd0N0QWFHWGJTZmQ2VWdhcDdTZXl5MUhYci1uSG0xdnNaNDdFVlpxbVJfdnM4MGJLUFd4ZkZqcXhwcnFDaEdTOVk",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T11:00:22Z",
+            "title": "Crypto foundation demanded employees endorse suicide pledge, then fired leaders who objected, Colorado lawsuit alleges - The Denver Post",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOa2dvSTJleHFjZ21zb01tM3d1WHY5cFZBNUlFc3YxclJadjJqSzMxM1Y3Sl85X2E3ekxTc2dBOFdYbGxMLVBqU2lyalRJSktiR2ZaRUZlSmtnWkxtYXBtMDE4S19hNVZqTkVxUlJqR3NVLUdaRkE4Y3poM1oyVDJGcGN2RHdfbE5TTjFBVC1EdmdENWs2Wm4yWg?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMimAFBVV95cUxOa2dvSTJleHFjZ21zb01tM3d1WHY5cFZBNUlFc3YxclJadjJqSzMxM1Y3Sl85X2E3ekxTc2dBOFdYbGxMLVBqU2lyalRJSktiR2ZaRUZlSmtnWkxtYXBtMDE4S19hNVZqTkVxUlJqR3NVLUdaRkE4Y3poM1oyVDJGcGN2RHdfbE5TTjFBVC1EdmdENWs2Wm4yWg?oc=5\" target=\"_blank\">Crypto foundation demanded employees endorse suicide pledge, then fired leaders who objected, Colorado lawsuit alleges</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Denver Post</font>",
+            "id": "CBMimAFBVV95cUxOa2dvSTJleHFjZ21zb01tM3d1WHY5cFZBNUlFc3YxclJadjJqSzMxM1Y3Sl85X2E3ekxTc2dBOFdYbGxMLVBqU2lyalRJSktiR2ZaRUZlSmtnWkxtYXBtMDE4S19hNVZqTkVxUlJqR3NVLUdaRkE4Y3poM1oyVDJGcGN2RHdfbE5TTjFBVC1EdmdENWs2Wm4yWg",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T11:00:00Z",
+            "title": "Consumers open to crypto in banking, report finds - ATM Marketplace",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOUlA5emczRTdpcmhTYlFNT1NmeTg3b2JNZElKdlRFUGN5SmZfdGxkY1ZmZDh3aDAwUmZoamZDZm9sU2xzS0F6eGF6THVqay1WdDFCVERsQ01UYnhwQnQ4TTFvemJtVktvTm94cnpzVWRxeW90VzJ2OGlzajZWN1RSandnX3Zwd1NJWkR4aE53?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxOUlA5emczRTdpcmhTYlFNT1NmeTg3b2JNZElKdlRFUGN5SmZfdGxkY1ZmZDh3aDAwUmZoamZDZm9sU2xzS0F6eGF6THVqay1WdDFCVERsQ01UYnhwQnQ4TTFvemJtVktvTm94cnpzVWRxeW90VzJ2OGlzajZWN1RSandnX3Zwd1NJWkR4aE53?oc=5\" target=\"_blank\">Consumers open to crypto in banking, report finds</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">ATM Marketplace</font>",
+            "id": "CBMijgFBVV95cUxOUlA5emczRTdpcmhTYlFNT1NmeTg3b2JNZElKdlRFUGN5SmZfdGxkY1ZmZDh3aDAwUmZoamZDZm9sU2xzS0F6eGF6THVqay1WdDFCVERsQ01UYnhwQnQ4TTFvemJtVktvTm94cnpzVWRxeW90VzJ2OGlzajZWN1RSandnX3Zwd1NJWkR4aE53",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T10:47:46Z",
+            "title": "🚨𝗝𝗨𝗦𝗧 𝗜𝗡: 🇬🇷 Greece approves its first crypto tax, charging 10% on profits above €500 per year. - Moomoo",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxON2Q0c0NPZzJORDAzS3lxVUg2SS03bGg2TFEwUUlfX2ppR0Rxb0lqOG1YUkk3aW1KQWVKTkdRWWFlMm9yNHlObndJN0F0NlBzTTBQVWV5WUJTLVNUZ2MwVzNEYVdrVG0wc2NvX3BtWXF4eXBWLTJrdFJIdDFUM2ZqMnRVU05xc2c4NGhLZFBoQUtteVF2ZHp4eG9mOV9ydkltYWtUM0s0VzV6Mk9OOGVJdmNKVQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxON2Q0c0NPZzJORDAzS3lxVUg2SS03bGg2TFEwUUlfX2ppR0Rxb0lqOG1YUkk3aW1KQWVKTkdRWWFlMm9yNHlObndJN0F0NlBzTTBQVWV5WUJTLVNUZ2MwVzNEYVdrVG0wc2NvX3BtWXF4eXBWLTJrdFJIdDFUM2ZqMnRVU05xc2c4NGhLZFBoQUtteVF2ZHp4eG9mOV9ydkltYWtUM0s0VzV6Mk9OOGVJdmNKVQ?oc=5\" target=\"_blank\">🚨𝗝𝗨𝗦𝗧 𝗜𝗡: 🇬🇷 Greece approves its first crypto tax, charging 10% on profits above €500 per year.</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Moomoo</font>",
+            "id": "CBMiswFBVV95cUxON2Q0c0NPZzJORDAzS3lxVUg2SS03bGg2TFEwUUlfX2ppR0Rxb0lqOG1YUkk3aW1KQWVKTkdRWWFlMm9yNHlObndJN0F0NlBzTTBQVWV5WUJTLVNUZ2MwVzNEYVdrVG0wc2NvX3BtWXF4eXBWLTJrdFJIdDFUM2ZqMnRVU05xc2c4NGhLZFBoQUtteVF2ZHp4eG9mOV9ydkltYWtUM0s0VzV6Mk9OOGVJdmNKVQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T10:29:56Z",
+            "title": "Citadel Securities expands crypto business with Wintermute hire - Hedgeweek",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPRHNZVEtNcUlGYmx4eENjQUJ1b25qbG1jQ3VuRVgtWm1lQklSNU5oTFgxSXRPci1DSHVqN0pWUmlycWJfd0NfWGM0Vm90TUs2bnZFM1p5U2R0Q1hjLXAwdXpoX1I3N2w1Z2taZkpJN0l6SlNuLXRlSWVQSEJYeVVjVGNJYmwxcGpVRjdJSmFocWtXbkNm?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMilAFBVV95cUxPRHNZVEtNcUlGYmx4eENjQUJ1b25qbG1jQ3VuRVgtWm1lQklSNU5oTFgxSXRPci1DSHVqN0pWUmlycWJfd0NfWGM0Vm90TUs2bnZFM1p5U2R0Q1hjLXAwdXpoX1I3N2w1Z2taZkpJN0l6SlNuLXRlSWVQSEJYeVVjVGNJYmwxcGpVRjdJSmFocWtXbkNm?oc=5\" target=\"_blank\">Citadel Securities expands crypto business with Wintermute hire</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Hedgeweek</font>",
+            "id": "CBMilAFBVV95cUxPRHNZVEtNcUlGYmx4eENjQUJ1b25qbG1jQ3VuRVgtWm1lQklSNU5oTFgxSXRPci1DSHVqN0pWUmlycWJfd0NfWGM0Vm90TUs2bnZFM1p5U2R0Q1hjLXAwdXpoX1I3N2w1Z2taZkpJN0l6SlNuLXRlSWVQSEJYeVVjVGNJYmwxcGpVRjdJSmFocWtXbkNm",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T10:17:00Z",
+            "title": "The Democrats Won Congress. Here's What Could Come Next for Crypto. - Yahoo Finance",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPamdoUXFfUmI4czdiOWYzQThYekhKRXU1MXJINjNDalQwSWNCWmdiMGtwUHllVDVPdW9DRnQ5cENMSXgxSWp5S2JHdGIycmZyRnhFSk45bWFzbno0MHJTQ2M1MzBIVWhDbXp0MmduRE5WVGk0Rl8xampvWnYxWXlDa0ZVU2hBVHlwVnQtc0ktSHpwYlU2TXFObXoycUxsNzdP?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMioAFBVV95cUxPamdoUXFfUmI4czdiOWYzQThYekhKRXU1MXJINjNDalQwSWNCWmdiMGtwUHllVDVPdW9DRnQ5cENMSXgxSWp5S2JHdGIycmZyRnhFSk45bWFzbno0MHJTQ2M1MzBIVWhDbXp0MmduRE5WVGk0Rl8xampvWnYxWXlDa0ZVU2hBVHlwVnQtc0ktSHpwYlU2TXFObXoycUxsNzdP?oc=5\" target=\"_blank\">The Democrats Won Congress. Here's What Could Come Next for Crypto.</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yahoo Finance</font>",
+            "id": "CBMioAFBVV95cUxPamdoUXFfUmI4czdiOWYzQThYekhKRXU1MXJINjNDalQwSWNCWmdiMGtwUHllVDVPdW9DRnQ5cENMSXgxSWp5S2JHdGIycmZyRnhFSk45bWFzbno0MHJTQ2M1MzBIVWhDbXp0MmduRE5WVGk0Rl8xampvWnYxWXlDa0ZVU2hBVHlwVnQtc0ktSHpwYlU2TXFObXoycUxsNzdP",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T10:00:00Z",
+            "title": "Taiwan, Bhutan, France split on crypto regulation - CoinGeek",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5LdmZ2X2pKOXozQmY2eU5vcEcwQlhsd19sYWhFemF4RnpTUEZsYWZ6X1VJRVpCZUxvSUdMaUMzV0hsX1hVMlc0V0hYYU1xSzVsYnJ3VkstOUlCREczSklaZU42UUVjR0o3bng1c0UzbmQwS0RseTlFbg?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMieEFVX3lxTE5LdmZ2X2pKOXozQmY2eU5vcEcwQlhsd19sYWhFemF4RnpTUEZsYWZ6X1VJRVpCZUxvSUdMaUMzV0hsX1hVMlc0V0hYYU1xSzVsYnJ3VkstOUlCREczSklaZU42UUVjR0o3bng1c0UzbmQwS0RseTlFbg?oc=5\" target=\"_blank\">Taiwan, Bhutan, France split on crypto regulation</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinGeek</font>",
+            "id": "CBMieEFVX3lxTE5LdmZ2X2pKOXozQmY2eU5vcEcwQlhsd19sYWhFemF4RnpTUEZsYWZ6X1VJRVpCZUxvSUdMaUMzV0hsX1hVMlc0V0hYYU1xSzVsYnJ3VkstOUlCREczSklaZU42UUVjR0o3bng1c0UzbmQwS0RseTlFbg",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T09:57:00Z",
+            "title": "The Democrats Won Congress. Here's What Could Come Next for Crypto. - The Motley Fool",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNYWNhZ2QwbGJ6TU8tZ3ZGWFdtU3pRaTJibXVqRlotZTR3TldmdFlIOU1CUXFnUmFNRmRIbnBvU2tjODFwd05ZQlpFNE9sT0R0MWNHLWxobkVrRGVTQlVOM1gwMmtIWnBxRUdtZWVWOGN0dE80TWVSMDdCWmtFZUJFbjZmR0VsWTlydlFjNUlBR2R2MDlIMjlsXw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMimAFBVV95cUxNYWNhZ2QwbGJ6TU8tZ3ZGWFdtU3pRaTJibXVqRlotZTR3TldmdFlIOU1CUXFnUmFNRmRIbnBvU2tjODFwd05ZQlpFNE9sT0R0MWNHLWxobkVrRGVTQlVOM1gwMmtIWnBxRUdtZWVWOGN0dE80TWVSMDdCWmtFZUJFbjZmR0VsWTlydlFjNUlBR2R2MDlIMjlsXw?oc=5\" target=\"_blank\">The Democrats Won Congress. Here's What Could Come Next for Crypto.</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The Motley Fool</font>",
+            "id": "CBMimAFBVV95cUxNYWNhZ2QwbGJ6TU8tZ3ZGWFdtU3pRaTJibXVqRlotZTR3TldmdFlIOU1CUXFnUmFNRmRIbnBvU2tjODFwd05ZQlpFNE9sT0R0MWNHLWxobkVrRGVTQlVOM1gwMmtIWnBxRUdtZWVWOGN0dE80TWVSMDdCWmtFZUJFbjZmR0VsWTlydlFjNUlBR2R2MDlIMjlsXw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T09:15:11Z",
+            "title": "$6.3B Crypto Hack, DoorDash to Acquire Instacart, and Apple’s New Touchscreen MacBooks | Tech Today - CNET",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPYzUwZHpCTS1zczVVbjE1VFRpaU9FYmFuVVBMTkpkalMtV1JkRkkxRlFjOVRMRWxja3JqRi1JNVpPbHBOb2RTUTlwWFlLa1oyZ2hjNkFkaTY2MjR2ckM3TTBYVjhTb29CQkRjSVYyT0hOOHJ6Z1hMNVNCU0NWLUVpenRReEZaTGllb2VlRHJCbDV3WGp1X0xmb2dfcW9nNXNGaHAtVVB0ZkJaSjdrbVR3eGMxQm9uZTdRU3oteVlucw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMivwFBVV95cUxPYzUwZHpCTS1zczVVbjE1VFRpaU9FYmFuVVBMTkpkalMtV1JkRkkxRlFjOVRMRWxja3JqRi1JNVpPbHBOb2RTUTlwWFlLa1oyZ2hjNkFkaTY2MjR2ckM3TTBYVjhTb29CQkRjSVYyT0hOOHJ6Z1hMNVNCU0NWLUVpenRReEZaTGllb2VlRHJCbDV3WGp1X0xmb2dfcW9nNXNGaHAtVVB0ZkJaSjdrbVR3eGMxQm9uZTdRU3oteVlucw?oc=5\" target=\"_blank\">$6.3B Crypto Hack, DoorDash to Acquire Instacart, and Apple’s New Touchscreen MacBooks | Tech Today</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CNET</font>",
+            "id": "CBMivwFBVV95cUxPYzUwZHpCTS1zczVVbjE1VFRpaU9FYmFuVVBMTkpkalMtV1JkRkkxRlFjOVRMRWxja3JqRi1JNVpPbHBOb2RTUTlwWFlLa1oyZ2hjNkFkaTY2MjR2ckM3TTBYVjhTb29CQkRjSVYyT0hOOHJ6Z1hMNVNCU0NWLUVpenRReEZaTGllb2VlRHJCbDV3WGp1X0xmb2dfcW9nNXNGaHAtVVB0ZkJaSjdrbVR3eGMxQm9uZTdRU3oteVlucw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T08:47:42Z",
+            "title": "Greece approves 10% tax on crypto gains and 15% levy on DeFi income - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxONVlSc0M0cnZBVG13RWw2ekpJdEc3WGg0LWlHZldzNmZmWUx6QnJld3pDX0Q3b3NPRkt0cWJRR2Y1MEM3N2I5aDVsMGlabXdLeEthSE5oRkZTemZvcU1KM2tib055R1ZubDJNRTdBMXRVSFFtM1lRZ1NRSm1iaXk3OE5HcEwtWld3X3AxV1p4Z3FkaTYxUXJDMmFTUmIycENCZ0dFdmRBYnBUOWdG?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxONVlSc0M0cnZBVG13RWw2ekpJdEc3WGg0LWlHZldzNmZmWUx6QnJld3pDX0Q3b3NPRkt0cWJRR2Y1MEM3N2I5aDVsMGlabXdLeEthSE5oRkZTemZvcU1KM2tib055R1ZubDJNRTdBMXRVSFFtM1lRZ1NRSm1iaXk3OE5HcEwtWld3X3AxV1p4Z3FkaTYxUXJDMmFTUmIycENCZ0dFdmRBYnBUOWdG?oc=5\" target=\"_blank\">Greece approves 10% tax on crypto gains and 15% levy on DeFi income</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMirAFBVV95cUxONVlSc0M0cnZBVG13RWw2ekpJdEc3WGg0LWlHZldzNmZmWUx6QnJld3pDX0Q3b3NPRkt0cWJRR2Y1MEM3N2I5aDVsMGlabXdLeEthSE5oRkZTemZvcU1KM2tib055R1ZubDJNRTdBMXRVSFFtM1lRZ1NRSm1iaXk3OE5HcEwtWld3X3AxV1p4Z3FkaTYxUXJDMmFTUmIycENCZ0dFdmRBYnBUOWdG",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T07:07:00Z",
+            "title": "Trump-Linked Crypto Firm Plans Token Buyback After Midterm Rout - Bloomberg.com",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPcWtybW1FMHZfdWtSU2l1VS1FMlBsV1g4SEVBV1hfVm9Ec0ppaGU3SWJqV0c5ZVMxR2dER0JfUmk4OG91NHg0SUJScTN4ckllUXlWbWFRSHFMcUpyUTVVNGlnSl9ONHpfdElDTzB4a3RCZC1Nc3J0b19uT0NEMkpjcmNBOXRPVF8ybTVHNEVVQXZpTnNaM0x4UHBYeGdjNW82WEpGeG9QZmFvYi1LMGVKU3ZaTko?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxPcWtybW1FMHZfdWtSU2l1VS1FMlBsV1g4SEVBV1hfVm9Ec0ppaGU3SWJqV0c5ZVMxR2dER0JfUmk4OG91NHg0SUJScTN4ckllUXlWbWFRSHFMcUpyUTVVNGlnSl9ONHpfdElDTzB4a3RCZC1Nc3J0b19uT0NEMkpjcmNBOXRPVF8ybTVHNEVVQXZpTnNaM0x4UHBYeGdjNW82WEpGeG9QZmFvYi1LMGVKU3ZaTko?oc=5\" target=\"_blank\">Trump-Linked Crypto Firm Plans Token Buyback After Midterm Rout</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bloomberg.com</font>",
+            "id": "CBMitAFBVV95cUxPcWtybW1FMHZfdWtSU2l1VS1FMlBsV1g4SEVBV1hfVm9Ec0ppaGU3SWJqV0c5ZVMxR2dER0JfUmk4OG91NHg0SUJScTN4ckllUXlWbWFRSHFMcUpyUTVVNGlnSl9ONHpfdElDTzB4a3RCZC1Nc3J0b19uT0NEMkpjcmNBOXRPVF8ybTVHNEVVQXZpTnNaM0x4UHBYeGdjNW82WEpGeG9QZmFvYi1LMGVKU3ZaTko",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T06:00:00Z",
+            "title": "1106 crypto - cecildaily.com",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPV1pCaUFTSXVnMUItQnhlZXNJUDdULTdMclNqS0ZmZVUwNzJENzZnU3YzLVd6bHMzZTh5SkpYSHN0U2NOb1g3ZW9DSTVJbDdaeFh4ME9WZUx2dmg4cmNXRTFNbVk2VUhGclJabV9FTklsTzdsREJXalUzY3lOaFVYTkRKV1V2aEExMHp4Wm8zX3hVVzlhWlhzTUFxN1U5c1RHSnlNaXpjaGR5dGM?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiqwFBVV95cUxPV1pCaUFTSXVnMUItQnhlZXNJUDdULTdMclNqS0ZmZVUwNzJENzZnU3YzLVd6bHMzZTh5SkpYSHN0U2NOb1g3ZW9DSTVJbDdaeFh4ME9WZUx2dmg4cmNXRTFNbVk2VUhGclJabV9FTklsTzdsREJXalUzY3lOaFVYTkRKV1V2aEExMHp4Wm8zX3hVVzlhWlhzTUFxN1U5c1RHSnlNaXpjaGR5dGM?oc=5\" target=\"_blank\">1106 crypto</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">cecildaily.com</font>",
+            "id": "CBMiqwFBVV95cUxPV1pCaUFTSXVnMUItQnhlZXNJUDdULTdMclNqS0ZmZVUwNzJENzZnU3YzLVd6bHMzZTh5SkpYSHN0U2NOb1g3ZW9DSTVJbDdaeFh4ME9WZUx2dmg4cmNXRTFNbVk2VUhGclJabV9FTklsTzdsREJXalUzY3lOaFVYTkRKV1V2aEExMHp4Wm8zX3hVVzlhWlhzTUFxN1U5c1RHSnlNaXpjaGR5dGM",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T04:59:13Z",
+            "title": "Trump's Crypto Vehicle World Liberty Financial to Buy Back Tokens After Post-Election Nose Dive - Gizmodo",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPanNqdnc5ZENuMURnRUctbmVHa0pneEZwZlpPcTRacUZQNWNYUm52dVJlSlZsWHB1emJMaDZ1d2JQZlFBbjdSYzFvRURBMlZ2cTllTnluUklpVWVTd1E5TnN4X1hsbnNWMFhEeFFKOTNtd2t5WnpzaWF4MVNZUVlTdjBuQVl1b0tOWE1ISDBlTXlQQldRLVVGei1oTkRKcHBtbjJGODVqSUo5dU1RMjZFaVZ4VENyVEV1QXI2QW54UVQyeE0?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwwFBVV95cUxPanNqdnc5ZENuMURnRUctbmVHa0pneEZwZlpPcTRacUZQNWNYUm52dVJlSlZsWHB1emJMaDZ1d2JQZlFBbjdSYzFvRURBMlZ2cTllTnluUklpVWVTd1E5TnN4X1hsbnNWMFhEeFFKOTNtd2t5WnpzaWF4MVNZUVlTdjBuQVl1b0tOWE1ISDBlTXlQQldRLVVGei1oTkRKcHBtbjJGODVqSUo5dU1RMjZFaVZ4VENyVEV1QXI2QW54UVQyeE0?oc=5\" target=\"_blank\">Trump's Crypto Vehicle World Liberty Financial to Buy Back Tokens After Post-Election Nose Dive</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Gizmodo</font>",
+            "id": "CBMiwwFBVV95cUxPanNqdnc5ZENuMURnRUctbmVHa0pneEZwZlpPcTRacUZQNWNYUm52dVJlSlZsWHB1emJMaDZ1d2JQZlFBbjdSYzFvRURBMlZ2cTllTnluUklpVWVTd1E5TnN4X1hsbnNWMFhEeFFKOTNtd2t5WnpzaWF4MVNZUVlTdjBuQVl1b0tOWE1ISDBlTXlQQldRLVVGei1oTkRKcHBtbjJGODVqSUo5dU1RMjZFaVZ4VENyVEV1QXI2QW54UVQyeE0",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T04:07:09Z",
+            "title": "The real lesson from the Binance heist goes beyond crypto - The National",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNNmN2SmpqcVVqZWJBN3JIRGtIVnoxQWh6bG1yWG10SUtwb1BqMXhJWWJjS3pmUmpobDdkQzZjMmpHVUtvb2RYbzJJUFR3QjdYZlIyUUtjemp3Z2M3YzY4WDNhSGZBWGdoa012OGRJdm4yNmhHVEFIbkFDN192UEZnc19KTW9kSHdYbW44N2lBTHRXMzd4aGE1U1B4WUZ4cVk?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMinwFBVV95cUxNNmN2SmpqcVVqZWJBN3JIRGtIVnoxQWh6bG1yWG10SUtwb1BqMXhJWWJjS3pmUmpobDdkQzZjMmpHVUtvb2RYbzJJUFR3QjdYZlIyUUtjemp3Z2M3YzY4WDNhSGZBWGdoa012OGRJdm4yNmhHVEFIbkFDN192UEZnc19KTW9kSHdYbW44N2lBTHRXMzd4aGE1U1B4WUZ4cVk?oc=5\" target=\"_blank\">The real lesson from the Binance heist goes beyond crypto</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The National</font>",
+            "id": "CBMinwFBVV95cUxNNmN2SmpqcVVqZWJBN3JIRGtIVnoxQWh6bG1yWG10SUtwb1BqMXhJWWJjS3pmUmpobDdkQzZjMmpHVUtvb2RYbzJJUFR3QjdYZlIyUUtjemp3Z2M3YzY4WDNhSGZBWGdoa012OGRJdm4yNmhHVEFIbkFDN192UEZnc19KTW9kSHdYbW44N2lBTHRXMzd4aGE1U1B4WUZ4cVk",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-06T02:26:00Z",
+            "title": "Bitcoin tumbles to $76,000 as collapsing AI trade drags stocks sharply lower - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPN3VFZFhZZVFocTFFbk1VWFpidzk5SlF6VzVpbk5aakNLT2RTVDZwVWJSX2xVY3F4MVpaV3lRM2JPM3MtNUpTVmxObkNxX0t6WjB2OUMtVmxueDBRcGMwZmNZN0s4WEFHQWhzbXVXSEdWcXpyM3d6UXdWWnlsc0tsY01ndE9TWWN6MXBxOFNqeTlpdW9oSkFHd1pxMi0tMFlUYnNyRnV4elhZczBRNWhsempubS1xc1BFNUZWT3F3MlhWMXRweVU2TS1BV0pjUU0zX3c?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMi0gFBVV95cUxPN3VFZFhZZVFocTFFbk1VWFpidzk5SlF6VzVpbk5aakNLT2RTVDZwVWJSX2xVY3F4MVpaV3lRM2JPM3MtNUpTVmxObkNxX0t6WjB2OUMtVmxueDBRcGMwZmNZN0s4WEFHQWhzbXVXSEdWcXpyM3d6UXdWWnlsc0tsY01ndE9TWWN6MXBxOFNqeTlpdW9oSkFHd1pxMi0tMFlUYnNyRnV4elhZczBRNWhsempubS1xc1BFNUZWT3F3MlhWMXRweVU2TS1BV0pjUU0zX3c?oc=5\" target=\"_blank\">Bitcoin tumbles to $76,000 as collapsing AI trade drags stocks sharply lower</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMi0gFBVV95cUxPN3VFZFhZZVFocTFFbk1VWFpidzk5SlF6VzVpbk5aakNLT2RTVDZwVWJSX2xVY3F4MVpaV3lRM2JPM3MtNUpTVmxObkNxX0t6WjB2OUMtVmxueDBRcGMwZmNZN0s4WEFHQWhzbXVXSEdWcXpyM3d6UXdWWnlsc0tsY01ndE9TWWN6MXBxOFNqeTlpdW9oSkFHd1pxMi0tMFlUYnNyRnV4elhZczBRNWhsempubS1xc1BFNUZWT3F3MlhWMXRweVU2TS1BV0pjUU0zX3c",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-05T18:25:24Z",
+            "title": "Engineering a Good Story: UC San Diego Professor Introduces Kids to Crypto Tech Through Fiction - UC San Diego Today",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNMVJjV3Y2Rmg1cEVGT09pck9LSkRyT3dyWmZoTTZ4ZE1rdFNTY0VDSVh5Tm4zdHVva0x1Q0tjRFFZc0s1LWphVWY5N1d1YXBZRm5yR0RQSF9ZVFFtaHM4NVlPV3BiQk9aa21lSjRWZ0VTVVFnVXdfRk8yTWtqM3ZnRG5LSWQzOERHSVdVelNlY2R3b25KVVVyREdjUWFza29Bc0p2WkdoWUhxLTNlZG9uYy1kZk1QQUVXQmg5bVRTYTI?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwAFBVV95cUxNMVJjV3Y2Rmg1cEVGT09pck9LSkRyT3dyWmZoTTZ4ZE1rdFNTY0VDSVh5Tm4zdHVva0x1Q0tjRFFZc0s1LWphVWY5N1d1YXBZRm5yR0RQSF9ZVFFtaHM4NVlPV3BiQk9aa21lSjRWZ0VTVVFnVXdfRk8yTWtqM3ZnRG5LSWQzOERHSVdVelNlY2R3b25KVVVyREdjUWFza29Bc0p2WkdoWUhxLTNlZG9uYy1kZk1QQUVXQmg5bVRTYTI?oc=5\" target=\"_blank\">Engineering a Good Story: UC San Diego Professor Introduces Kids to Crypto Tech Through Fiction</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">UC San Diego Today</font>",
+            "id": "CBMiwAFBVV95cUxNMVJjV3Y2Rmg1cEVGT09pck9LSkRyT3dyWmZoTTZ4ZE1rdFNTY0VDSVh5Tm4zdHVva0x1Q0tjRFFZc0s1LWphVWY5N1d1YXBZRm5yR0RQSF9ZVFFtaHM4NVlPV3BiQk9aa21lSjRWZ0VTVVFnVXdfRk8yTWtqM3ZnRG5LSWQzOERHSVdVelNlY2R3b25KVVVyREdjUWFza29Bc0p2WkdoWUhxLTNlZG9uYy1kZk1QQUVXQmg5bVRTYTI",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-05T15:00:43Z",
+            "title": "Gate unveils 'Proof of Security' standard to guarantee survival after hot wallet hacks - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQX1ctc3NJRm1XeHRIWGwxX01McU5iYWttNGhMRVdSQkV4SU1Vc0lFOUkyNERiWWlXbTBtdUdLdEVqQnJsS09Pa1p4M01VOW9QamFwNmlXNUFaekdaTnZJeklPSEN2SF9UR1NmTDlrVXFOTXZQNXRheTBiM182NGNnc1I3TkFxd0w1Q05LRnpTZTVORFVDVzdnVXgxMFFjeUJGTzVZc2N1aVZhN2J3QzdoaHpXSzlYLUxkTTlXWW1OWFVFcjA?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwwFBVV95cUxQX1ctc3NJRm1XeHRIWGwxX01McU5iYWttNGhMRVdSQkV4SU1Vc0lFOUkyNERiWWlXbTBtdUdLdEVqQnJsS09Pa1p4M01VOW9QamFwNmlXNUFaekdaTnZJeklPSEN2SF9UR1NmTDlrVXFOTXZQNXRheTBiM182NGNnc1I3TkFxd0w1Q05LRnpTZTVORFVDVzdnVXgxMFFjeUJGTzVZc2N1aVZhN2J3QzdoaHpXSzlYLUxkTTlXWW1OWFVFcjA?oc=5\" target=\"_blank\">Gate unveils 'Proof of Security' standard to guarantee survival after hot wallet hacks</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMiwwFBVV95cUxQX1ctc3NJRm1XeHRIWGwxX01McU5iYWttNGhMRVdSQkV4SU1Vc0lFOUkyNERiWWlXbTBtdUdLdEVqQnJsS09Pa1p4M01VOW9QamFwNmlXNUFaekdaTnZJeklPSEN2SF9UR1NmTDlrVXFOTXZQNXRheTBiM182NGNnc1I3TkFxd0w1Q05LRnpTZTVORFVDVzdnVXgxMFFjeUJGTzVZc2N1aVZhN2J3QzdoaHpXSzlYLUxkTTlXWW1OWFVFcjA",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-05T14:24:41Z",
+            "title": "Democratic sweep puts crypto on defensive in Washington - CNBC",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1GMlpnNl9TN2FOUW1TcnQ2SEhnSVVuS1BoUlhRVXNIU1h6MkFQTERmOENrSG5FLWtWeVlsZ3lKLXdIZ0RUcDI1Rll1N3RWeW9vWU1ib213QzJsdmN2RHFEa1FOeGEteWJvdXFqLWxXUXlHNWhSa2dwUkd0blIybE3SAYQBQVVfeXFMTjNmbkszVnE0LTRNUE1teWE1alhCc3dQTmVYb0pjV1duYk9KbXlEak1WVVk0a0dvU0ZkcEtjQi1pT1pVcmNoY0I2YURGNTFSODZPaDNHMjdHb1RRRkRIby1sbzY5Q2tLdjl4WVFUNnhUcUhEQmxta0hySU9sc0lnWXZBc2FC?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMif0FVX3lxTE1GMlpnNl9TN2FOUW1TcnQ2SEhnSVVuS1BoUlhRVXNIU1h6MkFQTERmOENrSG5FLWtWeVlsZ3lKLXdIZ0RUcDI1Rll1N3RWeW9vWU1ib213QzJsdmN2RHFEa1FOeGEteWJvdXFqLWxXUXlHNWhSa2dwUkd0blIybE3SAYQBQVVfeXFMTjNmbkszVnE0LTRNUE1teWE1alhCc3dQTmVYb0pjV1duYk9KbXlEak1WVVk0a0dvU0ZkcEtjQi1pT1pVcmNoY0I2YURGNTFSODZPaDNHMjdHb1RRRkRIby1sbzY5Q2tLdjl4WVFUNnhUcUhEQmxta0hySU9sc0lnWXZBc2FC?oc=5\" target=\"_blank\">Democratic sweep puts crypto on defensive in Washington</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CNBC</font>",
+            "id": "CBMif0FVX3lxTE1GMlpnNl9TN2FOUW1TcnQ2SEhnSVVuS1BoUlhRVXNIU1h6MkFQTERmOENrSG5FLWtWeVlsZ3lKLXdIZ0RUcDI1Rll1N3RWeW9vWU1ib213QzJsdmN2RHFEa1FOeGEteWJvdXFqLWxXUXlHNWhSa2dwUkd0blIybE3SAYQBQVVfeXFMTjNmbkszVnE0LTRNUE1teWE1alhCc3dQTmVYb0pjV1duYk9KbXlEak1WVVk0a0dvU0ZkcEtjQi1pT1pVcmNoY0I2YURGNTFSODZPaDNHMjdHb1RRRkRIby1sbzY5Q2tLdjl4WVFUNnhUcUhEQmxta0hySU9sc0lnWXZBc2FC",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-05T04:11:00Z",
+            "title": "Trump Media moves $342 million in bitcoin to Crypto.com, blockchain data show - CoinDesk",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOd2JhaWVYSkpWdGxJcWdZS2U2UnJuOXNRNGFQa0M2ZGV1c0E1RmtUaktXZHg4R28xVGNobkV1YkZMLUVuXzk3QTd0LWxHaE1ZeFpmVUx2dmtIUlRDUDN4cl95V2RlOWgxX0p2WUE1d2NkQjZ0WWZlcFQ1M1pvQnBtMVZoMklQWFdXemtYaDNReG5KWERPM1ZobFJ3YzZqQTZqOEtPd1dnRkNJM1VmSlFHcHFUNkZ5emctS29CekU0RQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMivwFBVV95cUxOd2JhaWVYSkpWdGxJcWdZS2U2UnJuOXNRNGFQa0M2ZGV1c0E1RmtUaktXZHg4R28xVGNobkV1YkZMLUVuXzk3QTd0LWxHaE1ZeFpmVUx2dmtIUlRDUDN4cl95V2RlOWgxX0p2WUE1d2NkQjZ0WWZlcFQ1M1pvQnBtMVZoMklQWFdXemtYaDNReG5KWERPM1ZobFJ3YzZqQTZqOEtPd1dnRkNJM1VmSlFHcHFUNkZ5emctS29CekU0RQ?oc=5\" target=\"_blank\">Trump Media moves $342 million in bitcoin to Crypto.com, blockchain data show</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CoinDesk</font>",
+            "id": "CBMivwFBVV95cUxOd2JhaWVYSkpWdGxJcWdZS2U2UnJuOXNRNGFQa0M2ZGV1c0E1RmtUaktXZHg4R28xVGNobkV1YkZMLUVuXzk3QTd0LWxHaE1ZeFpmVUx2dmtIUlRDUDN4cl95V2RlOWgxX0p2WUE1d2NkQjZ0WWZlcFQ1M1pvQnBtMVZoMklQWFdXemtYaDNReG5KWERPM1ZobFJ3YzZqQTZqOEtPd1dnRkNJM1VmSlFHcHFUNkZ5emctS29CekU0RQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-04T21:53:21Z",
+            "title": "Bitcoin Slips as Democratic Sweep Bets Threaten Crypto Agenda - Bloomberg.com",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNNWg3aW5QeW04R2pKaV9WdFp4XzJZdkJnaEw1UEdLNGZINHJBZk5UYldBX1FsY1Z3eUxubmphN1hvQnJJNFdERkJOcjZPMXppclBsN2hOZGZxVUhMZGRydHYwSlVpTXcxekxDZzQ5OFVFS1h3czZwVzQ2VW94VDNLdWdsbm5heHIteUhDZ2RjaC1SWlFycGNJSklZZkVWbThkQjRJQlF5QjJfMEFNWVVLa19n?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMisgFBVV95cUxNNWg3aW5QeW04R2pKaV9WdFp4XzJZdkJnaEw1UEdLNGZINHJBZk5UYldBX1FsY1Z3eUxubmphN1hvQnJJNFdERkJOcjZPMXppclBsN2hOZGZxVUhMZGRydHYwSlVpTXcxekxDZzQ5OFVFS1h3czZwVzQ2VW94VDNLdWdsbm5heHIteUhDZ2RjaC1SWlFycGNJSklZZkVWbThkQjRJQlF5QjJfMEFNWVVLa19n?oc=5\" target=\"_blank\">Bitcoin Slips as Democratic Sweep Bets Threaten Crypto Agenda</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bloomberg.com</font>",
+            "id": "CBMisgFBVV95cUxNNWg3aW5QeW04R2pKaV9WdFp4XzJZdkJnaEw1UEdLNGZINHJBZk5UYldBX1FsY1Z3eUxubmphN1hvQnJJNFdERkJOcjZPMXppclBsN2hOZGZxVUhMZGRydHYwSlVpTXcxekxDZzQ5OFVFS1h3czZwVzQ2VW94VDNLdWdsbm5heHIteUhDZ2RjaC1SWlFycGNJSklZZkVWbThkQjRJQlF5QjJfMEFNWVVLa19n",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-04T20:18:21Z",
+            "title": "What Democrats' midterm victory means for your crypto investments, according to experts - CNBC",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQNGV5cWJNWTZhR25sblhkZlBwTklKc3hYMHNtaGtFSG9ndHZCYjFEbXNTQzI4OWVIRHFzWEhqN3Z4MXNpUlN4ekgtT3lEVXc0X2JFeFJFUUZsbzJsbHppaVB0T1JyX0hPaG1SVUZsbmZ4UzJYNXNLOXZPeEpKTUs4VEV0VkUxakJFVEJWVWlGelN3RlJLRkNhUtIBngFBVV95cUxOMHB6ZnhSd1hCdHA4Tk1GZWUxV1FocVdRUVZLak1jWm82Q200dnlsaGpVVk95QWJFM293ejlIYW5EemtzQWYzbUZEcThJZUQwYWRib1VkZUptUHA4US1wd0pBOWxuYmcxY1pTM0NGVDVkNWhReG5zeTI2eGtUd3l4VUlTVFBJRUtuY0FCcmx6MHV0b1ZMTnU1amVNT3E1QQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMimAFBVV95cUxQNGV5cWJNWTZhR25sblhkZlBwTklKc3hYMHNtaGtFSG9ndHZCYjFEbXNTQzI4OWVIRHFzWEhqN3Z4MXNpUlN4ekgtT3lEVXc0X2JFeFJFUUZsbzJsbHppaVB0T1JyX0hPaG1SVUZsbmZ4UzJYNXNLOXZPeEpKTUs4VEV0VkUxakJFVEJWVWlGelN3RlJLRkNhUtIBngFBVV95cUxOMHB6ZnhSd1hCdHA4Tk1GZWUxV1FocVdRUVZLak1jWm82Q200dnlsaGpVVk95QWJFM293ejlIYW5EemtzQWYzbUZEcThJZUQwYWRib1VkZUptUHA4US1wd0pBOWxuYmcxY1pTM0NGVDVkNWhReG5zeTI2eGtUd3l4VUlTVFBJRUtuY0FCcmx6MHV0b1ZMTnU1amVNT3E1QQ?oc=5\" target=\"_blank\">What Democrats' midterm victory means for your crypto investments, according to experts</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CNBC</font>",
+            "id": "CBMimAFBVV95cUxQNGV5cWJNWTZhR25sblhkZlBwTklKc3hYMHNtaGtFSG9ndHZCYjFEbXNTQzI4OWVIRHFzWEhqN3Z4MXNpUlN4ekgtT3lEVXc0X2JFeFJFUUZsbzJsbHppaVB0T1JyX0hPaG1SVUZsbmZ4UzJYNXNLOXZPeEpKTUs4VEV0VkUxakJFVEJWVWlGelN3RlJLRkNhUtIBngFBVV95cUxOMHB6ZnhSd1hCdHA4Tk1GZWUxV1FocVdRUVZLak1jWm82Q200dnlsaGpVVk95QWJFM293ejlIYW5EemtzQWYzbUZEcThJZUQwYWRib1VkZUptUHA4US1wd0pBOWxuYmcxY1pTM0NGVDVkNWhReG5zeTI2eGtUd3l4VUlTVFBJRUtuY0FCcmx6MHV0b1ZMTnU1amVNT3E1QQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-04T18:06:32Z",
+            "title": "Sherrod Brown’s Win in Ohio Is a Rare Loss for Crypto Under Trump - The New York Times",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPbGdteG91UGFwTDV0VWlEYTdVSHh6c0dHOUcySnU3RnJaaVpiWGh4aS1nYkFsWGJiWHUxZEpwc2FYOGU4WlVpQ0dhZ0duMWkzYU1HRkxsSFdnOU83VkdIaUtPVS1KamYzSlY5Mk84MWd2N0w0T1ZKLUdRZEVNUmc2d3RDb0FIck1vTkE?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiigFBVV95cUxPbGdteG91UGFwTDV0VWlEYTdVSHh6c0dHOUcySnU3RnJaaVpiWGh4aS1nYkFsWGJiWHUxZEpwc2FYOGU4WlVpQ0dhZ0duMWkzYU1HRkxsSFdnOU83VkdIaUtPVS1KamYzSlY5Mk84MWd2N0w0T1ZKLUdRZEVNUmc2d3RDb0FIck1vTkE?oc=5\" target=\"_blank\">Sherrod Brown’s Win in Ohio Is a Rare Loss for Crypto Under Trump</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The New York Times</font>",
+            "id": "CBMiigFBVV95cUxPbGdteG91UGFwTDV0VWlEYTdVSHh6c0dHOUcySnU3RnJaaVpiWGh4aS1nYkFsWGJiWHUxZEpwc2FYOGU4WlVpQ0dhZ0duMWkzYU1HRkxsSFdnOU83VkdIaUtPVS1KamYzSlY5Mk84MWd2N0w0T1ZKLUdRZEVNUmc2d3RDb0FIck1vTkE",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-04T16:06:03Z",
+            "title": "Binance says hackers who stole billions in crypto spent months planning heist - Ars Technica",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPeGN5S1VQalFjUHNUdDVZaUhiRTFyS3NubHVCbTNBSFo2Zk9NQ1B2aDgxc2FzemtxeVd3S2h6SGxfVFNreF9LYVM4OEtCbnpvYy1OTzFiMHZWaGFkb0lPTVotb2ZJNERMcVZtSzJnLVd3dENNZ3Y1RUYtLVFJenZOQld0bzJLNkJ0cHBEVWpCQkNRTGpjcGZCalJPQmNZQUVYcFJPT01xemo5X0tzLWdMbzNUS2ZBMDFrV25qUjJySmo0TjhjLXU2MTNlV0Nydw?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMizgFBVV95cUxPeGN5S1VQalFjUHNUdDVZaUhiRTFyS3NubHVCbTNBSFo2Zk9NQ1B2aDgxc2FzemtxeVd3S2h6SGxfVFNreF9LYVM4OEtCbnpvYy1OTzFiMHZWaGFkb0lPTVotb2ZJNERMcVZtSzJnLVd3dENNZ3Y1RUYtLVFJenZOQld0bzJLNkJ0cHBEVWpCQkNRTGpjcGZCalJPQmNZQUVYcFJPT01xemo5X0tzLWdMbzNUS2ZBMDFrV25qUjJySmo0TjhjLXU2MTNlV0Nydw?oc=5\" target=\"_blank\">Binance says hackers who stole billions in crypto spent months planning heist</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Ars Technica</font>",
+            "id": "CBMizgFBVV95cUxPeGN5S1VQalFjUHNUdDVZaUhiRTFyS3NubHVCbTNBSFo2Zk9NQ1B2aDgxc2FzemtxeVd3S2h6SGxfVFNreF9LYVM4OEtCbnpvYy1OTzFiMHZWaGFkb0lPTVotb2ZJNERMcVZtSzJnLVd3dENNZ3Y1RUYtLVFJenZOQld0bzJLNkJ0cHBEVWpCQkNRTGpjcGZCalJPQmNZQUVYcFJPT01xemo5X0tzLWdMbzNUS2ZBMDFrV25qUjJySmo0TjhjLXU2MTNlV0Nydw",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-04T15:00:46Z",
+            "title": "Crypto tracks stocks higher after Democrat midterm wins - Reuters",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPMUFUdUF2M1VTUGNuNjdfek4xeXZfV0ZOd2lzTEZWQ0p4ZW1xRHlpYTYxamhrTF81Qm5fdVQyZGlEVjFLck5YU01kMkZwTEFXZlVpSk9RRHVVVEN2Y05ja29QVHA4Z2tBRXhLS1g2X1lmb1NFclZWZnFueC0tNURqamN0TUxyWExHV1BuN3lmc2hVOUhaNG5Ga3g5MGxUWDBuMEFaZ0ZXV1lGRTMwdWVnM3EwSQ?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxPMUFUdUF2M1VTUGNuNjdfek4xeXZfV0ZOd2lzTEZWQ0p4ZW1xRHlpYTYxamhrTF81Qm5fdVQyZGlEVjFLck5YU01kMkZwTEFXZlVpSk9RRHVVVEN2Y05ja29QVHA4Z2tBRXhLS1g2X1lmb1NFclZWZnFueC0tNURqamN0TUxyWExHV1BuN3lmc2hVOUhaNG5Ga3g5MGxUWDBuMEFaZ0ZXV1lGRTMwdWVnM3EwSQ?oc=5\" target=\"_blank\">Crypto tracks stocks higher after Democrat midterm wins</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Reuters</font>",
+            "id": "CBMiswFBVV95cUxPMUFUdUF2M1VTUGNuNjdfek4xeXZfV0ZOd2lzTEZWQ0p4ZW1xRHlpYTYxamhrTF81Qm5fdVQyZGlEVjFLck5YU01kMkZwTEFXZlVpSk9RRHVVVEN2Y05ja29QVHA4Z2tBRXhLS1g2X1lmb1NFclZWZnFueC0tNURqamN0TUxyWExHV1BuN3lmc2hVOUhaNG5Ga3g5MGxUWDBuMEFaZ0ZXV1lGRTMwdWVnM3EwSQ",
+            "kind": "rss"
+          },
+          {
+            "date": "2026-11-03T15:57:29Z",
+            "title": "Binance Says Hackers Plotted $6.3 Billion Heist for Months - The New York Times",
+            "source": "Google News",
+            "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5JRWdCcXZGN09kampnMmRmVXZocFpZTjM5UHBWY2xrc21jTGxuTzR5T3lzSE1MaWROSjk1SnFYanVLYW01SWhvNnB4cVNlZTBDQlYwNERBYW42ZzVPbXhWMGZJVmEydkRXam1sRnQ3MUVHOGwzRy1jTndn?oc=5",
+            "summary": "<a href=\"https://news.google.com/rss/articles/CBMiekFVX3lxTE5JRWdCcXZGN09kampnMmRmVXZocFpZTjM5UHBWY2xrc21jTGxuTzR5T3lzSE1MaWROSjk1SnFYanVLYW01SWhvNnB4cVNlZTBDQlYwNERBYW42ZzVPbXhWMGZJVmEydkRXam1sRnQ3MUVHOGwzRy1jTndn?oc=5\" target=\"_blank\">Binance Says Hackers Plotted $6.3 Billion Heist for Months</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">The New York Times</font>",
+            "id": "CBMiekFVX3lxTE5JRWdCcXZGN09kampnMmRmVXZocFpZTjM5UHBWY2xrc21jTGxuTzR5T3lzSE1MaWROSjk1SnFYanVLYW01SWhvNnB4cVNlZTBDQlYwNERBYW42ZzVPbXhWMGZJVmEydkRXam1sRnQ3MUVHOGwzRy1jTndn",
+            "kind": "rss"
+          }
+        ]
       }
     ]
   },
-  "people_monitoring": [
-    {
-      "name": "Donald Trump",
-      "platform": "X",
-      "username": "realDonaldTrump",
-      "topics": ["Bitcoin", "Crypto", "Regulation"],
-      "enabled": true,
-      "posts": []
-    },
-    {
-      "name": "Elon Musk",
-      "platform": "X",
-      "username": "elonmusk",
-      "topics": ["Bitcoin", "Crypto", "Technology"],
-      "enabled": true,
-      "posts": []
-    }
-  ],
-  "coins": [
-    {
-      "name": "KITE",
-      "symbol": "KITE",
-      "sources": [
-        {
-          "name": "KITE Official Website",
-          "type": "website",
-          "url": "https://kite.com/",
-          "enabled": true,
-          "items": []
-        },
-        {
-          "name": "KITE News RSS",
-          "type": "rss",
-          "url": "https://kite.com/news/rss/",
-          "enabled": true,
-          "items": []
-        }
-      ],
-      "news": []
-    }
-  ],
-  "seen_items": []
+  "people_monitoring": [],
+  "coins": [],
+  "seen_items": [
+    "id:CBMi0gFBVV95cUxPN3VFZFhZZVFocTFFbk1VWFpidzk5SlF6VzVpbk5aakNLT2RTVDZwVWJSX2xVY3F4MVpaV3lRM2JPM3MtNUpTVmxObkNxX0t6WjB2OUMtVmxueDBRcGMwZmNZN0s4WEFHQWhzbXVXSEdWcXpyM3d6UXdWWnlsc0tsY01ndE9TWWN6MXBxOFNqeTlpdW9oSkFHd1pxMi0tMFlUYnNyRnV4elhZczBRNWhsempubS1xc1BFNUZWT3F3MlhWMXRweVU2TS1BV0pjUU0zX3c",
+    "id:CBMi0wFBVV95cUxQa2l5bmxDTTIyazJJRURuQXdqeWo1YkVuZURFa096OVBxckRESUJNcy1UUERIRWM0X3gxSEZjUlJJVTRGT2Nwejh3WUU4d0NyYkllMHczLUNCOFJhdmtsY1U4V1dwY2pYTnJMNEIzSU5LS29lemE2c0IzOHVieEFGQm8ySkpQN3BKQzQ5eTJEclRpQkFuUDY2T29aZUhHbTJFalZnVTFJMmpRajZwX2MxQk9wYTh5V2pqY0JIcTBTVjZiZVRvN0xqSFBRS0JPV0tXSW0w",
+    "id:CBMi1gFBVV95cUxOWE1MbVpLblNXVWI3OHNPby1XN2RXYklaTlY5MTIyOVNzTHFqbHFwZVFYQnZ2UV9xdGlreno4WnBZRDlFeGpNbnM0dDlGOXUwUXRTYndPcEMweXluWHFDTTluckZRbjVEeGZhWkYxMlppUWh1WWtuNWdMbDZWZ1ZRdzV0WjRtdnpZVmk2QTJ1aXRmM2RxUzNPa251U00wNEdoNHFSUExYOWRoMVM0a3RWejdMaGhTcmZPM2JWbUpBa09FLTNfUFdJNGhJMXpIQW9DTjE2VUhn",
+    "id:CBMi2AFBVV95cUxNRzl4Z21YU1ZpcnJWSVJ6cW9UeFNIelFVcEI0TVZSRFdTR2EzbjA2ZFJnZzBPLW9RTElJcnFFR3ZZdVBXeFVLaDM4VzMyem1WQ2diQVZFdWkzRkw4d3M2RkYyeGQ5RFo2RVViQWhpRXZzRWxYMFA0ZjdWdzdoNldRTlFFY011U2xsemQ0dWgyMVVUaURHVGlZalV0NTA1UlAtaTh0S1JacHZwb0FYNEd3MjNUMzlxWlAwWFpjelZ1cXJiVHE3SVlBMG9vbFlrYTNOWDRpNUFrZnQ",
+    "id:CBMi2AFBVV95cUxNdGk4YU9HOXhSWlZ1ZXRVYXVxME5ObnQ2U05TcV81TEFWSWFHekItZWNwanZjWXJHNTBMSmE0Y1RlRXZRakpMNEFJc1FnWnN6YjJfQmtSaFVXUmZhRjFQUDR3UldjRmQ5M1RmRkd2N3lBSEtwbTNDYjNKUV9sLXNONVpCSzZUcERpbVVVTHlFNmxTaFcxNkFiNnp4Rk1LYkFTMTA5LVhXZi1aV3UzdDRlQ096X19GRjZGci1CUzROTUZGWW5mWDcyQ180RC1QYkpRb0pjUjJUUXo",
+    "id:CBMi2wFBVV95cUxQZHdGVnozNExTUXpTZnRxVXNUV3VEbnpFaEF6aE5VbjFVUmtKRUxjRE80cEJKT0w3aGlFd19DT1p4TEdVQ0JUdFFJTy12STd3a3JUTEpaYnNVZ1hmSlpSa0pxNVJHaU40aWF3b2Nsa0ZyX1ZVRnplR2JIR0R5QUdaVEhYN3VmM19JU2UxbFROdlRTcXdWbHF6aFltcV9CVFNYdW5hLTROU19OR1ZybjFxNFdxX2Jlc2ZGMUJXZzZncFBaMWpOSVNULVhTcHV5Y040T2phdzhlazRXbUE",
+    "id:CBMi6AFBVV95cUxQQ2I2RkxkMEV2Z0FLenN3Q3RVNktlX0piTTFJWnVheWlBQWsyRnBicXhLQmRhRE1ncng2SE5LaENYWTJpMmdkcGRPR0lLd0lfZEhHSEtsUUpZaDhoeDdVemNyQ1BYSExHY0xnUWlYd05HMGtFc2RaMWdnN09UdjRyTlN5MkpFYTNleV9ZajRlY1NXczNiRzlXTGxmSEZpWUc3UldpcTR6UEI4MEFiNUY1MWRYMVAzcFpRS3p0ZE8xSzRoa3B5VTlDS044TDV2ZXFIcFNnYlhhQzVoZlprUUdsWVZMVDVCUnhl",
+    "id:CBMi6gFBVV95cUxQX0VmTXpLWnNJVU5EVnowOU4xNk5oQWplTlVmaUM4emlQNXNHUzZGMWtPOVA0UDRvbFZGRFNLRlZBb0Fob0xWYXpNc01EejRvblBTMW9QMk1RRFFQa1REWk93UGNkWl9yc2g3RGpCT1hXSmhKUFJwQnh3WkY3OWt3ZFBndWdIMGNrYnc4cWpJYnpaUXY4ZUlOYTVXSVlWZ2pEcWNSY0t0MmhJODFUSzJtMGtwN3BkVE9wZlhkWnp2U3ctNUJBcnBUbGlvNVdtMXY5aG9TZzVzNS1SZ1A2a25icTJxRkhxSXRTcEE",
+    "id:CBMiVkFVX3lxTFByU2lkcWRZWUpBdy1NTkJNWE1yTjNjbVZPblB4UnMtNWtxREF2eEE0RmdjbVJOMVhsU2hTaHNENDF3dzBMMkNVUkFMQ25GeDZ1WHZtMWZn",
+    "id:CBMiW0FVX3lxTE1xN3QyVlNzMGgzRlpkUzhjVDVjd3EydzBOZUN4cDlCMjRoYkZUV1VOSzhsMC1JRXJJR3U2aFBXV1Z5TkV5dS00eUFDVEt0SUlYSGlUMm5tNzRKdkE",
+    "id:CBMiWEFVX3lxTE5VQUpjYU9Xd2phS214MEpscDNwMFExbFNqUjRwN3FHQUxlWmY3MmgzVUl0NTVyaWNvaW85WW9uWEREZTJTNGI3UDA3SEdabUkwUmZHV0NsU1Y",
+    "id:CBMia0FVX3lxTE5TcWRxanR1dVgyUFNQcTRYV2Zhazd6THFxZzJacWFCWlBTcWxlc0hVVUUxcHZ0YWxFaFRVVG9TUVZydzZCNjFuRTgtMWdfczltOFNHMm1rVXRseDhyQ29NYXE1STJqSTNETjZR",
+    "id:CBMib0FVX3lxTE1qU042a3Rxb0t0dHhfNVVZYVMyNUEzdGEtVUpYaklJbjNFb0lvVDZPQV9Nb3VHRjNwLVhLcFZMWTNhUUYxcWxJdnZOeGhoR0UzVDYyYkdTdWNBRXdDTEVLSE93dG1qbTNGMGw5c0JGTQ",
+    "id:CBMibEFVX3lxTFBZQzcwNF9qWHdKNmJSYmlnbGtZMVJkcVZmMmxPOWRHUmZjX1FpMk84QXhHVU02bm82bVA3TkpIRXA5eFlETmhoYUFCVk1sMGdFZjBqV2F6NlpRUlNIaW5iQWlDU1pyWHZyRHQxeA",
+    "id:CBMic0FVX3lxTE9CenF5V3U5QnNZekJGdzV3cm1YRGVVczBOVEZ4WkRYdkVDbXdzZUx1WkliclBVRm1SMW1oakdHQWkyYmdJN3QwRUY3T1FrZkdMbUp4RG5qaXdzanhRTERNVy1TVlVmdnpRUXgzQWwyTk9hOFE",
+    "id:CBMidEFVX3lxTE9mRFMwem9mS1Vfcmw0WVpoUzFqSVFzWmVRX3prSEtPRThPMF92M3plOW01VDhUUFJWRlFNS1hzNHBBN1RMUXpTTWIwVk1fSnVYUm9xbGdyUDV5WGhiX2JGZ1pqSGxZTXJGajFRUjRfekNiSGFr",
+    "id:CBMidkFVX3lxTE84QUNGWXFwWmdWR3p1QUFxVWV6ODhSc0Nac1dYOVRZSndtRFctS1N0eWROeGExcnM2VjVpMC01THBJRGVDMDNrZWlPVXR6SUZTQkg3aTM0SG8xS0d5dWFGYWpWdGNwRnNIOGNORFQybl9XcjY3eGc",
+    "id:CBMidkFVX3lxTE9wUU41VnBwUGl3Y2F5M3pJNlFtNVFjMFBtSjU0UDRhX19JVWlsdVNnemFyS2Y2OWR4Mi1ESTVZUm1HQW93MW85SURKek50NGRLSnQzQnB1RDQ0cC1fdE9Hc0R2ZzJJNmxySFZ4a0ZCOVVHbHEyUlE",
+    "id:CBMieEFVX3lxTE51d25ic0FDNXBKWEprWjZHbUUzbFE4SDU5NWJZZHJnbkIzTGdUVGIzUFl0RGM5TnFqaGNzTE5pMEc1cGVmWDkwdHViUXNSbU1TZHNIVFRUTklYdkVENmt3VTM3RmdNX21BUVVyeXNtaTRNZV9tbFgzUQ",
+    "id:CBMieEFVX3lxTE5LdmZ2X2pKOXozQmY2eU5vcEcwQlhsd19sYWhFemF4RnpTUEZsYWZ6X1VJRVpCZUxvSUdMaUMzV0hsX1hVMlc0V0hYYU1xSzVsYnJ3VkstOUlCREczSklaZU42UUVjR0o3bng1c0UzbmQwS0RseTlFbg",
+    "id:CBMiekFVX3lxTE5JRWdCcXZGN09kampnMmRmVXZocFpZTjM5UHBWY2xrc21jTGxuTzR5T3lzSE1MaWROSjk1SnFYanVLYW01SWhvNnB4cVNlZTBDQlYwNERBYW42ZzVPbXhWMGZJVmEydkRXam1sRnQ3MUVHOGwzRy1jTndn",
+    "id:CBMif0FVX3lxTE1GMlpnNl9TN2FOUW1TcnQ2SEhnSVVuS1BoUlhRVXNIU1h6MkFQTERmOENrSG5FLWtWeVlsZ3lKLXdIZ0RUcDI1Rll1N3RWeW9vWU1ib213QzJsdmN2RHFEa1FOeGEteWJvdXFqLWxXUXlHNWhSa2dwUkd0blIybE3SAYQBQVVfeXFMTjNmbkszVnE0LTRNUE1teWE1alhCc3dQTmVYb0pjV1duYk9KbXlEak1WVVk0a0dvU0ZkcEtjQi1pT1pVcmNoY0I2YURGNTFSODZPaDNHMjdHb1RRRkRIby1sbzY5Q2tLdjl4WVFUNnhUcUhEQmxta0hySU9sc0lnWXZBc2FC",
+    "id:CBMifEFVX3lxTE1yR3BrektlS3pwUTVpRDU0bHFtdFRBX1VRQnZoanZHc0l6d1d5ZjRUelh2YVlWbkF1QzhaUDg1WmxMNEN1SXpRN0JmUTd6T2QwaDRvTVoySXh6ZzVCcm5jNXBJeTVTMi01MDh4d2kwN045UU1qeE9INjcweFg",
+    "id:CBMigAFBVV95cUxNejZIYjVGXzd4cDVmUVNQY19PWDVDNWtxVkFvVjZsYkhRNUNjT0ppSFRUZHVoLVB6OWFnOUdOR1dWNHlWZnFEdDZIclhjWEV4Q3ZOaVdCRE9MYWhxTi1ZVlFXaUdWaUh3eFk5YlJTX0daejFTalhlYU0xNXBQenVkdA",
+    "id:CBMigAFBVV95cUxQYjhQeXpkc01Oc2xDVEhCRngwNDQwcnNpWVZuSXRVWTBwbzJDMTVlMUVPUFJJU0VELXdpQWpkQWdDQ0lQQV9BTHg0dDY4VkNKQ2JMYlZZdG9YSFhMeG9hTWs0Mk54UW80VFhDNWU1am01TEVLWmRHQnFsSE02SU5SOA",
+    "id:CBMigwFBVV95cUxPMnlJWGowUThCOU9jVzVnZWxWN2gtTUl6YlBkby1nYVpHRm1VRjdGalcwaWFfOHBsZ0lWMFJvSUJGRWdhaDJkZVZzZU5LRmRsVzdjOVhxanVabjZnTnZTTzAxdXlGQ1hiMmpmTGxLNGlJczFxNlhXcXZaRjZ6c1p3LTVGOA",
+    "id:CBMihAFBVV95cUxNcmxlQzBkTHF1b3BTYnNTRXB5TWl5cThxVzJJTlJXZldVMXJFaEtoeDRDODdIZ0xOaWZkeC1DNHNsb3pGbDVwM2stVXFEUTNHb25kUDliVDhPX1NpaGNPRVgtbXY4Y3hxTzg4QTFOc1ZiM1NQRF9MTGJSc3FSeXh6dTY0Yzg",
+    "id:CBMihAJBVV95cUxPWGM2S0pVWTRMWm1YSktRS3YtZnZRb19fU052Rmg2MHdPOW9vUFBCakNEdG1VdmlNQ0RCcWxlVUVSeU44U3IwQ3FuLURmQkJNUjdIcUhqQjdPbXQyUkRFaGswbDctYWdIQzYzZGxVN1dNczBmS1pFVmktaDdQeGNwUzRDdWt5SDN3Zlg5ZmJNeHhSRnN1YmJfYkptcHNjVzB1d0ZjZWJ4T3lDank0cnp6OUFlOUN2c2NUZ0pZb1NCelBYVlNfTElzdTJTVnV2MlJNUUlKa3lkbWJhMHF6OFYza1ZScHI1NkJwM0EwOURqY2xVdmNxaHN6RWhWRGt1S3dvV2wzZw",
+    "id:CBMihgFBVV95cUxQTEJIUlNWLTRTWDRLVDZ4SEpIdTRNcUVVZVkyOTBZY2MzUDd6M0Job1p2VTZVQVgzVkRGMnhzYURhcTdLSXctQnQ2cHlpeEJSd2NHWk9PWEpWZHVPUllpelBILU1IRzlFWjFMUlR3VVJPdDljcWdGQW04ZkVqTk9hRENtVV9yQQ",
+    "id:CBMihgFBVV95cUxQV2Q4WjdyaUdOekFMRVNOdGxXb3U5YzduN0ZlT0pxUERGaEI3NGVOaE9tUmVTRzl4UUZvMGxGRTdENFV0dkVCQXZBSWs2dlBfX1hfbXF0ZDhKYXB1Tm53eUczTF9pRzY2UlZtd3Z3OGIyU1d6aGoxUzFZdHMwcU4tQ2c4V1kwQQ",
+    "id:CBMihgJBVV95cUxNZEZEVV9QMzhveE5vd19tWG1VNm51d0I1dF9sQjlITE9JV29INTI2ZU1FemRXRjlieFdBNzgwWlNZWE5oWVpXVkJEUjdmek5Tb0JDd0NSbmJRMjBJaktQSWd0enNIcWdqNktOSGlVdi1nVlNQMUdXeGd0a2FqbUpXRno5YkcxWTdLOWJsVkFGOHM4OF9kZEp2dENaT0JaaHFpMFQwclBLWUxXY2NuUXlQX1g4cWszYkFQQjVFUjVZMkpRS0IwdEtoM0VmNTk4dElNN3ZIVF95UndJOFp3Z3J4VHV1Rkp5U1RIa0FDT0NtZ0pKR1EteDV2ZUlHSmtweDFzR1g4XzRB",
+    "id:CBMihwFBVV95cUxPYmNjZ3d4TmQ5anpMSVRzdGRiQzJEaDRleFE0NVFpOG9NSTRMSHdGLVM4S3RDajhZSWNpbEZ3VVhsXy04Y2FDeENjRy12NkxTMUtpc2dzUGU1UjNXRlFlbXE4ZXNFSFVsdXoxWUhVT2VGR1hQbmd2NUxHTmpVT3lUNUprZ0RoTmM",
+    "id:CBMihwFBVV95cUxQWU5GQURRcFBwNnFyOE1ibnVRbXExd2F2aks0aFU0Ql84STRfVGQ5SF9GSEV5WUFBRnlWVzZzQnRmYktoQ1VrdzlnaklFVjJybndQbVJmQkEzTng3WVRQN2Npb216LUx1bWRkazdTU21nZ3JuZWlTcVBKZHV1TUZxRjJzS2JzNk0",
+    "id:CBMiigFBVV95cUxPbGdteG91UGFwTDV0VWlEYTdVSHh6c0dHOUcySnU3RnJaaVpiWGh4aS1nYkFsWGJiWHUxZEpwc2FYOGU4WlVpQ0dhZ0duMWkzYU1HRkxsSFdnOU83VkdIaUtPVS1KamYzSlY5Mk84MWd2N0w0T1ZKLUdRZEVNUmc2d3RDb0FIck1vTkE",
+    "id:CBMiigJBVV95cUxNdVZ2V0JDVG5MMVM5bkx0VXc2MHVTOTdzY0twTDBZN213VjJsblZHNmVCSHVJQVB5WWYxVDRxSmpBWk9NdEhxbjBtMWJoa0ZWS01XWUdPaGJrRUk0aUNPNGgyb1NmM0k4NXdxb0MtQm5QN0FfY1NKSUFESHRMSlRVSkF4VlJGeTBVTmJsNUY2SURPMWlxTENtcWhRVTh6d0JFaW5Gdmd0U2JwYXJVeTVxalVrLW1iV3BlYWUxWHpUR1pUXzhuWFJ2SDRQUUF1aFl1R2xodGxURDR5SndzOHM2UkNTXzdYWld1OUZlMEFKc3NQZXRSOG15SU1YSmtvdHVad2FZQlpOanlGZw",
+    "id:CBMiiwFBVV95cUxPMkZCcHE3SWExbnFGRzVWUHFKb2k0dGFTSjRYVE9XUFR4OUl3d1RDUk5Wc3RVZ202YndRX1FlMDU4OWJvNHdJVkV3ekVmR0dXNGdLb0UwOGpqdG85VTZWNnNVc19kZjkyU01pcXctblBSQkxMbGRMR2JPY1ZycXBvLTd1ZndmY1VnN3FJ",
+    "id:CBMijgFBVV95cUxOUlA5emczRTdpcmhTYlFNT1NmeTg3b2JNZElKdlRFUGN5SmZfdGxkY1ZmZDh3aDAwUmZoamZDZm9sU2xzS0F6eGF6THVqay1WdDFCVERsQ01UYnhwQnQ4TTFvemJtVktvTm94cnpzVWRxeW90VzJ2OGlzajZWN1RSandnX3Zwd1NJWkR4aE53",
+    "id:CBMijgFBVV95cUxPZ0ZpT1E3NUlNZEdscUhGM3hoNnNLdkRobmpldkZDWnRIMDNKUzE0MmZSRDlJSUkwRG1aR0tMRDJnUkJuS1U0VHFtV01DOThTTURQTnd2V0ZrcFl1VU9MNF9nWlpWaVJiSkQzM0RjQXFWOWpBSEkzcnpSQWdMblhGeElzd3dxS1c3U3VxQU5n",
+    "id:CBMijgFBVV95cUxPeERLdEN0ZHFtYnhLaGJDOU5PeVR0VTQtdmtwVzZDWmFrTW5pVFBUWGp5Y3k2YUMtYmJEWVpvLVlzZHVqMG13cVRxTWpldEtyUDdFYmQtYS12aFVhVE9nLTlGeVdEcUJkNXdsazJlZm1uY2w1allBTkVKZVZwcklkTDUxUWItRVhpaWxhdEhR",
+    "id:CBMijgFBVV95cUxPeWdtencwYUc0ZDJWbFQ4VWZwdl96MDM5N2NDNl82VHRrTmRQTEpUbkYxN3dGcTBtVWU2dnVoT3BZaGJRWXFFVVlmR05tZ2MzUFZQZk9HazV2bzN6ME40OVhNSTZGWS1OS2hGSjJUTXVZbXE3blA5LWNmQkdXSEp4M1RRVDhBaWFSUm43d213",
+    "id:CBMijwFBVV95cUxOeXo2QU8zUUVCRkNlVG1LZnNvTDVHYXNqSnVoN1dQYWJEcGFvclpKZV9Kc3plSTZCaThPTWFDVDJydldCeWtUSkpMQ0JIU0tDbl9YdS15d0FOX3NjbFRoTnBfSHFvM2ZfNVFESVRDa0dleENpeGozQnh1S2g3SXlfQlI4SmQzTUZXanlDU0JwTQ",
+    "id:CBMikgFBVV95cUxPaHc1bEZRNjJVbFFzS2d0bzVXdkstQ1gwUnB4NTRkN1c3QzIyYmlPWVBpZEZOWlRlN2sxWXZxcW14YWxaV1JGWlFocGJqeXVHcHRDUFdfUzZXZmhNMWhxTDk5b3NITjkteEI0ZnhtXzJmRVBYdExLXzBDR3BRNm5RR2pVM0t3bTY4N2NpY01YVmRDdw",
+    "id:CBMikgFBVV95cUxQV1J4MU5ib0dzWGZ2aUpHNHVLdW5ha1VJTG4wZ19nMnJTejFvTWYwMWRJZFJSd1VCOFJyaE5aY19sRWNOYU1TTEZ5R3BUUmxUVEhPRGhWZmppMmFrVl8tNUZ3bDJTbzUxelFkZWtRSlNWRkdBbEwzZF90R3dyLUR3ekhyYWdvVHZBdWplY3VrdFExUQ",
+    "id:CBMilAFBVV95cUxPRHNZVEtNcUlGYmx4eENjQUJ1b25qbG1jQ3VuRVgtWm1lQklSNU5oTFgxSXRPci1DSHVqN0pWUmlycWJfd0NfWGM0Vm90TUs2bnZFM1p5U2R0Q1hjLXAwdXpoX1I3N2w1Z2taZkpJN0l6SlNuLXRlSWVQSEJYeVVjVGNJYmwxcGpVRjdJSmFocWtXbkNm",
+    "id:CBMilgFBVV95cUxNTmhUSkNUUG1EMnJqYVhMR2dOelVQdUU5aVdzdW5scUprUWdsX3l1ckNENkcxX2VlZzBQQ041SW0wYk5nYUtRTDI2bFZVWlBXbjExQVlVSURaQW82X09hY3F2SjEycWdiSTFZRWZqV1kyMjRvMzAzcjdTRi1MYmU1UnVFZjJWZUdYWlpseTlzbEZGdjBsSkE",
+    "id:CBMilgFBVV95cUxOOF9YaTJJWTFzVlJ4eG5BbjV1d0FiZkx4ZEVsenh2dGFxcXRkYnBjVGlSVnhyU2NHeFQ0dzA1ZXJxWS1teFZVOERxUVFqeEJxcExyZGlTVEREQVZXd0pwd3lqb1E2Y3FjUlVMTjhEZlZGenVGV054azA1Rm9odUUwajcwYUxyZzNldzdERHZ4R1Rsa0diSnc",
+    "id:CBMilgFBVV95cUxQY3FZeFlOeXlrRFFpZzdkVk1hcUFBM3ZRUGRpMHJqNDVBdWNlQjdoRlA1eE0zUjBVZl9tRHI4XzA0YjIwdU1MckRtWDNsWlgtcEU1N0IxOHdDZDdHb0RMVWJoaDdXLXFieGZkVUd1a1l1TEVWR3VGTzZEM3N4ekxhSVI4Zng5cWU3MlgxUzMyNE1xQVYwblE",
+    "id:CBMilwFBVV95cUxNcXczSGlHblpJdDN1NlctQnEtZFFsNkFJNll0bEtiMWgxeGQ5N2g5LWp3bVBBSHpKOVlRWkxSNncxRzNXZ2JyQks4endibWwzamRHd1Y0MVRBek9GTV9kUHRaZDEwaENxTURQYjVSN2o0T0JLSVkyM0owWTZDX2J6TWpRQ0xBMjdLNWh4OE92eFFhaTVEQUhr",
+    "id:CBMimAFBVV95cUxNYWNhZ2QwbGJ6TU8tZ3ZGWFdtU3pRaTJibXVqRlotZTR3TldmdFlIOU1CUXFnUmFNRmRIbnBvU2tjODFwd05ZQlpFNE9sT0R0MWNHLWxobkVrRGVTQlVOM1gwMmtIWnBxRUdtZWVWOGN0dE80TWVSMDdCWmtFZUJFbjZmR0VsWTlydlFjNUlBR2R2MDlIMjlsXw",
+    "id:CBMimAFBVV95cUxOa2dvSTJleHFjZ21zb01tM3d1WHY5cFZBNUlFc3YxclJadjJqSzMxM1Y3Sl85X2E3ekxTc2dBOFdYbGxMLVBqU2lyalRJSktiR2ZaRUZlSmtnWkxtYXBtMDE4S19hNVZqTkVxUlJqR3NVLUdaRkE4Y3poM1oyVDJGcGN2RHdfbE5TTjFBVC1EdmdENWs2Wm4yWg",
+    "id:CBMimAFBVV95cUxQNGV5cWJNWTZhR25sblhkZlBwTklKc3hYMHNtaGtFSG9ndHZCYjFEbXNTQzI4OWVIRHFzWEhqN3Z4MXNpUlN4ekgtT3lEVXc0X2JFeFJFUUZsbzJsbHppaVB0T1JyX0hPaG1SVUZsbmZ4UzJYNXNLOXZPeEpKTUs4VEV0VkUxakJFVEJWVWlGelN3RlJLRkNhUtIBngFBVV95cUxOMHB6ZnhSd1hCdHA4Tk1GZWUxV1FocVdRUVZLak1jWm82Q200dnlsaGpVVk95QWJFM293ejlIYW5EemtzQWYzbUZEcThJZUQwYWRib1VkZUptUHA4US1wd0pBOWxuYmcxY1pTM0NGVDVkNWhReG5zeTI2eGtUd3l4VUlTVFBJRUtuY0FCcmx6MHV0b1ZMTnU1amVNT3E1QQ",
+    "id:CBMimgFBVV95cUxQYjc3azRLVEFqM0VIRThPRTZ4c1ZDano4Sng2SVhHWTQxR0pHc19Ec2htd1oyc0Q3ODZJWGpmaVlCOERmQlJQTHYzV3JzaDM4ZVAtWGgyWUY1TEw5a1J5bGI5RU5UWGRZdlByYkJnYUVJeC0tWHVYRGp1RVhURHFrOW1hSlVFODNZUlUtY0VRS0NURHNONVZtb21B",
+    "id:CBMimwFBVV95cUxNejBXT3BtZmt2OXZYVmpWNnlvQXVyOXJKNVZFVGpoQ3pzMTg4WGdkaTFwZGVFeDBOZ0U2ZzFrWm9wanoyWFFQLTM0Ykh4NmliR3NTR0VsTTREYkgtMEY1dENKQU45aGJKcllMVEJPcERzMk9qbFlaeGlQT0dvLV9KM25FckJmRmRuYVdBQTQ2cWtiMHhEODNQME5QNA",
+    "id:CBMinAFBVV95cUxOclFMUzdiS2xJOG5fb1IzV1NrMTZOSXJYSXR0Y0szRUp1eWxfSTQwaFNLUEFILUdHekhBNEw5V01ldmFicFV5c2ZfTmV3Rk81eVlVNFpFS0VGYmFtbmxZaEdHMXd2emNtSDJrNm9HdHZWVy1WMG40eFRBNGUybkxLaUgyYmdmbWxkZmFXNDd0WmNzdkhRSlk0UWplUGI",
+    "id:CBMinAFBVV95cUxPVVRaMk1UVUMwbjVpUmRnTGpWS3BwSFBKUDlreEdzRGhlMDFvNGlrQTI1NmFkT2g3Vm5vOUN6WGc5WWt0ZGVSNk13X0ZvTVlaUnF6Sm5lTmNLNGJURDBLZnZSb0hvcXpGVF9tVnJLWER3NU4xdVpKbXFKSnFxLUxUR0Q4Ny05aGgyd2lhSEFaRHRPdVYxNTQ5OGtHX0s",
+    "id:CBMingFBVV95cUxPNGgxeHFaTHdTZWVNZjFJY3JvQWpNeWxSRno3a3RUeXVmRjQ3Z3dzMWdoWmdZb2F2SFQ1QVhKTFdvYmJudWdCdGJhSjhEenFqbUZKVS1fNDhEQ2NobWpZendCY3J3WmJaak02ZzFQUTR0azdqeGNNRTFwdFdCTG5TdzZURVpyWkxvV28tQ2IyWTZ5UmVCQjNnYnJzVHMzQQ",
+    "id:CBMingFBVV95cUxPbUkySE5mMS1rM2piclpBcUpBbDdMaWJLQ29SWVVnb2FHZzdteUFRLVB4dnR3VHAzT0toMTVDT3NUR2pYUVBHeGhSZldxUU5zM05RbnhDNklYVXVabjRtLVdRQjlfSWZXbnFYZHVXU2NlaTNBTEw3Vm42UkxiWVEyVUZqRFllVDg4djhDX0Y5b2Z5T0Zpd2o1VUZSajdQUQ",
+    "id:CBMinwFBVV95cUxNNmN2SmpqcVVqZWJBN3JIRGtIVnoxQWh6bG1yWG10SUtwb1BqMXhJWWJjS3pmUmpobDdkQzZjMmpHVUtvb2RYbzJJUFR3QjdYZlIyUUtjemp3Z2M3YzY4WDNhSGZBWGdoa012OGRJdm4yNmhHVEFIbkFDN192UEZnc19KTW9kSHdYbW44N2lBTHRXMzd4aGE1U1B4WUZ4cVk",
+    "id:CBMioAFBVV95cUxNSkR4NXFYQXpRZU82OVFua3pwSWZjUnVzQnRVR1ktRGk4TzByRU1QMWlUNmlMZHJTMzhTaWtfc2l6dTFENzVLS0FqOUE0QXN0NDk2Rl96SUVnQmt2M21EYy1LcDZpVTc1bnFuN29lQWNNWTVUTnNhVDNGM3BPWHM4cG9HMGdtTjBkWkdtYzBRZ29TV3dpQWtZSVRycDBJZHND",
+    "id:CBMioAFBVV95cUxOR2V6SE5Dc3g2U1BTNWZMYmZROU55MnFQOWV1MjhUNENmeVM4dlNYS2ZnQ05LXzRNQ0JWYUI0V3VadVcxWlU4RXV4dGR3M2dWb0xYUVZrUW9PZEtpYUc3VUlaYWxWZUNQOGtxUFBPRmxiQ0NCYmFDNjVYUVFzMWhZMGNtb2owXzE0ZDF2eDBjVkRFN1FoQWRHcE1iNmczRGw0",
+    "id:CBMioAFBVV95cUxPamdoUXFfUmI4czdiOWYzQThYekhKRXU1MXJINjNDalQwSWNCWmdiMGtwUHllVDVPdW9DRnQ5cENMSXgxSWp5S2JHdGIycmZyRnhFSk45bWFzbno0MHJTQ2M1MzBIVWhDbXp0MmduRE5WVGk0Rl8xampvWnYxWXlDa0ZVU2hBVHlwVnQtc0ktSHpwYlU2TXFObXoycUxsNzdP",
+    "id:CBMiogFBVV95cUxQUVhWR2RzSVg5U0MzOFE5REd3bFY1MWQzYmJvbVJCWktkSDhPQzBibnZXdjZaazlfRG9kcFc2d2tnQ1V4VWFXNTlmTDhjSGhjSmJuRDJSWW5fWTZlNlUyNTNZTmt4R244ZVhDLVFNQk4yZzRPMWtndDI4UGhpT1BmQVJ3bXQwbXpJelBIN1RXRWx0MlJKcEYtLVUyRVh0enZSNlE",
+    "id:CBMiowFBVV95cUxNLXAxTmpTRlQyZnBoQUtZeHNwOFh4dlhKU2p1WW12cU9hWmRrUWpydEF6eWtxM3hnazIyLXQwT2FJUVpSOTZYazRZNmE5VHV4QndIMEJ3NWN3TGtYZVRCSW5ET180RWNFTHZHUWtIWGo5Z0JJUFlLSU9hR09fVHVvdUptZ2VpYlhtTU9PUk4zbnJoQ09BVzdRNzZIYzVIVjBZeVJj",
+    "id:CBMipAFBVV95cUxNc1dEUTZsWFh0VmFsSlVzUHhUbTNienA2b3BfMlVEQzJoR0NHakZtdXdJZXNJZEVkeWVIN3h2TTBWaFUtaWZGQXNMM2VEN3lvWXlUZC13a3FGVTA3N0VnYWhUc05ua19mczZJd09GQlVnbEt3VFpDOUNjVEJCR1ZjdXRoZVY4eGhrTWg2OWtKOHpVYTlSeHN0NENNdlFteGJHNXV5Tg",
+    "id:CBMipAFBVV95cUxPZ1ZSTzEzUFNsaTlyOVRqQld6ZGJvcEtRM3dZakdKQXMyZGEza0hDS1dDd19iWldIODI0c2VwY25NQ3FPV3k4X1FXUVBaNFMwbjJjdWhqZkh6WUVlSUhQSG5TUTJ3bjRMdzBhNjEzbU9zY2VtR2ZqUnRPWi1sRklwUUZhTUtuaW1HRTdkOWl1UVJfT3c3VWRHbmEtdGNYQmNTc0pDRg",
+    "id:CBMipgFBVV95cUxNS2VPRmhWSkphRHFqY2ZYZVF4YmxwWmJjV2dUUXVzUFdvZmdfQy1kVDRuTUM2Zm90M211QXhrSGtwZlh5c1BUSkdkTkJMd2tCckF5djJSVjVWMDJRc0VhVkduMEhIa0xCRl9WaF9jcmRJM1hYelRRa21qTmZkM2otUkhvOEN1ME5DZ20tWk15OXVJcWp1d3pKVzNvR3BwMm9KOVhFYUpB",
+    "id:CBMipgFBVV95cUxNbUkwN09ZMnFIYkdla1U3Uk52WnhBYW9yQ0EzV2dpVkkxRmxsMEFVNUNWQXB1RVNfaUJ0SG80Y2ptdExSdVpXbzNjVlE0b2dCbENHRG9WLV84MlJINkVjU0tzM2lCb1UtWVFVWWJvUmxuTGVkU29NS3U4TVZ5RjZCdlhSN0F6TnFEa0Z6TndpNklYODJvT0NwZFI2OUxxU2JXS0NmT0F3",
+    "id:CBMipwFBVV95cUxPMU5yRmplTUtsLW1KcnRNUU5XVXBDRVcyQnZhWm42NkZDLVBId1BDRG1XNkhSSVZnM0FETS1ZaDlMVENSTGdwTUhTeUM2d3ZlMGQtYzVrYUkzTUdsM2NwbGNKeGR4STdmcXU1d3J4RTRkQVV5UzN5UldwaXVzT2JYNjc0UlNMUHMzSExMWlZmRDJ4V0lVVlVqeW1zdjVVWWNZaWpjYVlkcw",
+    "id:CBMiqwFBVV95cUxPV1pCaUFTSXVnMUItQnhlZXNJUDdULTdMclNqS0ZmZVUwNzJENzZnU3YzLVd6bHMzZTh5SkpYSHN0U2NOb1g3ZW9DSTVJbDdaeFh4ME9WZUx2dmg4cmNXRTFNbVk2VUhGclJabV9FTklsTzdsREJXalUzY3lOaFVYTkRKV1V2aEExMHp4Wm8zX3hVVzlhWlhzTUFxN1U5c1RHSnlNaXpjaGR5dGM",
+    "id:CBMirAFBVV95cUxONVlSc0M0cnZBVG13RWw2ekpJdEc3WGg0LWlHZldzNmZmWUx6QnJld3pDX0Q3b3NPRkt0cWJRR2Y1MEM3N2I5aDVsMGlabXdLeEthSE5oRkZTemZvcU1KM2tib055R1ZubDJNRTdBMXRVSFFtM1lRZ1NRSm1iaXk3OE5HcEwtWld3X3AxV1p4Z3FkaTYxUXJDMmFTUmIycENCZ0dFdmRBYnBUOWdG",
+    "id:CBMirAFBVV95cUxOcmRTV3k5TnBTMm5udVZpXy1xQTNYSmtacHIzVDZldHpaZHNHdzRuNUpnUkpUdkxDNy1OUGpRWU85STByRFJScDN3NUFkbENsdGE4dWRjY3F2aC16SDFET1JvTmRocHhfd3lORVNfaW1hVmhoX0VGT05UUWNnQm9RR2t0dXYxNXFsdVJ0NGFfWVJKMWlpUjc4QVZ4MGNVR2pIQUdZTnkySnhuZjUt",
+    "id:CBMirAFBVV95cUxPTWFMNzNtRXpCZHNydUFMMHI3WS12TEhxNW4zSWtJeURFSTVSa0dVVnZDclgyMkpVQzFjazM3NGQtNWFBYjg4YzFuTjhoWjF3Q0VtTmE0UzhjcFMydllZa2RNZEdMR2FHaGV3ck1pQUJlSVVncXN5eUhpR0tQRkI0YlFPQm9HTEd3YUw4aE9OLW80X2dHaVBrMjJwZjhNYXFpOWxuRC1VMTFYZ0l0",
+    "id:CBMirAFBVV95cUxQYVUxRlJJdEpMUXZNSEJGQWR1dGJCak9sN3dKdFc5VjNBMkhNMnZ2V1MxdkdDM0s2WHJ3VFZ4TGlFbVYzSkxWSGxHbEUwd1lBWmRFOGV1eWJJVEdOSHF3cU9WX1ZhTDBjNkd5clFMdEZJTWlsLWZzSmlrS0ZkRHpfQURreGhjS0dSdEpOdlRrWTQ3MzYtTDgzb3VIM3Y5WjJ3eWF5RDJfbnpnSnhl",
+    "id:CBMisAFBVV95cUxOVy1hcmJDZUNSUE55TDk3eFo3SEl2UEhPMTJPZm1pOW1aTkVBeFdOX0xwb3UwdnI4SEZ0NmZnRjhHYnlLeU1WeDF3Q3pRWXlIR0lNVEhYclpqUWFORGdQY0N6amFLelVmc2w1SGhwX1R2aGozbWZ3YlItYVlyWnVzb1NqWXFwU3VQeXg5bk1WWDNadmtnd0dDRG5PaktpQlZfWHhmaDhEcU5HdG5CLTdQTg",
+    "id:CBMisgFBVV95cUxNNWg3aW5QeW04R2pKaV9WdFp4XzJZdkJnaEw1UEdLNGZINHJBZk5UYldBX1FsY1Z3eUxubmphN1hvQnJJNFdERkJOcjZPMXppclBsN2hOZGZxVUhMZGRydHYwSlVpTXcxekxDZzQ5OFVFS1h3czZwVzQ2VW94VDNLdWdsbm5heHIteUhDZ2RjaC1SWlFycGNJSklZZkVWbThkQjRJQlF5QjJfMEFNWVVLa19n",
+    "id:CBMisgFBVV95cUxNWFVWTEJsa0ZQa1BLb3BjbnBQY1FFSkJhT1UwZnhDSXRQc1JqU05GSDE3YmJMT0lKb0VZVVhmR2VfaWhTeE1rMWFwYmNHN25PNVdRQWE2cmpYcncybGw1VDQwU0RzZ0dOeUJQSTh3NmVpT3lmTXA4NWxuRDJwdnRIZDZzWlFTcVNveHlGYmxhcjJwQ2Y5ajlNeTdYcEttTi1XUF9QTDFybzdvQ2JjU1l5ZEZn",
+    "id:CBMiswFBVV95cUxON2Q0c0NPZzJORDAzS3lxVUg2SS03bGg2TFEwUUlfX2ppR0Rxb0lqOG1YUkk3aW1KQWVKTkdRWWFlMm9yNHlObndJN0F0NlBzTTBQVWV5WUJTLVNUZ2MwVzNEYVdrVG0wc2NvX3BtWXF4eXBWLTJrdFJIdDFUM2ZqMnRVU05xc2c4NGhLZFBoQUtteVF2ZHp4eG9mOV9ydkltYWtUM0s0VzV6Mk9OOGVJdmNKVQ",
+    "id:CBMiswFBVV95cUxOamVlXzJQZDlZeS0zeFRTN3cwa1BtYkYyWFcxTmdtZ25oeWNaRFJxajI4cHZmc0taU1hyYmtaT1pjX2ZZcmk0dUNELWdkRnM2ZWVuUUUzNFdhanEtb2R6OUtzMG1JOVpoWTA3N0R0Q2Nlc2lGUGdkMkdQUHFUeUtickRneHFhMEFvZVNvRGFwLXNHRUstbW9ZTGdDeC1fXzhGSG9qUXI1QlduMUJ5WktnUURxQQ",
+    "id:CBMiswFBVV95cUxPMUFUdUF2M1VTUGNuNjdfek4xeXZfV0ZOd2lzTEZWQ0p4ZW1xRHlpYTYxamhrTF81Qm5fdVQyZGlEVjFLck5YU01kMkZwTEFXZlVpSk9RRHVVVEN2Y05ja29QVHA4Z2tBRXhLS1g2X1lmb1NFclZWZnFueC0tNURqamN0TUxyWExHV1BuN3lmc2hVOUhaNG5Ga3g5MGxUWDBuMEFaZ0ZXV1lGRTMwdWVnM3EwSQ",
+    "id:CBMitAFBVV95cUxPcWtybW1FMHZfdWtSU2l1VS1FMlBsV1g4SEVBV1hfVm9Ec0ppaGU3SWJqV0c5ZVMxR2dER0JfUmk4OG91NHg0SUJScTN4ckllUXlWbWFRSHFMcUpyUTVVNGlnSl9ONHpfdElDTzB4a3RCZC1Nc3J0b19uT0NEMkpjcmNBOXRPVF8ybTVHNEVVQXZpTnNaM0x4UHBYeGdjNW82WEpGeG9QZmFvYi1LMGVKU3ZaTko",
+    "id:CBMitAFBVV95cUxQR0VJY2VuZnBKd3FfMXZUQVo5SHJTS2tTUnpUVGRiQk9QczNYQjktUHB2LWdDMkZpUnJXVFZGWE5sZFRReFhHcG9aa2EzV1dYa19Eclozd3A4bF83aUlQWERYMUpObWtpaTR4TGNLSVhFQkZWWHNadzhRZTRaUGo3ZFN3UzhvVnlwV3BFelBYVk9yejBUclI4VW1BcURBUlZ1cW1wRnpIV0V2dDg4ZElaczZNbnI",
+    "id:CBMitAFBVV95cUxQdlZ6YWtITlA4aEd2MlpnUVpnTUU4clVQMVFNd2pzNFpJaHdQaWxxaE92WmlWOG5fRUhUdllVb1lrX0pPem5OUmYxcUluc3RPRHp6X0hQZXloTXF1YmZPQ3pIZHFNMWktRndXREVjY0t0dG9YdnpTSGZWMllINThxVVZPaUJHeFVMZEQxSWtBYUlxNzZCbUxMMGFSX0c0N3d3T2tCeXNibV8wUXZ5ZXcyb0IyVmM",
+    "id:CBMitgFBVV95cUxNWG84THVjeHZPNm5hOXJKYzlNeVJsYXNxMnFiWXVLYVB4N2dCSVNZU2JGcHIyMjZ4MUZUV21uVmRGam5lMHNOZkZCMEZURXRqNzZUNUNKTU84ZHhxX3BJVzhTZ2I5UzZ4VUt4WW5PVEkyMmhOVGM0aTZHS1JCMlFwU0wteW5OcmI4WUV6M083b1dERXNUblRUWmdBR25sVHNBR01ZZVJMaE9SSXhFbDVuV0daLWhfQQ",
+    "id:CBMiuAFBVV95cUxPMW9RWUw3WWhrRDJRWk93eGVFZzRaTTlPTWdLdlA2S3hXeEZyOVBPMGhISlV5ZWFpZ2sxMXUyZzI2RGRUb3Z1Ukxmb0tGLWd2S2xGdEZmbDJhcU1RUlZFMjE0V1IxWkVfQU5TRHg3WW5ydGJVMGhBVVFPZkdSc0hoN2E5TkJLUXh2bWdNdGxuRi1YM000SDQwYUdIamZ2ZkZ3R0NBWm5HN0xGSkhPSEJISVIwS01OXzkt",
+    "id:CBMivwFBVV95cUxOd2JhaWVYSkpWdGxJcWdZS2U2UnJuOXNRNGFQa0M2ZGV1c0E1RmtUaktXZHg4R28xVGNobkV1YkZMLUVuXzk3QTd0LWxHaE1ZeFpmVUx2dmtIUlRDUDN4cl95V2RlOWgxX0p2WUE1d2NkQjZ0WWZlcFQ1M1pvQnBtMVZoMklQWFdXemtYaDNReG5KWERPM1ZobFJ3YzZqQTZqOEtPd1dnRkNJM1VmSlFHcHFUNkZ5emctS29CekU0RQ",
+    "id:CBMivwFBVV95cUxPYzUwZHpCTS1zczVVbjE1VFRpaU9FYmFuVVBMTkpkalMtV1JkRkkxRlFjOVRMRWxja3JqRi1JNVpPbHBOb2RTUTlwWFlLa1oyZ2hjNkFkaTY2MjR2ckM3TTBYVjhTb29CQkRjSVYyT0hOOHJ6Z1hMNVNCU0NWLUVpenRReEZaTGllb2VlRHJCbDV3WGp1X0xmb2dfcW9nNXNGaHAtVVB0ZkJaSjdrbVR3eGMxQm9uZTdRU3oteVlucw",
+    "id:CBMiwAFBVV95cUxNMVJjV3Y2Rmg1cEVGT09pck9LSkRyT3dyWmZoTTZ4ZE1rdFNTY0VDSVh5Tm4zdHVva0x1Q0tjRFFZc0s1LWphVWY5N1d1YXBZRm5yR0RQSF9ZVFFtaHM4NVlPV3BiQk9aa21lSjRWZ0VTVVFnVXdfRk8yTWtqM3ZnRG5LSWQzOERHSVdVelNlY2R3b25KVVVyREdjUWFza29Bc0p2WkdoWUhxLTNlZG9uYy1kZk1QQUVXQmg5bVRTYTI",
+    "id:CBMiwgFBVV95cUxNMDY3UnY3ZUh1SFllbVNIRzBCVzN1YzFuZ08tQnhaSzNEY05YdTdjMUliaWNqdmVtWDYyeTc3TDN3cXFkbld0eTFESHpnTHRyZUlBaWZPRFNGcFh5aXlpeEhuTlMtVXY0NFFuNHR1b2V5LW1OeThTdWRTMWw5dldKRDViNmsxbUhHbTNPdUpDN2lWaHVEVExTX2tHMDBrNDA4VndyVlczdFlzUll2V2I0ZmdKT1c3ODB3OHNZa2RaWHlBZw",
+    "id:CBMiwgFBVV95cUxQbFdFQXhTR29LaDNqU1psb0hGXzJvLUdDS1BGUjB0X2hZRjM2RWRKNHIzd25mRVh1eHVkUGpFSGdqRk9qbVByZ1dYVjdnWjYyUTdQRXFuLWkycGRudEExcGNKWFNTOXd5UzdZeERfZkdJcWcza2pCcFB4UzU0UEpGeHlDX09QOWdJWlBkM0RCZlh1VHlKbW81bFdob0d0d2FmaFFoQ3RMUm42N1R1VVhxdFhHbVVvOUZhSmhoRE1yNXJMd9IBxwFBVV95cUxOQ1BjWXlWeWRLMi1TYy14YTZ1SGxIa0RFclJja2llaGcwd2dfV0pnUmdqS1VDOUpLajZjc2M0YWppRW04MzJDYWhmb0p4amRvMmZxeFNuSDE5MWtCWmtFTWllNF9UcDcyQnllVGdqMElPOWVvdFhZYmRjNS04UENuLU9fVXdFazlFLTgwSGF0RTA2RkpuWW9CWkI1SmhDUVFFM3JZd1BDZ2NIT09tY0ZaeHJvc0o2RTludU41dU1rX0RrSExuTjYw",
+    "id:CBMiwwFBVV95cUxPX0dST3lGYWltcmlWYzEyMnQ3bDhhQ0w5SmJrOUUtQ2FEdVlYWkZIcmRydW1zakRXZlNMZXlTcFNIVkhWVWxrekJzNGhwLUNzdWhpaW1LUmpzeF9JSFN5eTNOWlcxT011d3hfTFN3WDRuN19INXdEb296NmNaTlhrWEtjV2wyRVU2Um9CY0NvZVlVYjJiQ3JlUGhCSm9yUllrS0x4MldiMjNEdUVnNl9EcmdldUY2TFBENjktZ1NZZlluMnM",
+    "id:CBMiwwFBVV95cUxPanNqdnc5ZENuMURnRUctbmVHa0pneEZwZlpPcTRacUZQNWNYUm52dVJlSlZsWHB1emJMaDZ1d2JQZlFBbjdSYzFvRURBMlZ2cTllTnluUklpVWVTd1E5TnN4X1hsbnNWMFhEeFFKOTNtd2t5WnpzaWF4MVNZUVlTdjBuQVl1b0tOWE1ISDBlTXlQQldRLVVGei1oTkRKcHBtbjJGODVqSUo5dU1RMjZFaVZ4VENyVEV1QXI2QW54UVQyeE0",
+    "id:CBMiwwFBVV95cUxQRUtyY2d5N1k5eXkzWDNWZlhmdC1qaG5vcEpKc3hMMGFFR1BqMXU5Um1qUDhRNUk3R0luWi16OEFLQ2lpM3pVTER6ZVV0NERjN2lnZ29RakNxVUF3QV9xVXV1RE9JMkVOQnhnNFJmNnZzUjZndC1Qc29OT2tyald3M2k3NlE0VDFKUEQza3ZVT1BqVHc5cXJSRnpXYndJNEZ0cFpMSHc0Yk9HbkJkck1ibmxxTEVYZjB2d3dtQk9uUkh1WE0",
+    "id:CBMiwwFBVV95cUxQX1ctc3NJRm1XeHRIWGwxX01McU5iYWttNGhMRVdSQkV4SU1Vc0lFOUkyNERiWWlXbTBtdUdLdEVqQnJsS09Pa1p4M01VOW9QamFwNmlXNUFaekdaTnZJeklPSEN2SF9UR1NmTDlrVXFOTXZQNXRheTBiM182NGNnc1I3TkFxd0w1Q05LRnpTZTVORFVDVzdnVXgxMFFjeUJGTzVZc2N1aVZhN2J3QzdoaHpXSzlYLUxkTTlXWW1OWFVFcjA",
+    "id:CBMiyAFBVV95cUxPbFZHNVhlbDdUckFldTRpNzFQTl9sREZ2Y0NNOEpUX0RQSTExTzBiWlpZLXU4Yl9hamdjM0dDX1JqOG02d045bTVndnNXMGF4TnVMazZpVmNFTUUxTEJUR1lEUnJjbklFNV9YQjFrYTFYN1duUGZTd1FTZ3FoQW1BQnZfeWJ3WFlQQ1NHNVpvVlY4b2szdEpvSTVwSk80UlRIOExsM2o3ajhyMjlsZkNER3VXSlF6S0UyNDFDNWlHd2lsM256UXJrWQ",
+    "id:CBMiygFBVV95cUxQQUtsY0JxZlZqS2JnOU80VDVHb0dGREE2VUtHU2FzaEZiM0VENUpyaVZmYjJ2MTlqZ1FZY2VCWmVVSG9VbXdxSG12V3VHcjFTUVFIMkZIOWJJVTlvRWM1MFZpaVRYT08zR1VtRWY0dmtDd1JQaExRVkJ6VHU1WEo2MHpFZ0ZxM3c4NlUxZXBCWVc5QmpXcFh5TW9lbUtZaU1WcDFwYTNrZTdmMHhiZ0x0QXk0OXpFcDNuUGpzRFY1NF8xRzV3UXh5Q0x3",
+    "id:CBMiygFBVV95cUxQYmNwSDNwZWVBOFp2LV9LODUwMTVLSnlDanZfblBRT252bUowOTJMWXVFcjJaUk1BTGEwcWxkVGpVN2taSWhEa0h5ZkRfYXE3YWIxUDAzQWNRVkFKdTBHMEpQSTdYUUNkMldQQkhUMnRCR2dQOHJHdmNubDdjT1hlOTh6LWppNHA4ZGplN3JMdk56TXhIbnVmNDdGVGNHai1ZdmhsdTVmZVV0Y3UxMmtaS3pZbjhhVE5iaDcyem0welFoOHEtM21hVElB",
+    "id:CBMiygFBVV95cUxQamxxYVBfMW1lcVdjQnZCeFp1LWhTZWd1NTBzZVl3S0JUaTV4Z2g4c2stLWd2V0tvRjZfY3VfZlluMVlHR2xwaktRZWR5S2dhMFJoR1Nuc0MxU0IxNzBYSExTcmtLRWR2TmJ1OVVDVTBVdWR2S3J1eVVZNzB1X3NBODljdy1hQ3JXdEJoOHJCYkQteVdrOFBsT0ZhSE9iMTdKdjB0R2djcDFKX29JMm5GVzR4dG5xUFZRZ1lBdzI3bXo3ak4tUWlEbDhR",
+    "id:CBMiywFBVV95cUxNenhnaERkSE5pSzE4cjJuaDBMYVd0dUx6dDRZNGlib3lPYXBWZ3lwb2lvcFNhaE5qY1RrdEgwNFRaQ05wcmhiMTRFZnBtMDdOWklpYjRock95LVdQNHRLYkNvaUo0UzM4SlNpemcxN3phNmFld095cGhQNy03WkFrMVM2MVlvZVV2ZTVlbHhkcVFtMHRRNkVNRUtiZzBhZ2gzYjBESGZ1anVKdzhMUUZCUGlsZnQyNFhOVnBJaWJmYjRwQlJKX1ZPZ2N6OA",
+    "id:CBMizAFBVV95cUxOOG90RHphdkwycUFVUHl2U3IteTc5bXg4bFhfU20zTVNYQVdYa3lxOWhwRkJtZ1pHUHdMb3hWLWt5aFloMWZ2TnNfVWRZQUYxLVVnbDFERlh4dmVKejNCYXU5RXVHSGlGVnhmVkQzX0phMm9YVWpZU0dSMDllTmdDdVJwMmMwbU1PQjRWNWM3QXhDVkFKZ012UUp5U3pEbHFZZFltOXQ1UmNZRWNIOFNDQ1B3Q2s2M2ZDWTJTNnpYVUNmOHM0Qm51VDg5Tzk",
+    "id:CBMizAFBVV95cUxPUUQ1OUtYSENBWXM2Nk9SYTl6b29QT09sMG9RSk5RYm5mcHdWWGJUeU9wZVY3X0k4RzQ3M3hTdzFOSktZY0ZvcVZVZEg5cmhIaWFuYkxPbjM5T044cW5pcFllbS1jamFhZDlka0tJYzRENjlWYXBGNm9lRWhxaHdlc09teHlIZHhMUElpWkV6dUdHYXhFM29BTUhqWWtQNUZZQ2NTR19wZWwxWHhKaUFYTTdfeWdqNVZuRWNNT0YxeldSSG1uUm5Lb0Fvb1o",
+    "id:CBMizAFBVV95cUxPZ2NSdDlpb0dyMG5teVRSTzJNMHhudVlYWklxZUhocVRpVUZUNXdPN09Dd0lBWFI1elBkNHlOejJQOGFEdnIwX1VDdWtRX2NhRlRBM0s0NWd5Rnd6VnI3M0ZhWkQ5aFgwcUlkeG5XaDVGTDNhVFJCSU8tdWNpdkhFUGYyeFJRbjRwMjNLYUJ2cVFGLTc4VnJEcDZLS2o4Qkxsc3A2bm1ZbkZ0SFN3eE1lR0N4RVVHajItUnktWS1QNUFRc3dDcE1abWFyMk0",
+    "id:CBMizAFBVV95cUxPbFdQRy1WbjNxQk90c1ZBTlpxY3o5QUhKQXF3TndFY0d5WTVYUkFEczhsdktBenRkXzdudFZ5dTUyNk5nbUlWbklnTnFidmNyRUo1ZVBTTmhoVU5HOUZTQVFKdHVHWUVRcGJuMVZleWJtZkdndlZ5VmdDTEw3b0oySDNJVlh3ZlBXdHN2dXNyNDI3QW1UNnpHZWFOZTdnSFpMMV9QeWlBcnFPQ3NZaU1SMWtYMEpZWXBwOExmWUtvaWtmVzRQSWN5Wl9BYnY",
+    "id:CBMizAFBVV95cUxQTGs3ODQ1Y2lQTVg5aDFMN1MzNHJYUTNDbUdvQUZaeEpsUWdkQlBJbUxLOUl3dE51cmMwS2hJaS1mRU9CT1JJZER3M1RPN2c1NmxISGx3ZURIYVRwWXFDVWR5dVQxcjBBTHhkdUpSbWh5QTJJUVdkdlRMSU1HV3ZtQUoxbGdISHBPbHJKSzQ3OS0zbjVLMlpvOTN6bVgtdGx5VThETU5CYk9FMHhYRFpOYmlpWmlYVVZBaUV5ZGRNTnIyYl9rLVVKOF9ITW4",
+    "id:CBMizgFBVV95cUxNbm5JbzZXUURHSWpRYk4zSmZpMW5rclRKN3Q3RmRyQ3hxVUtOOHBPQl9pVE5YQ3BiWGtnblIxVy12cURzS3hxaTE4VUs0Ul9PaDNJaXN3WG9hc19LeDdvelVQdVdOWmphdHZTNEdtdjJsNFBBbndKcUJvWjUyQkpDNE1LUHFHWXJyYmtEMHdEc2I3N3loWU5yZDFrWV93NmFYZWFBc3lqaHhTSkkyLUVoRHAyZTFoVEMzUktxV05RVnJjVklvWmdKOHVJVmtwQQ",
+    "id:CBMizgFBVV95cUxPeGN5S1VQalFjUHNUdDVZaUhiRTFyS3NubHVCbTNBSFo2Zk9NQ1B2aDgxc2FzemtxeVd3S2h6SGxfVFNreF9LYVM4OEtCbnpvYy1OTzFiMHZWaGFkb0lPTVotb2ZJNERMcVZtSzJnLVd3dENNZ3Y1RUYtLVFJenZOQld0bzJLNkJ0cHBEVWpCQkNRTGpjcGZCalJPQmNZQUVYcFJPT01xemo5X0tzLWdMbzNUS2ZBMDFrV25qUjJySmo0TjhjLXU2MTNlV0Nydw",
+    "id:CBMizwFBVV95cUxNOHVGM2UzVFBBWll1MXFQTGQycVVKRDk1Q0s4SXVTS0FQc3VVZEcwUDVYbGZ4VnpyRXNFOEFnbktUZVdFUmw4bjZFS05VRUMxUzU3LUhQQXI2SWVtSFpaaFN1d0h6Y0RwRTA1V3pRQ0RKMG8yWHFWaEt1ckUyZXFRVF9GaUN0MXZ6SktGY3RDd0N0QWFHWGJTZmQ2VWdhcDdTZXl5MUhYci1uSG0xdnNaNDdFVlpxbVJfdnM4MGJLUFd4ZkZqcXhwcnFDaEdTOVk",
+    "id:CBMizwFBVV95cUxOVmxIVXZ1R2xBUkNnZ3B2cGhha2l5TlE1cDRkUTBSbDlSM0tTVkc4SWN5MjV6MjRvT1E1NkdfYUdMcm1ha05ydHB2b0FnVFJwZ0Z2UlhVV3NaVy1FME0yU256ZENqTWctb1JRZXpjN1hCaFBJRXJ5NWx3dkIwc1lkSXJ3cVNQTkNNcFdpQVlMQU92N2dBeHBUYnJGS2lGSFJhdjZtZjVZUVAySUpJTEMzT0RoQVNod093TjFweXZfOS0ya244RnNJM0V1RTBVU3c"
+  ]
 }
