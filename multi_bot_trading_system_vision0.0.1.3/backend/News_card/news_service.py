@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -18,16 +19,15 @@ from dotenv import load_dotenv
 logger = logging.getLogger(__name__)
 
 
-def repo_root() -> Path:
-    """Get the repository root directory."""
-    return Path(__file__).resolve().parent.parent
+def news_config_path() -> Path:
+    """Get the configuration file next to this service."""
+    return Path(__file__).resolve().parent / "config.json"
 
 
 def load_news_config() -> Dict[str, Any]:
     """Load the news configuration from config.json."""
-    config_path = repo_root() / "backend" / "News_card" / "config.json"
     try:
-        with open(config_path, "r", encoding="utf-8") as f:
+        with news_config_path().open("r", encoding="utf-8") as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         logger.warning(f"Could not load news config: {e}")
@@ -36,11 +36,10 @@ def load_news_config() -> Dict[str, Any]:
 
 def save_news_config(config: Dict[str, Any]) -> None:
     """Save the news configuration to config.json."""
-    config_path = repo_root() / "backend" / "News_card" / "config.json"
     try:
-        with open(config_path, "w", encoding="utf-8") as f:
+        with news_config_path().open("w", encoding="utf-8") as f:
             json.dump(config, f, indent=2, ensure_ascii=False)
-        logger.debug(f"Saved news config to {config_path}")
+        logger.debug(f"Saved news config to {news_config_path()}")
     except Exception as e:
         logger.error(f"Could not save news config: {e}")
 
@@ -78,64 +77,31 @@ def get_news_items() -> List[Dict[str, Any]]:
     if not config:
         return []
 
-    from backend.News_card.news import ensure_config, gather_seen_keys, deduplicate
+    from backend.News_card.news import ensure_config, deduplicate
 
     config = ensure_config(config)
-    seen = gather_seen_keys(config)
 
     all_items: List[Dict[str, Any]] = []
 
-    # Collect from general sources
+    # Newly collected items are already saved in these configuration lists.
     for source in config.get("general", {}).get("sources", []):
-        if not source.get("enabled", False):
-            continue
-        items, error = _dispatch_source(source)
-        if error:
-            logger.warning(f"[{source.get('name', 'SOURCE')}] {error}")
-            continue
-        if items:
-            all_items.extend(items)
+        items = source.get("items", [])
+        if isinstance(items, list):
+            all_items.extend(item for item in items if isinstance(item, dict))
 
-    # Collect from people monitoring
+    # Include persisted posts from monitored accounts.
     for person in config.get("people_monitoring", []):
-        if not person.get("enabled", False):
-            continue
-        items, error = _collect_x_person(person)
-        if error:
-            logger.warning(f"[{person.get('name', 'PERSON')}] {error}")
-            continue
-        if items:
-            all_items.extend(items)
+        items = person.get("posts", [])
+        if isinstance(items, list):
+            all_items.extend(item for item in items if isinstance(item, dict))
 
-    # Collect from coins
+    # Include persisted coin-specific news.
     for coin in config.get("coins", []):
-        for source in coin.get("sources", []):
-            if not source.get("enabled", False):
-                continue
-            items, error = _dispatch_source(source)
-            if error:
-                logger.warning(f"[{source.get('name', 'COIN')}] {error}")
-                continue
-            if items:
-                all_items.extend(items)
+        items = coin.get("news", [])
+        if isinstance(items, list):
+            all_items.extend(item for item in items if isinstance(item, dict))
 
-    # Deduplicate and sort by date (newest first)
-    all_items = deduplicate(all_items)
-    all_items.sort(
-        key=lambda entry: __import__("pathlib").Path(__import__("datetime").datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"))
-        or __import__("datetime").datetime.min.replace(tzinfo=__import__("datetime").timezone.utc),
-        reverse=True
-    )
-
-    # Return only items not already seen
-    new_items = []
-    for item in all_items:
-        key = _canonical_key(item)
-        if key and key not in seen:
-            seen.add(key)
-            new_items.append(item)
-
-    return new_items
+    return deduplicate(all_items)
 
 
 def _dispatch_source(source: Dict[str, Any]) -> tuple:

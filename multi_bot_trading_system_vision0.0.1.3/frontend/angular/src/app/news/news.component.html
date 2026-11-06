@@ -9,11 +9,17 @@
     <p>Error: {{ error }}</p>
   </div>
   <div *ngIf="!loading && !error" class="mt-3">
-    <p *ngIf="newsItems.length === 0">No new news.</p>
-    <div *ngFor="let item of newsItems" class="news-item mb-3 p-3 rounded border">
-      <h3 class="font-medium mb-1"><a [href]="item.url" target="_blank" rel="noopener noreferrer">{{ item.title }}</a></h3>
-      <p class="text-xs text-gray-400 mb-1"><small>Source: {{ item.source }} | {{ item.date }}</small></p>
-      <p class="text-sm line-clamp-2">{{ item.summary }}</p>
+    <p *ngIf="newsItems.length === 0">No news available.</p>
+    <div *ngFor="let item of newsItems; let index = index" class="news-item mb-3 p-3 rounded border">
+      <p class="text-xs text-gray-500 mb-1">ID: {{ index + 1 }}</p>
+      <h3 class="font-medium mb-1">
+        Title:
+        <a [href]="item.url" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
+      </h3>
+      <p class="text-xs text-gray-400 mb-1">
+        <small>Source: {{ item.source }} | Date: {{ item.date }}</small>
+      </p>
+      <p class="text-sm"><strong>Information:</strong> {{ item.summary }}</p>
       <p class="text-xs text-gray-500">
         <small>Kind: {{ item.kind }}<span *ngIf="item.topics?.length"> | Topics: {{ item.topics?.join(', ') }}</span></small>
       </p>
