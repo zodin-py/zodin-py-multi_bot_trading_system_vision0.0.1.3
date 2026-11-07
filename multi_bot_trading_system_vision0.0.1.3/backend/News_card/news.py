@@ -488,10 +488,10 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
             continue
         if not items:
             continue
+        new_items = remember_items(config, items)
         existing_items = list(source.get("items", []))
         merged = deduplicate(existing_items + items)
         source["items"] = merged
-        new_items = remember_items(config, items)
         summary.append((source.get("name", "SOURCE"), len(new_items), "source"))
 
     for person in config.get("people_monitoring", []):
@@ -503,9 +503,9 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
             continue
         if not items:
             continue
+        new_items = remember_items(config, items)
         merged = deduplicate(list(person.get("posts", [])) + items)
         person["posts"] = merged
-        new_items = remember_items(config, items)
         summary.append((person.get("name", "PERSON"), len(new_items), "post"))
 
     for coin in config.get("coins", []):
@@ -520,15 +520,15 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
             coin_items.extend(items)
         if not coin_items:
             continue
+        new_items = remember_items(config, coin_items)
         merged = deduplicate(list(coin.get("news", [])) + coin_items)
         coin["news"] = merged
-        new_items = remember_items(config, coin_items)
         summary.append((coin.get("name", "COIN"), len(new_items), "article"))
 
     total_new = sum(count for _, count, _ in summary)
     print("\nCollection completed.")
     print(f"Total new items: {total_new}")
-    return {"summary": summary}
+    return {"summary": summary, "total_new": total_new}
 
 
 def main() -> int:

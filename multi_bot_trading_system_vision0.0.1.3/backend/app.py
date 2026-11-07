@@ -167,6 +167,7 @@ def api_news():
         return jsonify({
             "success": True,
             "total_new": result.get("total_new", 0),
+            "total_items": len(items),
             "items": items[:50],  # Limit to 50 most recent
         })
     except Exception as e:
@@ -174,6 +175,8 @@ def api_news():
         return jsonify({
             "success": False,
             "error": str(e),
+            "total_new": 0,
+            "total_items": 0,
             "items": [],
         }), 500
 

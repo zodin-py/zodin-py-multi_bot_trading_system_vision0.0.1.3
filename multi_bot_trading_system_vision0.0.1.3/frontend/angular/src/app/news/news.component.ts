@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { ApiService } from '../shared/services/api.service';
-import { NewsItem } from '../shared/models/api.models';
+import { NewsItem, NewsResponse } from '../shared/models/api.models';
 
 @Component({
   selector: 'app-news',
@@ -13,21 +13,42 @@ import { NewsItem } from '../shared/models/api.models';
 })
 export class NewsComponent implements OnInit {
   newsItems: NewsItem[] = [];
+  totalNew = 0;
+  totalItems = 0;
   loading = true;
+  refreshing = false;
   error: string | null = null;
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly changeDetector: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
+    this.refreshNews();
+  }
+
+  refreshNews(): void {
+    this.refreshing = true;
+    this.error = null;
     this.apiService.getNews().subscribe({
-      next: (items) => {
-        this.newsItems = items;
+      next: (response: NewsResponse) => {
+        this.newsItems = response.items;
+        this.totalNew = response.total_new;
+        this.totalItems = response.total_items;
+        if (!response.success) {
+          this.error = response.error || 'Nachrichten konnten nicht geladen werden.';
+        }
         this.loading = false;
+        this.refreshing = false;
+        this.changeDetector.markForCheck();
       },
       error: (err: unknown) => {
-        this.error = 'Failed to load news';
+        this.error = 'Nachrichten konnten nicht geladen werden.';
         this.loading = false;
+        this.refreshing = false;
         console.error('News fetch error:', err);
+        this.changeDetector.markForCheck();
       },
     });
   }

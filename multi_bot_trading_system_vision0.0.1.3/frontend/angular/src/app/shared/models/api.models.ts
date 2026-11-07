@@ -86,6 +86,7 @@ export interface NewsItem {
 export interface NewsResponse {
   success: boolean;
   total_new: number;
+  total_items: number;
   items: NewsItem[];
   error?: string;
 }

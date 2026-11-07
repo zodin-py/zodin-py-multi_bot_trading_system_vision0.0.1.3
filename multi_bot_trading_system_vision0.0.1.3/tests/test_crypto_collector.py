@@ -1,5 +1,5 @@
 from backend.News_card import news
-from backend.News_card.news import collect_rss_source, deduplicate
+from backend.News_card.news import collect_all, collect_rss_source, deduplicate
 
 
 def test_api_only_news_route_returns_news_items(monkeypatch):
@@ -18,6 +18,7 @@ def test_api_only_news_route_returns_news_items(monkeypatch):
     assert response.get_json() == {
         "success": True,
         "total_new": 1,
+        "total_items": 1,
         "items": items,
     }
 
@@ -76,3 +77,53 @@ def test_deduplicate_uses_url_when_id_missing():
         "https://example.com/b",
         "https://example.com/a",
     ]
+
+
+def test_collect_all_counts_new_items_before_persisting_them(monkeypatch):
+    general_item = {"id": "general-1", "title": "General news"}
+    person_post = {"id": "post-1", "title": "New post"}
+    coin_item = {"id": "coin-1", "title": "Coin news"}
+    items_by_source = {
+        "General": [general_item],
+        "Coin": [coin_item],
+    }
+
+    monkeypatch.setattr(
+        news,
+        "dispatch_source",
+        lambda source: (items_by_source[source["name"]], None),
+    )
+    monkeypatch.setattr(news, "collect_x_person", lambda _: ([person_post], None))
+
+    config = {
+        "general": {
+            "sources": [{"name": "General", "enabled": True, "items": []}],
+        },
+        "people_monitoring": [
+            {"name": "Person", "enabled": True, "posts": []},
+        ],
+        "coins": [
+            {
+                "name": "Coin",
+                "news": [],
+                "sources": [{"name": "Coin", "enabled": True}],
+            },
+        ],
+    }
+
+    first_result = collect_all(config)
+    second_result = collect_all(config)
+
+    assert first_result["summary"] == [
+        ("General", 1, "source"),
+        ("Person", 1, "post"),
+        ("Coin", 1, "article"),
+    ]
+    assert second_result["summary"] == [
+        ("General", 0, "source"),
+        ("Person", 0, "post"),
+        ("Coin", 0, "article"),
+    ]
+    assert config["general"]["sources"][0]["items"] == [general_item]
+    assert config["people_monitoring"][0]["posts"] == [person_post]
+    assert config["coins"][0]["news"] == [coin_item]

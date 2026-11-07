@@ -11,6 +11,11 @@
       <!-- Price Card -->
       <app-price-card [price]="currentPrice" [priceChange]="priceChange"></app-price-card>
 
+      <!-- Wallet Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+      <app-wallet></app-wallet>
+    </div>
+
       <!-- Indicators Preview Card -->
       <div class="card rounded-xl p-4" *ngIf="indicators">
         <h2 class="text-lg font-semibold mb-4">
@@ -39,11 +44,7 @@
       <div class="card rounded-xl p-4 flex items-center justify-center md:col-span-2" *ngIf="!indicators">
         <span class="text-gray-400">Loading indicators for {{ currentCoin }}...</span>
       </div>
-    </div>
-
-    <!-- Wallet Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-      <app-wallet></app-wallet>
+    
 
     <!-- News Agent Card -->
     <app-news></app-news>

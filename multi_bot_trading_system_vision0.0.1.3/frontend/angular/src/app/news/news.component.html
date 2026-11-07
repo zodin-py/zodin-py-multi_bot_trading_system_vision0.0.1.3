@@ -1,28 +1,44 @@
-<div class="card rounded-xl p-4">
-  <h2 class="text-lg font-semibold mb-4">
-    <i class="fas fa-newspaper mr-2 text-green-400"></i>News Agent
-  </h2>
-  <div class="text-sm text-gray-300" *ngIf="loading">
-    <p>Loading news...</p>
-  </div>
-  <div *ngIf="!loading && error" class="alert alert-danger mt-3">
-    <p>Error: {{ error }}</p>
-  </div>
-  <div *ngIf="!loading && !error" class="mt-3">
-    <p *ngIf="newsItems.length === 0">No news available.</p>
-    <div *ngFor="let item of newsItems; let index = index" class="news-item mb-3 p-3 rounded border">
-      <p class="text-xs text-gray-500 mb-1">ID: {{ index + 1 }}</p>
-      <h3 class="font-medium mb-1">
-        Title:
-        <a [href]="item.url" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
-      </h3>
-      <p class="text-xs text-gray-400 mb-1">
-        <small>Source: {{ item.source }} | Date: {{ item.date }}</small>
-      </p>
-      <p class="text-sm"><strong>Information:</strong> {{ item.summary }}</p>
-      <p class="text-xs text-gray-500">
-        <small>Kind: {{ item.kind }}<span *ngIf="item.topics?.length"> | Topics: {{ item.topics?.join(', ') }}</span></small>
-      </p>
+<div class="card rounded-xl p-4 news-card">
+  <div class="flex items-center justify-between gap-3 mb-4">
+    <h2 class="text-lg font-semibold">
+      <i class="fas fa-newspaper mr-2 text-green-400"></i>News Agent
+    </h2>
+    <div class="flex items-center gap-3">
+      <div class="text-right" aria-live="polite">
+        <p class="text-sm text-green-300">Meldungen verfügbar: {{ totalItems }}</p>
+        <p class="text-xs text-gray-400">Neu bei diesem Abruf: {{ totalNew }}</p>
+      </div>
+      <button
+        type="button"
+        class="text-sm text-blue-300 hover:text-blue-200 disabled:opacity-50"
+        (click)="refreshNews()"
+        [disabled]="refreshing"
+      >
+        {{ refreshing ? 'Aktualisiere...' : 'Aktualisieren' }}
+      </button>
     </div>
+  </div>
+  <p *ngIf="loading && newsItems.length === 0" class="text-sm text-gray-300">
+    Nachrichten werden geladen...
+  </p>
+  <p *ngIf="error" class="text-sm text-red-400 mt-3" role="alert">
+    {{ error }}
+  </p>
+  <p *ngIf="!loading && !error && newsItems.length === 0" class="text-sm text-gray-400">
+    Keine Nachrichten verfügbar.
+  </p>
+  <div *ngFor="let item of newsItems; let index = index" class="news-item mb-3 p-3 rounded border">
+    <p class="text-xs text-gray-500 mb-1">#{{ index + 1 }}</p>
+    <h3 class="font-medium mb-1">
+      <a
+        *ngIf="item.url; else plainTitle"
+        [href]="item.url"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ item.title || 'Ohne Titel' }}
+      </a>
+      <ng-template #plainTitle>{{ item.title || 'Ohne Titel' }}</ng-template>
+    </h3>
   </div>
 </div>

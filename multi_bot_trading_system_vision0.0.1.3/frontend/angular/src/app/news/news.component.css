@@ -1,0 +1,6 @@
+.news-card {
+  height: 600px;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

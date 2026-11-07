@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,6 +33,7 @@ import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
 })
 export class App implements OnInit, OnDestroy {
   private readonly api = inject(ApiService);
+  private readonly changeDetector = inject(ChangeDetectorRef);
   private readonly refreshInterval = 5000;
   private sub?: Subscription;
 
@@ -66,12 +67,16 @@ export class App implements OnInit, OnDestroy {
     this.api.getPrice(this.currentCoin).subscribe({
       next: (p: PriceResponse) => {
         this.currentPrice = p.price;
+        this.changeDetector.markForCheck();
       },
       error: (err) => console.error('Price error:', err),
     });
 
     this.api.getIndicators(this.currentCoin, this.currentTimeframe).subscribe({
-      next: (i: IndicatorsResponse) => (this.indicators = i),
+      next: (i: IndicatorsResponse) => {
+        this.indicators = i;
+        this.changeDetector.markForCheck();
+      },
       error: (err) => console.error('Indicators error:', err),
     });
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import {
   PriceResponse,
@@ -8,7 +8,6 @@ import {
   StatusResponse,
   WalletResponse,
   Trade,
-  NewsItem,
   NewsResponse,
 } from '../models/api.models';
 
@@ -58,8 +57,8 @@ export class ApiService {
     return this.http.get<Trade[]>('/api/trades', { params });
   }
 
-  /** Fetch latest news from configured sources. */
-  getNews(): Observable<NewsItem[]> {
-    return this.http.get<NewsResponse>('/api/news').pipe(map((response) => response.items));
+  /** Collect and fetch latest news from configured sources. */
+  getNews(): Observable<NewsResponse> {
+    return this.http.get<NewsResponse>('/api/news');
   }
 }
