@@ -1,4 +1,4 @@
-"""API domain models.
+"""API models.
 
 Defines Pydantic models for API requests and responses.
 """

@@ -32,8 +32,12 @@ class WalletService:
                 'apiKey': config.BINANCE_API_KEY,
                 'secret': config.BINANCE_SECRET_KEY,
                 'enableRateLimit': True,
-                'options': {'defaultType': 'spot'},
+                'options': {
+                    'defaultType': 'spot',
+                    'adjustForTimeDifference': True,
+                },
             })
+            self._exchange.set_sandbox_mode(config.USE_TESTNET)
         return self._exchange
 
     def get_wallet_sync(self) -> Dict[str, Any]:
@@ -50,11 +54,7 @@ class WalletService:
         }
         """
         try:
-            # Check if exchange is properly initialized
-            if self._exchange is None:
-                raise RuntimeError('Wallet service exchange not initialized. '
-                                   'Check that Binance API keys are valid.')
-
+            self.exchange.load_time_difference()
             balances = self.exchange.fetch_balance()
             result: Dict[str, Any] = {
                 'balances': [],
@@ -91,8 +91,9 @@ class WalletService:
                     usdt_value = free + locked
                 else:
                     try:
-                        # Use format: BTCUSDT (no slash) for ccxt ticker
-                        price_ticker = self.exchange.fetch_ticker(f'{asset}USDT')
+                        price_ticker = self.exchange.fetch_ticker(
+                            f'{asset}/{config.DEFAULT_QUOTE}'
+                        )
                         asset_price = price_ticker.get('last', 0.0)
                         usdt_value = (free + locked) * asset_price
                     except Exception as e:

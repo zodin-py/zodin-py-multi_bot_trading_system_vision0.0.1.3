@@ -6,7 +6,7 @@
 
 **Status:** completed
 
-- [ ] `domains/api/models.py` — Pydantic request/response models (AnalyzeRequest, AnalyzeResponse, IndicatorsResponse, MarketDataResponse, TradeRequest, etc.)
+- [ ] `api/models.py` — Pydantic request/response models (AnalyzeRequest, AnalyzeResponse, IndicatorsResponse, MarketDataResponse, TradeRequest, etc.)
 - [ ] `domains/api/dependencies.py` — FastAPI `Depends()` for DI container services (AnalysisService, TradeService, etc.)
 - [ ] `domains/api/routes/analysis.py` — `/api/v1/analyze`, `/api/v1/indicators`, `/api/v1/market-data`, `/api/v1/symbols`, `/api/v1/timeframes`
 - [ ] `domains/api/routes/trades.py` — `/api/v1/trades` (GET/POST), `/api/v1/trades/{trade_id}` (DELETE), `/api/v1/trades/history`
