@@ -15,6 +15,13 @@ from backend import config
 from backend.services.indicators_service import IndicatorService
 from backend.services.price_service import PriceService
 from backend.services.wallet_service import WalletService
+from backend.candles.manager import (
+    fetch_historical_candles,
+    update_candle_data,
+    load_candles,
+    save_candles,
+    merge_candles,
+)
 from backend.config import COINS, TIMEFRAMES, REFRESH_INTERVAL
 
 # Logging konfigurieren
@@ -207,6 +214,134 @@ def api_settings():
     return jsonify({
         'symbol': current_symbol,
         'timeframe': current_timeframe
+    })
+
+
+# ==================== COIN & CANDLE API ROUTES ====================
+
+@app.route('/api/coins')
+def api_coins():
+    """Get list of available trading coins."""
+    return jsonify({
+        'success': True,
+        'coins': COINS,
+        'timeframes': TIMEFRAMES
+    })
+
+
+@app.route('/api/coins/<symbol>/candles')
+def api_coin_candles(symbol: str):
+    """Get candle data for a specific coin and timeframe.
+
+    Query parameters:
+        timeframe: Candle interval (default: '5m' from config)
+        limit: Maximum candles to return (default: 100, max: 1000)
+    """
+    # Get timeframe from query param or default
+    timeframe = request.args.get('timeframe', '5m')
+    if timeframe not in config.TIMEFRAMES:
+        timeframe = '5m'
+
+    # Get limit from query param
+    try:
+        limit = int(request.args.get('limit', 100))
+        limit = max(1, min(limit, 1000))  # Clamp between 1 and 1000
+    except (ValueError, TypeError):
+        limit = 100
+
+    # Validate symbol is in supported list
+    if symbol not in config.COINS:
+        return jsonify({
+            'success': False,
+            'error': f"Symbol '{symbol}' not in supported coins list"
+        }), 400
+
+    # Load existing candle data
+    candle_data, success = load_candles(symbol, timeframe)
+
+    if not success or not candle_data:
+        return jsonify({
+            'success': False,
+            'error': 'No candle data available',
+            'candles': [],
+            'candle_count': 0
+        }), 404
+
+    candles = candle_data.get("candles", [])
+
+    # Return up to 'limit' candles (newest first, but stored oldest-first)
+    # Since we store oldest-first, we return the last 'limit' candles
+    candle_count = len(candles)
+    start_idx = max(0, candle_count - limit)
+    candles_to_return = candles[start_idx:]
+
+    return jsonify({
+        'success': True,
+        'symbol': symbol,
+        'timeframe': timeframe,
+        'candles': candles_to_return,
+        'candle_count': candle_count,
+        'returned_count': len(candles_to_return)
+    })
+
+
+@app.route('/api/coins/<symbol>/select', methods=['POST'])
+def api_coin_select(symbol: str):
+    """Select a coin and update its candle data.
+
+    Request body:
+        timeframe: Candle interval (optional, defaults to '5m')
+
+    Returns:
+        Update summary including new candles loaded, success status
+    """
+    # Get timeframe from request body or default
+    data = request.json or {}
+    timeframe = data.get('timeframe', '5m')
+    if timeframe not in config.TIMEFRAMES:
+        timeframe = '5m'
+
+    # Validate symbol
+    if symbol not in config.COINS:
+        return jsonify({
+            'success': False,
+            'error': f"Symbol '{symbol}' not in supported coins list"
+        }), 400
+
+    # Get current server time for candle completion checks
+    from backend.config import BASE_URL, WS_URL
+    import time
+
+    # Fetch server time from Binance
+    server_time = None
+    try:
+        import urllib.request
+        url = f"{BASE_URL}/api/v3/time"
+        request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(request, timeout=5) as response:
+            server_data = json.loads(response.read().decode("utf-8"))
+            server_time = int(server_data.get('serverTime', 0))
+    except Exception as e:
+        logger.warning(f"Could not fetch Binance server time: {e}")
+        server_time = None
+
+    # Update candle data
+    update_summary = update_candle_data(symbol, timeframe, server_time)
+
+    if not update_summary["success"]:
+        return jsonify({
+            'success': False,
+            'error': update_summary.get('error', 'Failed to update candle data')
+        }), 500
+
+    return jsonify({
+        'success': True,
+        'symbol': symbol,
+        'timeframe': timeframe,
+        'candles_loaded': update_summary['candles_loaded'],
+        'new_candles': update_summary['new_candles'],
+        'duplicates_skipped': update_summary['duplicates_skipped'],
+        'message': f'Candle data updated for {symbol}/{timeframe}'
     })
 
 

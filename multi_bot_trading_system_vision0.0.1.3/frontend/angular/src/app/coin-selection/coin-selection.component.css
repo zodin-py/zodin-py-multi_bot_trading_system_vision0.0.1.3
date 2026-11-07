@@ -1,0 +1,83 @@
+/* Coin Selection Component Styles */
+
+.coin-selection-container {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.coin-selection-container h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.coin-selection-container select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%3E%3Cpath%20fill='%236b7280'%20d='M2%2013l6-6 6 6-1.41-1.42L8%2012l-6.3-1.31a12.03912%2012.03912%200%2000-2.08-2.07L1%208l-1.41 1.42L5.5%205.5l1.41 1.42L1%2011l6.3 1.31a12.03832%2012.03832%200%2000%202.08 2.07L8%2016l6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+.coin-selection-container select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.btn {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+}
+
+.btn-secondary {
+  background-color: #4a5568;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #2d3748;
+}
+
+/* Chart Container */
+.chart-card {
+  background-color: #1e293b;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.chart-toolbar {
+  background-color: #0f172a;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #334155;
+}
+
+.chart-toolbar select,
+.chart-toolbar button {
+  font-size: 0.875rem;
+}
+
+/* No data message */
+.no-data-message {
+  padding: 2rem;
+  color: #64748b;
+}
+
+/* Candle info */
+.candle-info {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}

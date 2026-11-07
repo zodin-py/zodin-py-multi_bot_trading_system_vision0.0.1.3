@@ -9,6 +9,9 @@ import {
   WalletResponse,
   Trade,
   NewsResponse,
+  CoinsResponse,
+  CandleChartData,
+  CoinSelectionResponse,
 } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
@@ -20,8 +23,8 @@ export class ApiService {
   }
 
   /** Returns the fixed list of supported coin symbols, e.g. ['BTC', 'ETH', ...] */
-  getCoins(): Observable<string[]> {
-    return this.http.get<string[]>('/api/coins');
+  getCoins(): Observable<CoinsResponse> {
+    return this.http.get<CoinsResponse>('/api/coins');
   }
 
   /**
@@ -60,5 +63,17 @@ export class ApiService {
   /** Collect and fetch latest news from configured sources. */
   getNews(): Observable<NewsResponse> {
     return this.http.get<NewsResponse>('/api/news');
+  }
+
+  /** Get candle chart data for a specific coin and timeframe. */
+  getCoinCandles(symbol: string, timeframe: string = '5m'): Observable<CandleChartData> {
+    return this.http.get<CandleChartData>(`/api/coins/${symbol}/candles`, {
+      params: { timeframe },
+    });
+  }
+
+  /** Refresh candle data for a specific coin and timeframe. */
+  refreshCoinCandles(symbol: string, timeframe: string = '5m'): Observable<CoinSelectionResponse> {
+    return this.http.post<CoinSelectionResponse>(`/api/coins/${symbol}/select`, { timeframe });
   }
 }

@@ -6,10 +6,10 @@ import { interval, Subscription } from 'rxjs';
 
 import { HeaderComponent } from './header/header.component';
 import { PriceCardComponent } from './kpi/price-card.component';
-import { IndicatorsComponent } from './indicators/indicators.component';
 import { NewsComponent } from './news/news.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { TradesComponent } from './trades/trades.component';
+import { CoinSelectionComponent } from './coin-selection/coin-selection.component';
 
 import { ApiService } from './shared/services/api.service';
 import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
@@ -23,10 +23,10 @@ import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
     HttpClientModule,
     HeaderComponent,
     PriceCardComponent,
-    IndicatorsComponent,
     NewsComponent,
     WalletComponent,
     TradesComponent,
+    CoinSelectionComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -55,7 +55,6 @@ export class App implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadAllData();
     this.sub = interval(this.refreshInterval).subscribe(() => this.loadAllData());
   }
 

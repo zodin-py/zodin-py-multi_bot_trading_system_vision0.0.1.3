@@ -1,76 +1,73 @@
-<body class="gradient-bg min-h-screen text-white">
-  <!-- Header (standalone) -->
-  <app-header
-    (coinLoaded)="onCoinLoaded($event)"
-  ></app-header>
+<div class="gradient-bg min-h-screen text-white">
+  <app-header (coinLoaded)="onCoinLoaded($event)"></app-header>
 
-  <!-- Main Content -->
   <main class="container mx-auto px-4 py-6">
-    <!-- KPI Grid: Price + Wallet -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-      <!-- Price Card -->
+    <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
       <app-price-card [price]="currentPrice" [priceChange]="priceChange"></app-price-card>
-
-      <!-- Wallet Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
       <app-wallet></app-wallet>
     </div>
 
-      <!-- Indicators Preview Card -->
-      <div class="card rounded-xl p-4" *ngIf="indicators">
-        <h2 class="text-lg font-semibold mb-4">
-          <i class="fas fa-chart-line mr-2 text-green-400"></i>Indicators ({{ indicators.symbol }} · {{ indicators.timeframe }})
-        </h2>
-        <div class="space-y-2">
-          <div class="flex justify-between text-sm">
-            <span class="text-gray-400">RSI (14)</span>
-            <span class="font-bold" *ngIf="indicators.rsi.length">{{ indicators.rsi[indicators.rsi.length - 1] | number:'1.2-2' }}</span>
-            <span class="font-bold text-gray-400" *ngIf="!indicators.rsi.length">--</span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span class="text-gray-400">MACD</span>
-            <span class="font-bold" *ngIf="indicators.macd.length">{{ indicators.macd[indicators.macd.length - 1] | number:'1.4-4' }}</span>
-            <span class="font-bold text-gray-400" *ngIf="!indicators.macd.length">--</span>
-          </div>
-          <div class="flex justify-between text-sm">
-            <span class="text-gray-400">EMA (20)</span>
-            <span class="font-bold" *ngIf="indicators.ema.length">{{ indicators.ema[indicators.ema.length - 1] | number:'1.2-2' }}</span>
-            <span class="font-bold text-gray-400" *ngIf="!indicators.ema.length">--</span>
-          </div>
+    <section class="card rounded-xl p-4 mb-6">
+      <app-coin-selection></app-coin-selection>
+    </section>
+
+    <section class="card rounded-xl p-4 mb-6">
+      <h2 class="text-lg font-semibold mb-4" *ngIf="indicators">
+        <i class="fas fa-chart-line mr-2 text-green-400"></i>
+        Indikatoren ({{ indicators.symbol }} · {{ indicators.timeframe }})
+      </h2>
+      <h2 class="text-lg font-semibold mb-4" *ngIf="!indicators">
+        <i class="fas fa-chart-line mr-2 text-green-400"></i>Indikatoren
+      </h2>
+
+      <div *ngIf="indicators; else indicatorsLoading" class="space-y-2">
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-400">RSI (14)</span>
+          <span class="font-bold" *ngIf="indicators.rsi.length; else emptyRsi">
+            {{ indicators.rsi[indicators.rsi.length - 1] | number:'1.2-2' }}
+          </span>
+          <ng-template #emptyRsi><span class="font-bold text-gray-400">--</span></ng-template>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-400">MACD</span>
+          <span class="font-bold" *ngIf="indicators.macd.length; else emptyMacd">
+            {{ indicators.macd[indicators.macd.length - 1] | number:'1.4-4' }}
+          </span>
+          <ng-template #emptyMacd><span class="font-bold text-gray-400">--</span></ng-template>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-400">EMA (20)</span>
+          <span class="font-bold" *ngIf="indicators.ema.length; else emptyEma">
+            {{ indicators.ema[indicators.ema.length - 1] | number:'1.2-2' }}
+          </span>
+          <ng-template #emptyEma><span class="font-bold text-gray-400">--</span></ng-template>
         </div>
       </div>
+      <ng-template #indicatorsLoading>
+        <span class="text-gray-400">Lade Indikatoren für {{ currentCoin }}...</span>
+      </ng-template>
+    </section>
 
-      <!-- Loading state when no data -->
-      <div class="card rounded-xl p-4 flex items-center justify-center md:col-span-2" *ngIf="!indicators">
-        <span class="text-gray-400">Loading indicators for {{ currentCoin }}...</span>
-      </div>
-    
-
-    <!-- News Agent Card -->
     <app-news></app-news>
 
-      <div class="card rounded-xl p-4">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold">
-            <i class="fas fa-history mr-2 text-blue-400"></i>Trades History
-          </h2>
-          <div class="flex items-center space-x-2">
-            <label class="text-sm text-gray-400">Letzte N:</label>
-            <input
-              type="number"
-              min="1"
-              max="100"
-              [(ngModel)]="tradesLimit"
-              class="w-16 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-blue-500"
-            />
-          </div>
+    <section class="card rounded-xl p-4">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold">
+          <i class="fas fa-history mr-2 text-blue-400"></i>Trades History
+        </h2>
+        <div class="flex items-center space-x-2">
+          <label for="trades-limit" class="text-sm text-gray-400">Letzte N:</label>
+          <input
+            id="trades-limit"
+            type="number"
+            min="1"
+            max="100"
+            [(ngModel)]="tradesLimit"
+            class="w-16 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-blue-500"
+          />
         </div>
-        <app-trades [limit]="tradesLimit"></app-trades>
       </div>
-    </div>
-
+      <app-trades [limit]="tradesLimit"></app-trades>
+    </section>
   </main>
-
-  <!-- FontAwesome icons loaded globally -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"></script>
-</body>
+</div>

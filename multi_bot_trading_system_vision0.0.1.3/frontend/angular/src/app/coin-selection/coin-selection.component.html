@@ -1,0 +1,158 @@
+<div class="coin-selection-container">
+  <!-- Header Section -->
+  <div class="border-b border-slate-700 pb-4">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-chart-line text-green-400 text-2xl"></i>
+        <h2 class="text-xl font-bold text-white">Coin Selection &amp; Chart</h2>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-sm text-slate-400">Symbol:</span>
+        <select
+          [(ngModel)]="selectedCoin"
+          (ngModelChange)="onCoinChange($event)"
+          class="bg-slate-800 border border-slate-600 rounded px-3 py-2 text-sm text-white min-w-[180px]"
+        >
+          <option *ngFor="let coin of availableCoins" [value]="coin.value">
+            {{ coin.label }}
+          </option>
+        </select>
+        <span class="text-sm text-slate-400">|</span>
+        <span class="text-sm text-slate-400">Timeframe:</span>
+        <select
+          [(ngModel)]="selectedTimeframe"
+          (ngModelChange)="onTimeframeChange($event)"
+          class="bg-slate-800 border border-slate-600 rounded px-3 py-2 text-sm text-white min-w-[120px]"
+        >
+          <option *ngFor="let tf of timeframes" [value]="tf">
+            {{ tf }}
+          </option>
+        </select>
+        <button
+          class="ml-2 btn btn-primary text-sm py-1 px-4 rounded"
+          (click)="refreshCandleData()"
+          [disabled]="loading">
+            <i *ngIf="loading" class="fas fa-spin fa-spinner"></i>
+            <i *ngIf="!loading" class="fas fa-refresh"></i>
+            Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="pt-4">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex min-h-48 items-center justify-center">
+      <span class="text-slate-400">Lade Kerzendaten für {{ selectedCoin }} ({{ selectedTimeframe }})...</span>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="mt-6 p-6 rounded-xl bg-slate-800/50 text-center">
+      <i class="fas fa-exclamation-triangle text-red-400 text-3xl mb-4 display:block"></i>
+      <h3 class="text-xl font-bold text-white">Fehler</h3>
+      <p class="text-slate-400 mb-6">{{ error }}</p>
+      <button
+        class="btn btn-secondary px-6 py-2 rounded"
+        (click)="refreshCandleData()"
+      >
+        Nochmal versuchen
+      </button>
+    </div>
+
+    <!-- Chart Data Available -->
+    <div *ngIf="chartData && !loading" class="mt-6">
+      <!-- Chart Summary Header -->
+      <div class="border-b border-slate-700 pb-4 mb-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="text-white font-medium">{{ chartData.symbol }} {{ chartData.timeframe }}</span>
+            <span class="text-slate-400 text-sm">({{ chartData.candle_count }} Kerzen)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Candlestick Chart -->
+      <div class="rounded-xl overflow-hidden bg-slate-900/50">
+        <!-- Chart Toolbar -->
+        <div class="p-4 border-b border-slate-700 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-slate-400">Anzeigen:</span>
+            <select
+              class="bg-slate-700 rounded px-2 py-1 text-sm text-white"
+              [(ngModel)]="selectedTimeframe"
+              (ngModelChange)="onTimeframeChange($event)"
+            >
+              <option *ngFor="let tf of timeframes" [value]="tf">
+                {{ tf }}
+              </option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              class="btn btn-secondary text-xs py-1 px-3 rounded"
+              (click)="refreshCandleData()"
+              [disabled]="loading">
+                Aktualisieren
+            </button>
+          </div>
+        </div>
+
+        <!-- Chart Area -->
+        <div class="h-96 w-full">
+          <svg
+            *ngIf="chartData.candles.length > 0; else noCandles"
+            class="w-full h-full"
+            viewBox="0 0 1000 300"
+            preserveAspectRatio="none"
+            role="img"
+            [attr.aria-label]="chartData.symbol + ' candlestick chart'"
+          >
+            <line x1="0" y1="290" x2="1000" y2="290" stroke="#334155"></line>
+            <g *ngFor="let candle of chartCandles">
+              <line
+                [attr.x1]="candle.x"
+                [attr.x2]="candle.x"
+                [attr.y1]="candle.highY"
+                [attr.y2]="candle.lowY"
+                [attr.stroke]="candle.bullish ? '#34d399' : '#f87171'"
+              ></line>
+              <rect
+                [attr.x]="candle.x - candleWidth / 2"
+                [attr.y]="candle.bodyY"
+                [attr.width]="candleWidth"
+                [attr.height]="candle.bodyHeight"
+                [attr.fill]="candle.bullish ? '#34d399' : '#f87171'"
+              ></rect>
+            </g>
+          </svg>
+          <ng-template #noCandles>
+            <div class="flex h-full items-center justify-center text-slate-400">
+              Für diesen Zeitraum sind noch keine Kerzendaten verfügbar.
+            </div>
+          </ng-template>
+        </div>
+
+        <!-- Chart Footer / Info -->
+        <div class="p-4 border-t border-slate-700 text-sm">
+          <div class="flex justify-between">
+            <span class="text-slate-400">Anzahl Kerzen: {{ chartData.candle_count }}</span>
+            <span class="text-slate-400">Zeitrahmen: {{ chartData.timeframe }}</span>
+          </div>
+          <div class="mt-2 flex justify-between">
+            <span class="text-slate-500">Erste Kerze: {{ chartData.candles.length ? (chartData.candles[0].timestamp | date:'short') : 'N/A' }}</span>
+            <span class="text-slate-500">Letzte Kerze: {{ chartData.candles.length ? (chartData.candles[chartData.candles.length - 1].timestamp | date:'short') : 'N/A' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No data message -->
+    <div *ngIf="!chartData && !loading && !error && selectedCoin" class="mt-6 p-6 rounded-xl bg-slate-800/50 text-center">
+      <i class="fas fa-chart-bar text-slate-400 text-3xl mb-4 display-block"></i>
+      <h3 class="text-xl font-bold text-white">Keine Chart-Daten</h3>
+      <p class="text-slate-400 mb-4">Wähle einen Coin und Zeitrahmen aus, um Candlestick-Daten anzuzeigen.</p>
+      <p class="text-slate-500">Die Daten werden von Binance über die API geladen.</p>
+    </div>
+  </div>
+</div>

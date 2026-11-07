@@ -90,3 +90,57 @@ export interface NewsResponse {
   items: NewsItem[];
   error?: string;
 }
+
+// Candle data models for the coin selection chart feature
+
+export interface CandleData {
+  open_time: number;
+  close_time: number;
+  timestamp: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  quote_volume: number;
+  trades: number;
+  taker_buy_base_volume: number;
+  taker_buy_quote_volume: number;
+}
+
+export interface CandleChartData {
+  success: boolean;
+  symbol: string;
+  timeframe: string;
+  candle_count: number;
+  candles: CandleData[];
+  returned_count?: number;
+  error?: string;
+}
+
+export interface CoinSelectionRequest {
+  symbol: string;
+  timeframe: string;
+}
+
+export interface CoinSelectionResponse {
+  success: boolean;
+  symbol: string;
+  timeframe: string;
+  candles_loaded: number;
+  new_candles: number;
+  duplicates_skipped: number;
+  error?: string;
+  message?: string;
+}
+
+export interface AvailableCoin {
+  value: string;
+  label: string;
+}
+
+export interface CoinsResponse {
+  success: boolean;
+  coins: string[];
+  timeframes: Record<string, string>;
+}
