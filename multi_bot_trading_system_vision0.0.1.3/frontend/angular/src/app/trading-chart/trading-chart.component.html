@@ -25,15 +25,25 @@
       <button type="button" class="live-button" (click)="goToLive()">Go to Live</button>
     </div>
   </div>
-  <div
-    #chartContainer
-    class="chart-container"
-    [class.chart-ready]="chartReady"
-    [hidden]="candles.length === 0"
-    role="img"
-    [attr.aria-label]="symbol + ' ' + timeframe + ' candlestick and volume chart'"
-    (dblclick)="handleDoubleClick($event)"
-  ></div>
+  <div class="chart-stage">
+    <div
+      #chartContainer
+      class="chart-container"
+      [class.chart-ready]="chartReady"
+      [hidden]="candles.length === 0"
+      role="img"
+      [attr.aria-label]="symbol + ' ' + timeframe + ' candlestick and volume chart'"
+      (dblclick)="handleDoubleClick($event)"
+    ></div>
+    <app-chart-drawing-toolbar
+      *ngIf="chartReady"
+      [chart]="chartApi"
+      [series]="chartSeries"
+      [chartElement]="chartContainer"
+      [candles]="candles"
+      [symbol]="symbol"
+    ></app-chart-drawing-toolbar>
+  </div>
   <div *ngIf="candles.length === 0" class="no-data">
     Für diesen Zeitraum sind noch keine Kerzendaten verfügbar.
   </div>

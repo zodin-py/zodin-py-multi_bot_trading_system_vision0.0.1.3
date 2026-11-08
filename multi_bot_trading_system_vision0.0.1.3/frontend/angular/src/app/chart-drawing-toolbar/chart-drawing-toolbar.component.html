@@ -1,0 +1,134 @@
+<aside
+  class="drawing-toolbar"
+  role="toolbar"
+  aria-label="Chart-Werkzeuge"
+  (pointerdown)="$event.stopPropagation()"
+  (click)="$event.stopPropagation()"
+>
+  <button
+    type="button"
+    class="tool-button"
+    [class.active]="activeTool === 'select'"
+    [attr.aria-pressed]="activeTool === 'select'"
+    title="Auswählen und verschieben (Esc)"
+    aria-label="Auswählen und verschieben"
+    (click)="selectTool('select')"
+  >
+    <i class="fas fa-arrow-pointer" aria-hidden="true"></i>
+  </button>
+
+  <button
+    type="button"
+    class="tool-button"
+    [class.active]="favoritesOpen"
+    [attr.aria-expanded]="favoritesOpen"
+    title="Favoriten verwalten"
+    aria-label="Favoriten verwalten"
+    (click)="toggleFavorites()"
+  >
+    <i class="fas fa-star" aria-hidden="true"></i>
+  </button>
+
+  <div class="tool-separator"></div>
+  <ng-container *ngFor="let tool of tools; let index = index">
+    <div *ngIf="index === 4" class="tool-separator"></div>
+    <button
+      type="button"
+      class="tool-button"
+      [class.active]="activeTool === tool.id"
+      [attr.aria-pressed]="activeTool === tool.id"
+      [title]="tool.label"
+      [attr.aria-label]="tool.label"
+      (click)="selectTool(tool.id)"
+    >
+      <i class="fas" [ngClass]="tool.icon" aria-hidden="true"></i>
+    </button>
+  </ng-container>
+
+  <div class="tool-separator"></div>
+  <button
+    type="button"
+    class="tool-button toggle-button"
+    [class.active]="magnetEnabled"
+    [attr.aria-pressed]="magnetEnabled"
+    title="Magnet-Modus"
+    aria-label="Magnet-Modus"
+    (click)="toggleMagnet()"
+  >
+    <i class="fas fa-magnet" aria-hidden="true"></i>
+  </button>
+  <button
+    type="button"
+    class="tool-button toggle-button"
+    [class.active]="!drawingsVisible"
+    [attr.aria-pressed]="!drawingsVisible"
+    title="Zeichnungen ein-/ausblenden"
+    aria-label="Zeichnungen ein- oder ausblenden"
+    (click)="toggleVisibility()"
+  >
+    <i class="fas" [ngClass]="drawingsVisible ? 'fa-eye' : 'fa-eye-slash'" aria-hidden="true"></i>
+  </button>
+
+  <div class="tool-separator"></div>
+  <button
+    type="button"
+    class="tool-button"
+    [disabled]="!canUndo"
+    title="Letzte Zeichenaktion rückgängig"
+    aria-label="Rückgängig"
+    (click)="undo()"
+  >
+    <i class="fas fa-rotate-left" aria-hidden="true"></i>
+  </button>
+  <button
+    type="button"
+    class="tool-button danger-button"
+    [disabled]="!canDelete"
+    title="Auswahl löschen oder alle Zeichnungen löschen"
+    aria-label="Zeichnung löschen"
+    (click)="deleteDrawings()"
+  >
+    <i class="fas fa-trash" aria-hidden="true"></i>
+  </button>
+</aside>
+
+<div *ngIf="favoritesOpen" class="favorites-menu" role="dialog" aria-label="Favoriten">
+  <div class="favorites-heading">Werkzeuge</div>
+  <div *ngFor="let tool of tools" class="favorite-row">
+    <button type="button" class="favorite-select" (click)="selectTool(tool.id)">
+      <i class="fas" [ngClass]="tool.icon" aria-hidden="true"></i>
+      <span>{{ tool.label }}</span>
+    </button>
+    <button
+      type="button"
+      class="favorite-toggle"
+      [attr.aria-label]="
+        favorites.includes(tool.id) ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
+      "
+      [attr.aria-pressed]="favorites.includes(tool.id)"
+      (click)="toggleFavorite(tool.id)"
+    >
+      <i class="fas fa-star" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="favorites-heading">Favoriten</div>
+  <button
+    *ngFor="let favorite of favorites"
+    type="button"
+    class="favorite-shortcut"
+    (click)="selectTool(favorite)"
+  >
+    {{ toolLabel(favorite) }}
+  </button>
+  <span *ngIf="favorites.length === 0" class="empty-favorites">Noch keine Favoriten</span>
+</div>
+
+<canvas
+  #drawingCanvas
+  class="drawing-overlay"
+  [class.drawing-enabled]="activeTool !== 'select'"
+  [hidden]="!chart || !series || !chartElement"
+  aria-hidden="true"
+  (pointerdown)="onCanvasPointerDown($event)"
+  (pointermove)="onCanvasPointerMove($event)"
+></canvas>

@@ -57,10 +57,15 @@
 }
 
 .chart-container {
-  width: 100%;
+  width: calc(100% - 52px);
+  margin-left: 52px;
   height: min(68vh, 560px);
   min-height: 360px;
   cursor: grab;
+}
+
+.chart-stage {
+  position: relative;
 }
 
 .chart-container:active {
@@ -90,6 +95,8 @@
   }
 
   .chart-container {
+    width: calc(100% - 46px);
+    margin-left: 46px;
     height: 420px;
     min-height: 320px;
   }

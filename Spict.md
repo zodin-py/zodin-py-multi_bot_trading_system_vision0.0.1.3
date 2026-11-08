@@ -1,208 +1,177 @@
-# SPECIFICATION: Interactive TradingView-Style Candlestick Chart
+# Feature Specification: Left Chart Toolbar – MultiTradingBot
 
-## 1. Ziel des Features
+## 1. Ziel
 
-Der aktuell implementierte Candlestick-Chart zeigt die Kerzen bereits korrekt an, ist aber statisch.
+Implementiere eine vertikale Werkzeugleiste auf der linken Seite des bestehenden Charts im MultiTradingBot.
 
-Ich möchte diesen Chart in einen vollständig interaktiven Trading-Chart umwandeln, dessen Bedienung sich möglichst ähnlich wie TradingView anfühlt.
+Die Toolbar soll sich optisch und funktional an der bereitgestellten Referenz (TradingView Drawing Toolbar) orientieren.
 
-**Wichtig:** Der bestehende Chart und die bereits funktionierende Binance-Datenverbindung sollen erhalten bleiben. Es geht um eine Erweiterung des bestehenden Systems, nicht um eine komplette Neuentwicklung.
+**WICHTIG:**
+- Der bestehende Chart ist bereits vollständig implementiert und funktionsfähig.
+- Die Chart-Engine darf nicht ersetzt oder neu implementiert werden.
+- Bestehende Chart-Funktionen, Indikatoren, Datenfeeds, Zoom, Scrolling und Interaktionen müssen erhalten bleiben.
+- Es soll ausschließlich die linke Toolbar ergänzt und mit dem bestehenden Chart verbunden werden.
 
-## 2. Interaktive Chart-Steuerung
+## 2. Position und Design
 
-Implementiere folgende Funktionen:
+Die Toolbar wird direkt links innerhalb des Chart-Bereichs positioniert.
 
-### 2.1 Drag & Pan
-- Mit der linken Maustaste den Chart greifen und horizontal verschieben.
-- Historische Kerzen links sichtbar machen.
-- Zu neueren Kerzen rechts navigieren.
-- Vertikales Verschieben der Preisskala ermöglichen.
-- Flüssige Bewegung ohne Verzögerungen.
-- Kein automatisches Zurückspringen während der manuellen Navigation.
+### Layout
+- Vertikale Anordnung.
+- Feste Breite: ca. 48–52 px.
+- Höhe: 100 % des verfügbaren Chart-Bereichs.
+- Dunkler Hintergrund passend zum bestehenden Dark Theme.
+- Dezente rechte Trennlinie zum Chart.
+- Icons mittig ausgerichtet.
+- Einheitliche Abstände zwischen den Icons.
+- Toolbar bleibt beim Scrollen und Zoomen des Charts an ihrer Position.
+- Responsive Verhalten für unterschiedliche Bildschirmgrößen.
 
-### 2.2 Zoom
-- Mausrad zum Hinein- und Herauszoomen.
-- Zoom soll sich an der aktuellen Mausposition orientieren.
-- Beim Hineinzoomen werden weniger Kerzen mit mehr Details angezeigt.
-- Beim Herauszoomen werden mehr historische Kerzen angezeigt.
-- Zoom auf der Zeitachse und Preisskala ermöglichen.
-- Optional Buttons für Zoom In, Zoom Out und Reset View.
+### Design-Stil
+- Minimalistisches TradingView-inspiriertes Design.
+- Kleine, dezente Icons.
+- Keine großen Beschriftungen.
+- Aktives Werkzeug bekommt einen deutlich sichtbaren Hintergrund.
+- Hover-Effekt für jedes Icon.
+- Tooltips beim Darüberfahren mit der Maus.
+- Dezente Trennlinien zwischen zusammengehörigen Werkzeuggruppen.
 
-### 2.3 Crosshair
-Wenn ich mit der Maus über den Chart fahre:
-- Eine vertikale Linie zeigt die Position der jeweiligen Kerze.
-- Eine horizontale Linie zeigt das aktuelle Preisniveau.
-- Angezeigte Informationen:
-  - Open
-  - High
-  - Low
-  - Close
-  - Volume
-  - Zeitstempel
-- Preis und Zeit sollen sich dynamisch mit dem Crosshair aktualisieren.
+## 3. Aufbau der Toolbar
 
-### 2.4 Zeitachse
-- Datum und Uhrzeit unterhalb des Charts anzeigen.
-- Beim Zoomen die Zeitbeschriftung dynamisch anpassen.
-- Historische Zeiträume korrekt darstellen.
-- Keine überlappenden Zeitbeschriftungen.
+Die Reihenfolge soll sich an der Referenz orientieren.
 
-### 2.5 Preisskala
-- Preisachse rechts neben dem Chart.
-- Dynamische Anpassung der Preisskala beim Zoomen und Verschieben.
-- Aktuellen Preis deutlich markieren.
-- Automatische Skalierung als Option.
-- Manuelle Skalierung ermöglichen.
+### Gruppe 1 – Auswahl
 
-## 3. Chart-Darstellung
+1. **Cursor / Select Tool**
+   - Standardmäßig aktiviert.
+   - Auswahl und Verschieben vorhandener Zeichnungen.
+   - Auswahl von Chart-Objekten.
 
-Die Darstellung soll professionell und TradingView-ähnlich sein.
+2. **Favorites**
+   - Häufig verwendete Werkzeuge als Favoriten verwalten.
+   - Favoriten-Menü öffnen.
+   - Werkzeuge können hinzugefügt und entfernt werden.
 
-Folgende Elemente sollen vorhanden sein:
+### Gruppe 2 – Drawing Tools
 
-- Grüne Kerzen für steigende Kurse.
-- Rote Kerzen für fallende Kurse.
-- Dochte (Wicks) korrekt darstellen.
-- Dezentes Hintergrund-Grid.
-- Preisachse rechts.
-- Zeitachse unten.
-- Volume-Bars unterhalb des Hauptcharts.
-- Aktueller Preis als horizontale Linie.
-- Klare und gut lesbare Schrift.
-- Dark Mode passend zu einem Trading-Dashboard.
+3. **Trend Line**
+   - Zeichnen von diagonalen Trendlinien.
+   - Start- und Endpunkt durch Mausklick festlegen.
 
-## 4. Datenintegration
+4. **Horizontal Line / Levels**
+   - Horizontale Linien auf bestimmten Preisniveaus zeichnen.
+   - Unterstützung für Support- und Resistance-Level.
 
-Die vorhandene Binance-Verbindung muss weiterhin verwendet werden.
+5. **Fibonacci Tools**
+   - Fibonacci-Retracement zeichnen.
+   - Automatische Berechnung der Fibonacci-Level.
+   - Darstellung der Level direkt im Chart.
 
-Die Chart-Komponente soll die bereits gespeicherten historischen Candlestick-Daten nutzen.
+6. **Geometric / Pattern Tools**
+   - Zeichnen geometrischer Formen und Muster.
+   - Erweiterbar für weitere Pattern-Werkzeuge.
 
-Anforderungen:
+### Gruppe 3 – Trading Tools
 
-- Bis zu 1000 historische Kerzen laden und darstellen.
-- Neue Daten nur nach dem Schließen einer Kerze übernehmen.
-- Keine unvollständigen Kerzen in die historische Datenbasis schreiben.
-- Beim Navigieren durch historische Daten keine unnötigen API-Anfragen auslösen.
-- Beim Erreichen des ältesten geladenen Datenbereichs optional weitere historische Kerzen nachladen.
-- Bereits geladene Daten lokal verwenden.
+7. **Long / Short Position Tool**
+   - Long- und Short-Positionen grafisch im Chart darstellen.
+   - Entry-Preis definieren.
+   - Stop-Loss definieren.
+   - Take-Profit definieren.
+   - Risk/Reward-Verhältnis anzeigen.
+   - Gewinn- und Verlustbereiche visuell unterscheiden.
 
-**Wichtig:** Die Chart-Navigation darf die Binance-Datenaktualisierung nicht beeinflussen.
+8. **Rectangle Tool**
+   - Rechtecke im Chart zeichnen.
+   - Für Support-/Resistance-Zonen und Supply-/Demand-Zonen verwenden.
 
-## 5. Live-Update-Verhalten
+### Gruppe 4 – Zeichenoptionen
 
-Der Chart soll automatisch aktuell bleiben.
+9. **Magnet Mode**
+   - Wenn aktiviert, werden Zeichnungspunkte automatisch an nahegelegene Candlestick-Preise bzw. relevante Chart-Punkte angepasst.
+   - Ein- und ausschaltbar.
 
-- Neue geschlossene Kerzen werden am rechten Rand hinzugefügt.
-- Die aktuelle Ansicht bleibt erhalten, wenn der Benutzer historische Daten betrachtet.
-- Wenn der Benutzer am rechten Rand ist und dem aktuellen Markt folgt, soll der Chart automatisch mit neuen Kerzen weiterlaufen.
-- Wenn der Benutzer manuell nach links navigiert, darf der Chart nicht automatisch zurück zur neuesten Kerze springen.
-- Eine Schaltfläche "Go to Live" soll jederzeit zur neuesten Kerze zurückführen.
+10. **Visibility**
+    - Zeichnungen im Chart ein- und ausblenden.
+    - Erneutes Aktivieren stellt die Zeichnungen wieder dar.
 
-## 6. Interaktionsdetails
+### Gruppe 5 – Aktionen
 
-Implementiere zusätzlich:
+11. **Undo**
+    - Letzte Zeichenaktion rückgängig machen.
 
-- Doppelklick auf den Chart: Reset der Ansicht.
-- Doppelklick auf die Preisskala: automatische Preisskalierung.
-- Drag auf der Preisskala: vertikales Verschieben.
-- Drag auf der Zeitachse: horizontales Verschieben.
-- Responsive Darstellung bei Größenänderung des Browserfensters.
-- Sinnvolle Mauszeiger (Grab/Grabbing).
-- Smoothes Rendering ohne unnötige Re-Renders.
+12. **Delete**
+    - Ausgewähltes Zeichenobjekt löschen.
+    - Bei Bedarf alle Zeichnungen löschen (mit Sicherheitsabfrage).
 
-## 7. Technische Anforderungen
+## 4. Funktionales Verhalten
 
-Untersuche zuerst die vorhandene Projektstruktur.
+### Werkzeugauswahl
+- Immer nur ein aktives Zeichenwerkzeug gleichzeitig.
+- Das ausgewählte Werkzeug wird visuell hervorgehoben.
+- Beim Wechsel des Werkzeugs wird das vorherige Werkzeug deaktiviert.
+- Cursor-Darstellung entsprechend dem aktiven Werkzeug anpassen.
+- ESC beendet den aktuellen Zeichenmodus und aktiviert Select.
 
-Finde heraus:
-- Welche Bibliothek aktuell für Candlestick-Charts verwendet wird.
-- Wie die historischen Kerzen gespeichert werden.
-- Wie die Binance-Daten an den Chart übergeben werden.
-- Wie die Chart-Komponente in das bestehende Frontend eingebunden ist.
+### Zeichnen
+- Zeichnungen müssen direkt im vorhandenen Chart erfolgen.
+- Zeichnungen müssen an die tatsächlichen Preis- und Zeitkoordinaten des Charts gebunden sein.
+- Beim Zoomen und Verschieben müssen sie korrekt an ihrer Position bleiben.
+- Zeichnungen dürfen nicht an festen Bildschirmkoordinaten gespeichert werden.
 
-Prüfe anschließend, ob die vorhandene Bibliothek die benötigten Interaktionen unterstützt.
+### Speicherung
+- Zeichnungen sollen beim Wechsel des Timeframes erhalten bleiben.
+- Zeichnungen sollen beim Wechsel des Symbols nicht versehentlich auf andere Märkte übertragen werden.
+- Zeichnungsdaten sollen dem jeweiligen Symbol und Timeframe bzw. Chart-Kontext zugeordnet werden.
+- Falls bereits ein Persistenzsystem existiert, dieses wiederverwenden.
 
-Falls die aktuelle Bibliothek dafür ungeeignet ist, prüfe bevorzugt:
+## 5. Technische Anforderungen
 
-**TradingView Lightweight Charts**
+- Zuerst die bestehende Chart-Architektur analysieren.
+- Vorhandene Chart-API und Drawing-Funktionen wiederverwenden.
+- Keine zweite Chart-Instanz erstellen.
+- Keine unnötigen Änderungen an bestehenden Komponenten.
+- Toolbar als eigenständige, wiederverwendbare UI-Komponente implementieren.
+- Werkzeugzustand zentral verwalten.
+- Drawing-Logik möglichst modular aufbauen.
+- Icons aus der bereits verwendeten Icon-Bibliothek verwenden.
+- Keine zusätzlichen Abhängigkeiten installieren, wenn die bestehende Technologie ausreicht.
 
-Dokumentation: https://www.tradingview.com/lightweight-charts/
+## 6. UX-Anforderungen
 
-Alternativ kann eine andere geeignete Bibliothek verwendet werden, wenn sie die Anforderungen besser erfüllt.
+- Toolbar muss sich wie ein nativer Bestandteil des Charts anfühlen.
+- Keine Überlagerung wichtiger Chart-Elemente.
+- Werkzeugauswahl muss sofort visuell erkennbar sein.
+- Tooltips sollen die Werkzeugnamen anzeigen.
+- Klicks auf die Toolbar dürfen keine unbeabsichtigten Chart-Aktionen auslösen.
+- Zeichnen, Zoomen, Panning und Auswahl müssen sauber voneinander getrennt sein.
 
-Keine unnötige Migration des gesamten Frontends.
+## 7. Akzeptanzkriterien
 
-## 8. Performance
+Die Implementierung gilt als abgeschlossen, wenn:
 
-Der Chart muss auch mit 1000 oder mehr Candlesticks flüssig funktionieren.
+- [ ] Die linke Toolbar entsprechend der Referenz angezeigt wird.
+- [ ] Die Toolbar innerhalb des vorhandenen Chart-Bereichs sitzt.
+- [ ] Alle Icons Tooltips besitzen.
+- [ ] Die Werkzeugauswahl funktioniert.
+- [ ] Aktive Werkzeuge visuell hervorgehoben werden.
+- [ ] Zeichnungen korrekt im vorhandenen Chart erstellt werden.
+- [ ] Zeichnungen beim Zoomen und Verschieben korrekt positioniert bleiben.
+- [ ] Undo und Delete funktionieren.
+- [ ] Magnet und Visibility funktionieren.
+- [ ] Der bestehende Chart weiterhin vollständig funktioniert.
+- [ ] Es keine Regressionen bei bestehenden Chart-Funktionen gibt.
 
-- Keine unnötigen kompletten Chart-Neuberechnungen.
-- Nur neue Datenpunkte aktualisieren, wenn möglich.
-- Keine unnötigen API-Requests.
-- Pan und Zoom müssen flüssig sein.
-- Daten und Darstellung sauber voneinander trennen.
-- Keine Verzögerungen bei Mausbewegungen.
+## 8. Scope und Priorität
 
-## 9. Architektur
+**Priorität 1:** Toolbar-Layout, Positionierung, Design und Werkzeugauswahl.
 
-Trenne die Verantwortlichkeiten sauber:
+**Priorität 2:** Trendline, Horizontal Line, Rectangle und Long/Short Position.
 
-1. **Data Layer:** Historische und neue Binance-Kerzen.
-2. **Chart Layer:** Candlestick-Darstellung.
-3. **Interaction Layer:** Pan, Zoom, Crosshair und Navigation.
-4. **Update Layer:** Aktualisierung nach Kerzenschluss.
+**Priorität 3:** Fibonacci, Magnet, Visibility, Undo und Delete.
 
-Die Chart-Interaktionen dürfen nicht direkt die Binance-Daten verändern.
+**Priorität 4:** Speicherung und Wiederherstellung der Zeichnungen.
 
-## 10. Akzeptanzkriterien
+**Abschließende Anweisung:**
 
-Das Feature gilt erst als fertig, wenn alle folgenden Punkte funktionieren:
-
-- [ ] Chart lässt sich horizontal mit der Maus verschieben.
-- [ ] Historische Candlesticks können betrachtet werden.
-- [ ] Mausrad-Zoom funktioniert.
-- [ ] Zoom orientiert sich an der Mausposition.
-- [ ] Crosshair zeigt korrekte OHLCV-Daten.
-- [ ] Zeitachse passt sich dem Zoom an.
-- [ ] Preisskala lässt sich verschieben.
-- [ ] Volume wird unter dem Candlestick-Chart angezeigt.
-- [ ] Neue geschlossene Kerzen werden automatisch ergänzt.
-- [ ] Historische Navigation wird durch Live-Updates nicht unterbrochen.
-- [ ] Go to Live funktioniert.
-- [ ] Reset View funktioniert.
-- [ ] Chart bleibt bei 1000+ Kerzen performant.
-- [ ] Bestehende Binance-Verbindung funktioniert weiterhin.
-
-## 11. Arbeitsweise
-
-Arbeite in folgenden Phasen:
-
-**Phase 1 – Analyse**
-Untersuche das bestehende Projekt und identifiziere die aktuelle Chart-Implementierung.
-
-**Phase 2 – Technische Entscheidung**
-Entscheide, ob die vorhandene Bibliothek erweitert werden kann oder eine andere Chart-Bibliothek sinnvoller ist.
-
-**Phase 3 – Implementierung**
-Implementiere die Interaktionen und das TradingView-ähnliche Verhalten.
-
-**Phase 4 – Integration**
-Verbinde den interaktiven Chart mit der bestehenden Binance-Datenquelle.
-
-**Phase 5 – Tests**
-Teste sämtliche Interaktionen und das Verhalten bei Live-Updates.
-
-**Phase 6 – Dokumentation**
-Dokumentiere die geänderten Dateien, die Architektur und die Bedienung.
-
-### Wichtige Regeln
-
-- Bestehende Funktionen nicht zerstören.
-- Keine unnötige Änderung an der Binance-Integration.
-- Keine Fake-Daten verwenden.
-- Keine Funktionen nur visuell simulieren.
-- Bestehenden Code zuerst verstehen, dann verändern.
-- Bei Problemen die Ursache analysieren, statt Workarounds einzubauen.
-- Änderungen schrittweise und nachvollziehbar durchführen.
-
-**Endziel:** Ein professioneller, flüssiger, interaktiver Kryptowährungs-Candlestick-Chart, der sich in der Bedienung möglichst nah an TradingView orientiert.
+Arbeite ausschließlich an der Erweiterung des bestehenden Charts. Analysiere zuerst die vorhandenen Komponenten und die verwendete Chart-Library. Passe die Implementierung an die bestehende Architektur an. Verändere keine bereits funktionierenden Chart-Funktionen und führe keine unnötige Refaktorierung durch.

@@ -23,11 +23,12 @@ import {
 } from 'lightweight-charts';
 
 import { CandleData } from '../shared/models/api.models';
+import { ChartDrawingToolbarComponent } from '../chart-drawing-toolbar/chart-drawing-toolbar.component';
 
 @Component({
   selector: 'app-trading-chart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ChartDrawingToolbarComponent],
   templateUrl: './trading-chart.component.html',
   styleUrl: './trading-chart.component.css',
 })
@@ -51,6 +52,14 @@ export class TradingChartComponent implements AfterViewInit, OnChanges, OnDestro
   private renderedCandles: CandleData[] = [];
   private renderedSymbol = '';
   private renderedTimeframe = '';
+
+  get chartApi(): IChartApi | null {
+    return this.chart ?? null;
+  }
+
+  get chartSeries(): ISeriesApi<'Candlestick'> | null {
+    return this.candleSeries ?? null;
+  }
 
   ngAfterViewInit(): void {
     this.updateData();
