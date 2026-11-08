@@ -25,6 +25,7 @@ from backend import config
 from backend.services.indicators_service import IndicatorService
 from backend.services.price_service import PriceService
 from backend.News_card.news_service import collect_news, get_news_items
+from backend.candles.manager import load_candles, update_candle_data
 
 # --- Logging ---------------------------------------------------------------
 
@@ -50,14 +51,6 @@ indicators_service = IndicatorService()
 # Start WebSocket price stream immediately
 PriceService.start()
 
-# --- Constants ----------------------------------------------------------------
-
-SUPPORTED_COINS = [
-    'BTC', 'ETH', 'SOL', 'ADA', 'BNB',
-    'XRP', 'LTC', 'DOT', 'DOGE', 'AVAX',
-]
-
-
 # --- Routes ----------------------------------------------------------------
 
 @app.route('/api/price')
@@ -76,8 +69,82 @@ def api_price():
 
 @app.route('/api/coins')
 def api_coins():
-    """Return the list of supported coins."""
-    return jsonify(SUPPORTED_COINS)
+    """Return supported coins and candle timeframes."""
+    return jsonify({
+        'success': True,
+        'coins': config.COINS,
+        'timeframes': config.TIMEFRAMES,
+    })
+
+
+@app.route('/api/coins/<symbol>/candles')
+def api_coin_candles(symbol: str):
+    """Get stored candle data for a supported symbol and timeframe."""
+    timeframe = request.args.get('timeframe', '5m').strip()
+    if timeframe not in config.TIMEFRAMES:
+        timeframe = '5m'
+
+    try:
+        limit = max(1, min(int(request.args.get('limit', 100)), 1000))
+    except (ValueError, TypeError):
+        limit = 100
+
+    if symbol not in config.COINS:
+        return jsonify({
+            'success': False,
+            'error': f"Symbol '{symbol}' not in supported coins list",
+        }), 400
+
+    candle_data, success = load_candles(symbol, timeframe)
+    if not success or not candle_data:
+        return jsonify({
+            'success': False,
+            'error': 'No candle data available',
+            'candles': [],
+            'candle_count': 0,
+        }), 404
+
+    candles = candle_data.get('candles', [])
+    return jsonify({
+        'success': True,
+        'symbol': symbol,
+        'timeframe': timeframe,
+        'candles': candles[-limit:],
+        'candle_count': len(candles),
+        'returned_count': min(len(candles), limit),
+    })
+
+
+@app.route('/api/coins/<symbol>/select', methods=['POST'])
+def api_coin_select(symbol: str):
+    """Fetch and persist candle data for a supported symbol/timeframe."""
+    data = request.get_json(silent=True) or {}
+    timeframe = data.get('timeframe', '5m')
+    if timeframe not in config.TIMEFRAMES:
+        timeframe = '5m'
+
+    if symbol not in config.COINS:
+        return jsonify({
+            'success': False,
+            'error': f"Symbol '{symbol}' not in supported coins list",
+        }), 400
+
+    update_summary = update_candle_data(symbol, timeframe)
+    if not update_summary['success']:
+        return jsonify({
+            'success': False,
+            'error': update_summary.get('error', 'Failed to update candle data'),
+        }), 500
+
+    return jsonify({
+        'success': True,
+        'symbol': symbol,
+        'timeframe': timeframe,
+        'candles_loaded': update_summary['candles_loaded'],
+        'new_candles': update_summary['new_candles'],
+        'duplicates_skipped': update_summary['duplicates_skipped'],
+        'message': f'Candle data updated for {symbol}/{timeframe}',
+    })
 
 
 @app.route('/api/indicators')
@@ -172,6 +239,9 @@ def root():
         'endpoints': {
             'GET /api/price?coin=xxx': 'Live price (WebSocket cached)',
             'GET /api/indicators?coin=xxx&tf=1h': 'Technical indicators (RSI, MACD, EMA)',
+            'GET /api/coins': 'Supported coins and candle timeframes',
+            'GET /api/coins/<symbol>/candles?timeframe=5m': 'Stored candle data',
+            'POST /api/coins/<symbol>/select': 'Fetch and store candle data',
             'GET /api/news': 'Latest news from configured sources',
             'GET /api/status': 'Health check',
             'GET/POST /api/settings': 'Settings',

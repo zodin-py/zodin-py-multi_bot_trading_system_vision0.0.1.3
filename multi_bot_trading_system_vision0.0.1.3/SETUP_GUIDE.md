@@ -20,18 +20,18 @@ cd .\frontend\angular
 npm install
 npm run build
 cd ..\..
-& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" .\backend\run.py
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" .\backend\app.py
 ```
 
 ## Web Interface
 
-Nach dem Angular-Build liefert der Server ausschließlich das Frontend aus `frontend/angular/dist/angular/browser` aus. Das Dashboard ist unter `http://127.0.0.1:5000` verfügbar. Beim Laden eines Coins ruft die Anwendung Marktdaten von Binance ab; eine Internetverbindung ist dafür erforderlich.
+Nach dem Angular-Build liefert `backend/app.py` das Frontend aus `frontend/angular/dist/angular/browser` und stellt die API bereit. Das Dashboard ist unter `http://127.0.0.1:5000` verfügbar. Beim Laden oder Wechseln eines Coins ruft die Anwendung Kerzendaten von Binance ab und speichert sie im Backend unter `backend/data/candles/`; eine Internetverbindung ist dafür erforderlich.
 
 Zum Beenden `Ctrl+C` im Server-Terminal drücken. Für einen späteren Start zuerst wieder in den Projektordner wechseln und die Umgebung aktivieren:
 
 ```powershell
 cd .\multi_bot_trading_system_vision0.0.1.3
-& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" .\backend\run.py
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" .\backend\app.py
 ```
 
 ## Tests

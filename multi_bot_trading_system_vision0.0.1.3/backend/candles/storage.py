@@ -9,8 +9,11 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+
+from .manager import get_candle_file_path
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +36,6 @@ def get_candle_data_dir() -> Path:
     Relative to the project root (where this package is imported from).
     Will create the directory if it doesn't exist.
     """
-    import os
     project_root = Path(__file__).resolve().parent.parent
     data_dir = project_root / CANDLE_DATA_DIR_NAME
     data_dir.mkdir(parents=True, exist_ok=True)

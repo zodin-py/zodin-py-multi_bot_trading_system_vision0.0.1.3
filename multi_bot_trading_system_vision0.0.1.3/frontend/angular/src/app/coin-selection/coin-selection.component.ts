@@ -106,7 +106,7 @@ export class CoinSelectionComponent implements OnInit {
     this.candlesLoaded = 0;
     this.newCandles = 0;
 
-    this.fetchCandleData();
+    this.refreshCandleData();
   }
 
   onCoinChange(symbol: string): void {
