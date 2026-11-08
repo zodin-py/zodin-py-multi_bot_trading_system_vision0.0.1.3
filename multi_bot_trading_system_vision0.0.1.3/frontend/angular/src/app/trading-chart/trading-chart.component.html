@@ -1,0 +1,40 @@
+<div class="chart-shell">
+  <div class="chart-toolbar">
+    <div class="ohlc" aria-live="polite">
+      <ng-container *ngIf="activeCandle as candle; else waitingForData">
+        <span>{{ candle.timestamp | date:'medium' }}</span>
+        <span>O <b>{{ candle.open | number:'1.2-8' }}</b></span>
+        <span>H <b>{{ candle.high | number:'1.2-8' }}</b></span>
+        <span>L <b>{{ candle.low | number:'1.2-8' }}</b></span>
+        <span>C <b>{{ candle.close | number:'1.2-8' }}</b></span>
+        <span>Vol <b>{{ candle.volume | number:'1.0-4' }}</b></span>
+      </ng-container>
+      <ng-template #waitingForData>
+        <span>{{ symbol }} · {{ timeframe }} · Keine Kerzendaten verfügbar</span>
+      </ng-template>
+    </div>
+    <div class="chart-actions">
+      <button type="button" title="Vergrößern" aria-label="Vergrößern" (click)="zoomIn()">+</button>
+      <button type="button" title="Verkleinern" aria-label="Verkleinern" (click)="zoomOut()">−</button>
+      <button
+        type="button"
+        [attr.aria-pressed]="autoScale"
+        (click)="toggleAutoScale()"
+      >Auto Scale</button>
+      <button type="button" (click)="resetView()">Reset View</button>
+      <button type="button" class="live-button" (click)="goToLive()">Go to Live</button>
+    </div>
+  </div>
+  <div
+    #chartContainer
+    class="chart-container"
+    [class.chart-ready]="chartReady"
+    [hidden]="candles.length === 0"
+    role="img"
+    [attr.aria-label]="symbol + ' ' + timeframe + ' candlestick and volume chart'"
+    (dblclick)="handleDoubleClick($event)"
+  ></div>
+  <div *ngIf="candles.length === 0" class="no-data">
+    Für diesen Zeitraum sind noch keine Kerzendaten verfügbar.
+  </div>
+</div>

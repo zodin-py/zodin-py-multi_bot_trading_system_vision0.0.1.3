@@ -43,12 +43,12 @@
   <!-- Main Content -->
   <div class="pt-4">
     <!-- Loading State -->
-    <div *ngIf="loading" class="flex min-h-48 items-center justify-center">
+    <div *ngIf="loading && !chartData" class="flex min-h-48 items-center justify-center">
       <span class="text-slate-400">Lade Kerzendaten für {{ selectedCoin }} ({{ selectedTimeframe }})...</span>
     </div>
 
     <!-- Error State -->
-    <div *ngIf="error && !loading" class="mt-6 p-6 rounded-xl bg-slate-800/50 text-center">
+    <div *ngIf="error && !chartData && !loading" class="mt-6 p-6 rounded-xl bg-slate-800/50 text-center">
       <i class="fas fa-exclamation-triangle text-red-400 text-3xl mb-4 display:block"></i>
       <h3 class="text-xl font-bold text-white">Fehler</h3>
       <p class="text-slate-400 mb-6">{{ error }}</p>
@@ -61,7 +61,10 @@
     </div>
 
     <!-- Chart Data Available -->
-    <div *ngIf="chartData && !loading" class="mt-6">
+    <div *ngIf="chartData" class="mt-6">
+      <p *ngIf="error" class="mb-3 rounded bg-red-950/50 px-3 py-2 text-sm text-red-300">
+        {{ error }}
+      </p>
       <!-- Chart Summary Header -->
       <div class="border-b border-slate-700 pb-4 mb-4">
         <div class="flex items-center justify-between">
@@ -74,19 +77,9 @@
 
       <!-- Candlestick Chart -->
       <div class="rounded-xl overflow-hidden bg-slate-900/50">
-        <!-- Chart Toolbar -->
         <div class="p-4 border-b border-slate-700 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="text-sm text-slate-400">Anzeigen:</span>
-            <select
-              class="bg-slate-700 rounded px-2 py-1 text-sm text-white"
-              [(ngModel)]="selectedTimeframe"
-              (ngModelChange)="onTimeframeChange($event)"
-            >
-              <option *ngFor="let tf of timeframes" [value]="tf">
-                {{ tf }}
-              </option>
-            </select>
+          <div class="text-sm text-slate-400">
+            {{ loading ? 'Aktualisiere geschlossene Kerzen…' : 'Binance Spot · lokal gespeicherte Kerzen' }}
           </div>
           <div class="flex items-center gap-2">
             <button
@@ -99,39 +92,11 @@
         </div>
 
         <!-- Chart Area -->
-        <div class="h-96 w-full">
-          <svg
-            *ngIf="chartData.candles.length > 0; else noCandles"
-            class="w-full h-full"
-            viewBox="0 0 1000 300"
-            preserveAspectRatio="none"
-            role="img"
-            [attr.aria-label]="chartData.symbol + ' candlestick chart'"
-          >
-            <line x1="0" y1="290" x2="1000" y2="290" stroke="#334155"></line>
-            <g *ngFor="let candle of chartCandles">
-              <line
-                [attr.x1]="candle.x"
-                [attr.x2]="candle.x"
-                [attr.y1]="candle.highY"
-                [attr.y2]="candle.lowY"
-                [attr.stroke]="candle.bullish ? '#34d399' : '#f87171'"
-              ></line>
-              <rect
-                [attr.x]="candle.x - candleWidth / 2"
-                [attr.y]="candle.bodyY"
-                [attr.width]="candleWidth"
-                [attr.height]="candle.bodyHeight"
-                [attr.fill]="candle.bullish ? '#34d399' : '#f87171'"
-              ></rect>
-            </g>
-          </svg>
-          <ng-template #noCandles>
-            <div class="flex h-full items-center justify-center text-slate-400">
-              Für diesen Zeitraum sind noch keine Kerzendaten verfügbar.
-            </div>
-          </ng-template>
-        </div>
+        <app-trading-chart
+          [candles]="chartData.candles"
+          [symbol]="chartData.symbol"
+          [timeframe]="chartData.timeframe"
+        ></app-trading-chart>
 
         <!-- Chart Footer / Info -->
         <div class="p-4 border-t border-slate-700 text-sm">

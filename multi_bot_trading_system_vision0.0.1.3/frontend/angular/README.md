@@ -44,6 +44,16 @@ To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use th
 ng test
 ```
 
+## Candlestick chart
+
+The coin-selection view renders historical candles from the backend's local Binance
+storage using Lightweight Charts. The chart requests up to 1000 stored candles,
+shows OHLCV values at the crosshair, and supports dragging, wheel zoom, scale
+adjustment, reset, and returning to the live edge. Closed candles are refreshed
+after each selected timeframe boundary; updates are applied without replacing the
+chart or interrupting a historical view. Chart gestures never initiate Binance
+requests; Binance refreshes remain in the data/update layer.
+
 ## Running end-to-end tests
 
 For end-to-end (e2e) testing, run:

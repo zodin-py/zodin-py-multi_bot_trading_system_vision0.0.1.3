@@ -529,8 +529,13 @@ def update_candle_data(symbol: str, timeframe: str, server_time: int | None = No
             summary["error"] = fetch_error
             return summary
 
-        # Filter to only candles newer than our latest stored candle
-        new_candles = [c for c in new_candles_raw if c.get("close_time", 0) > latest_close]
+        # A newer Binance response can still contain the currently open candle.
+        new_candles = [
+            candle
+            for candle in new_candles_raw
+            if candle.get("close_time", 0) > latest_close
+            and is_candle_complete(candle["close_time"], server_time)
+        ]
     else:
         # No existing data - fetch 1000 historical candles
         new_candles_raw, fetch_error = fetch_historical_candles(symbol, timeframe, limit=1000, server_time=server_time)

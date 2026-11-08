@@ -65,10 +65,14 @@ export class ApiService {
     return this.http.get<NewsResponse>('/api/news');
   }
 
-  /** Get candle chart data for a specific coin and timeframe. */
-  getCoinCandles(symbol: string, timeframe: string = '5m'): Observable<CandleChartData> {
+  /** Get stored candle chart data for a specific coin and timeframe. */
+  getCoinCandles(
+    symbol: string,
+    timeframe: string = '5m',
+    limit: number = 1000,
+  ): Observable<CandleChartData> {
     return this.http.get<CandleChartData>(`/api/coins/${symbol}/candles`, {
-      params: { timeframe },
+      params: { timeframe, limit: limit.toString() },
     });
   }
 

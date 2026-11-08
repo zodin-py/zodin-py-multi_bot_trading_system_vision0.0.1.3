@@ -46,7 +46,7 @@ describe('CoinSelectionComponent', () => {
     fixture.detectChanges();
 
     expect(refreshCoinCandles).toHaveBeenCalledWith('BTCUSDT', '5m');
-    expect(getCoinCandles).toHaveBeenCalledWith('BTCUSDT', '5m');
+    expect(getCoinCandles).toHaveBeenCalledWith('BTCUSDT', '5m', 1000);
     expect(fixture.componentInstance.chartData?.candle_count).toBe(500);
   });
 });
