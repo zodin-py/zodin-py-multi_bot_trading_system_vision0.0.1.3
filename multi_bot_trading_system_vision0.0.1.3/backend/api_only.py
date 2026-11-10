@@ -1,13 +1,14 @@
-"""Multi-Bot Trading System - API only mode (no frontend).
+"""Multi-Bot Trading System - Flask API and Angular dashboard.
 
 Usage:
     venv/Scripts/python.exe -m backend.api_only
 
-Serves only the /api/* endpoints on port 5000.
+Serves the Angular build and /api/* endpoints on port 5000.
+The Angular application must be built before starting the server.
 WebSocket provides live price updates in background.
-No Angular build required.
 """
 
+import json
 import logging
 import os
 import sys
@@ -18,8 +19,10 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from flask import Flask, jsonify, request
+from ccxt.base.errors import AuthenticationError
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
+from werkzeug.utils import safe_join
 
 from backend import config
 from backend.services.indicators_service import IndicatorService
@@ -39,6 +42,12 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'trading_system_secret_key')
+ANGULAR_DIST = os.path.join(
+    PROJECT_ROOT, 'frontend', 'angular', 'dist', 'angular', 'browser'
+)
+TRADES_HISTORY_FILE = os.path.abspath(
+    os.path.join(PROJECT_ROOT, '..', 'trades', 'trades_history.json')
+)
 
 CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
                    "http://localhost:4200", "http://127.0.0.1:4200"])
@@ -215,38 +224,74 @@ def api_wallet():
         wallet_service = WalletService()
         result = wallet_service.get_wallet_sync()
         if result is None or 'error' in result:
-            return jsonify({"error": "Could not fetch wallet", "data": None}), 500
+            return jsonify({"error": "Could not fetch wallet", "data": None}), 502
         return jsonify(result)
     except ValueError as e:
         # API keys not configured
         return jsonify({"error": str(e), "data": None}), 401
+    except AuthenticationError:
+        logger.warning("Binance rejected wallet credentials or permissions")
+        return jsonify({
+            "error": "Binance API key, IP allow-list, or permissions are invalid",
+            "data": None,
+        }), 401
     except Exception as e:
-        return jsonify({"error": "Wallet service error", "data": None}), 500
+        logger.error("Wallet service error: %s", type(e).__name__)
+        return jsonify({"error": "Wallet service error", "data": None}), 502
 
 
 @app.route('/api/trades')
 def api_get_trades():
     """Get trades history."""
-    from backend.app import _load_trades
-    trades = _load_trades()
+    try:
+        with open(TRADES_HISTORY_FILE, 'r', encoding='utf-8') as trades_file:
+            trades = json.load(trades_file)
+    except FileNotFoundError:
+        trades = []
+    except json.JSONDecodeError:
+        logger.exception("Invalid trades history JSON in %s", TRADES_HISTORY_FILE)
+        return jsonify({'error': 'Trade history contains invalid JSON'}), 500
+    except OSError:
+        logger.exception("Could not read trades history from %s", TRADES_HISTORY_FILE)
+        return jsonify({'error': 'Trade history could not be read'}), 500
+
+    if not isinstance(trades, list):
+        logger.error("Trades history in %s must contain a JSON list", TRADES_HISTORY_FILE)
+        return jsonify({'error': 'Trade history must contain a JSON list'}), 500
+
+    limit_value = request.args.get('limit')
+    if limit_value is not None:
+        try:
+            limit = int(limit_value)
+            if limit < 1:
+                raise ValueError
+        except ValueError:
+            return jsonify({'error': 'limit must be a positive integer'}), 400
+        trades = trades[-min(limit, 1000):]
+
     return jsonify(trades)
 
 
-@app.route('/')
-def root():
-    return jsonify({
-        'service': 'Multi-Bot Trading System (API only)',
-        'endpoints': {
-            'GET /api/price?coin=xxx': 'Live price (WebSocket cached)',
-            'GET /api/indicators?coin=xxx&tf=1h': 'Technical indicators (RSI, MACD, EMA)',
-            'GET /api/coins': 'Supported coins and candle timeframes',
-            'GET /api/coins/<symbol>/candles?timeframe=5m': 'Stored candle data',
-            'POST /api/coins/<symbol>/select': 'Fetch and store candle data',
-            'GET /api/news': 'Latest news from configured sources',
-            'GET /api/status': 'Health check',
-            'GET/POST /api/settings': 'Settings',
-        },
-    })
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_angular(path: str):
+    """Serve the built Angular dashboard and route browser paths to its SPA."""
+    if path == 'api' or path.startswith('api/'):
+        return jsonify({'error': 'Not found'}), 404
+
+    index_file = os.path.join(ANGULAR_DIST, 'index.html')
+    if not os.path.isfile(index_file):
+        return jsonify({
+            'error': (
+                'Angular build not found. Run npm install and npm run build '
+                'in frontend/angular.'
+            )
+        }), 503
+
+    requested_file = safe_join(ANGULAR_DIST, path) if path else None
+    if requested_file and os.path.isfile(requested_file):
+        return send_from_directory(ANGULAR_DIST, path)
+    return send_from_directory(ANGULAR_DIST, 'index.html')
 
 
 # --- Main ------------------------------------------------------------------

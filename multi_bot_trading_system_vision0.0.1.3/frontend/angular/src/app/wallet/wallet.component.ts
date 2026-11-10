@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { ApiService } from '../shared/services/api.service';
 import { WalletResponse, WalletBalance } from '../shared/models/api.models';
@@ -32,8 +33,14 @@ export class WalletComponent implements OnInit {
         this.loading = false;
         this.changeDetector.markForCheck();
       },
-      error: (err) => {
-        this.error = 'Wallet konnte nicht geladen werden.';
+      error: (err: HttpErrorResponse) => {
+        const apiError = err.error;
+        this.error =
+          apiError &&
+          typeof apiError === 'object' &&
+          typeof apiError.error === 'string'
+            ? apiError.error
+            : 'Wallet konnte nicht geladen werden.';
         this.loading = false;
         console.error('Wallet error:', err);
         this.changeDetector.markForCheck();

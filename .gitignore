@@ -17,6 +17,8 @@ build/
 
 # IDE / editor
 .vscode/
+!.vscode/
+!.vscode/launch.json
 .idea/
 *.swp
 *.swo

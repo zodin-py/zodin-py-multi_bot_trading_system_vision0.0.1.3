@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import ccxt
 
@@ -115,11 +115,16 @@ class WalletService:
 
             return result
 
+        except ValueError:
+            raise
+        except ccxt.AuthenticationError:
+            logger.warning('Binance rejected wallet credentials or permissions')
+            raise
         except Exception as e:
-            logger.error(f'Wallet fetch failed: {e}', exc_info=True)
+            logger.error('Wallet fetch failed: %s', type(e).__name__)
             return {
                 'balances': [],
                 'total_usdt': 0.0,
                 'timestamp': datetime.now(tz=timezone.utc).isoformat(),
-                'error': str(e),
+                'error': 'Wallet fetch failed',
             }
