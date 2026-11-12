@@ -12,7 +12,12 @@ import { TradesComponent } from './trades/trades.component';
 import { CoinSelectionComponent } from './coin-selection/coin-selection.component';
 
 import { ApiService } from './shared/services/api.service';
-import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
+import {
+  AnalysisResponse,
+  IndicatorsResponse,
+  PriceResponse,
+  StrategyId,
+} from './shared/models/api.models';
 
 @Component({
   selector: 'app-root',
@@ -44,6 +49,16 @@ export class App implements OnInit, OnDestroy {
   currentPrice: number | null = null;
   priceChange = '--';
   indicators: IndicatorsResponse | null = null;
+  readonly strategyOptions: { id: StrategyId; label: string }[] = [
+    { id: 'sr', label: 'Support / Resistance' },
+    { id: 'smc', label: 'Smart Money Concepts' },
+    { id: 'harmonic', label: 'Harmonic' },
+    { id: 'trend', label: 'Trend' },
+  ];
+  selectedStrategies: StrategyId[] = this.strategyOptions.map(({ id }) => id);
+  analysis: AnalysisResponse | null = null;
+  analysisError: string | null = null;
+  analysisLoading = false;
 
   // Trades limit — user can set this in the UI
   tradesLimit = 10;
@@ -52,6 +67,54 @@ export class App implements OnInit, OnDestroy {
     this.currentCoin = cmd.symbol;
     this.currentTimeframe = cmd.timeframe;
     this.loadAllData();
+  }
+
+  toggleStrategy(strategy: StrategyId, selected: boolean): void {
+    this.selectedStrategies = selected
+      ? [...new Set([...this.selectedStrategies, strategy])]
+      : this.selectedStrategies.filter((item) => item !== strategy);
+  }
+
+  onStrategyChange(strategy: StrategyId, event: Event): void {
+    if (!(event.target instanceof HTMLInputElement)) return;
+    this.toggleStrategy(strategy, event.target.checked);
+  }
+
+  runAnalysis(): void {
+    if (this.analysisLoading) return;
+    if (this.selectedStrategies.length === 0) {
+      this.analysisError = 'Wähle mindestens eine Strategie aus.';
+      this.analysis = null;
+      return;
+    }
+
+    this.analysisLoading = true;
+    this.analysisError = null;
+    this.analysis = null;
+    this.api
+      .analyzeCoin(this.currentCoin, this.currentTimeframe, [...this.selectedStrategies])
+      .subscribe({
+        next: (result) => {
+          this.analysis = result;
+          this.analysisLoading = false;
+          this.changeDetector.markForCheck();
+        },
+        error: (err: unknown) => {
+          const apiMessage =
+            typeof err === 'object' &&
+            err !== null &&
+            'error' in err &&
+            typeof err.error === 'object' &&
+            err.error !== null &&
+            'error' in err.error &&
+            typeof err.error.error === 'string'
+              ? err.error.error
+              : null;
+          this.analysisError = apiMessage ?? 'Die Analyse konnte nicht abgeschlossen werden.';
+          this.analysisLoading = false;
+          this.changeDetector.markForCheck();
+        },
+      });
   }
 
   ngOnInit(): void {

@@ -25,6 +25,11 @@ from flask_cors import CORS
 from werkzeug.utils import safe_join
 
 from backend import config
+from backend.services.analysis_service import (
+    AnalysisRequestError,
+    AnalysisService,
+    RuleConfigurationError,
+)
 from backend.services.indicators_service import IndicatorService
 from backend.services.price_service import PriceService
 from backend.News_card.news_service import collect_news, get_news_items
@@ -56,6 +61,7 @@ CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
 
 price_service = PriceService()
 indicators_service = IndicatorService()
+analysis_service = AnalysisService(indicators_service)
 
 # Start WebSocket price stream immediately
 PriceService.start()
@@ -170,6 +176,34 @@ def api_indicators():
     result = indicators_service.get_indicators(coin, tf)
     if result is None:
         return jsonify({"error": "Coin not found", "data": None}), 404
+
+    return jsonify(result)
+
+
+@app.route('/api/analyze', methods=['POST'])
+def api_analyze():
+    """Run one explicitly requested rule-based coin analysis."""
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({'error': 'Request body must be a JSON object'}), 400
+
+    try:
+        result = analysis_service.analyze(
+            data.get('symbol'),
+            data.get('timeframe'),
+            data.get('strategies'),
+        )
+    except AnalysisRequestError as error:
+        return jsonify({'error': str(error)}), 400
+    except RuleConfigurationError as error:
+        logger.error("Analysis rules are invalid: %s", error)
+        return jsonify({'error': str(error)}), 500
+    except OSError:
+        logger.exception("Could not persist analysis history")
+        return jsonify({'error': 'Analysis completed but its history could not be saved'}), 500
+    except Exception:
+        logger.exception("Coin analysis failed")
+        return jsonify({'error': 'Coin analysis could not be completed'}), 500
 
     return jsonify(result)
 

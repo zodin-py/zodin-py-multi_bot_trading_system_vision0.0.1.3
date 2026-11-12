@@ -116,3 +116,40 @@ def test_api_only_wallet_route_returns_authentication_error(monkeypatch):
         'error': 'Binance API key, IP allow-list, or permissions are invalid',
         'data': None,
     }
+
+
+def test_api_only_analysis_route_passes_request_to_service(monkeypatch):
+    api_only = _api_only_module()
+    request_data = {}
+
+    def analyze(symbol, timeframe, strategies):
+        request_data.update(
+            symbol=symbol,
+            timeframe=timeframe,
+            strategies=strategies,
+        )
+        return {'status': 'completed', 'summary': {'signal': 'HOLD'}}
+
+    monkeypatch.setattr(api_only.analysis_service, 'analyze', analyze)
+
+    response = api_only.app.test_client().post(
+        '/api/analyze',
+        json={'symbol': 'BTC', 'timeframe': '1h', 'strategies': ['trend']},
+    )
+
+    assert response.status_code == 200
+    assert request_data == {
+        'symbol': 'BTC',
+        'timeframe': '1h',
+        'strategies': ['trend'],
+    }
+    assert response.get_json()['summary']['signal'] == 'HOLD'
+
+
+def test_api_only_analysis_route_rejects_missing_request_fields():
+    api_only = _api_only_module()
+
+    response = api_only.app.test_client().post('/api/analyze', json={})
+
+    assert response.status_code == 400
+    assert 'symbol' in response.get_json()['error']

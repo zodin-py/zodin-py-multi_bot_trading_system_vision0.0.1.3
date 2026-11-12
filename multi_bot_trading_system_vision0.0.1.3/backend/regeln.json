@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "analysis_rules": [
+    {
+      "step": 1,
+      "action": "indicators",
+      "title": "Technische Indikatoren",
+      "instructions": "Bewerte RSI, MACD und EMA im gewählten Timeframe. Nenne fehlende Werte ausdrücklich."
+    },
+    {
+      "step": 2,
+      "action": "news",
+      "title": "Nachrichten",
+      "instructions": "Fasse passende aktuelle Meldungen neutral zusammen. Leite keine Stimmung ab, wenn die Daten dafür nicht ausreichen."
+    },
+    {
+      "step": 3,
+      "action": "strategies",
+      "title": "Ausgewählte Strategien",
+      "instructions": "Berücksichtige ausschließlich die Strategien, die für diesen Analyseauftrag ausgewählt wurden."
+    },
+    {
+      "step": 4,
+      "action": "summary",
+      "title": "Gesamtbewertung",
+      "instructions": "Fasse die vorherigen Ergebnisse zusammen und nenne Unsicherheiten und fehlende Daten."
+    }
+  ]
+}

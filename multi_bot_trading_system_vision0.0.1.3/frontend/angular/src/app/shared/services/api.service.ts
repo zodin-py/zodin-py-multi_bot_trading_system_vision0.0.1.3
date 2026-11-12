@@ -12,6 +12,8 @@ import {
   CoinsResponse,
   CandleChartData,
   CoinSelectionResponse,
+  AnalysisResponse,
+  StrategyId,
 } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
@@ -45,6 +47,18 @@ export class ApiService {
   getIndicators(coin: string, tf: string = '1h'): Observable<IndicatorsResponse> {
     return this.http.get<IndicatorsResponse>('/api/indicators', {
       params: { coin, tf },
+    });
+  }
+
+  analyzeCoin(
+    symbol: string,
+    timeframe: string,
+    strategies: StrategyId[],
+  ): Observable<AnalysisResponse> {
+    return this.http.post<AnalysisResponse>('/api/analyze', {
+      symbol,
+      timeframe,
+      strategies,
     });
   }
 

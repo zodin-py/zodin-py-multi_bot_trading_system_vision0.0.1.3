@@ -49,6 +49,36 @@ export interface IndicatorsResponse {
   symbol: string;
 }
 
+export type StrategyId = 'sr' | 'smc' | 'harmonic' | 'trend';
+
+export interface AnalysisStep {
+  step: number;
+  action: string;
+  title: string;
+  instructions: string;
+  status: 'completed' | 'partial' | 'failed';
+  result?: Record<string, unknown>;
+  error?: string;
+}
+
+export interface AnalysisResponse {
+  symbol: string;
+  timeframe: string;
+  strategies: StrategyId[];
+  rules_version: number;
+  rules_sha256: string;
+  started_at: string;
+  status: 'completed' | 'partial';
+  failed_steps: number[];
+  steps: AnalysisStep[];
+  summary: {
+    signal: 'BUY' | 'SELL' | 'HOLD' | 'INCONCLUSIVE';
+    signal_counts: Record<'BUY' | 'SELL' | 'HOLD', number>;
+    reason: string;
+    incomplete_steps: number[];
+  };
+}
+
 export interface SettingsResponse {
   symbol: string;
   timeframe: string;
