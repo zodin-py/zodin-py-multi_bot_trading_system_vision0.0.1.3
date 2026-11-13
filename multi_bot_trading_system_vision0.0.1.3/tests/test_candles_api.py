@@ -1,4 +1,3 @@
-import json
 from unittest.mock import patch
 
 
@@ -60,21 +59,26 @@ def test_api_only_candles_route_returns_latest_requested_candles(monkeypatch):
     assert data['returned_count'] == 2
 
 
-def test_api_only_trades_route_reads_history_and_applies_limit(monkeypatch, tmp_path):
+def test_api_only_trades_route_fetches_binance_history_and_applies_limit(monkeypatch):
+    from backend.services.trade_history_service import TradeHistoryService
+
     api_only = _api_only_module()
     history = [
-        {'id': 'TRD00001'},
-        {'id': 'TRD00002'},
-        {'id': 'TRD00003'},
+        {'id': 'BTC/USDT:1'},
+        {'id': 'BTC/USDT:2'},
     ]
-    history_path = tmp_path / 'trades_history.json'
-    history_path.write_text(json.dumps(history), encoding='utf-8')
-    monkeypatch.setattr(api_only, 'TRADES_HISTORY_FILE', str(history_path))
+    requested_limits = []
 
+    def get_trade_history(self, limit):
+        requested_limits.append(limit)
+        return history
+
+    monkeypatch.setattr(TradeHistoryService, 'get_trade_history_sync', get_trade_history)
     response = api_only.app.test_client().get('/api/trades?limit=2')
 
     assert response.status_code == 200
-    assert response.get_json() == history[-2:]
+    assert response.get_json() == history
+    assert requested_limits == [2]
 
 
 def test_api_only_trades_route_rejects_invalid_limit():

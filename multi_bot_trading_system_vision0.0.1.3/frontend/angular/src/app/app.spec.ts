@@ -15,6 +15,8 @@ describe('App', () => {
       of({ success: true, total_new: 0, total_items: 0, items: [] }),
     getCoins: () =>
       of({ success: true, coins: ['BTCUSDT'], timeframes: { '5m': '5 Minutes' } }),
+    getAnalyzerCatalog: () =>
+      of({ indicators: [], patterns: [], strategies: [] }),
     getCoinCandles: () =>
       of({
         success: true,

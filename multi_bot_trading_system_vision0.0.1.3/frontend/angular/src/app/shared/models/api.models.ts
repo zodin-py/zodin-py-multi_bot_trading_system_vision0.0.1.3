@@ -54,22 +54,17 @@ export interface SettingsResponse {
   timeframe: string;
 }
 
-export interface Trade {
+export interface AccountTrade {
   id: string;
   symbol: string;
-  timeframe: string;
-  side: 'long' | 'short';
-  entry_price: number;
-  quantity: number;
-  stop_loss: number;
-  take_profit: number;
-  status: 'open' | 'closed';
-  open_time: string;
-  close_time: string | null;
-  pnl: number;
-  pnl_percent: number;
-  notes: string;
-  sl_source: string;
+  side: 'buy' | 'sell';
+  price: number;
+  amount: number;
+  cost: number;
+  timestamp: number;
+  datetime: string;
+  order: string | null;
+  fee: { cost: number; currency: string } | null;
 }
 
 export interface NewsItem {
@@ -143,4 +138,81 @@ export interface CoinsResponse {
   success: boolean;
   coins: string[];
   timeframes: Record<string, string>;
+}
+
+// --- Analysis System Models ---
+
+export interface AnalyzerMetadata {
+  id: string;
+  name: string;
+  category: 'indicator' | 'pattern' | 'strategy';
+  description: string;
+  icon: string;
+  config_fields: string[];
+  default_config?: Record<string, string | number | boolean>;
+}
+
+export interface AnalyzerCatalog {
+  indicators: AnalyzerMetadata[];
+  patterns: AnalyzerMetadata[];
+  strategies: AnalyzerMetadata[];
+}
+
+export interface AnalysisSelection {
+  analyzer_id: string;
+  mode: 'current' | 'history';
+  config: Record<string, string | number | boolean>;
+}
+
+export interface AnalysisRunRequest {
+  symbol: string;
+  timeframe: string;
+  mode: 'current' | 'history';
+  selected: AnalysisSelection[];
+}
+
+export interface AnalysisResult {
+  status: 'success' | 'error' | 'no_signal';
+  analyzer_id: string;
+  symbol: string;
+  timeframe: string;
+  mode: 'current' | 'history';
+  signals: AnalysisSignal[];
+  series: unknown;
+  error?: string;
+}
+
+export interface AnalysisSignal {
+  timestamp: number;
+  candle_index: number;
+  type: string;
+  direction: 'bullish' | 'bearish' | 'neutral';
+  price: number;
+  title: string;
+  description: string;
+  details?: Record<string, unknown>;
+}
+
+export interface RunAnalysisResponse {
+  success?: boolean;
+  symbol: string;
+  timeframe: string;
+  mode: 'current' | 'history';
+  results: Record<string, AnalysisResult>;
+  errors?: string | { analyzer_id: string; error: string }[];
+}
+
+export interface CandlestickPattern {
+  body_ratio: number;
+  lower_shadow_ratio: number;
+  total_range: number;
+  open: number;
+  close: number;
+  low: number;
+  high: number;
+}
+
+export interface DojiDetails {
+  body_ratio: number;
+  total_range: number;
 }

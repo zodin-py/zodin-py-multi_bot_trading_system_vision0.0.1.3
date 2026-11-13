@@ -83,6 +83,11 @@ Kontostand lesen und Spot-Trading ausführen dürfen. **Auszahlungen niemals
 aktivieren.** Ein Fehler beim Abrufen wird angezeigt; das Dashboard ersetzt ihn
 nicht still durch das Papier-Startkapital von 10.000.
 
+Die Trades-History liest echte Spot-Ausführungen von Binance Live für die in
+`COINS` konfigurierten Handelspaare und zeigt die letzten 100 an. Der Schlüssel
+benötigt Leserechte für Kontodaten und Spot-Handelshistorie; Handels- und
+Auszahlungsrechte sind für diesen Abruf nicht erforderlich.
+
 ### Trading Parameter
 In `backend/config.py` können folgende Parameter angepasst werden:
 - `COINS` - Handelbare Kryptowährungen

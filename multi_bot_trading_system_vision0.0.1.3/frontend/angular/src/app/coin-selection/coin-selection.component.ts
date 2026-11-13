@@ -4,7 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { ApiService } from '../shared/services/api.service';
 import { TradingChartComponent } from '../trading-chart/trading-chart.component';
+import { AnalysisComponent } from '../analysis/analysis.component';
 import {
+  AnalysisSignal,
   AvailableCoin,
   CandleChartData,
   CoinSelectionResponse,
@@ -13,7 +15,7 @@ import {
 @Component({
   selector: 'app-coin-selection',
   standalone: true,
-  imports: [CommonModule, FormsModule, TradingChartComponent],
+  imports: [CommonModule, FormsModule, TradingChartComponent, AnalysisComponent],
   templateUrl: './coin-selection.component.html',
   styleUrl: './coin-selection.component.css',
 })
@@ -23,6 +25,7 @@ export class CoinSelectionComponent implements OnInit, OnDestroy {
   selectedCoin = '';
   selectedTimeframe = '5m';
   chartData: CandleChartData | null = null;
+  analysisSignals: AnalysisSignal[] = [];
   loading = false;
   error: string | null = null;
   candlesLoaded = 0;
@@ -69,6 +72,7 @@ export class CoinSelectionComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.error = null;
     this.chartData = null;
+    this.analysisSignals = [];
     this.candlesLoaded = 0;
     this.newCandles = 0;
 
@@ -166,5 +170,9 @@ export class CoinSelectionComponent implements OnInit, OnDestroy {
       clearTimeout(this.refreshTimer);
       this.refreshTimer = undefined;
     }
+  }
+
+  onAnalysisSignalsChange(signals: AnalysisSignal[]): void {
+    this.analysisSignals = signals;
   }
 }

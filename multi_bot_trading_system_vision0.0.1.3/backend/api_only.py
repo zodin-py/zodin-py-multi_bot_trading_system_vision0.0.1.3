@@ -27,6 +27,8 @@ from werkzeug.utils import safe_join
 from backend import config
 from backend.services.indicators_service import IndicatorService
 from backend.services.price_service import PriceService
+from backend.analyzers.engine import AnalysisEngine
+from backend.analyzers.registry import AnalyzerRegistry
 from backend.News_card.news_service import collect_news, get_news_items
 from backend.candles.manager import load_candles, update_candle_data
 
@@ -45,10 +47,6 @@ app.secret_key = os.environ.get('SECRET_KEY', 'trading_system_secret_key')
 ANGULAR_DIST = os.path.join(
     PROJECT_ROOT, 'frontend', 'angular', 'dist', 'angular', 'browser'
 )
-TRADES_HISTORY_FILE = os.path.abspath(
-    os.path.join(PROJECT_ROOT, '..', 'trades', 'trades_history.json')
-)
-
 CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
                    "http://localhost:4200", "http://127.0.0.1:4200"])
 
@@ -56,6 +54,24 @@ CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
 
 price_service = PriceService()
 indicators_service = IndicatorService()
+
+# Initialize analysis engine with registry
+analyzer_registry = AnalyzerRegistry()
+
+# Register built-in analyzers
+from backend.analyzers.indicators.ema import EMAIndicator
+from backend.analyzers.indicators.rsi import RSIIndicator
+from backend.analyzers.indicators.macd import MACDIndicator
+from backend.analyzers.patterns.hammer import HammerPattern
+from backend.analyzers.patterns.doji import DojiPattern
+
+analyzer_registry.register(EMAIndicator())
+analyzer_registry.register(RSIIndicator())
+analyzer_registry.register(MACDIndicator())
+analyzer_registry.register(HammerPattern())
+analyzer_registry.register(DojiPattern())
+
+analysis_engine = AnalysisEngine(analyzer_registry)
 
 # Start WebSocket price stream immediately
 PriceService.start()
@@ -174,16 +190,6 @@ def api_indicators():
     return jsonify(result)
 
 
-@app.route('/api/status')
-def api_status():
-    """API health check."""
-    return jsonify({
-        'mode': 'api-only',
-        'status': 'running',
-        'timestamp': datetime.now().isoformat(),
-    })
-
-
 @app.route('/api/news')
 def api_news():
     """Get latest news from configured sources."""
@@ -240,36 +246,153 @@ def api_wallet():
         return jsonify({"error": "Wallet service error", "data": None}), 502
 
 
+@app.route('/api/analysis/run', methods=['POST'])
+def api_analysis_run():
+    """Run technical analysis on selected analyzers.
+
+    Expected request body:
+    {
+        "symbol": "BTCUSDT",
+        "timeframe": "1h",
+        "mode": "current" or "history",
+        "selected": [
+            {
+                "analyzer_id": "indicator.rsi",
+                "mode": "current",
+                "config": {"length": 14, "source": "close", "overbought": 70, "oversold": 30}
+            },
+            {
+                "analyzer_id": "pattern.hammer",
+                "mode": "history",
+                "config": {"body_ratio_threshold": 0.3, "lower_shadow_ratio": 2.0}
+            }
+        ]
+    }
+
+    Returns analysis results for each selected analyzer.
+    """
+    data = request.get_json(silent=True) or {}
+    symbol = data.get("symbol", "").strip()
+    timeframe = data.get("timeframe", "1h").strip()
+    mode = data.get("mode", "current").strip()
+    selected = data.get("selected", [])
+
+    if not symbol:
+        return jsonify({"error": "Symbol is required", "data": None}), 400
+
+    if timeframe not in config.TIMEFRAMES:
+        return jsonify({"error": f"Timeframe '{timeframe}' not supported", "data": None}), 400
+
+    # Load candle data
+    candle_data, success = load_candles(symbol, timeframe)
+    if not success or not candle_data:
+        return jsonify({
+            "error": "No candle data available",
+            "data": None,
+        }), 404
+
+    candles = candle_data.get("candles", [])
+    if not candles:
+        return jsonify({
+            "error": "No candle data available",
+            "data": None,
+        }), 404
+
+    # Run analysis via the engine
+    result = analysis_engine.run_analysis(
+        symbol=symbol,
+        timeframe=timeframe,
+        mode=mode,
+        selected=selected,
+        all_candles=candles,
+    )
+
+    return jsonify(result)
+
+
+@app.route('/api/analysis/catalog', methods=['GET'])
+def api_analysis_catalog():
+    """Get the catalog of available analysis analyzers.
+
+    Returns:
+        Dict with categories: indicators, patterns, strategies
+        each containing list of analyzer metadata with IDs, names, descriptions
+    """
+    catalog = analysis_engine.get_available_analyzers()
+    return jsonify({
+        "success": True,
+        "catalog": catalog,
+    })
+
+
+@app.route('/api/analysis/metadata/<analyzer_id>', methods=['GET'])
+def api_analysis_metadata(analyzer_id: str):
+    """Get metadata for a specific analyzer.
+
+    Args:
+        analyzer_id: The analyzer ID (e.g., 'indicator.rsi', 'pattern.hammer')
+
+    Returns:
+        Metadata dict for the analyzer
+    """
+    metadata = analysis_engine.get_analyzer_metadata(analyzer_id)
+    if metadata is None:
+        return jsonify({
+            "error": f"Analyzer '{analyzer_id}' not found",
+            "data": None,
+        }), 404
+
+    analyzer = analyzer_registry.get(analyzer_id)
+    if analyzer is not None:
+        metadata = {**metadata, "default_config": analyzer.get_default_config()}
+
+    return jsonify({
+        "success": True,
+        "metadata": metadata,
+    })
+
+
+@app.route('/api/status')
+def api_status():
+    """API health check."""
+    return jsonify({
+        'mode': 'api-only',
+        'status': 'running',
+        'timestamp': datetime.now().isoformat(),
+        'analyzers_loaded': list(analysis_engine.registry._analyzers.keys()) if hasattr(analysis_engine.registry, '_analyzers') else [],
+    })
+
+
 @app.route('/api/trades')
 def api_get_trades():
-    """Get trades history."""
+    """Get recent Binance Spot account trades for configured pairs."""
+    from backend.services.trade_history_service import (
+        BinanceCredentialsError,
+        TradeHistoryService,
+    )
+
+    limit_value = request.args.get('limit', default='100')
     try:
-        with open(TRADES_HISTORY_FILE, 'r', encoding='utf-8') as trades_file:
-            trades = json.load(trades_file)
-    except FileNotFoundError:
-        trades = []
-    except json.JSONDecodeError:
-        logger.exception("Invalid trades history JSON in %s", TRADES_HISTORY_FILE)
-        return jsonify({'error': 'Trade history contains invalid JSON'}), 500
-    except OSError:
-        logger.exception("Could not read trades history from %s", TRADES_HISTORY_FILE)
-        return jsonify({'error': 'Trade history could not be read'}), 500
+        limit = int(limit_value)
+        if limit < 1:
+            raise ValueError
+    except ValueError:
+        return jsonify({'error': 'limit must be a positive integer'}), 400
 
-    if not isinstance(trades, list):
-        logger.error("Trades history in %s must contain a JSON list", TRADES_HISTORY_FILE)
-        return jsonify({'error': 'Trade history must contain a JSON list'}), 500
-
-    limit_value = request.args.get('limit')
-    if limit_value is not None:
-        try:
-            limit = int(limit_value)
-            if limit < 1:
-                raise ValueError
-        except ValueError:
-            return jsonify({'error': 'limit must be a positive integer'}), 400
-        trades = trades[-min(limit, 1000):]
-
-    return jsonify(trades)
+    limit = min(limit, 1000)
+    try:
+        trades = TradeHistoryService().get_trade_history_sync(limit)
+        return jsonify(trades)
+    except BinanceCredentialsError as error:
+        return jsonify({'error': str(error)}), 401
+    except AuthenticationError:
+        logger.warning("Binance rejected trade-history credentials or permissions")
+        return jsonify({
+            'error': 'Binance credentials or account read permissions are invalid',
+        }), 401
+    except Exception as error:
+        logger.error("Trade history service error: %s", type(error).__name__)
+        return jsonify({'error': 'Could not fetch Binance trade history'}), 502
 
 
 @app.route('/', defaults={'path': ''})

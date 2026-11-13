@@ -1,17 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import {
   PriceResponse,
   IndicatorsResponse,
   StatusResponse,
   WalletResponse,
-  Trade,
+  AccountTrade,
   NewsResponse,
   CoinsResponse,
   CandleChartData,
   CoinSelectionResponse,
+  AnalyzerMetadata,
+  AnalyzerCatalog,
+  AnalysisSelection,
+  AnalysisRunRequest,
+  AnalysisResult,
+  AnalysisSignal,
+  RunAnalysisResponse,
+  CandlestickPattern,
+  DojiDetails,
 } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
@@ -54,10 +63,10 @@ export class ApiService {
   }
 
   /** Fetch trades history. If n is provided, only the last n entries are returned. */
-  getTrades(n?: number): Observable<Trade[]> {
+  getTrades(n?: number): Observable<AccountTrade[]> {
     let params = new HttpParams();
     if (typeof n === 'number' && n > 0) params = params.set('limit', n.toString());
-    return this.http.get<Trade[]>('/api/trades', { params });
+    return this.http.get<AccountTrade[]>('/api/trades', { params });
   }
 
   /** Collect and fetch latest news from configured sources. */
@@ -79,5 +88,26 @@ export class ApiService {
   /** Refresh candle data for a specific coin and timeframe. */
   refreshCoinCandles(symbol: string, timeframe: string = '5m'): Observable<CoinSelectionResponse> {
     return this.http.post<CoinSelectionResponse>(`/api/coins/${symbol}/select`, { timeframe });
+  }
+
+  /** Get catalog of available analysis analyzers. */
+  getAnalyzerCatalog(): Observable<AnalyzerCatalog> {
+    return this.http
+      .get<{ success: boolean; catalog: AnalyzerCatalog }>('/api/analysis/catalog')
+      .pipe(map((response) => response.catalog));
+  }
+
+  /** Get metadata for a specific analyzer. */
+  getAnalyzerMetadata(analyzerId: string): Observable<AnalyzerMetadata> {
+    return this.http
+      .get<{ success: boolean; metadata: AnalyzerMetadata }>(
+        `/api/analysis/metadata/${encodeURIComponent(analyzerId)}`,
+      )
+      .pipe(map((response) => response.metadata));
+  }
+
+  /** Run selected analyzers on candle data. */
+  runAnalysis(request: AnalysisRunRequest): Observable<RunAnalysisResponse> {
+    return this.http.post<RunAnalysisResponse>('/api/analysis/run', request);
   }
 }

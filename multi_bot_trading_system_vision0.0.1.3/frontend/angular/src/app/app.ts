@@ -10,6 +10,7 @@ import { NewsComponent } from './news/news.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { TradesComponent } from './trades/trades.component';
 import { CoinSelectionComponent } from './coin-selection/coin-selection.component';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 import { ApiService } from './shared/services/api.service';
 import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
@@ -27,6 +28,7 @@ import { PriceResponse, IndicatorsResponse } from './shared/models/api.models';
     WalletComponent,
     TradesComponent,
     CoinSelectionComponent,
+    AnalysisComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
