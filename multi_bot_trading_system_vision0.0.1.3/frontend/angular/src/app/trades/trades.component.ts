@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/co
 import { CommonModule } from '@angular/common';
 
 import { ApiService } from '../shared/services/api.service';
-import { Trade } from '../shared/models/api.models';
+import { AccountTrade } from '../shared/models/api.models';
 
 @Component({
   selector: 'app-trades',
@@ -16,9 +16,9 @@ export class TradesComponent implements OnInit {
   private readonly changeDetector = inject(ChangeDetectorRef);
 
   /** Wie viele der letzten Trades angezeigt werden sollen. */
-  @Input() limit = 10;
+  @Input() limit = 100;
 
-  trades: Trade[] = [];
+  trades: AccountTrade[] = [];
   loading = true;
   error: string | null = null;
 
@@ -30,12 +30,12 @@ export class TradesComponent implements OnInit {
     this.loading = true;
     this.error = null;
     this.api.getTrades(this.limit).subscribe({
-      next: (t) => {
-        this.trades = t;
+      next: (trades) => {
+        this.trades = trades;
         this.loading = false;
         this.changeDetector.markForCheck();
       },
-      error: (err) => {
+      error: (err: unknown) => {
         this.error = 'Trades konnten nicht geladen werden.';
         this.loading = false;
         console.error('Trades error:', err);

@@ -16,13 +16,17 @@ import {
   CrosshairMode,
   HistogramSeries,
   createChart,
+  createSeriesMarkers,
   type IChartApi,
+  type ISeriesMarkersPluginApi,
   type ISeriesApi,
   type LogicalRange,
+  type SeriesMarker,
+  type Time,
   type UTCTimestamp,
 } from 'lightweight-charts';
 
-import { CandleData } from '../shared/models/api.models';
+import { AnalysisSignal, CandleData } from '../shared/models/api.models';
 import { ChartDrawingToolbarComponent } from '../chart-drawing-toolbar/chart-drawing-toolbar.component';
 
 @Component({
@@ -34,6 +38,7 @@ import { ChartDrawingToolbarComponent } from '../chart-drawing-toolbar/chart-dra
 })
 export class TradingChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() candles: CandleData[] = [];
+  @Input() analysisSignals: AnalysisSignal[] = [];
   @Input() symbol = '';
   @Input() timeframe = '';
   @ViewChild('chartContainer', { static: true })
@@ -48,6 +53,7 @@ export class TradingChartComponent implements AfterViewInit, OnChanges, OnDestro
   private chart?: IChartApi;
   private candleSeries?: ISeriesApi<'Candlestick'>;
   private volumeSeries?: ISeriesApi<'Histogram'>;
+  private markerPlugin?: ISeriesMarkersPluginApi<Time>;
   private currentPriceLine?: ReturnType<ISeriesApi<'Candlestick'>['createPriceLine']>;
   private renderedCandles: CandleData[] = [];
   private renderedSymbol = '';
@@ -63,10 +69,12 @@ export class TradingChartComponent implements AfterViewInit, OnChanges, OnDestro
 
   ngAfterViewInit(): void {
     this.updateData();
+    this.updateMarkers();
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
     this.updateData();
+    this.updateMarkers();
   }
 
   ngOnDestroy(): void {
@@ -171,6 +179,7 @@ export class TradingChartComponent implements AfterViewInit, OnChanges, OnDestro
       lastValueVisible: false,
       priceLineVisible: false,
     });
+    this.markerPlugin = createSeriesMarkers(this.candleSeries, []);
     this.chart.priceScale('volume').applyOptions({
       scaleMargins: { top: 0.82, bottom: 0 },
       visible: false,
@@ -253,6 +262,27 @@ export class TradingChartComponent implements AfterViewInit, OnChanges, OnDestro
       axisLabelVisible: true,
       title: 'Last',
     });
+  }
+
+  private updateMarkers(): void {
+    if (!this.markerPlugin) return;
+
+    const markers: SeriesMarker<Time>[] = [];
+    for (const signal of this.analysisSignals) {
+      const candle = this.candles.find((item) => item.close_time === signal.timestamp);
+      if (!candle) continue;
+
+      const bullish = signal.direction === 'bullish';
+      markers.push({
+        time: Math.floor(candle.open_time / 1000) as UTCTimestamp,
+        position: bullish ? 'belowBar' : 'aboveBar',
+        color: bullish ? '#22c55e' : signal.direction === 'bearish' ? '#ef4444' : '#a78bfa',
+        shape: bullish ? 'arrowUp' : signal.direction === 'bearish' ? 'arrowDown' : 'circle',
+        text: signal.title,
+      });
+    }
+
+    this.markerPlugin.setMarkers(markers);
   }
 
   private changeBarSpacing(factor: number): void {

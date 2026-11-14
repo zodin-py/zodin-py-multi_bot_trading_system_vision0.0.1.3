@@ -27,6 +27,8 @@ describe('CoinSelectionComponent', () => {
       }),
     );
     const apiServiceMock = {
+      getAnalyzerCatalog: () =>
+        of({ indicators: [], patterns: [], strategies: [] }),
       getCoins: () =>
         of({
           success: true,

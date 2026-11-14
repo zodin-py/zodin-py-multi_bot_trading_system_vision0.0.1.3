@@ -1,0 +1,295 @@
+<section class="rag-panel card flex min-h-[34rem] flex-col overflow-hidden rounded-xl">
+  <header class="flex items-start justify-between gap-3 border-b border-slate-700 p-4">
+    <div>
+      <h2 class="flex items-center gap-2 text-lg font-semibold text-white">
+        <i class="fas fa-sparkles text-violet-400"></i>
+        RAG Copilot
+      </h2>
+      <p class="mt-1 text-xs text-slate-400">Antworten aus deinen JSON-Wissensquellen</p>
+    </div>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        class="rounded border border-slate-600 px-2 py-1 text-xs text-slate-300 hover:bg-slate-700 disabled:opacity-50"
+        (click)="clearChat()"
+        [disabled]="loading || !messages.length"
+        aria-label="Chat leeren"
+        title="Chat leeren"
+      >
+        <i class="fas fa-trash"></i>
+      </button>
+      <button
+        type="button"
+        class="rounded border border-slate-600 px-2 py-1 text-xs text-slate-300 hover:bg-slate-700 disabled:opacity-50"
+        (click)="syncSources()"
+        [disabled]="syncing"
+      >
+        <i class="fas" [class.fa-rotate]="!syncing" [class.fa-spinner]="syncing" [class.fa-spin]="syncing"></i>
+        {{ syncing ? 'Indexiere…' : 'Quellen sync' }}
+      </button>
+    </div>
+  </header>
+
+  <div class="flex flex-wrap items-center gap-2 border-b border-slate-800 px-4 py-2 text-xs">
+    <span
+      class="inline-flex items-center gap-1 rounded-full px-2 py-1"
+      [class]="status?.status === 'ready'
+        ? 'bg-green-500/10 text-green-300'
+        : 'bg-amber-500/10 text-amber-300'"
+    >
+      <span class="h-1.5 w-1.5 rounded-full" [class]="status?.status === 'ready' ? 'bg-green-400' : 'bg-amber-400'"></span>
+      {{ status?.status === 'ready' ? 'Index bereit' : 'Index nicht erstellt' }}
+    </span>
+    <span class="text-slate-400">
+      {{ sources.length }} Quellen · {{ status?.system_info?.num_chunks ?? 0 }} Abschnitte
+    </span>
+    <span
+      class="ml-auto rounded-full px-2 py-1"
+      [class]="status?.system_info?.chat_configured
+        ? 'bg-green-500/10 text-green-300'
+        : 'bg-amber-500/10 text-amber-300'"
+      [title]="status?.system_info?.chat_configured
+        ? 'Claude ist konfiguriert'
+        : 'ANTHROPIC_API_KEY in .env fehlt'"
+    >
+      {{ status?.system_info?.chat_configured ? 'Claude verbunden' : 'Claude nicht konfiguriert' }}
+    </span>
+  </div>
+
+  @if (error) {
+    <div class="mx-4 mt-3 rounded-lg border border-red-500/30 bg-red-950/40 p-3 text-sm text-red-200" role="alert">
+      {{ error }}
+      @if (error.includes('ANTHROPIC_API_KEY')) {
+        <p class="mt-2 text-xs text-red-300">
+          Trage ANTHROPIC_API_KEY in die .env-Datei im Backend-Projektordner ein und starte das Backend neu.
+        </p>
+      }
+    </div>
+  }
+
+  <div class="rag-messages flex-1 space-y-4 overflow-y-auto p-4" aria-live="polite">
+    @if (!messages.length) {
+      <div class="py-6 text-center">
+        <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-violet-500/10 text-violet-300">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <p class="text-sm font-medium text-slate-200">Frage deine Wissensbasis</p>
+        <p class="mx-auto mt-1 max-w-xs text-xs leading-5 text-slate-400">
+          Lege JSON-Dateien in <code>backend/data/json_files</code> ab und synchronisiere den Index.
+        </p>
+        <div class="mt-4 flex flex-wrap justify-center gap-2">
+          <button
+            type="button"
+            class="rounded-full border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:border-violet-400 hover:text-white"
+            (click)="useSuggestion('Welche Daten sind in meinen Quellen enthalten?')"
+          >
+            Welche Daten sind enthalten?
+          </button>
+          <button
+            type="button"
+            class="rounded-full border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:border-violet-400 hover:text-white"
+            (click)="useSuggestion('Fasse die wichtigsten Informationen zusammen.')"
+          >
+            Wichtigste Infos
+          </button>
+        </div>
+      </div>
+    }
+
+    @for (message of messages; track trackMessage($index, message)) {
+      <article class="flex gap-2" [class.flex-row-reverse]="message.role === 'user'">
+        <div
+          class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs"
+          [class]="message.role === 'user'
+            ? 'bg-blue-500/20 text-blue-300'
+            : 'bg-violet-500/20 text-violet-300'"
+          aria-hidden="true"
+        >
+          <i class="fas" [class.fa-user]="message.role === 'user'" [class.fa-sparkles]="message.role === 'assistant'"></i>
+        </div>
+        <div class="min-w-0 max-w-[88%]">
+          <div
+            class="rounded-xl px-3 py-2.5 text-sm leading-6"
+            [class]="message.role === 'user'
+              ? 'bg-blue-500/15 text-blue-50'
+              : message.status === 'error'
+                ? 'border border-red-500/30 bg-red-950/30 text-red-200'
+                : 'bg-slate-800 text-slate-100'"
+          >
+            <p class="whitespace-pre-wrap break-words">{{ message.content }}</p>
+            @if (message.status === 'error' && message.content.includes('ANTHROPIC_API_KEY')) {
+              <p class="mt-2 text-xs text-red-300">
+                Trage ANTHROPIC_API_KEY in die .env-Datei im Backend-Projektordner ein und starte das Backend neu.
+              </p>
+            }
+          </div>
+
+          @if (message.role === 'assistant' && message.status !== 'error') {
+            <div class="mt-2 flex flex-wrap items-center gap-2">
+              <span
+                class="rounded-full px-2 py-0.5 text-[10px]"
+                [class]="message.status === 'grounded'
+                  ? 'bg-green-500/10 text-green-300'
+                  : 'bg-amber-500/10 text-amber-300'"
+              >
+                {{ message.status === 'grounded' ? 'Mit Quellen' : 'Keine ausreichenden Belege' }}
+              </span>
+              @for (source of message.sources ?? []; track source.citation_id) {
+                <span
+                  class="rounded border border-slate-700 px-2 py-0.5 text-[10px] text-slate-400"
+                  [title]="'Datensatz ' + source.record_id"
+                >
+                  {{ source.source_file }} · {{ source.record_id }}
+                </span>
+              }
+            </div>
+
+            @if (message.analysis) {
+              <details class="mt-2 rounded-lg border border-slate-700/80 bg-slate-900/50">
+                <summary class="cursor-pointer px-3 py-2 text-xs font-medium text-slate-300 hover:text-white">
+                  Retrieval-Analyse
+                  <span class="ml-1 text-slate-500">
+                    {{ message.analysis.retrieval_ms }} ms · {{ message.analysis.context_characters }} Zeichen Kontext
+                  </span>
+                </summary>
+                <div class="space-y-3 border-t border-slate-700 p-3 text-xs">
+                  <div>
+                    <p class="font-semibold text-slate-300">Suchanfrage</p>
+                    <p class="mt-1 break-words text-slate-400">{{ message.analysis.search_query }}</p>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2 text-slate-400">
+                    <span>Top-K: {{ message.analysis.retrieval_parameters.top_k }}</span>
+                    <span>Embedding: {{ message.analysis.retrieval_parameters.embedding_model }}</span>
+                    <span>Keyword-Gewicht: {{ message.analysis.retrieval_parameters.keyword_weight }}</span>
+                    <span>Vector-Gewicht: {{ message.analysis.retrieval_parameters.vector_weight }}</span>
+                    <span>Claude: {{ message.analysis.claude_ms }} ms</span>
+                  </div>
+                  <div>
+                    <p class="mb-1 font-semibold text-slate-300">
+                      Keyword-Ergebnisse ({{ message.analysis.keyword_results.length }})
+                    </p>
+                    @for (result of message.analysis.keyword_results; track result.chunk_id) {
+                      <p class="mb-1 break-words text-slate-400">
+                        #{{ result.rank }} · {{ result.source_file }} / {{ result.record_id }}
+                        · {{ result.score | number:'1.0-4' }}
+                      </p>
+                    }
+                    @if (!message.analysis.keyword_results.length) {
+                      <p class="text-slate-500">Keine Keyword-Treffer.</p>
+                    }
+                  </div>
+                  <div>
+                    <p class="mb-1 font-semibold text-slate-300">
+                      Lokale Vector-Ergebnisse ({{ message.analysis.vector_results.length }})
+                    </p>
+                    @for (result of message.analysis.vector_results; track result.chunk_id) {
+                      <p class="mb-1 break-words text-slate-400">
+                        #{{ result.rank }} · {{ result.source_file }} / {{ result.record_id }}
+                        · {{ result.score | number:'1.0-4' }}
+                      </p>
+                    }
+                    @if (!message.analysis.vector_results.length) {
+                      <p class="text-slate-500">Keine Vector-Treffer.</p>
+                    }
+                  </div>
+                  <div>
+                    <p class="mb-1 font-semibold text-slate-300">
+                      An Claude übergebener Kontext ({{ message.analysis.context_documents.length }})
+                    </p>
+                    @for (document of message.analysis.context_documents; track document.chunk_id) {
+                      <p class="text-slate-400">
+                        {{ document.rank }}. {{ document.source_file }} / {{ document.record_id }}
+                        <span class="text-slate-500">({{ document.chunk_id }})</span>
+                      </p>
+                    }
+                  </div>
+                  <p class="border-t border-slate-800 pt-2 text-slate-500">
+                    Quellen-IDs werden gegen den übergebenen Kontext geprüft. Das ist keine unabhängige Prüfung,
+                    ob jede Aussage inhaltlich vollständig belegt ist.
+                  </p>
+                </div>
+              </details>
+            } @else if (message.analysisLoading) {
+              <p class="mt-2 text-xs text-slate-500">Lade Retrieval-Analyse…</p>
+            }
+          }
+          @if (message.role === 'assistant' && message.status === 'error' && message.analysis) {
+            <details class="mt-2 rounded-lg border border-slate-700/80 bg-slate-900/50">
+              <summary class="cursor-pointer px-3 py-2 text-xs text-slate-300">
+                Retrieval vor dem Fehler anzeigen
+              </summary>
+              <div class="space-y-2 border-t border-slate-700 p-3 text-xs text-slate-400">
+                <p>Suchanfrage: {{ message.analysis.search_query }}</p>
+                <p>
+                  Keyword-Treffer: {{ message.analysis.keyword_results.length }} ·
+                  Vector-Treffer: {{ message.analysis.vector_results.length }} ·
+                  kombinierte Treffer: {{ message.analysis.combined_results.length }}
+                </p>
+                <p>
+                  Kontext: {{ message.analysis.context_characters }} Zeichen ·
+                  Retrieval: {{ message.analysis.retrieval_ms }} ms
+                </p>
+                @for (document of message.analysis.context_documents; track document.chunk_id) {
+                  <p>{{ document.source_file }} / {{ document.record_id }}</p>
+                }
+              </div>
+            </details>
+          } @else if (message.role === 'assistant' && message.status === 'error' && message.analysisLoading) {
+            <p class="mt-2 text-xs text-slate-500">Lade Retrieval-Analyse…</p>
+          }
+        </div>
+      </article>
+    }
+
+    @if (loading) {
+      <div class="flex items-center gap-2 text-xs text-slate-400" role="status">
+        <i class="fas fa-spinner fa-spin"></i>
+        Suche Quellen und erstelle eine belegte Antwort…
+      </div>
+    }
+  </div>
+
+  <form class="border-t border-slate-700 p-3" (ngSubmit)="send()">
+    <label class="sr-only" for="rag-question">Frage an den RAG Copilot</label>
+    <div class="flex items-end gap-2 rounded-xl border border-slate-700 bg-slate-900/70 p-2 focus-within:border-violet-500">
+      <textarea
+        id="rag-question"
+        name="question"
+        [(ngModel)]="draft"
+        (keydown.enter)="onEnter($event)"
+        [disabled]="loading"
+        rows="2"
+        maxlength="4000"
+        placeholder="Frage zu deinen JSON-Quellen…"
+        class="max-h-32 min-h-12 flex-1 resize-y bg-transparent px-1 py-1 text-sm text-white outline-none placeholder:text-slate-500 disabled:opacity-60"
+      ></textarea>
+      <button
+        type="submit"
+        [disabled]="loading || !draft.trim()"
+        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-white hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-40"
+        aria-label="Frage senden"
+      >
+        <i class="fas" [class.fa-paper-plane]="!loading" [class.fa-spinner]="loading" [class.fa-spin]="loading"></i>
+      </button>
+    </div>
+    <p class="mt-2 text-[10px] leading-4 text-slate-500">
+      Antworten nutzen nur abgerufene Quellen. IDs werden geprüft; die Belegbarkeit einzelner Aussagen ist nicht automatisch garantiert.
+    </p>
+  </form>
+
+  <details class="border-t border-slate-800 px-4 py-2">
+    <summary class="cursor-pointer text-xs text-slate-400 hover:text-white">
+      Quellen anzeigen ({{ sources.length }})
+    </summary>
+    <div class="max-h-36 space-y-1 overflow-y-auto py-2">
+      @for (source of sources; track source.source_file) {
+        <div class="flex justify-between gap-2 text-xs text-slate-400">
+          <span class="break-all">{{ source.source_file }}</span>
+          <span class="shrink-0">{{ source.record_count }} Datensätze</span>
+        </div>
+      } @empty {
+        <p class="text-xs text-slate-500">Noch keine Quellen indexiert.</p>
+      }
+    </div>
+  </details>
+</section>
