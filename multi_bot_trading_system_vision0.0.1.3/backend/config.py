@@ -6,6 +6,7 @@ Nur die für Preis, Wallet und Indikatoren benötigten Felder sind enthalten.
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any, Dict, List
 
 from pydantic import Field
@@ -91,7 +92,7 @@ class TradingConfig(BaseSettings):
 
     model_config = SettingsConfigDict(
         env_prefix='TRADING_',
-        env_file='.env',
+        env_file=Path(__file__).resolve().parent.parent / '.env',
         env_file_encoding='utf-8',
         case_sensitive=False,
         extra='ignore'

@@ -1,8 +1,19 @@
+from pathlib import Path
+
 import ccxt
 import pytest
 from unittest.mock import patch
 
+from backend.config import TradingConfig
 from backend.services.wallet_service import WalletService
+
+
+def test_config_dotenv_path_is_independent_of_working_directory(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+
+    assert TradingConfig.model_config['env_file'] == (
+        Path(__file__).resolve().parents[1] / '.env'
+    )
 
 
 @patch('backend.services.wallet_service.config.USE_TESTNET', True)
