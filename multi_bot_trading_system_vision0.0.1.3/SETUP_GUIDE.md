@@ -88,6 +88,34 @@ Die Trades-History liest echte Spot-Ausführungen von Binance Live für die in
 benötigt Leserechte für Kontodaten und Spot-Handelshistorie; Handels- und
 Auszahlungsrechte sind für diesen Abruf nicht erforderlich.
 
+### RAG Copilot
+Lege deine JSON-Wissensdateien in
+`backend/data/json_files/` ab. Unterstützt werden einzelne JSON-Objekte,
+Listen von Objekten sowie Objekte mit einem `records`, `items` oder
+`documents`-Array. Datensätze mit einem `id`-Feld lassen sich in der Antwort
+leichter als Quelle wiederfinden.
+
+Für Antworten über Claude ergänze dieselbe `.env`-Datei:
+
+```dotenv
+ANTHROPIC_API_KEY=dein_anthropic_api_key
+# Optional:
+ANTHROPIC_MODEL=claude-3-5-haiku-latest
+```
+
+Der Schlüssel bleibt im Backend und wird nie an den Browser gesendet. Beim
+Start der Seite kannst du im Copilot-Panel **Quellen sync** auswählen; Änderungen
+an den JSON-Dateien werden während der geöffneten Seite außerdem regelmäßig
+geprüft. Ein fehlerhaftes JSON ersetzt den letzten gültigen Index nicht.
+Abgerufene Textabschnitte werden für die Antwort an Anthropic gesendet.
+
+Die aktuelle lokale Vector-Suche nutzt Feature-Hashing mit Wort- und
+Zeichen-N-Grammen und benötigt keinen zusätzlichen Embedding-Anbieter. Sie ist
+keine semantische Embedding-Suche; entsprechende Anbieter/Modelle sind in der
+vorgefundenen Konfiguration nicht eingerichtet. Die Oberfläche zeigt beide
+Retrieval-Ranglisten. Quellen-IDs werden gegen den tatsächlichen Kontext geprüft,
+was allein keine automatische inhaltliche Belegprüfung ersetzt.
+
 ### Trading Parameter
 In `backend/config.py` können folgende Parameter angepasst werden:
 - `COINS` - Handelbare Kryptowährungen

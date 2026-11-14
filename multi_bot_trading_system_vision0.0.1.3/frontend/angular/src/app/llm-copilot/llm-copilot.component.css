@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.rag-panel {
+  margin: 0;
+}
+
+.rag-messages {
+  min-height: 15rem;
+  max-height: min(66vh, 58rem);
+}

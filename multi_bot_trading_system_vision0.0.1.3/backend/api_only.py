@@ -31,6 +31,12 @@ from backend.analyzers.engine import AnalysisEngine
 from backend.analyzers.registry import AnalyzerRegistry
 from backend.News_card.news_service import collect_news, get_news_items
 from backend.candles.manager import load_candles, update_candle_data
+from backend.rag import default_config
+from backend.rag.rag_service import (
+    RagConfigurationError,
+    RagService,
+    RagServiceError,
+)
 
 # --- Logging ---------------------------------------------------------------
 
@@ -54,6 +60,9 @@ CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
 
 price_service = PriceService()
 indicators_service = IndicatorService()
+
+# Initialize RAG service
+rag_service = RagService(config=default_config)
 
 # Initialize analysis engine with registry
 analyzer_registry = AnalyzerRegistry()
@@ -244,6 +253,143 @@ def api_wallet():
     except Exception as e:
         logger.error("Wallet service error: %s", type(e).__name__)
         return jsonify({"error": "Wallet service error", "data": None}), 502
+
+
+@app.route('/api/rag/status', methods=['GET'])
+def api_rag_status():
+    """Get RAG system status."""
+    info = rag_service.get_system_info()
+    return jsonify({
+        "success": True,
+        "status": "ready" if rag_service._is_built else "not_built",
+        "system_info": info,
+    })
+
+
+@app.route('/api/rag/indices', methods=['POST'])
+def api_rag_build_indices():
+    """Compatibility endpoint for rebuilding the local RAG index."""
+    try:
+        result = rag_service.build_indices(force_rebuild=True)
+        status_code = 200 if result["status"] == "success" else 422
+        return jsonify({"success": status_code == 200, **result}), status_code
+    except RagServiceError as error:
+        logger.warning("RAG index rebuild failed: %s", error)
+        return jsonify({"success": False, "error": str(error)}), 500
+
+
+@app.route('/api/rag/sync', methods=['POST'])
+def api_rag_sync():
+    """Check JSON sources and atomically update the active RAG index."""
+    try:
+        result = rag_service.build_indices()
+        success = result["status"] in ("success", "unchanged")
+        return jsonify({"success": success, **result}), 200 if success else 422
+    except RagServiceError as error:
+        logger.warning("RAG source synchronization failed: %s", error)
+        return jsonify({"success": False, "error": str(error)}), 500
+
+
+@app.route('/api/rag/sources', methods=['GET'])
+def api_rag_sources():
+    """List indexed JSON sources without exposing their contents."""
+    return jsonify({"success": True, "sources": rag_service.get_sources()})
+
+
+@app.route('/api/rag/analysis/<request_id>', methods=['GET'])
+def api_rag_analysis(request_id: str):
+    """Return retrieval and context diagnostics for one chat request."""
+    analysis = rag_service.get_analysis(request_id)
+    if analysis is None:
+        return jsonify({
+            "success": False,
+            "error": "Analysis not found or expired",
+        }), 404
+    return jsonify({"success": True, "analysis": analysis})
+
+
+@app.route('/api/rag/chat', methods=['POST'])
+def api_rag_chat():
+    """Answer a question using retrieved JSON records and Claude."""
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"success": False, "error": "A JSON request body is required"}), 400
+    question = data.get("question")
+    if not isinstance(question, str) or not question.strip():
+        return jsonify({"success": False, "error": "question is required"}), 400
+    history = data.get("history", [])
+    if not isinstance(history, list) or any(
+        not isinstance(turn, dict)
+        or turn.get("role") not in ("user", "assistant")
+        or not isinstance(turn.get("content"), str)
+        for turn in history
+    ):
+        return jsonify({
+            "success": False,
+            "error": "history must be a list of user/assistant messages",
+        }), 400
+    if len(history) > 12 or any(len(turn["content"]) > 4000 for turn in history):
+        return jsonify({
+            "success": False,
+            "error": "history is limited to 12 messages of 4000 characters each",
+        }), 400
+
+    top_k = data.get("top_k", 5)
+    try:
+        result = rag_service.chat(question, top_k=top_k, history=history)
+        return jsonify({"success": True, **result})
+    except ValueError as error:
+        return jsonify({"success": False, "error": str(error)}), 400
+    except RagConfigurationError as error:
+        return jsonify({
+            "success": False,
+            "error": str(error),
+            "request_id": error.request_id,
+        }), 503
+    except RagServiceError as error:
+        logger.warning("RAG chat failed: %s", error)
+        return jsonify({
+            "success": False,
+            "error": str(error),
+            "request_id": error.request_id,
+        }), 502
+
+
+@app.route('/api/rag/search', methods=['POST'])
+def api_rag_search():
+    """Search the RAG system."""
+    data = request.get_json(silent=True) or {}
+    query = data.get("query", "").strip()
+    top_k = data.get("top_k", 10)
+
+    if not query:
+        return jsonify({
+            "success": False,
+            "error": "Query parameter is required",
+        }), 400
+
+    try:
+        result = rag_service.search(query, top_k=top_k)
+        if result["status"] not in ("success",):
+            return jsonify({
+                "success": False,
+                "error": result.get("message", "RAG index is not ready"),
+                "status": result["status"],
+                "analysis": result.get("analysis"),
+            }), 503
+        return jsonify({
+            "success": result["status"] == "success",
+            "query": query,
+            "num_results": result.get("num_results", 0),
+            "context": result.get("context", ""),
+            "sources": result.get("sources", []),
+            "analysis": result.get("analysis", {}),
+        })
+    except ValueError as error:
+        return jsonify({"success": False, "error": str(error)}), 400
+    except RagServiceError as error:
+        logger.warning("RAG search failed: %s", error)
+        return jsonify({"success": False, "error": str(error)}), 500
 
 
 @app.route('/api/analysis/run', methods=['POST'])

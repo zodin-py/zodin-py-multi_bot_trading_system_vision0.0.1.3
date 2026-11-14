@@ -11,6 +11,60 @@ describe('App', () => {
       of({ symbol: 'BTC', timeframe: '1h', rsi: [], macd: [], ema: [] }),
     getWallet: () => of({ balances: [], total_usdt: 0, timestamp: '' }),
     getTrades: () => of([]),
+    getRagStatus: () =>
+      of({
+        success: true,
+        status: 'not_built',
+        system_info: {
+          is_built: false,
+          source_files: [],
+          num_chunks: 0,
+          chat_configured: false,
+          embedding_model: 'local-hash-ngram-v1',
+          keyword_stats: null,
+          vector_stats: null,
+        },
+      }),
+    getRagSources: () => of({ success: true, sources: [] }),
+    syncRagSources: () =>
+      of({ success: true, status: 'success', message: 'Knowledge index updated' }),
+    sendRagChat: () =>
+      of({
+        success: true,
+        request_id: 'test-request',
+        answer: 'Keine Belege gefunden.',
+        status: 'insufficient_information',
+        sources: [],
+        insufficient_information: true,
+      }),
+    getRagAnalysis: () =>
+      of({
+        success: true,
+        analysis: {
+          request_id: 'test-request',
+          query: 'question',
+          search_query: 'question',
+          retrieval_parameters: {
+            top_k: 5,
+            keyword_weight: 0.5,
+            vector_weight: 0.5,
+            embedding_model: 'local-hash-ngram-v1',
+          },
+          keyword_results: [],
+          vector_results: [],
+          combined_results: [],
+          context_documents: [],
+          context_characters: 0,
+          retrieval_ms: 0,
+          claude_ms: 0,
+          response: {
+            answer: 'Keine Belege gefunden.',
+            status: 'insufficient_information',
+            sources: [],
+            insufficient_information: true,
+          },
+        },
+      }),
     getNews: () =>
       of({ success: true, total_new: 0, total_items: 0, items: [] }),
     getCoins: () =>

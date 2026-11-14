@@ -67,6 +67,89 @@ export interface AccountTrade {
   fee: { cost: number; currency: string } | null;
 }
 
+export interface RagSource {
+  source_file: string;
+  record_count: number;
+}
+
+export interface RagSystemInfo {
+  is_built: boolean;
+  source_files: RagSource[];
+  num_chunks: number;
+  chat_configured: boolean;
+  embedding_model: string;
+  keyword_stats: Record<string, number> | null;
+  vector_stats: Record<string, number> | null;
+}
+
+export interface RagStatusResponse {
+  success: boolean;
+  status: 'ready' | 'not_built';
+  system_info: RagSystemInfo;
+}
+
+export interface RagSourcesResponse {
+  success: boolean;
+  sources: RagSource[];
+}
+
+export interface RagChatTurn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface RagCitation {
+  source_file: string;
+  record_id: string;
+  citation_id: string;
+}
+
+export interface RagRetrievedDocument extends RagCitation {
+  chunk_id: string;
+  rank: number;
+  score: number;
+  text: string;
+}
+
+export interface RagAnalysis {
+  request_id: string;
+  query: string;
+  search_query: string;
+  retrieval_parameters: {
+    top_k: number;
+    keyword_weight: number;
+    vector_weight: number;
+    embedding_model: string;
+  };
+  keyword_results: RagRetrievedDocument[];
+  vector_results: RagRetrievedDocument[];
+  combined_results: RagRetrievedDocument[];
+  context_documents: Array<RagCitation & { chunk_id: string; rank: number }>;
+  context_characters: number;
+  retrieval_ms: number;
+  claude_ms: number;
+  response: {
+    answer: string;
+    status: 'grounded' | 'insufficient_information' | 'error';
+    sources: RagCitation[];
+    insufficient_information: boolean;
+  };
+}
+
+export interface RagChatResponse {
+  success: boolean;
+  request_id: string;
+  answer: string;
+  status: 'grounded' | 'insufficient_information';
+  sources: RagCitation[];
+  insufficient_information: boolean;
+}
+
+export interface RagAnalysisResponse {
+  success: boolean;
+  analysis: RagAnalysis;
+}
+
 export interface NewsItem {
   id: string;
   title: string;

@@ -8,6 +8,11 @@ import {
   StatusResponse,
   WalletResponse,
   AccountTrade,
+  RagAnalysisResponse,
+  RagChatResponse,
+  RagChatTurn,
+  RagSourcesResponse,
+  RagStatusResponse,
   NewsResponse,
   CoinsResponse,
   CandleChartData,
@@ -67,6 +72,39 @@ export class ApiService {
     let params = new HttpParams();
     if (typeof n === 'number' && n > 0) params = params.set('limit', n.toString());
     return this.http.get<AccountTrade[]>('/api/trades', { params });
+  }
+
+  getRagStatus(): Observable<RagStatusResponse> {
+    return this.http.get<RagStatusResponse>('/api/rag/status');
+  }
+
+  getRagSources(): Observable<RagSourcesResponse> {
+    return this.http.get<RagSourcesResponse>('/api/rag/sources');
+  }
+
+  syncRagSources(): Observable<{ success: boolean; status: string; message: string }> {
+    return this.http.post<{ success: boolean; status: string; message: string }>(
+      '/api/rag/sync',
+      {},
+    );
+  }
+
+  sendRagChat(
+    question: string,
+    history: RagChatTurn[],
+    topK: number = 5,
+  ): Observable<RagChatResponse> {
+    return this.http.post<RagChatResponse>('/api/rag/chat', {
+      question,
+      history,
+      top_k: topK,
+    });
+  }
+
+  getRagAnalysis(requestId: string): Observable<RagAnalysisResponse> {
+    return this.http.get<RagAnalysisResponse>(
+      `/api/rag/analysis/${encodeURIComponent(requestId)}`,
+    );
   }
 
   /** Collect and fetch latest news from configured sources. */
