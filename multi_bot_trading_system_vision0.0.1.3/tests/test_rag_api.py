@@ -1,5 +1,9 @@
 from unittest.mock import patch
 
+import numpy as np
+
+from backend.rag.vector_search import VectorSearch
+
 
 def _api_only_module():
     with patch("backend.services.price_service.PriceService.start"):
@@ -54,6 +58,23 @@ def test_rag_api_exposes_sync_sources_chat_and_analysis(monkeypatch):
     assert sources.get_json()["sources"][0]["source_file"] == "facts.json"
     assert chat.get_json()["sources"] == [citation]
     assert analysis.get_json()["analysis"]["request_id"] == "request-1"
+
+
+def test_rag_status_includes_vector_statistics(monkeypatch):
+    api_only = _api_only_module()
+    service = api_only.rag_service
+    monkeypatch.setattr(service, "_vector_search", VectorSearch(
+        embeddings=np.array([[1.0, 0.0], [0.0, 1.0]]),
+        index_data=[{}, {}],
+    ))
+
+    response = api_only.app.test_client().get("/api/rag/status")
+
+    assert response.status_code == 200
+    assert response.get_json()["system_info"]["vector_stats"] == {
+        "num_vectors": 2,
+        "embedding_dimension": 2,
+    }
 
 
 def test_rag_chat_rejects_invalid_history():

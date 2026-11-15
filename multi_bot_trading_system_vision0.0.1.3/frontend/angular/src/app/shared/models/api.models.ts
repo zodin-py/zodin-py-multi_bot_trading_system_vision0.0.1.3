@@ -127,10 +127,10 @@ export interface RagAnalysis {
   context_documents: Array<RagCitation & { chunk_id: string; rank: number }>;
   context_characters: number;
   retrieval_ms: number;
-  claude_ms: number;
+  llm_ms: number;
   response: {
     answer: string;
-    status: 'grounded' | 'insufficient_information' | 'error';
+    status: 'grounded' | 'conversational' | 'insufficient_information' | 'error';
     sources: RagCitation[];
     insufficient_information: boolean;
   };
@@ -140,7 +140,7 @@ export interface RagChatResponse {
   success: boolean;
   request_id: string;
   answer: string;
-  status: 'grounded' | 'insufficient_information';
+  status: 'grounded' | 'conversational' | 'insufficient_information';
   sources: RagCitation[];
   insufficient_information: boolean;
 }

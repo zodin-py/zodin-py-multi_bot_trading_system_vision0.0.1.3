@@ -70,3 +70,11 @@ class VectorSearch:
                 })
 
         return results
+
+    def get_statistics(self) -> Dict[str, int]:
+        """Return basic vector index statistics."""
+        num_vectors = len(self.embeddings) if self.embeddings is not None else 0
+        return {
+            "num_vectors": num_vectors,
+            "embedding_dimension": self.dim,
+        }

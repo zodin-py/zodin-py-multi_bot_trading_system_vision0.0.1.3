@@ -21,7 +21,7 @@ import { ApiService } from '../shared/services/api.service';
 
 interface ChatMessage extends RagChatTurn {
   id: number;
-  status?: 'grounded' | 'insufficient_information' | 'error';
+  status?: 'grounded' | 'conversational' | 'insufficient_information' | 'error';
   sources?: RagCitation[];
   analysis?: RagAnalysis;
   analysisLoading?: boolean;

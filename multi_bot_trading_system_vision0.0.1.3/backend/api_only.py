@@ -310,7 +310,7 @@ def api_rag_analysis(request_id: str):
 
 @app.route('/api/rag/chat', methods=['POST'])
 def api_rag_chat():
-    """Answer a question using retrieved JSON records and Claude."""
+    """Answer a question using retrieved JSON records and the configured LLM."""
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
         return jsonify({"success": False, "error": "A JSON request body is required"}), 400

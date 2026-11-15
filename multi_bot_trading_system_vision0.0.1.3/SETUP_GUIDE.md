@@ -95,19 +95,29 @@ Listen von Objekten sowie Objekte mit einem `records`, `items` oder
 `documents`-Array. Datensätze mit einem `id`-Feld lassen sich in der Antwort
 leichter als Quelle wiederfinden.
 
-Für Antworten über Claude ergänze dieselbe `.env`-Datei:
+Für Antworten über eine OpenAI-kompatible LLM-API ergänze dieselbe `.env`-Datei.
+Trage die vom Anbieter angegebene Modell-ID ein:
 
 ```dotenv
-ANTHROPIC_API_KEY=dein_anthropic_api_key
-# Optional:
-ANTHROPIC_MODEL=claude-3-5-haiku-latest
+LLM_BASE_URL=http://localhost:3001/v1
+LLM_API_KEY=dein_neuer_api_key
+LLM_MODEL=modell-id-aus-der-anbieter-dokumentation
 ```
+
+Für FreeLLMAPI kannst du `LLM_MODEL=auto` verwenden. Der Gateway wählt damit
+ein verfügbares Modell aus seiner aktiven Fallback-Kette. Die verfügbaren
+Modell-IDs listet `GET http://localhost:3001/v1/models`.
+
+`LLM_BASE_URL` muss auf dem Backend-Rechner erreichbar sein. `LLM_MODEL` muss
+genau der Modell-ID entsprechen, die dein API-Anbieter unterstützt. Falls dein
+Anbieter einen anderen Endpoint als OpenAI `chat/completions` verwendet, ist
+dieser Adapter nicht kompatibel.
 
 Der Schlüssel bleibt im Backend und wird nie an den Browser gesendet. Beim
 Start der Seite kannst du im Copilot-Panel **Quellen sync** auswählen; Änderungen
 an den JSON-Dateien werden während der geöffneten Seite außerdem regelmäßig
 geprüft. Ein fehlerhaftes JSON ersetzt den letzten gültigen Index nicht.
-Abgerufene Textabschnitte werden für die Antwort an Anthropic gesendet.
+Abgerufene Textabschnitte werden für die Antwort an den konfigurierten LLM-Anbieter gesendet.
 
 Die aktuelle lokale Vector-Suche nutzt Feature-Hashing mit Wort- und
 Zeichen-N-Grammen und benötigt keinen zusätzlichen Embedding-Anbieter. Sie ist

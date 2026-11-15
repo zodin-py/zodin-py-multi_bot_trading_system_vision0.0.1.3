@@ -36,7 +36,7 @@ const analysis: RagAnalysis = {
   context_documents: [],
   context_characters: 40,
   retrieval_ms: 2,
-  claude_ms: 10,
+  llm_ms: 10,
   response: {
     answer: 'Bitcoin wird in der Quelle beschrieben.',
     status: 'grounded',
@@ -86,13 +86,13 @@ describe('LlmCopilotComponent', () => {
     }).compileComponents();
   });
 
-  it('shows index, source, and Claude status', () => {
+  it('shows index, source, and LLM status', () => {
     const fixture = TestBed.createComponent(LlmCopilotComponent);
     fixture.detectChanges();
 
     const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
     expect(text).toContain('Index bereit');
-    expect(text).toContain('Claude verbunden');
+    expect(text).toContain('LLM verbunden');
     expect(text).toContain('coins.json');
   });
 
@@ -112,13 +112,13 @@ describe('LlmCopilotComponent', () => {
     expect(text).toContain('local-hash-ngram-v1');
   });
 
-  it('surfaces missing Claude configuration without inventing an answer', () => {
+  it('surfaces missing LLM configuration without inventing an answer', () => {
     apiServiceMock.sendRagChat = () =>
       throwError(
         () =>
           new HttpErrorResponse({
             status: 503,
-            error: { error: 'ANTHROPIC_API_KEY fehlt.' },
+            error: { error: 'LLM_API_KEY fehlt.' },
           }),
       );
       const fixture = TestBed.createComponent(LlmCopilotComponent);
@@ -128,7 +128,7 @@ describe('LlmCopilotComponent', () => {
       fixture.detectChanges();
 
     const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
-    expect(text).toContain('ANTHROPIC_API_KEY fehlt.');
+    expect(text).toContain('LLM_API_KEY fehlt.');
     expect(text).toContain('starte das Backend neu');
   });
 });

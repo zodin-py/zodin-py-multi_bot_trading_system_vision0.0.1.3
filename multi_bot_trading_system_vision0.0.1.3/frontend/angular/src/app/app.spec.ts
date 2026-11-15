@@ -56,7 +56,7 @@ describe('App', () => {
           context_documents: [],
           context_characters: 0,
           retrieval_ms: 0,
-          claude_ms: 0,
+          llm_ms: 0,
           response: {
             answer: 'Keine Belege gefunden.',
             status: 'insufficient_information',

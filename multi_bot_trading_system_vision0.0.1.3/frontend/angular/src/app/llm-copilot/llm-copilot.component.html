@@ -5,7 +5,7 @@
         <i class="fas fa-sparkles text-violet-400"></i>
         RAG Copilot
       </h2>
-      <p class="mt-1 text-xs text-slate-400">Antworten aus deinen JSON-Wissensquellen</p>
+      <p class="mt-1 text-xs text-slate-400">Antworten aus deinen Quellen und auf allgemeine Fragen</p>
     </div>
     <div class="flex gap-2">
       <button
@@ -49,19 +49,19 @@
         ? 'bg-green-500/10 text-green-300'
         : 'bg-amber-500/10 text-amber-300'"
       [title]="status?.system_info?.chat_configured
-        ? 'Claude ist konfiguriert'
-        : 'ANTHROPIC_API_KEY in .env fehlt'"
+        ? 'LLM ist konfiguriert'
+        : 'LLM_API_KEY oder LLM_MODEL in .env fehlt'"
     >
-      {{ status?.system_info?.chat_configured ? 'Claude verbunden' : 'Claude nicht konfiguriert' }}
+      {{ status?.system_info?.chat_configured ? 'LLM verbunden' : 'LLM nicht konfiguriert' }}
     </span>
   </div>
 
   @if (error) {
     <div class="mx-4 mt-3 rounded-lg border border-red-500/30 bg-red-950/40 p-3 text-sm text-red-200" role="alert">
       {{ error }}
-      @if (error.includes('ANTHROPIC_API_KEY')) {
+      @if (error.includes('LLM_API_KEY') || error.includes('LLM_MODEL')) {
         <p class="mt-2 text-xs text-red-300">
-          Trage ANTHROPIC_API_KEY in die .env-Datei im Backend-Projektordner ein und starte das Backend neu.
+          Trage LLM_API_KEY und LLM_MODEL in die .env-Datei im Backend-Projektordner ein und starte das Backend neu.
         </p>
       }
     </div>
@@ -73,9 +73,9 @@
         <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-violet-500/10 text-violet-300">
           <i class="fas fa-book-open"></i>
         </div>
-        <p class="text-sm font-medium text-slate-200">Frage deine Wissensbasis</p>
+        <p class="text-sm font-medium text-slate-200">Stelle eine Frage oder starte einen Chat</p>
         <p class="mx-auto mt-1 max-w-xs text-xs leading-5 text-slate-400">
-          Lege JSON-Dateien in <code>backend/data/json_files</code> ab und synchronisiere den Index.
+          Allgemeine Fragen funktionieren auch ohne Quellen. Für Trading- und Marktdaten lege JSON-Dateien ab und synchronisiere den Index.
         </p>
         <div class="mt-4 flex flex-wrap justify-center gap-2">
           <button
@@ -117,9 +117,9 @@
                 : 'bg-slate-800 text-slate-100'"
           >
             <p class="whitespace-pre-wrap break-words">{{ message.content }}</p>
-            @if (message.status === 'error' && message.content.includes('ANTHROPIC_API_KEY')) {
+            @if (message.status === 'error' && (message.content.includes('LLM_API_KEY') || message.content.includes('LLM_MODEL'))) {
               <p class="mt-2 text-xs text-red-300">
-                Trage ANTHROPIC_API_KEY in die .env-Datei im Backend-Projektordner ein und starte das Backend neu.
+                Trage LLM_API_KEY und LLM_MODEL in die .env-Datei im Backend-Projektordner ein und starte das Backend neu.
               </p>
             }
           </div>
@@ -130,9 +130,15 @@
                 class="rounded-full px-2 py-0.5 text-[10px]"
                 [class]="message.status === 'grounded'
                   ? 'bg-green-500/10 text-green-300'
-                  : 'bg-amber-500/10 text-amber-300'"
+                  : message.status === 'conversational'
+                    ? 'bg-blue-500/10 text-blue-300'
+                    : 'bg-amber-500/10 text-amber-300'"
               >
-                {{ message.status === 'grounded' ? 'Mit Quellen' : 'Keine ausreichenden Belege' }}
+                {{ message.status === 'grounded'
+                  ? 'Mit Quellen'
+                  : message.status === 'conversational'
+                    ? 'Allgemeine Antwort'
+                    : 'Keine ausreichenden Belege' }}
               </span>
               @for (source of message.sources ?? []; track source.citation_id) {
                 <span
@@ -162,7 +168,7 @@
                     <span>Embedding: {{ message.analysis.retrieval_parameters.embedding_model }}</span>
                     <span>Keyword-Gewicht: {{ message.analysis.retrieval_parameters.keyword_weight }}</span>
                     <span>Vector-Gewicht: {{ message.analysis.retrieval_parameters.vector_weight }}</span>
-                    <span>Claude: {{ message.analysis.claude_ms }} ms</span>
+                    <span>LLM: {{ message.analysis.llm_ms }} ms</span>
                   </div>
                   <div>
                     <p class="mb-1 font-semibold text-slate-300">
@@ -194,7 +200,7 @@
                   </div>
                   <div>
                     <p class="mb-1 font-semibold text-slate-300">
-                      An Claude übergebener Kontext ({{ message.analysis.context_documents.length }})
+                      An das LLM übergebener Kontext ({{ message.analysis.context_documents.length }})
                     </p>
                     @for (document of message.analysis.context_documents; track document.chunk_id) {
                       <p class="text-slate-400">
@@ -244,7 +250,7 @@
     @if (loading) {
       <div class="flex items-center gap-2 text-xs text-slate-400" role="status">
         <i class="fas fa-spinner fa-spin"></i>
-        Suche Quellen und erstelle eine belegte Antwort…
+        Suche Quellen oder beantworte deine Frage…
       </div>
     }
   </div>
@@ -260,7 +266,7 @@
         [disabled]="loading"
         rows="2"
         maxlength="4000"
-        placeholder="Frage zu deinen JSON-Quellen…"
+        placeholder="Frage zu Quellen oder stelle eine normale Frage…"
         class="max-h-32 min-h-12 flex-1 resize-y bg-transparent px-1 py-1 text-sm text-white outline-none placeholder:text-slate-500 disabled:opacity-60"
       ></textarea>
       <button
@@ -273,7 +279,7 @@
       </button>
     </div>
     <p class="mt-2 text-[10px] leading-4 text-slate-500">
-      Antworten nutzen nur abgerufene Quellen. IDs werden geprüft; die Belegbarkeit einzelner Aussagen ist nicht automatisch garantiert.
+      Fachfragen zu Märkten und Trading benötigen passende Quellen. Allgemeine Fragen sind auch ohne Quellen möglich.
     </p>
   </form>
 
