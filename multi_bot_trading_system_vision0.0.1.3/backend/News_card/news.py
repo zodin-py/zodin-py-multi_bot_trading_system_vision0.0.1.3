@@ -272,6 +272,7 @@ def normalize_item(source_name: str, payload: Dict[str, Any], default_kind: str 
         "summary": payload.get("summary") or payload.get("description") or "",
         "id": str(payload.get("id") or payload.get("post_id") or payload.get("source_id") or payload.get("url") or payload.get("link") or payload.get("title") or "").strip(),
         "kind": payload.get("kind") or default_kind,
+        "status": "offen",
     }
     item["date"] = iso_utc(item["date"]) or None
     if not item["id"]:
@@ -480,6 +481,8 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
     summary: List[Tuple[str, int, str]] = []
 
     for source in config.get("general", {}).get("sources", []):
+        for item in source.get("items", []):
+            item.setdefault("status", "offen")
         if not source.get("enabled"):
             continue
         items, error = dispatch_source(source)
@@ -488,6 +491,8 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
             continue
         if not items:
             continue
+        for item in items:
+            item["status"] = "offen"
         new_items = remember_items(config, items)
         existing_items = list(source.get("items", []))
         merged = deduplicate(existing_items + items)
@@ -495,6 +500,8 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
         summary.append((source.get("name", "SOURCE"), len(new_items), "source"))
 
     for person in config.get("people_monitoring", []):
+        for post in person.get("posts", []):
+            post.setdefault("status", "offen")
         if not person.get("enabled"):
             continue
         items, error = collect_x_person(person)
@@ -503,12 +510,16 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
             continue
         if not items:
             continue
+        for item in items:
+            item["status"] = "offen"
         new_items = remember_items(config, items)
         merged = deduplicate(list(person.get("posts", [])) + items)
         person["posts"] = merged
         summary.append((person.get("name", "PERSON"), len(new_items), "post"))
 
     for coin in config.get("coins", []):
+        for item in coin.get("news", []):
+            item.setdefault("status", "offen")
         coin_items: List[Dict[str, Any]] = []
         for source in coin.get("sources", []):
             if not source.get("enabled"):
@@ -520,6 +531,8 @@ def collect_all(config: Dict[str, Any]) -> Dict[str, Any]:
             coin_items.extend(items)
         if not coin_items:
             continue
+        for item in coin_items:
+            item["status"] = "offen"
         new_items = remember_items(config, coin_items)
         merged = deduplicate(list(coin.get("news", [])) + coin_items)
         coin["news"] = merged

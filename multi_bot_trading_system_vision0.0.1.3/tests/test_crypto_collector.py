@@ -48,6 +48,7 @@ def test_collect_rss_source_extracts_item_fields(monkeypatch):
             "summary": "Market summary",
             "id": "bitcoin-update",
             "kind": "rss",
+            "status": "offen",
         }
     ]
 
@@ -124,6 +125,10 @@ def test_collect_all_counts_new_items_before_persisting_them(monkeypatch):
         ("Person", 0, "post"),
         ("Coin", 0, "article"),
     ]
-    assert config["general"]["sources"][0]["items"] == [general_item]
-    assert config["people_monitoring"][0]["posts"] == [person_post]
-    assert config["coins"][0]["news"] == [coin_item]
+    assert config["general"]["sources"][0]["items"] == [
+        {**general_item, "status": "offen"}
+    ]
+    assert config["people_monitoring"][0]["posts"] == [
+        {**person_post, "status": "offen"}
+    ]
+    assert config["coins"][0]["news"] == [{**coin_item, "status": "offen"}]
