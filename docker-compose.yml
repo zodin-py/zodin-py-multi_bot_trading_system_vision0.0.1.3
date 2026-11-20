@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./multi_bot_trading_system_vision0.0.1.3
+      dockerfile: backend/Dockerfile
+    container_name: trading-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"  # Dashboard port (DASHBOARD_PORT)
+    env_file:
+      - ./multi_bot_trading_system_vision0.0.1.3/.env
+    volumes:
+      - trades:/app/trades
+      - ./multi_bot_trading_system_vision0.0.1.3/memory:/app/memory:cached
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/status')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./multi_bot_trading_system_vision0.0.1.3/frontend/angular
+      dockerfile: Dockerfile
+    container_name: trading-frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"  # Angular port
+    depends_on:
+      - backend
+    environment:
+      - API_BASE_URL=http://backend:5000/api
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  trades:
+  memory:

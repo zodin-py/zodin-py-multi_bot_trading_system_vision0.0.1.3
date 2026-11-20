@@ -1,0 +1,32 @@
+# Docker ignore file for the trading system
+
+# Python
+.__pycache__/
+*.pyc
+*.pyo
+*~
+venv/
+.env
+**/*.env*
+
+# Node.js
+node_modules/
+dist/
+*.log
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database
+*.db
+*.sqlite
+
+# Docker
+.dockerignore

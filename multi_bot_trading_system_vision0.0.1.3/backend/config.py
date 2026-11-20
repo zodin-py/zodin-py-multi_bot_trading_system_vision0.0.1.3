@@ -56,6 +56,11 @@ class TradingConfig(BaseSettings):
         description='Mapping of timeframes'
     )
 
+    HOURLY_INTERVAL_SECONDS: int = Field(default=3600)
+    RISK_USDC_STOP: float = Field(default=25.0)
+    RISK_DAILY_PROFIT_STOP_PERCENT: float = Field(default=6.0)
+    RISK_DAILY_LOSS_STOP_PERCENT: float = Field(default=3.0)
+
     # ==================== SERVER / PORTS ====================
     API_PORT: int = Field(default=8000, description='FastAPI REST server port')
     DASHBOARD_PORT: int = Field(default=5000, description='Flask dashboard port')
@@ -149,6 +154,10 @@ LOG_FILE: str = config.LOG_FILE if hasattr(config, 'LOG_FILE') else 'trades/trad
 REFRESH_INTERVAL: int = config.REFRESH_INTERVAL if hasattr(config, 'REFRESH_INTERVAL') else 5
 BACKTEST_MODE: bool = config.BACKTEST_MODE if hasattr(config, 'BACKTEST_MODE') else False
 INITIAL_CAPITAL: float = config.INITIAL_CAPITAL if hasattr(config, 'INITIAL_CAPITAL') else 10000.0
+HOURLY_INTERVAL_SECONDS: int = config.HOURLY_INTERVAL_SECONDS
+RISK_USDC_STOP: float = config.RISK_USDC_STOP
+RISK_DAILY_PROFIT_STOP_PERCENT: float = config.RISK_DAILY_PROFIT_STOP_PERCENT
+RISK_DAILY_LOSS_STOP_PERCENT: float = config.RISK_DAILY_LOSS_STOP_PERCENT
 COINS: List[str] = config.COINS
 TIMEFRAMES: Dict[str, str] = config.TIMEFRAMES
 DEFAULT_QUOTE: str = config.DEFAULT_QUOTE
@@ -184,6 +193,10 @@ __all__ = [
     'REFRESH_INTERVAL',
     'BACKTEST_MODE',
     'INITIAL_CAPITAL',
+    'HOURLY_INTERVAL_SECONDS',
+    'RISK_USDC_STOP',
+    'RISK_DAILY_PROFIT_STOP_PERCENT',
+    'RISK_DAILY_LOSS_STOP_PERCENT',
     'COINS',
     'TIMEFRAMES',
 ]
