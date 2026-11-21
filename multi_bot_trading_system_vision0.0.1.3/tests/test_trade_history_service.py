@@ -11,7 +11,7 @@ def test_trade_history_fetches_live_spot_fills_for_configured_pairs(monkeypatch)
         [
             {
                 'id': 'btc-1',
-                'symbol': 'BTC/USDT',
+                'symbol': 'BTC/USDC',
                 'side': 'buy',
                 'price': 100,
                 'amount': 0.5,
@@ -25,7 +25,7 @@ def test_trade_history_fetches_live_spot_fills_for_configured_pairs(monkeypatch)
         [
             {
                 'id': 'eth-1',
-                'symbol': 'ETH/USDT',
+                'symbol': 'ETH/USDC',
                 'side': 'sell',
                 'price': 200,
                 'amount': 1,
@@ -46,7 +46,7 @@ def test_trade_history_fetches_live_spot_fills_for_configured_pairs(monkeypatch)
     )
     monkeypatch.setattr(trade_history_service.config, 'BINANCE_API_KEY', 'configured')
     monkeypatch.setattr(trade_history_service.config, 'BINANCE_SECRET_KEY', 'configured')
-    monkeypatch.setattr(trade_history_service.config, 'DEFAULT_QUOTE', 'USDT')
+    monkeypatch.setattr(trade_history_service.config, 'DEFAULT_QUOTE', 'USDC')
     monkeypatch.setattr(
         trade_history_service.config,
         'COINS',
@@ -57,11 +57,11 @@ def test_trade_history_fetches_live_spot_fills_for_configured_pairs(monkeypatch)
 
     exchange.set_sandbox_mode.assert_called_once_with(False)
     exchange.load_time_difference.assert_called_once_with()
-    assert exchange.fetch_my_trades.call_args_list[0].args == ('BTC/USDT',)
+    assert exchange.fetch_my_trades.call_args_list[0].args == ('BTC/USDC',)
     assert exchange.fetch_my_trades.call_args_list[0].kwargs == {'limit': 1}
-    assert exchange.fetch_my_trades.call_args_list[1].args == ('ETH/USDT',)
+    assert exchange.fetch_my_trades.call_args_list[1].args == ('ETH/USDC',)
     assert len(trades) == 1
-    assert trades[0]['id'] == 'ETH/USDT:eth-1'
+    assert trades[0]['id'] == 'ETH/USDC:eth-1'
     assert trades[0]['side'] == 'sell'
     assert trades[0]['cost'] == 200
 

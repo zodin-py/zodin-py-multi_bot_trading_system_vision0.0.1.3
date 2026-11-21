@@ -16,7 +16,7 @@ def execute_trade():
 
     Example JSON body:
     {
-        "symbol": "BTCUSDT",
+        "symbol": "BTCUSDC",
         "entry_price": 95000.0,
         "amount": 100.0,
         "take_profit": 97000.0,

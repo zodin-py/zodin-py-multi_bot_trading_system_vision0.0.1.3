@@ -90,7 +90,7 @@ class TradingConfig(BaseSettings):
     )
 
     # ==================== DEFAULT QUOTE ====================
-    DEFAULT_QUOTE: str = Field(default='USDT', description='Default quote currency')
+    DEFAULT_QUOTE: str = Field(default='USDC', description='Default quote currency')
 
     # --- Backward-compatible module-level exports ---
     # (exposed at bottom of file)

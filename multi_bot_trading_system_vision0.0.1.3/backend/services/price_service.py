@@ -109,13 +109,13 @@ class PriceService:
                         if isinstance(item, dict) and item.get("s"):
                             # Update price directly without nested lock
                             symbol = item["s"].upper()
-                            if symbol.endswith("USDT"):
+                            formatted_symbol = cls._format_pair_symbol(symbol)
+                            if formatted_symbol:
                                 price_str = item.get("c", "0")
                                 try:
                                     price = float(price_str)
                                 except (ValueError, TypeError):
                                     continue
-                                formatted_symbol = symbol.replace("USDT", "/USDT")
                                 ts = datetime.now(tz=timezone.utc)
                                 with cls._lock:
                                     cls._prices[formatted_symbol] = {
@@ -129,13 +129,13 @@ class PriceService:
                     for item in data:
                         if isinstance(item, dict) and item.get("s"):
                             symbol = item["s"].upper()
-                            if symbol.endswith("USDT"):
+                            formatted_symbol = cls._format_pair_symbol(symbol)
+                            if formatted_symbol:
                                 price_str = item.get("c", "0")
                                 try:
                                     price = float(price_str)
                                 except (ValueError, TypeError):
                                     continue
-                                formatted_symbol = symbol.replace("USDT", "/USDT")
                                 ts = datetime.now(tz=timezone.utc)
                                 with cls._lock:
                                     cls._prices[formatted_symbol] = {
@@ -178,7 +178,8 @@ class PriceService:
     def _update_price(cls, data: dict) -> None:
         """Update cached price from WebSocket data."""
         symbol = data.get("s", "").upper()
-        if not symbol.endswith("USDT"):
+        formatted_symbol = cls._format_pair_symbol(symbol)
+        if not formatted_symbol:
             return
         price_str = data.get("c", "0")
         try:
@@ -186,8 +187,6 @@ class PriceService:
         except (ValueError, TypeError):
             return
         ts = datetime.now(tz=timezone.utc)
-        # Store in BTC/USDT format (with slash) to match normalization
-        formatted_symbol = symbol.replace("USDT", "/USDT")
         with cls._lock:
             cls._prices[formatted_symbol] = {
                 "symbol": formatted_symbol,
@@ -221,16 +220,19 @@ class PriceService:
 
     @staticmethod
     def _normalize_symbol(coin: str) -> str:
-        """Normalize coin symbol to BTC/USDT format (always with slash)."""
+        """Normalize symbols with explicit USDT or USDC quotes."""
         symbol = coin.strip().upper()
-        # Already has slash format
-        if symbol.endswith("/USDT"):
+        if "/" in symbol:
             return symbol
-        # No USDT suffix - add it and then add slash
-        if not symbol.endswith("USDT"):
-            symbol = symbol + "USDT"
-        # Convert BTCUSDT to BTC/USDT
-        return symbol[:-4] + "/USDT"
+        formatted_symbol = PriceService._format_pair_symbol(symbol)
+        return formatted_symbol or f"{symbol}/USDT"
+
+    @staticmethod
+    def _format_pair_symbol(symbol: str) -> Optional[str]:
+        for quote in ("USDT", "USDC"):
+            if len(symbol) > len(quote) and symbol.endswith(quote):
+                return f"{symbol[:-len(quote)]}/{quote}"
+        return None
 
     @classmethod
     def _fetch_price_rest(cls, symbol: str) -> Dict[str, Any]:

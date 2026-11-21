@@ -34,11 +34,31 @@ def test_wallet_initializes_exchange_and_values_assets(mock_binance):
     assert mock_binance.call_args.args[0]['options']['adjustForTimeDifference'] is True
     exchange.set_sandbox_mode.assert_called_once_with(True)
     exchange.load_time_difference.assert_called_once_with()
-    exchange.fetch_ticker.assert_called_once_with('BTC/USDT')
+    exchange.fetch_ticker.assert_called_once_with('BTC/USDC')
     assert wallet['total_usdt'] == 10600
     assert wallet['balances'] == [
         {'asset': 'BTC', 'free': '0.05', 'locked': '0.05', 'usdt_value': 10000.0},
         {'asset': 'USDT', 'free': '500.0', 'locked': '100.0', 'usdt_value': 600.0},
+    ]
+
+
+@patch('backend.services.wallet_service.config.DEFAULT_QUOTE', 'USDC')
+@patch('backend.services.wallet_service.config.BINANCE_API_KEY', 'test-key')
+@patch('backend.services.wallet_service.config.BINANCE_SECRET_KEY', 'test-secret')
+@patch('backend.services.wallet_service.ccxt.binance')
+def test_wallet_counts_usdc_as_quote_balance(mock_binance):
+    exchange = mock_binance.return_value
+    exchange.fetch_balance.return_value = {
+        'info': {},
+        'USDC': {'free': 500, 'total': 600},
+    }
+
+    wallet = WalletService().get_wallet_sync()
+
+    exchange.fetch_ticker.assert_not_called()
+    assert wallet['total_usdt'] == 600
+    assert wallet['balances'] == [
+        {'asset': 'USDC', 'free': '500.0', 'locked': '100.0', 'usdt_value': 600.0},
     ]
 
 

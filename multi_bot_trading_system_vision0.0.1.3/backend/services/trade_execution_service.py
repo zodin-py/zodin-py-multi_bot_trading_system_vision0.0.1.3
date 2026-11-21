@@ -63,9 +63,14 @@ class TradeExecutionService:
 
         exchange = self.wallet_service.exchange
         try:
+            exchange.load_time_difference()
             markets = exchange.load_markets()
         except ccxt.BaseError as error:
-            logger.error("Could not load Binance markets: %s", type(error).__name__)
+            logger.error(
+                "Could not synchronize Binance time or load markets (%s): %s",
+                type(error).__name__,
+                error,
+            )
             raise TradeExecutionError(
                 "BINANCE_API_ERROR", "Could not load Binance markets", 502
             ) from error

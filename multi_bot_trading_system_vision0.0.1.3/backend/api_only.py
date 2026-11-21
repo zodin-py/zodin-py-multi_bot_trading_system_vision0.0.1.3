@@ -21,6 +21,7 @@ if PROJECT_ROOT not in sys.path:
 from ccxt.base.errors import AuthenticationError
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
+from flask_swagger_ui import get_swaggerui_blueprint
 from werkzeug.utils import safe_join
 
 from backend import config
@@ -38,6 +39,7 @@ from backend.rag.rag_service import (
     RagService,
     RagServiceError,
 )
+from backend.swagger import build_openapi_spec
 
 # --- Logging ---------------------------------------------------------------
 
@@ -57,6 +59,15 @@ ANGULAR_DIST = os.path.join(
 CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
                    "http://localhost:4200", "http://127.0.0.1:4200"])
 app.register_blueprint(trade_api)
+swagger_ui = get_swaggerui_blueprint(
+    "/docs",
+    "/openapi.json",
+    config={
+        "app_name": "Multi-Bot Trading System API",
+        "tryItOutEnabled": True,
+    },
+)
+app.register_blueprint(swagger_ui, url_prefix="/docs")
 
 # --- Services --------------------------------------------------------------
 
@@ -92,6 +103,12 @@ PriceService.start()
 hourly_trading_manager.start()
 
 # --- Routes ----------------------------------------------------------------
+
+@app.route('/openapi.json')
+def openapi_document():
+    """Return the OpenAPI specification for the registered API routes."""
+    return jsonify(build_openapi_spec(app))
+
 
 @app.route('/api/price')
 def api_price():

@@ -21,16 +21,12 @@ cd .\frontend\angular
 npm install
 npm run build
 cd ..\..
-& ".\venv\Scripts\python.exe backend/api_only.py
+& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" -m backend.api_only
 ```
 
-Der Server liefert das Angular-Frontend aus `frontend/angular/dist/angular/browser` aus; ein Angular-Build ist erforderlich. Das Dashboard ist danach unter `http://127.0.0.1:5000` erreichbar. Beim Laden eines Coins werden Marktdaten von Binance abgerufen; dafür ist eine Internetverbindung erforderlich.
+Der Server liefert das Angular-Frontend aus `frontend/angular/dist/angular/browser` aus; ein Angular-Build ist erforderlich. Das Dashboard ist danach unter `http://127.0.0.1:5000` erreichbar. Die interaktive Swagger-Dokumentation mit „Try it out“ findest du unter `http://127.0.0.1:5000/docs`; das OpenAPI-Dokument liegt unter `http://127.0.0.1:5000/openapi.json`. Beim Laden eines Coins werden Marktdaten von Binance abgerufen; dafür ist eine Internetverbindung erforderlich.
 
-Die separate FastAPI-REST-API kann bei Bedarf in einem zweiten Terminal gestartet werden:
-
-```powershell
-& "$env:USERPROFILE\venvs\multi-bot\Scripts\python.exe" -m backend.api.server
-```
+Trade- und Hourly-Endpunkte können Orders auslösen. Teste diese nur, wenn Testnet korrekt konfiguriert ist.
 
 ## Tests
 

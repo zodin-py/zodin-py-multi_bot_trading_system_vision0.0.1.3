@@ -19,6 +19,23 @@ def test_api_only_coins_route_matches_frontend_response():
     assert '5m' in data['timeframes']
 
 
+def test_api_only_serves_swagger_ui_and_documents_registered_routes():
+    api_only = _api_only_module()
+    client = api_only.app.test_client()
+
+    docs_response = client.get('/docs/')
+    spec_response = client.get('/openapi.json')
+
+    assert docs_response.status_code == 200
+    assert b'SwaggerUIBundle' in docs_response.data
+    assert spec_response.status_code == 200
+    spec = spec_response.get_json()
+    assert spec['openapi'] == '3.0.3'
+    assert 'get' in spec['paths']['/api/status']
+    assert 'post' in spec['paths']['/api/trade/execute']
+    assert spec['paths']['/api/trade/execute']['post']['requestBody']['required'] is True
+
+
 def test_api_only_select_route_fetches_and_persists_candles(monkeypatch):
     api_only = _api_only_module()
     summary = {

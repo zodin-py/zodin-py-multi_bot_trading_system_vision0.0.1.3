@@ -13,9 +13,14 @@ class FakeExchange:
     def __init__(self):
         self.oco_params = None
         self.buy_amount = None
+        self.calls = []
+
+    def load_time_difference(self):
+        self.calls.append("load_time_difference")
 
     def load_markets(self):
-        return {"BTC/USDT": {"id": "BTCUSDT"}}
+        self.calls.append("load_markets")
+        return {"BTC/USDC": {"id": "BTCUSDC"}}
 
     def create_market_buy_order_with_cost(self, symbol, cost):
         self.buy_amount = (symbol, cost)
@@ -27,11 +32,11 @@ class FakeExchange:
         }
 
     def amount_to_precision(self, symbol, amount):
-        assert symbol == "BTC/USDT"
+        assert symbol == "BTC/USDC"
         return f"{float(amount):.8f}".rstrip("0").rstrip(".")
 
     def price_to_precision(self, symbol, price):
-        assert symbol == "BTC/USDT"
+        assert symbol == "BTC/USDC"
         return f"{float(price):.2f}"
 
     def private_post_orderlist_oco(self, params):
@@ -53,7 +58,7 @@ class FakeWalletService:
     def get_wallet_sync(self):
         return {
             "balances": [
-                {"asset": "USDT", "free": self.free_balance, "locked": "100"}
+                {"asset": "USDC", "free": self.free_balance, "locked": "100"}
             ]
         }
 
@@ -65,6 +70,7 @@ def configured_trade_service(monkeypatch):
     monkeypatch.setattr(trade_execution_service, "WalletService", lambda: wallet_service)
     monkeypatch.setattr(trade_execution_service.config, "BINANCE_API_KEY", "test-key")
     monkeypatch.setattr(trade_execution_service.config, "BINANCE_SECRET_KEY", "test-secret")
+    monkeypatch.setattr(trade_execution_service.config, "DEFAULT_QUOTE", "USDC")
     monkeypatch.setattr(
         trade_execution_service.PriceService,
         "get_price_sync",
@@ -75,7 +81,7 @@ def configured_trade_service(monkeypatch):
 
 def _request(**overrides):
     data = {
-        "symbol": "BTCUSDT",
+        "symbol": "BTCUSDC",
         "entry_price": 95000,
         "amount": 100,
         "take_profit": 97000,
@@ -92,9 +98,10 @@ def test_trade_service_places_quote_buy_and_binance_oco(configured_trade_service
     result = service.execute(_request())
 
     assert result["status"] == "SUCCESS"
-    assert exchange.buy_amount == ("BTC/USDT", 100.0)
+    assert exchange.calls[:2] == ["load_time_difference", "load_markets"]
+    assert exchange.buy_amount == ("BTC/USDC", 100.0)
     assert exchange.oco_params == {
-        "symbol": "BTCUSDT",
+        "symbol": "BTCUSDC",
         "side": "SELL",
         "quantity": "0.001",
         "aboveType": "LIMIT_MAKER",
@@ -123,6 +130,25 @@ def test_trade_service_rejects_spending_locked_quote_balance(configured_trade_se
     assert exchange.buy_amount is None
 
 
+def test_trade_service_logs_market_loading_failure(configured_trade_service, caplog):
+    import ccxt
+
+    service, exchange, _ = configured_trade_service
+
+    def fail_to_load_markets():
+        raise ccxt.NetworkError("temporary DNS failure")
+
+    exchange.load_markets = fail_to_load_markets
+
+    with pytest.raises(TradeExecutionError) as error:
+        service.execute(_request())
+
+    assert error.value.error_code == "BINANCE_API_ERROR"
+    assert error.value.message == "Could not load Binance markets"
+    assert "NetworkError" in caplog.text
+    assert "temporary DNS failure" in caplog.text
+
+
 @pytest.mark.parametrize(
     ("field", "value"),
     [
@@ -144,7 +170,7 @@ def test_trade_execute_endpoint_returns_validation_errors_as_json():
     app = Flask(__name__)
     app.register_blueprint(trade_endpoints.trade_api)
 
-    response = app.test_client().post("/api/trade/execute", json={"symbol": "BTCUSDT"})
+    response = app.test_client().post("/api/trade/execute", json={"symbol": "BTCUSDC"})
 
     assert response.status_code == 400
     assert response.get_json()["error_code"] == "INVALID_FIELD"

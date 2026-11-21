@@ -37,11 +37,14 @@ class TradeHistoryService:
             quote = config.DEFAULT_QUOTE
 
             for configured_symbol in config.COINS:
-                if not configured_symbol.endswith(quote):
-                    raise ValueError(
-                        f'Configured symbol {configured_symbol} does not use {quote}'
-                    )
-                symbol = f'{configured_symbol[:-len(quote)]}/{quote}'
+                base = configured_symbol.upper().replace('/', '')
+                for configured_quote in ('USDT', 'USDC'):
+                    if base.endswith(configured_quote):
+                        base = base[:-len(configured_quote)]
+                        break
+                if not base:
+                    raise ValueError(f'Configured symbol {configured_symbol} has no base asset')
+                symbol = f'{base}/{quote}'
                 for trade in exchange.fetch_my_trades(symbol, limit=limit):
                     trades.append(self._format_trade(trade, symbol))
 

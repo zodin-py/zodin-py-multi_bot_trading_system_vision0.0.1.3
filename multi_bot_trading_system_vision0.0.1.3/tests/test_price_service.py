@@ -10,14 +10,20 @@ class TestPriceService:
     """Tests for PriceService WebSocket implementation."""
 
     def test_normalize_symbol(self):
-        """Test symbol normalization - ensures proper USDT suffix and slash."""
-        # All formats should normalize to BTC/USDT format (with slash)
+        """Test USDT defaulting and explicit USDT/USDC quote normalization."""
         assert PriceService._normalize_symbol('btc') == 'BTC/USDT'
         assert PriceService._normalize_symbol('BTC') == 'BTC/USDT'
-        # Already has USDT suffix - add slash
         assert PriceService._normalize_symbol('btcusdt') == 'BTC/USDT'
         assert PriceService._normalize_symbol('BTCUSDT') == 'BTC/USDT'
         assert PriceService._normalize_symbol('BTC/USDT') == 'BTC/USDT'
+        assert PriceService._normalize_symbol('btcusdc') == 'BTC/USDC'
+        assert PriceService._normalize_symbol('BTC/USDC') == 'BTC/USDC'
+
+    def test_update_price_caches_usdc_pair(self):
+        with patch.object(PriceService, '_prices', {}):
+            PriceService._update_price({'s': 'BTCUSDC', 'c': '64000.5'})
+
+            assert PriceService._prices['BTC/USDC']['price'] == 64000.5
 
     @patch('backend.services.price_service.PriceService._fetch_price_rest')
     def test_get_price_sync_uses_cache(self, mock_rest):

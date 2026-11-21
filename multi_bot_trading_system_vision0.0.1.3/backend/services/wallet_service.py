@@ -47,7 +47,7 @@ class WalletService:
         {
             "balances": [
                 {"asset": "BTC", "free": "0.5", "locked": "0.0", "usdt_value": 33716.25},
-                {"asset": "USDT", "free": "1000.00", "locked": "0.0", "usdt_value": 1000.00}
+                {"asset": "USDC", "free": "1000.00", "locked": "0.0", "usdt_value": 1000.00}
             ],
             "total_usdt": number,
             "timestamp": iso
@@ -63,7 +63,7 @@ class WalletService:
             }
 
             # Extract balances from ccxt response
-            # ccxt format: {info: {}, BTC: {free: x, total: y}, USDT: {...}, ...}
+            # ccxt format: {info: {}, BTC: {free: x, total: y}, USDC: {...}, ...}
             all_balances: Dict[str, Dict[str, float]] = {}
 
             # Get non-info keys (actual balances)
@@ -85,9 +85,9 @@ class WalletService:
                     # Skip zero-balance assets (per spec: filter out zero-balance)
                     continue
 
-                # Get price for this asset (unless it's USDT)
+                # Stablecoin balances are already denominated in the quote currency.
                 usdt_value = 0.0
-                if asset == 'USDT' or asset == 'USD':
+                if asset.upper() in ('USDT', 'USDC', 'USD'):
                     usdt_value = free + locked
                 else:
                     try:
@@ -97,7 +97,7 @@ class WalletService:
                         asset_price = price_ticker.get('last', 0.0)
                         usdt_value = (free + locked) * asset_price
                     except Exception as e:
-                        # If price fetch fails, skip this asset's USDT conversion
+                        # If price fetch fails, skip this asset's quote conversion
                         # but still include the asset with usdt_value=0
                         logger.warning(f'Could not fetch price for {asset}: {e}')
                         usdt_value = 0.0
