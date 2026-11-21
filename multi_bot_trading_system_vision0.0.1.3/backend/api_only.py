@@ -8,7 +8,6 @@ The Angular application must be built before starting the server.
 WebSocket provides live price updates in background.
 """
 
-import json
 import logging
 import os
 import sys
@@ -27,6 +26,8 @@ from werkzeug.utils import safe_join
 from backend import config
 from backend.services.indicators_service import IndicatorService
 from backend.services.price_service import PriceService
+from backend.hourly_trading_manager import HourlyTradingManager
+from backend.api.trade_endpoints import trade_api
 from backend.analyzers.engine import AnalysisEngine
 from backend.analyzers.registry import AnalyzerRegistry
 from backend.News_card.news_service import collect_news, get_news_items
@@ -55,6 +56,7 @@ ANGULAR_DIST = os.path.join(
 )
 CORS(app, origins=["http://localhost:5000", "http://127.0.0.1:5000",
                    "http://localhost:4200", "http://127.0.0.1:4200"])
+app.register_blueprint(trade_api)
 
 # --- Services --------------------------------------------------------------
 
@@ -81,9 +83,13 @@ analyzer_registry.register(HammerPattern())
 analyzer_registry.register(DojiPattern())
 
 analysis_engine = AnalysisEngine(analyzer_registry)
+hourly_trading_manager = HourlyTradingManager(
+    analysis_engine=analysis_engine,
+)
 
 # Start WebSocket price stream immediately
 PriceService.start()
+hourly_trading_manager.start()
 
 # --- Routes ----------------------------------------------------------------
 
@@ -509,6 +515,31 @@ def api_status():
     })
 
 
+@app.route('/api/risk/status')
+def api_risk_status():
+    """Return persisted hourly risk-manager state."""
+    return jsonify(hourly_trading_manager.risk_manager.state_store.load())
+
+
+@app.route('/api/hourly/run', methods=['POST'])
+def api_hourly_run():
+    """Run the hourly trading manager once, protected against overlap."""
+    result = hourly_trading_manager.run_once()
+    return jsonify(result), 409 if result.get("status") == "ERROR" and "running" in str(result.get("error", "")).lower() else 200
+
+
+@app.route('/api/risk/manual-stop', methods=['POST'])
+def api_manual_stop():
+    data = request.get_json(silent=True) or {}
+    reason = str(data.get("reason", "Manueller Stop")).strip() or "Manueller Stop"
+    return jsonify(hourly_trading_manager.risk_manager.manual_stop(reason))
+
+
+@app.route('/api/risk/manual-resume', methods=['POST'])
+def api_manual_resume():
+    return jsonify(hourly_trading_manager.risk_manager.manual_resume())
+
+
 @app.route('/api/trades')
 def api_get_trades():
     """Get recent Binance Spot account trades for configured pairs."""
@@ -568,6 +599,7 @@ def serve_angular(path: str):
 if __name__ == '__main__':
     logger.info("Starting API-only server (WebSocket price feed)…")
     try:
-        app.run(debug=False, host='127.0.0.1', port=config.DASHBOARD_PORT, use_reloader=False)
+        app.run(debug=False, host='0.0.0.0', port=config.DASHBOARD_PORT, use_reloader=False)
     finally:
+        hourly_trading_manager.stop()
         PriceService.stop()

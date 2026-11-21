@@ -90,6 +90,19 @@ def test_api_only_trades_route_rejects_invalid_limit():
     assert response.get_json()['error'] == 'limit must be a positive integer'
 
 
+def test_api_only_trade_execute_route_is_registered():
+    api_only = _api_only_module()
+
+    response = api_only.app.test_client().post(
+        '/api/trade/execute',
+        data='not json',
+        content_type='application/json',
+    )
+
+    assert response.status_code == 400
+    assert response.get_json()['error_code'] == 'INVALID_JSON'
+
+
 def test_api_only_root_serves_built_angular_dashboard(monkeypatch, tmp_path):
     api_only = _api_only_module()
     (tmp_path / 'index.html').write_text('<html>dashboard</html>', encoding='utf-8')
